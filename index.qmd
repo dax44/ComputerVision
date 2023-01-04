@@ -1,5 +1,7 @@
 # Preface {.unnumbered}
 
+Niniejsza książka powstała na potrzeby prowadzenia wykładu z *Automatycznej analizy obrazu*.
+
 This is a Quarto book.
 
 To learn more about Quarto books visit <https://quarto.org/docs/books>.
