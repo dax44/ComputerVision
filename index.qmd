@@ -5,3 +5,9 @@ Jest wynikiem moich doświadczeń z automatyczną analizą obrazu.
 W pisaniu tego kompendium wiedzy na temat *Computer Vision* bardzo pomocne były dwie pozycje literaturowe [@burgerDigitalImageProcessing2016; @szeliskiComputerVisionAlgorithms2022].
 Oprócz wspomnianych książek poświęconych wizji komputerowej, ważne są również pozycje objaśniające arkana *deep learning*.
 Wśród nich należy wymienić [@goodfellowDeepLearning2016; @ketkarDeepLearningPython2017; @DeepLearningPython; @cholletDeepLearning2018].
+Ponadto zostaną wykorzystane nieprzebrane zasoby internetu - na stronach takich jak <https://stackoverflow.com> czy <https://github.com> można znaleźć rozwiązania do niemal każdego zadania.
+
+Na potrzeby zajęć laboratoryjnych będą dodatkowo potrzebne pewne programy komputerowe i biblioteki:
+
+-   Fiji - darmowy program będący nakładką na program ImageJ. Służy on do operacji na zdjęciach. Do pobrania ze strony <https://fiji.sc/>;
+-   Python - język programowania, w którym można wykonać niemal dowolne zadanie z zakresu automatycznej analizy obrazu. Przez instalacje Python-a rozumiem zainstalowanie odpowiedniej dystrybucji tego programu (np. dla Windows zaleca się instalację dystrybucji Anconda lub Miniconda). Po szczegóły dotyczące instalacji Pythona na Windows odsyłam na stronę
