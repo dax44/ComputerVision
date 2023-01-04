@@ -12,6 +12,8 @@ book:
       Ta książka została napisana z wykorzystaniem <a href="https://quarto.org/">Quarto</a>.
   cover-image: cover.png
   favicon: cover.png
+  repo-url: https://github.com/dax44/ComputerVision.git
+  repo-actions: [edit, issue]
   author:
   - name: Dariusz Majerek
     url: d.majerek@pollub.pl
@@ -30,6 +32,7 @@ format:
   html:
     theme:
       - cosmo
+      - mycss.scss
     code-link: true
 
     author-meta: "Dariusz Majerek"
