@@ -42,7 +42,6 @@ format:
     code-link: true
 
     author-meta: "Dariusz Majerek"
-    include-in-header: "plausible.html"
     callout-appearance: simple
 
 editor: visual
