@@ -1,4 +1,4 @@
-# Preface {.unnumbered}
+# Wstęp {.unnumbered}
 
 Niniejsza książka powstała na potrzeby prowadzenia wykładu z *Automatycznej analizy obrazu*.
 
