@@ -3,10 +3,6 @@ project:
   output-dir: docs
 
 book:
-  navbar: 
-    search: true
-    logo: images/logo.png
-    background: dark
   title: "Automatyczna analiza obrazu"
   reader-mode: true
   language: setup/polski.yml
@@ -14,16 +10,22 @@ book:
     left: |
       Automatyczna analiza obrazu, Dariusz Majerek
     right: |
-      Książka została napisana z wykorzystaniem <a href="https://quarto.org/">Quarto</a>.
+      Książka została napisana w <a href="https://quarto.org/">Quarto</a>
   cover-image: cover.png
   favicon: cover.png
   repo-url: https://github.com/dax44/ComputerVision/
   repo-actions: [issue]
-  author:
+  sharing: [twitter,facebook]
+  downloads: [pdf, epub]
+  search: true
+  twitter-card:
+    site: "@DariuszMajerek"
+  author: 
   - name: Dariusz Majerek
-    url: d.majerek@pollub.pl
     affiliation: Politechnika Lubelska
   date: last-modified
+  sidebar: 
+    logo: images/logo.png
   chapters:
     - index.qmd
     - intro.qmd
@@ -37,11 +39,13 @@ format:
   html:
     lang: pl
     theme:
-      - cosmo
-      - mycss.scss
+      light: pulse
+      dark: slate
     code-link: true
-
-    author-meta: "Dariusz Majerek"
-    callout-appearance: simple
+    mainfont: serif
+    margin-left: 0em
+    margin-right: 0em
 
 editor: visual
+comments:
+  hypothesis: true
