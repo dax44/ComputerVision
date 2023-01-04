@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Automatyczna analiza obrazu",
     "section": "",
-    "text": "Wstęp\nNiniejsza książka powstała na potrzeby prowadzenia wykładu z Automatycznej analizy obrazu.\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books."
+    "text": "Wstęp\nNiniejsza książka powstała na potrzeby prowadzenia wykładu z Automatycznej analizy obrazu. Jest wynikiem moich doświadczeń z automatyczną analizą obrazu. W pisaniu tego kompendium wiedzy na temat Computer Vision bardzo pomocne były dwie pozycje literaturowe (Burger i Burge 2016; Szeliski 2022). Oprócz wspomnianych książek poświęconych wizji komputerowej, ważne są również pozycje objaśniające arkana deep learning. Wśród nich należy wymienić (Goodfellow, Bengio, i Courville 2016; Ketkar i Santana 2017; „Deep Learning with Python, Second Edition”, b.d.; Chollet i Allaire 2018).\n\n\n\n\nBurger, Wilhelm, i Mark J. Burge. 2016. Digital Image Processing: An Algorithmic Introduction Using Java. Texts w Computer Science. London: Springer. https://doi.org/10.1007/978-1-4471-6684-9.\n\n\nChollet, Francois, i J. J. Allaire. 2018. Deep Learning with R. Manning Publications.\n\n\n„Deep Learning with Python, Second Edition”. b.d. Manning Publications. https://www.manning.com/books/deep-learning-with-python-second-edition.\n\n\nGoodfellow, Ian, Yoshua Bengio, i Aaron Courville. 2016. Deep Learning. Illustrated edition. Cambridge, Massachusetts: The MIT Press.\n\n\nKetkar, Nikhil, i Eder Santana. 2017. Deep Learning with Python. T. 1. Springer.\n\n\nSzeliski, Richard. 2022. Computer Vision: Algorithms and Applications. Texts w Computer Science. Cham: Springer International Publishing. https://doi.org/10.1007/978-3-030-34372-9."
   },
   {
     "objectID": "intro.html",
@@ -25,6 +25,6 @@
     "href": "references.html",
     "title": "Bibliografia",
     "section": "",
-    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "text": "Burger, Wilhelm, and Mark J. Burge. 2016. Digital Image\nProcessing: An Algorithmic Introduction Using\nJava. Texts in Computer Science.\nLondon: Springer. https://doi.org/10.1007/978-1-4471-6684-9.\n\n\nChollet, Francois, and J. J. Allaire. 2018. Deep\nLearning with R. Manning\nPublications.\n\n\n“Deep Learning with Python, Second\nEdition.” n.d. Manning Publications.\nhttps://www.manning.com/books/deep-learning-with-python-second-edition.\n\n\nGoodfellow, Ian, Yoshua Bengio, and Aaron Courville. 2016. Deep\nLearning. Illustrated edition. Cambridge,\nMassachusetts: The MIT Press.\n\n\nKetkar, Nikhil, and Eder Santana. 2017. Deep Learning with\nPython. Vol. 1. Springer.\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.\n\n\nSzeliski, Richard. 2022. Computer Vision:\nAlgorithms and Applications. Texts in\nComputer Science. Cham: Springer\nInternational Publishing. https://doi.org/10.1007/978-3-030-34372-9."
   }
 ]

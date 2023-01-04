@@ -1,7 +1,7 @@
 # Wstęp {.unnumbered}
 
 Niniejsza książka powstała na potrzeby prowadzenia wykładu z *Automatycznej analizy obrazu*.
-
-This is a Quarto book.
-
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+Jest wynikiem moich doświadczeń z automatyczną analizą obrazu.
+W pisaniu tego kompendium wiedzy na temat *Computer Vision* bardzo pomocne były dwie pozycje literaturowe [@burgerDigitalImageProcessing2016; @szeliskiComputerVisionAlgorithms2022].
+Oprócz wspomnianych książek poświęconych wizji komputerowej, ważne są również pozycje objaśniające arkana *deep learning*.
+Wśród nich należy wymienić [@goodfellowDeepLearning2016; @ketkarDeepLearningPython2017; @DeepLearningPython; @cholletDeepLearning2018].
