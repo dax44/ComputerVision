@@ -20,25 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
 </style>
 
 
@@ -63,6 +44,8 @@ div.csl-indent {
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/videojs/video.min.js"></script>
+<link href="site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -86,12 +69,12 @@ div.csl-indent {
 
 
 <meta name="twitter:title" content="Automatyczna analiza obrazu - 1&nbsp; Wprowadzenie">
-<meta name="twitter:description" content="This is a book created from markdown and executable code.">
+<meta name="twitter:description" content="Automatyczna analiza obrazu jest znana również pod inną nazwą wizja komputerowa (ang. Computer Vision).">
 <meta name="twitter:site" content="@DariuszMajerek">
 <meta name="twitter:card" content="summary">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -108,7 +91,10 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Automatyczna analiza obrazu</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -128,7 +114,21 @@ div.csl-indent {
           </a>
         </li>
     </ul>
-    <a href="https://twitter.com/intent/tweet?url=|url|" title="Twitter" class="sidebar-tool px-1"><i class="bi bi-twitter"></i></a>
+    <a href="" title="Share" id="sidebar-tool-dropdown-1" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-1">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+    </ul>
   <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
@@ -173,7 +173,7 @@ div.csl-indent {
         
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -192,15 +192,152 @@ div.csl-indent {
 
 </header>
 
-<p>This is a book created from markdown and executable code.</p>
-<p>See <span class="citation" data-cites="knuth84">Knuth (<a href="references.html#ref-knuth84" role="doc-biblioref">1984</a>)</span> for additional discussion of literate programming.</p>
+<div class="page-columns page-full"><p>Automatyczna analiza obrazu jest znana również pod inną nazwą wizja komputerowa (ang. <em>Computer Vision</em>). Można powiedzieć też, że AAO<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> jest częścią jeszcze szerszej dziedziny automatycznej analizy sygnałów. Ponieważ różnice pomiędzy analizą obrazu i dźwięku w niektórych zadaniach będą się zacierać, to poznane metody w toku tego wykładu będzie można śmiało przenieść na inne dziedziny. Oczywiście uwzględniając szereg podobieństw pomiędzy analizą obrazu i analizą dźwięku, istniej wiele dedykowanych modeli stosowanych tylko w domenie fal dźwiękowych.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;skrót od Automatyczna Analiza Obrazu</p></li></div></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media.giphy.com/media/nJcXqpOgoFCxO/giphy.gif" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>W ramach zadań realizowanych przez wizję komputerową można wymienić:</p>
+<ul>
+<li>pozyskiwanie obrazów (opis procesu “robienia zdjęcia” cyfrowego);</li>
+<li>przetwarzanie obrazów w celu zmiany ich parametrów (np. poprawy ostrości, usuwania szumów, itp);</li>
+<li>analizowania zdjęć w celu poszukiwania wzorców:
+<ul>
+<li><p>zastosowanie ML<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> do klasyfikacji obiektów na zdjęciach;</p></li>
+<li><p>zastosowanie ML do zadań regresyjnych (np. wyznaczanie poziomu wylania na podstawie zdjęć satelitarnych);</p></li>
+<li><p>zastosowanie ML w lokalizacji obiektów na obrazie (np. wskazanie położenia samolotu na zdjęciu w postaci ujęcia go w prostokątną ramkę);</p></li>
+<li><p>autoidentyfikacja (np. rozpoznawanie twarzy czy odcisku palca);</p></li>
+<li><p>tworzenie obrazów na podstawie fraz (istnieją sieci np. GAN, które są w stanie wygenerować całkowicie fikcyjny obraz na podstawie zdania opisującego co ma się na nim znaleźć);</p></li>
+<li><p>śledzenie ruchów na podstawie obrazu wideo (np. automatyczne kadrowanie obrazu wideo na podstawie położenia twarzy podczas rozmowy przez komunikator);</p></li>
+<li><p>segmentacja obrazu;</p></li>
+<li><p>i wiele innych</p></li>
+</ul></li>
+</ul>
+<div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;Machine Learning</p></li></div><p>Śmiało można stwierdzić, że AAO towarzyszy nam codziennie i na każdym kroku. Czasami nie jesteśmy nawet tego świadomi.</p>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="https://darwin-public.s3.eu-west-1.amazonaws.com/splash_page/v7-vs-other-tools.mp4"></video></div>
+<p>Poniżej przedstawiam listę wybranych zastosowań AAO:</p>
+<ol type="1">
+<li>Transport - Rosnące wymagania sektora transportowego napędzają rozwój technologiczny w tej branży, w którego centrum znajduje się wizja komputerowa. Od pojazdów autonomicznych po wykrywanie zajętości miejsc parkingowych, Inteligentny System Transportowy (ITS) stał się krytycznym obszarem promowania wydajności, efektywności i bezpieczeństwa transportu.</li>
+</ol>
+<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/KLgnqnKbpGI" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc59829c5d3f40c63c8c79_kgfTLrY0PWEI5RosfrI1paxVhOQUsaI28fJHdMc45d0MDugcMLTWlajG5GN1zRdm-SHafTGXgiUoRRHLDci1XGvPLjKnN-xNwIKJrS2hQu8nVM3gHMyXGIY3rtqneCmZT6XvCJS4.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Monitorowanie zajętości miejsc na parkingu</figcaption><p></p>
+</figure>
+</div>
+<ol start="2" type="1">
+<li>Medycyna. Dane z obrazowania medycznego są jednym z najbogatszych źródeł informacji. Bez odpowiedniej technologii lekarze są zmuszeni spędzać godziny na ręcznym analizowaniu danych pacjentów i wykonywaniu prac administracyjnych. Na szczęście, wraz z upływem lat i rozwojem technologii, branża opieki zdrowotnej stała się jedną z najszybciej przyjmujących nowe rozwiązania automatyzacji, w tym wizję komputerową.</li>
+</ol>
+<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/BTnYehqjirM" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc598232f27002f1d6723b_BtnZghsPM9o_nFMZ400x1daKiqlT7jU4JyS7tpVVb4OwDmGWMy-om3a1Ja74hiKJOY76_mpz3piP552O2tU9ICBKr3JVsxV3p2BNhnEp0FPlXxlY4DQooC4NT9e2XdHBPyEt4iQq.gif" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Segmentacja obrazu MRI</figcaption><p></p>
+</figure>
+</div>
+<ol start="3" type="1">
+<li>Produkcja. Przemysł produkcyjny przyjął już szeroką gamę rozwiązań automatyzacji z wizją komputerową w centrum. Pomaga ona zautomatyzować kontrolę jakości, zminimalizować zagrożenia bezpieczeństwa i zwiększyć wydajność produkcji. Oto niektóre z najczęstszych zastosowań wizji komputerowej w przemyśle produkcyjnym.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fd7cd55dbbe9aa16a0a72d_missing%20pill.PNG" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">AAO w kontroli jakości</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc598357f2fab35086a350_wjjK4s_ju-B4NmwOsMwECiQs7XcfktM9Z97pBSH9cgzs_E9UA7rbE4FUcm5HB0JZ0Qdu_jFUy_FJnnb6rxowfJKXWICqRf6Az0EOsa3yd4rdmd2hB6vw81cel9OxL6ho6YCepeag.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">AAO w procesie magazynowania</figcaption><p></p>
+</figure>
+</div>
+<ol start="4" type="1">
+<li>Budowa. Sektor budowlany szybko przyjmuje technologię wizji komputerowej i wykorzystuje ją do wykrywania sprzętu ochrony osobistej, kontroli aktywów infrastruktury, wykrywania zagrożeń w miejscu pracy lub konserwacji.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc598357f2fa0e1286a34f_tTzWALM99EjqnbscUwWS5IjXfGJeZO8cH4E9t_0RRBf5kttI6fUe5Wg76rxZ9xfjbWgQjd9SpjNiEYYzBw3zPTdjABAiOk2u0Luy5csiiBCsOhCNfrU7_WvBs15jMtKOhIsU8zhE.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Wykrywanie zużytych części</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc59839d50654852d23dfb__Hi-nntl-MVNlAJUdLKKxS1pm0rBdSMyKexEpDUIYQ8_jPU0hezOnOSnLOeLOzOxOFipEbVgDg3bCzN2YO0USrETgJzgvBIe3QU1VGv5-ES1x8BrPX2JDAtyfzSRQFtQCy3HTtiU.jpeg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Naruszenia procedur bezpieczeństwa</figcaption><p></p>
+</figure>
+</div>
+<ol start="5" type="1">
+<li>Rolnictwo. Sektor rolniczy był świadkiem kilku przypadków zastosowania modeli sztucznej inteligencji (w tym wizji komputerowej) w takich dziedzinach, jak monitorowanie upraw i plonów, zautomatyzowane zbiory, analiza warunków pogodowych, monitorowanie zdrowia zwierząt gospodarskich czy wykrywanie chorób roślin. Technologia ta zdobyła już silną pozycję dzięki możliwościom automatyzacji i wykrywania, a jej zastosowania będą się tylko rozszerzać.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc5984d806aa3e13f43f6d__2ixaxqamXj_YjFrTKHtEjoF7WWIcd8RG-zZax-fPNBpmAtmtHphHqA2OgBvwIoNaiX2pp7mfStLcAEj_pavsv6fptBiiZXyDOTCazzfrnVp7q9YmxCw7iwS5M3gwUFGr5FXoWyZ.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Wyrywanie nietypowych zachowań zwierząt</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc598432f27058b5d6723c_dHWjLelZK7zoop9w_DXZvM8x5L_0gBDS4LULfyyFX2L3c4lB1iU-vWnyHbQAEmuCEGP1PUja38D5PwQbgjKOV2Z9PW61Rb18K7rT-qtxIJSrgZ1osK0z17ZiWCcw87FGOaVUSxy9.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Choroby roślin</figcaption><p></p>
+</figure>
+</div>
+<ol start="6" type="1">
+<li>Sprzedaż detaliczna. Kamery zainstalowane w sklepach detalicznych pozwalają sprzedawcom zbierać duże ilości danych wizualnych pomocnych w projektowaniu lepszych doświadczeń klientów i pracowników. Rozwój systemów wizji komputerowej do przetwarzania tych danych sprawia, że cyfrowa transformacja branży realnej staje się znacznie bardziej osiągalna.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fd9a0e575c8541c8c6eea7_missing%20products.PNG" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Wykrywanie braków towaru</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc5985d3713414bc52a802_ASiEMtMMPiPu7Wu9WUr_0amhXbxV0_94PD8-pZuI9zXe4EnVFyUfKqWHfMPQ79THYjNahS5pfOoev0_EJ9FnkB4pdRW5ZfJYR8HfAxK_nO5BTd4ZQKkkM1DmL1sGjFN5VjnUamwG.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Wykrywanie nietypowych zachowań klientów lub badanie zatłoczenia</figcaption><p></p>
+</figure>
+</div>
+<p>Przestrzeni do zastosowań AAO jest jeszcze dużo więcej ale nie sposób ich wszystkich opisać. Oto kilka przykładów z różnych kategorii.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://viso.ai/wp-content/uploads/2021/01/human-pose-estimation-deep-learning.gif" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Badanie ruchu zawodnika</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://viso.ai/wp-content/uploads/2021/05/video-analytics-fence-detection.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Wykrywanie naruszeń prawa</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.malwarebytes.com/blog/news/2021/11/asset_upload_file64984_232483.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Wykrywanie twarzy</figcaption><p></p>
+</figure>
+</div>
+<p>Może też służyć do zabawy</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-01-3 o 19.50.20.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Kilka obrazów wygenerowanych jako wariacje na temat mojego zdjęcia z wakacji</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-01-3 o 19.50.45.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Kilka przykładów obrazów wygenerowanych przez sieć DALL E2 jako odpowiedź na zdanie “narysuj bez odrywania ręki jedna linią misia na zakupach”</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-01-5 o 13.42.47.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Tym razem sieć DALL E2 została poproszona o namalowanie kobiet w stylu Van Gogha</figcaption><p></p>
+</figure>
+</div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-knuth84" class="csl-entry" role="doc-biblioentry">
-Knuth, Donald E. 1984. <span>„Literate Programming”</span>. <em>Comput. J.</em> 27 (2): 97–111. <a href="https://doi.org/10.1093/comjnl/27.2.97">https://doi.org/10.1093/comjnl/27.2.97</a>.
-</div>
-</div>
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -467,9 +604,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">Automatyczna analiza obrazu, Dariusz Majerek</div>   
-    <div class="nav-footer-right">images/logo.png</div>
+    <div class="nav-footer-right">Książka została napisana w <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>
+<script>videojs(video_shortcode_videojs_video1);</script>
 
 
 
