@@ -106,7 +106,10 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Automatyczna analiza obrazu</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -126,7 +129,21 @@ div.csl-indent {
           </a>
         </li>
     </ul>
-    <a href="https://twitter.com/intent/tweet?url=|url|" title="Twitter" class="sidebar-tool px-1"><i class="bi bi-twitter"></i></a>
+    <a href="" title="Share" id="sidebar-tool-dropdown-1" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-1">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+    </ul>
   <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
@@ -155,7 +172,17 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Podsumowanie</span></a>
+  <a href="./history.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Historia wizji komputerowej</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./digt_img.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Obrazy cyfrowe</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Podsumowanie</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -191,40 +218,148 @@ div.csl-indent {
 </header>
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-barnardComputationalStereo1982" class="csl-entry" role="doc-biblioentry">
+Barnard, Stephen T., and Martin A. Fischler. 1982. <span>“Computational
+<span>Stereo</span>.”</span> <em>ACM Computing Surveys</em> 14 (4):
+553–72. <a href="https://doi.org/10.1145/356893.356896">https://doi.org/10.1145/356893.356896</a>.
+</div>
+<div id="ref-barrowComputationalVision1981" class="csl-entry" role="doc-biblioentry">
+Barrow, H. G., and J. M. Tenenbaum. 1981. <span>“Computational
+Vision.”</span> <em>Proceedings of the IEEE</em> 69 (5): 572–95. <a href="https://doi.org/10.1109/PROC.1981.12026">https://doi.org/10.1109/PROC.1981.12026</a>.
+</div>
+<div id="ref-blakeActiveContoursApplication2012" class="csl-entry" role="doc-biblioentry">
+Blake, Andrew, and Michael Isard. 2012. <em>Active
+<span>Contours</span>: <span>The Application</span> of
+<span>Techniques</span> from <span>Graphics</span>, <span>Vision</span>,
+<span>Control Theory</span> and <span>Statistics</span> to <span>Visual
+Tracking</span> of <span>Shapes</span> in <span>Motion</span></em>.
+<span>Springer Science &amp; Business Media</span>.
+</div>
+<div id="ref-blakeSurfaceDescriptionsStereo1985" class="csl-entry" role="doc-biblioentry">
+Blake, Andrew, Andrew Zisserman, and Greg Knowles. 1985. <span>“Surface
+Descriptions from Stereo and Shading.”</span> <em>Image and Vision
+Computing</em>, Papers from the 1985 <span>Alvey Computer Vision</span>
+and <span>Image Interpretation Meeting</span>, 3 (4): 183–91. <a href="https://doi.org/10.1016/0262-8856(85)90006-X">https://doi.org/10.1016/0262-8856(85)90006-X</a>.
+</div>
 <div id="ref-burgerDigitalImageProcessing2016" class="csl-entry" role="doc-biblioentry">
 Burger, Wilhelm, and Mark J. Burge. 2016. <em>Digital <span>Image
 Processing</span>: <span>An Algorithmic Introduction Using
 Java</span></em>. Texts in <span>Computer Science</span>.
 <span>London</span>: <span>Springer</span>. <a href="https://doi.org/10.1007/978-1-4471-6684-9">https://doi.org/10.1007/978-1-4471-6684-9</a>.
 </div>
+<div id="ref-cannyComputationalApproachEdge1986" class="csl-entry" role="doc-biblioentry">
+Canny, John. 1986. <span>“A <span>Computational Approach</span> to
+<span>Edge Detection</span>.”</span> <em>IEEE Transactions on Pattern
+Analysis and Machine Intelligence</em> PAMI-8 (6): 679–98. <a href="https://doi.org/10.1109/TPAMI.1986.4767851">https://doi.org/10.1109/TPAMI.1986.4767851</a>.
+</div>
 <div id="ref-cholletDeepLearning2018" class="csl-entry" role="doc-biblioentry">
 Chollet, Francois, and J. J. Allaire. 2018. <em>Deep
 <span>Learning</span> with <span>R</span></em>. <span>Manning
 Publications</span>.
+</div>
+<div id="ref-CooperativeComputationStereo" class="csl-entry" role="doc-biblioentry">
+<span>“Cooperative <span>Computation</span> of <span>Stereo
+Disparity</span> | <span>Science</span>.”</span> n.d.
+https://www.science.org/doi/10.1126/science.968482.
 </div>
 <div id="ref-DeepLearningPython" class="csl-entry" role="doc-biblioentry">
 <span>“Deep <span>Learning</span> with <span>Python</span>, <span>Second
 Edition</span>.”</span> n.d. <em>Manning Publications</em>.
 https://www.manning.com/books/deep-learning-with-python-second-edition.
 </div>
+<div id="ref-devPerceptionDepthSurfaces1975" class="csl-entry" role="doc-biblioentry">
+Dev, Parvati. 1975. <span>“Perception of Depth Surfaces in Random-Dot
+Stereograms : A Neural Model.”</span> <em>International Journal of
+Man-Machine Studies</em> 7 (4): 511–28. <a href="https://doi.org/10.1016/S0020-7373(75)80030-7">https://doi.org/10.1016/S0020-7373(75)80030-7</a>.
+</div>
+<div id="ref-felzenszwalbPictorialStructuresObject2005" class="csl-entry" role="doc-biblioentry">
+Felzenszwalb, Pedro F., and Daniel P. Huttenlocher. 2005.
+<span>“Pictorial <span>Structures</span> for <span>Object
+Recognition</span>.”</span> <em>International Journal of Computer
+Vision</em> 61 (1): 55–79. <a href="https://doi.org/10.1023/B:VISI.0000042934.15159.49">https://doi.org/10.1023/B:VISI.0000042934.15159.49</a>.
+</div>
+<div id="ref-fergusWeaklySupervisedScaleInvariant2007" class="csl-entry" role="doc-biblioentry">
+Fergus, R., P. Perona, and A. Zisserman. 2007. <span>“Weakly
+<span>Supervised Scale-Invariant Learning</span> of <span>Models</span>
+for <span>Visual Recognition</span>.”</span> <em>International Journal
+of Computer Vision</em> 71 (3): 273–303. <a href="https://doi.org/10.1007/s11263-006-8707-x">https://doi.org/10.1007/s11263-006-8707-x</a>.
+</div>
+<div id="ref-fischlerReadingsComputerVision1987" class="csl-entry" role="doc-biblioentry">
+Fischler, M., and O. Firschein. 1987. <span>“Readings in Computer
+Vision: Issues, Problems, Principles, and Paradigms.”</span> In.
+</div>
 <div id="ref-goodfellowDeepLearning2016" class="csl-entry" role="doc-biblioentry">
 Goodfellow, Ian, Yoshua Bengio, and Aaron Courville. 2016. <em>Deep
 <span>Learning</span></em>. Illustrated edition. <span>Cambridge,
 Massachusetts</span>: <span>The MIT Press</span>.
 </div>
+<div id="ref-hansonComputerVisionSystems1978" class="csl-entry" role="doc-biblioentry">
+Hanson, Allen. 1978. <em>Computer <span>Vision Systems</span></em>.
+<span>Elsevier</span>.
+</div>
+<div id="ref-hornObtainingShapeShading" class="csl-entry" role="doc-biblioentry">
+Horn, Berthold K P. n.d. <span>“Obtaining <span>Shape</span> from
+<span>Shading Information</span>.”</span>
+</div>
+<div id="ref-kassSnakesActiveContour1988" class="csl-entry" role="doc-biblioentry">
+Kass, Michael, Andrew Witkin, and Demetri Terzopoulos. 1988.
+<span>“Snakes: <span>Active</span> Contour Models.”</span>
+<em>International Journal of Computer Vision</em> 1 (4): 321–31. <a href="https://doi.org/10.1007/BF00133570">https://doi.org/10.1007/BF00133570</a>.
+</div>
 <div id="ref-ketkarDeepLearningPython2017" class="csl-entry" role="doc-biblioentry">
 Ketkar, Nikhil, and Eder Santana. 2017. <em>Deep Learning with
 <span>Python</span></em>. Vol. 1. <span>Springer</span>.
 </div>
-<div id="ref-knuth84" class="csl-entry" role="doc-biblioentry">
-Knuth, Donald E. 1984. <span>“Literate Programming.”</span> <em>Comput.
-J.</em> 27 (2): 97–111. <a href="https://doi.org/10.1093/comjnl/27.2.97">https://doi.org/10.1093/comjnl/27.2.97</a>.
+<div id="ref-lecunDeepLearning2015" class="csl-entry" role="doc-biblioentry">
+LeCun, Yann, Yoshua Bengio, and Geoffrey Hinton. 2015. <span>“Deep
+Learning.”</span> <em>Nature</em> 521 (7553): 436–44. <a href="https://doi.org/10.1038/nature14539">https://doi.org/10.1038/nature14539</a>.
+</div>
+<div id="ref-malladiShapeModelingFront1995" class="csl-entry" role="doc-biblioentry">
+Malladi, R., J. A. Sethian, and B. C. Vemuri. 1995. <span>“Shape
+Modeling with Front Propagation: A Level Set Approach.”</span> <em>IEEE
+Transactions on Pattern Analysis and Machine Intelligence</em> 17 (2):
+158–75. <a href="https://doi.org/10.1109/34.368173">https://doi.org/10.1109/34.368173</a>.
+</div>
+<div id="ref-mindas2007" class="csl-entry" role="doc-biblioentry">
+<span>“Mind as Machine: A History of Cognitive Science.”</span> 2007.
+<em>Choice Reviews Online</em> 44 (11). <a href="https://doi.org/10.5860/choice.44-6202">https://doi.org/10.5860/choice.44-6202</a>.
+</div>
+<div id="ref-mundyGeometricInvarianceComputer1992" class="csl-entry" role="doc-biblioentry">
+Mundy, Joseph L., and Andrew Zisserman, eds. 1992. <em>Geometric
+Invariance in Computer Vision</em>. <span>Cambridge, MA, USA</span>:
+<span>MIT Press</span>.
+</div>
+<div id="ref-nalwaDetectingEdges1986" class="csl-entry" role="doc-biblioentry">
+Nalwa, Vishvjit S., and Thomas O. Binford. 1986. <span>“On
+<span>Detecting Edges</span>.”</span> <em>IEEE Transactions on Pattern
+Analysis and Machine Intelligence</em> PAMI-8 (6): 699–714. <a href="https://doi.org/10.1109/TPAMI.1986.4767852">https://doi.org/10.1109/TPAMI.1986.4767852</a>.
+</div>
+<div id="ref-ponceCategoryLevelObjectRecognition2007" class="csl-entry" role="doc-biblioentry">
+Ponce, Jean, Martial Hebert, Cordelia Schmid, and Andrew Zisserman.
+2007. <em>Toward <span>Category-Level Object Recognition</span></em>.
+<span>Springer</span>.
+</div>
+<div id="ref-robertsMachinePerceptionThreedimensional1980" class="csl-entry" role="doc-biblioentry">
+Roberts, Lawrence G. 1980. <em>Machine <span>Perception</span> of <span class="nocase">Three-dimensional Solids</span></em>. <span>Garland
+Pub.</span>
 </div>
 <div id="ref-szeliskiComputerVisionAlgorithms2022" class="csl-entry" role="doc-biblioentry">
 Szeliski, Richard. 2022. <em>Computer <span>Vision</span>:
 <span>Algorithms</span> and <span>Applications</span></em>. Texts in
 <span>Computer Science</span>. <span>Cham</span>: <span>Springer
 International Publishing</span>. <a href="https://doi.org/10.1007/978-3-030-34372-9">https://doi.org/10.1007/978-3-030-34372-9</a>.
+</div>
+<div id="ref-winston1976" class="csl-entry" role="doc-biblioentry">
+Winston, Patrick Henry. 1976. <span>“The Psychology of Computer
+Vision.”</span> <em>Pattern Recognition</em> 8 (3): 193. <a href="https://doi.org/10.1016/0031-3203(76)90020-0">https://doi.org/10.1016/0031-3203(76)90020-0</a>.
+</div>
+<div id="ref-witkinRecoveringSurfaceShape1981" class="csl-entry" role="doc-biblioentry">
+Witkin, Andrew P. 1981. <span>“Recovering Surface Shape and Orientation
+from Texture.”</span> <em>Artificial Intelligence</em> 17 (1): 17–45. <a href="https://doi.org/10.1016/0004-3702(81)90019-9">https://doi.org/10.1016/0004-3702(81)90019-9</a>.
+</div>
+<div id="ref-woodhamAnalysingImagesCurved1981" class="csl-entry" role="doc-biblioentry">
+Woodham, Robert J. 1981. <span>“Analysing Images of Curved
+Surfaces.”</span> <em>Artificial Intelligence</em> 17 (1): 117–40. <a href="https://doi.org/10.1016/0004-3702(81)90022-9">https://doi.org/10.1016/0004-3702(81)90022-9</a>.
 </div>
 </div>
 
@@ -482,7 +617,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./summary.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Podsumowanie</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Podsumowanie</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -492,7 +627,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">Automatyczna analiza obrazu, Dariusz Majerek</div>   
-    <div class="nav-footer-right">images/logo.png</div>
+    <div class="nav-footer-right">Książka została napisana w <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>
 

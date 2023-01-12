@@ -143,5 +143,5 @@ Umożliwiły one również rozszerzenie podejść do rozpoznawania obrazów na z
 
 Specjalistyczne czujniki i sprzęt do zadań związanych z widzeniem komputerowym również stale się rozwijały.
 Wprowadzona w 2010 r.
-kamera głębi Microsoft Kinect szybko stała się podstawowym elementem wielu systemów modelowania 3D i śledzenia osób.
+kamera głębi *Microsoft Kinect* szybko stała się podstawowym elementem wielu systemów modelowania 3D i śledzenia osób.
 W ciągu dekady systemy modelowania i śledzenia kształtu ciała 3D nadal się rozwijały, do tego stopnia, że obecnie możliwe jest wnioskowanie o modelu 3D osoby wraz z gestami i ekspresją na podstawie jednego obrazu.

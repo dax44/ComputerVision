@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Automatyczna analiza obrazu - 2&nbsp; Historia wizji komputerowej</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./digt_img.html" rel="next">
+<link href="./intro.html" rel="prev">
+<link href="./cover.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Brak wyników",
+    "search-matching-documents-text": "dopasowane dokumenty",
+    "search-copy-link-title": "Kopiuj link do wyszukiwania",
+    "search-hide-matches-text": "Ukryj dodatkowe dopasowania",
+    "search-more-match-text": "więcej dopasowań w tym dokumencie",
+    "search-more-matches-text": "więcej dopasowań w tym dokumencie",
+    "search-clear-button-title": "Wyczyść",
+    "search-detached-cancel-button-title": "Anuluj",
+    "search-submit-button-title": "Zatwierdź"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+
+
+<meta name="twitter:title" content="Automatyczna analiza obrazu - 2&nbsp; Historia wizji komputerowej">
+<meta name="twitter:description" content="Naukowcy zajmujący się widzeniem komputerowym równolegle rozwijają matematyczne techniki odzyskiwania trójwymiarowego kształtu i wyglądu obiektów na obrazach.">
+<meta name="twitter:site" content="@DariuszMajerek">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Historia wizji komputerowej</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Automatyczna analiza obrazu</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/dax44/ComputerVision/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="" title="Download" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-download"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="./Automatyczna-analiza-obrazu.pdf">
+            <i class="bi bi-bi-file-pdf pe-1"></i>
+          Download PDF
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="./Automatyczna-analiza-obrazu.epub">
+            <i class="bi bi-bi-journal pe-1"></i>
+          Download ePub
+          </a>
+        </li>
+    </ul>
+    <a href="" title="Share" id="sidebar-tool-dropdown-1" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-1">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+    </ul>
+  <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Wstęp</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Wprowadzenie</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./history.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Historia wizji komputerowej</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./digt_img.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Obrazy cyfrowe</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Podsumowanie</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">Bibliografia</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+  <li><a href="#lata-70" id="toc-lata-70" class="nav-link active" data-scroll-target="#lata-70"><span class="toc-section-number">2.1</span>  Lata ’70</a></li>
+  <li><a href="#lata-80" id="toc-lata-80" class="nav-link" data-scroll-target="#lata-80"><span class="toc-section-number">2.2</span>  Lata ’80</a></li>
+  <li><a href="#lata-90" id="toc-lata-90" class="nav-link" data-scroll-target="#lata-90"><span class="toc-section-number">2.3</span>  Lata ’90</a></li>
+  <li><a href="#lata-00" id="toc-lata-00" class="nav-link" data-scroll-target="#lata-00"><span class="toc-section-number">2.4</span>  Lata ’00</a></li>
+  <li><a href="#lata-10" id="toc-lata-10" class="nav-link" data-scroll-target="#lata-10"><span class="toc-section-number">2.5</span>  Lata ’10</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Historia wizji komputerowej</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Naukowcy zajmujący się widzeniem komputerowym równolegle rozwijają matematyczne techniki odzyskiwania trójwymiarowego kształtu i wyglądu obiektów na obrazach. Postęp w tej dziedzinie w ciągu ostatnich dwóch dekad był błyskawiczny. Obecnie dysponujemy niezawodnymi technikami dokładnego obliczania trójwymiarowego modelu otoczenia z tysięcy częściowo nakładających się na siebie zdjęć. Biorąc pod uwagę wystarczająco duży zestaw obrazów danego obiektu lub fasady, możemy stworzyć dokładne, gęste modele 3D powierzchni przy użyciu dopasowania stereo. Możemy nawet, z umiarkowanym sukcesem, wyznaczyć większość osób i obiektów na fotografii. Jednak mimo tych wszystkich postępów marzenie o tym, by komputer objaśniał obraz na tym samym poziomie szczegółowości i przyczynowości co dwuletnie dziecko, pozostaje nieosiągalne.</p>
+<p>Dlaczego widzenie jest tak trudne? Po części dlatego, że jest to problem odwrotny, w którym staramy się odzyskać pewne niewiadome, mając za mało informacji, by w pełni określić rozwiązanie. Musimy więc uciekać się do modeli opartych na fizyce i probabilistyce lub do uczenia maszynowego na dużych zbiorach przykładów, aby wyróżnić potencjalne rozwiązania. Jednak modelowanie świata wizualnego w całej jego bogatej złożoności jest o wiele trudniejsze niż, powiedzmy, modelowanie dzwięku, który wytwarzamy podczas mówienia.</p>
+<p>Modele naprzód (ang. <em>forward</em>), których używamy w wizji komputerowej, są zwykle opracowywane w fizyce (radiometria, optyka i projektowanie czujników) oraz w grafice komputerowej. Obie te dziedziny modelują poruszanie się obiektów, jak światło odbija się od ich powierzchni, jak jest rozpraszane przez atmosferę, załamywane przez soczewki kamery (lub ludzkie oczy) i wreszcie rzutowane na płaską (lub zakrzywioną) płaszczyznę obrazu. Chociaż grafika komputerowa nie jest jeszcze doskonała, w wielu dziedzinach, takich jak renderowanie nieruchomej sceny złożonej z przedmiotów codziennego użytku lub animowanie wymarłych stworzeń, takich jak dinozaury, iluzja rzeczywistości jest w zasadzie zapewniona.</p>
+<p>W wizji komputerowej staramy się zrobić coś odwrotnego, tzn. opisać świat, który widzimy na jednym lub kilku obrazach i zrekonstruować jego właściwości, takie jak kształt, oświetlenie i rozkład kolorów. Zadziwiające jest, że ludzie i zwierzęta robią to tak bez wysiłku, podczas gdy algorytmy widzenia komputerowego są tak podatne na błędy. Ludzie, którzy nie zajmowali się tą dziedziną, często nie doceniają trudności problemu. To błędne przekonanie, że widzenie powinno być łatwe, sięga początków sztucznej inteligencji, kiedy to początkowo uważano, że kognitywne (logiczne dowodzenie i planowanie) części inteligencji są z natury trudniejsze niż komponenty percepcyjne <span class="citation" data-cites="mindas2007">(<a href="references.html#ref-mindas2007" role="doc-biblioref"><span>„Mind as Machine: A History of Cognitive Science”</span> 2007</a>)</span>.</p>
+<p>Dobrą wiadomością jest to, że widzenie komputerowe jest dziś wykorzystywane w wielu różnych zastosowaniach w świecie rzeczywistym, które obejmują:</p>
+<ul>
+<li>Optyczne rozpoznawanie znaków (OCR): odczytywanie odręcznych kodów pocztowych na listach oraz automatyczne rozpoznawanie tablic rejestracyjnych (ANPR);</li>
+<li>Kontrola maszyn: szybka kontrola części w celu zapewnienia jakości przy użyciu wizji stereoskopowej ze specjalistycznym oświetleniem do pomiaru tolerancji na skrzydłach samolotów lub częściach karoserii samochodowej lub szukanie defektów w odlewach stalowych przy użyciu wizji rentgenowskiej;</li>
+<li>Handel detaliczny: rozpoznawanie obiektów dla zautomatyzowanych stanowisk kasowych i w pełni zautomatyzowanych sklepów;</li>
+<li>Logistyka magazynowa: autonomiczne dostawy paczek i “napędy” przenoszące palety oraz kompletacja części przez manipulatory robotyczne;</li>
+<li>Obrazowanie medyczne: rejestrowanie obrazów przedoperacyjnych i śródoperacyjnych lub wykonywanie długoterminowych badań morfologii mózgu ludzi w miarę ich starzenia się;</li>
+<li>Pojazdy samojezdne: zdolne do jazdy od punktu do punktu, jak również do autonomicznego lotu;</li>
+<li>Budowa modeli 3D (fotogrametria): w pełni zautomatyzowana budowa modeli 3D ze zdjęć lotniczych i z drona;</li>
+<li>Łączenie ruchu: łączenie obrazów generowanych komputerowo (CGI) z materiałem filmowym z życia wziętym poprzez śledzenie punktów charakterystycznych w źródłowym materiale wideo w celu oszacowania ruchu kamery 3D i kształtu otoczenia. Takie techniki są szeroko stosowane w Hollywood, np. w filmach takich jak Jurassic Park; wymagają one również zastosowania precyzyjnego matowania w celu wstawienia nowych elementów pomiędzy elementy pierwszego planu i tła;</li>
+<li>Śledzenie ruchu: wykorzystywanie znaczników retrorefleksyjnych oglądanych z wielu kamer lub innych technik opartych na wizji w celu uchwycenia aktorów na potrzeby animacji komputerowej;</li>
+<li>Nadzór: monitorowanie intruzów, analizowanie ruchu na drogach i monitorowanie basenów pod kątem ofiar utonięć;</li>
+<li>Rozpoznawanie odcisków palców i biometria: do automatycznego uwierzytelniania dostępu oraz do zastosowań kryminalistycznych.</li>
+</ul>
+<p>Oprócz tych wszystkich zastosowań przemysłowych, istnieją niezliczone zastosowania na poziomie konsumenckim, które można zrobić z własnymi zdjęciami i wideo. Należą do nich:</p>
+<ul>
+<li>Zszywanie (ang. <em>stitching</em>): przekształcanie nakładających się na siebie zdjęć w jedną, płynnie zszytą panoramę;</li>
+<li><em>Exposure bracketing</em>: łączenie wielu ekspozycji wykonanych w trudnych warunkach oświetleniowych (silne światło słoneczne i cienie) w jedno doskonale naświetlone zdjęcie;</li>
+<li><em>Morphing</em>: przekształcanie zdjęcia jednego z przyjaciół w inne, przy użyciu płynnego przejścia morficznego;</li>
+<li>Modelowanie 3D: przekształcanie jednego lub więcej ujęć w model 3D fotografowanego obiektu lub osoby;</li>
+<li>Ruch i stabilizacja dopasowania wideo: wstawianie obrazów 2D lub modeli 3D do filmów poprzez automatyczne śledzenie pobliskich punktów odniesienia lub wykorzystanie oszacowania ruchu w celu usunięcia drgań z filmów;</li>
+<li>Spacer po zdjęciach: poruszanie się po dużej kolekcji zdjęć, np. po wnętrzu domu, poprzez przelatywanie pomiędzy różnymi zdjęciami w 3D.</li>
+</ul>
+<p>W tym rozdziale przedstawiam krótkie, subiektywne streszczenie głównych osiągnięć w dziedzinie wizyjności komputerowej w ciągu ostatnich pięćdziesięciu lat, koncentrując się na postępach, które uważam za osobiście interesujące i które przetrwały próbę czasu.</p>
+<div id="fig-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-01-12 o 16.08.19.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;2.1: Najważniejsze osiągnięcia w wizji komputerowej na przestrzeni lat</figcaption><p></p>
+</figure>
+</div>
+<section id="lata-70" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="lata-70"><span class="header-section-number">2.1</span> Lata ’70</h2>
+<p>Kiedy wizja komputerowa po raz pierwszy pojawiła się na początku lat siedemdziesiątych, była postrzegana jako wizualny komponent percepcji ambitnego programu naśladowania ludzkiej inteligencji i obdarzenia robotów inteligentnym zachowaniem. W tym czasie niektórzy z pionierów sztucznej inteligencji i robotyki (w miejscach takich jak MIT, Stanford) wierzyli, że rozwiązanie problemu “wejścia wizualnego” będzie łatwym krokiem na drodze do rozwiązania trudniejszych problemów, takich jak rozumowanie na wyższym poziomie i planowanie. Według jednej ze znanych historii, w 1966 roku Marvin Minsky z MIT poprosił swojego studenta Geralda Jay Sussmana o “spędzenie lata na podłączeniu kamery do komputera i nakłonieniu komputera do opisania tego, co widział”. Obecnie wiemy, że problem jest nieco trudniejszy niż wówczas się wydawało.</p>
+<p>Tym, co odróżniało widzenie komputerowe od istniejącej już dziedziny cyfrowej obróbki obrazów, była chęć odzyskania trójwymiarowej struktury świata z obrazów i wykorzystania tego jako kroku w kierunku pełnego zrozumienia prezentowanej sceny. <span class="citation" data-cites="winston1976">Winston (<a href="references.html#ref-winston1976" role="doc-biblioref">1976</a>)</span> oraz <span class="citation" data-cites="hansonComputerVisionSystems1978">Hanson (<a href="references.html#ref-hansonComputerVisionSystems1978" role="doc-biblioref">1978</a>)</span> dostarczają dwóch ładnych zbiorów klasycznych prac z tego wczesnego okresu. Wczesne próby zrozumienia sceny polegały na wyodrębnieniu krawędzi, a następnie wnioskowaniu o strukturze 3D obiektu lub “świata bloków” z topologicznej struktury linii 2D <span class="citation" data-cites="robertsMachinePerceptionThreedimensional1980">Roberts (<a href="references.html#ref-robertsMachinePerceptionThreedimensional1980" role="doc-biblioref">1980</a>)</span>.</p>
+<p>Jakościowe podejście do rozumienia intensywności i zmienności cieniowania oraz wyjaśniania ich przez efekty zjawisk formowania się obrazu, takich jak orientacja powierzchni i cienie, zostało spopularyzowane przez <span class="citation" data-cites="barrowComputationalVision1981">Barrow i Tenenbaum (<a href="references.html#ref-barrowComputationalVision1981" role="doc-biblioref">1981</a>)</span> w ich pracy na temat obrazów wewnętrznych. W tym czasie opracowano również bardziej ilościowe podejścia do wizji komputerowej, w tym pierwszy z wielu opartych na cechach algorytmów korespondencji stereo <span class="citation" data-cites="devPerceptionDepthSurfaces1975 CooperativeComputationStereo barnardComputationalStereo1982">(<a href="references.html#ref-devPerceptionDepthSurfaces1975" role="doc-biblioref">Dev 1975</a>; <a href="references.html#ref-CooperativeComputationStereo" role="doc-biblioref"><span>„Cooperative <span>Computation</span> of <span>Stereo Disparity</span> | <span>Science</span>”</span>, b.d.</a>; <a href="references.html#ref-barnardComputationalStereo1982" role="doc-biblioref">Barnard i Fischler 1982</a>)</span>.</p>
+</section>
+<section id="lata-80" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="lata-80"><span class="header-section-number">2.2</span> Lata ’80</h2>
+<p>W latach ’80 ubiegłego wieku wiele uwagi poświęcono bardziej wyrafinowanym technikom matematycznym służącym do przeprowadzania ilościowej analizy obrazów i scen. Piramidy obrazów zaczęły być powszechnie stosowane do wykonywania zadań takich jak mieszanie obrazów i wyszukiwanie korespondencji <em>coarse-to-fine</em>. Wykorzystanie stereo jako ilościowej wskazówki kształtu zostało rozszerzone o szeroką gamę technik <em>shape-from-X</em>, w tym <em>shape from shading</em> <span class="citation" data-cites="hornObtainingShapeShading blakeSurfaceDescriptionsStereo1985">(<a href="references.html#ref-hornObtainingShapeShading" role="doc-biblioref">Horn, b.d.</a>; <a href="references.html#ref-blakeSurfaceDescriptionsStereo1985" role="doc-biblioref">Blake, Zisserman, i Knowles 1985</a>)</span><em>.</em></p>
+<div id="fig-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-01-12 o 17.00.24.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;2.2: Przykład wykorzystania techniki piramid blending</figcaption><p></p>
+</figure>
+</div>
+<p>W tym okresie prowadzono również badania nad lepszym wykrywaniem krawędzi i konturów <span class="citation" data-cites="cannyComputationalApproachEdge1986 nalwaDetectingEdges1986">(<a href="references.html#ref-cannyComputationalApproachEdge1986" role="doc-biblioref">Canny 1986</a>; <a href="references.html#ref-nalwaDetectingEdges1986" role="doc-biblioref">Nalwa i Binford 1986</a>)</span>, stereografii fotometrycznej <span class="citation" data-cites="woodhamAnalysingImagesCurved1981">(<a href="references.html#ref-woodhamAnalysingImagesCurved1981" role="doc-biblioref">Woodham 1981</a>)</span> oraz kształty z tekstur <span class="citation" data-cites="witkinRecoveringSurfaceShape1981">(<a href="references.html#ref-witkinRecoveringSurfaceShape1981" role="doc-biblioref">Witkin 1981</a>)</span>. W tym okresie prowadzono również badania nad lepszym wykrywaniem krawędzi i konturów, w tym wprowadzono dynamicznie ewoluujące trackery konturów, takie jak węże, a także trójwymiarowe modele oparte na fizyce. Naukowcy zauważyli, że wiele algorytmów detekcji stereoskopowej, przepływu, <em>shape-from-X</em> i krawędzi może być zunifikowanych lub przynajmniej opisanych przy użyciu tych samych ram matematycznych, jeśli zostaną one postawione jako problemy optymalizacji wariacyjnej i uodpornione (dobrze postawione) przy użyciu regularyzacji.</p>
+<p>Nieco później wprowadzono warianty on-line algorytmów MRF (ang. <em>Markov Random Field</em>), które modelowały i aktualizowały niepewności za pomocą filtru Kalmana. Podjęto również próby odwzorowania zarówno algorytmów regularyzowanych jak i MRF na sprzęt zrównoleglony (ang. <em>parallel</em>). Książka <span class="citation" data-cites="fischlerReadingsComputerVision1987">(<a href="references.html#ref-fischlerReadingsComputerVision1987" role="doc-biblioref">Fischler i Firschein 1987</a>)</span> zawiera zbiór artykułów skupiających się na wszystkich tych tematach (stereo, przepływ, regularność, MRF, a nawet widzenie wyższego poziomu).</p>
+</section>
+<section id="lata-90" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="lata-90"><span class="header-section-number">2.3</span> Lata ’90</h2>
+<p>Podczas gdy wiele z wcześniej wymienionych tematów było nadal eksplorowanych, kilka z nich stało się znacznie bardziej aktywnych. Nagły wzrost aktywności w zakresie wykorzystania niezmienników projekcyjnych do celów rozpoznania <span class="citation" data-cites="mundyGeometricInvarianceComputer1992">(<a href="references.html#ref-mundyGeometricInvarianceComputer1992" role="doc-biblioref">Mundy i Zisserman 1992</a>)</span> przerodził się w skoordynowane wysiłki zmierzające do rozwiązania problemu <em>structure from motion</em>. Wiele początkowych działań skierowanych było na rekonstrukcje rzutowe, które nie wymagają znajomości kalibracji kamery. Równolegle, techniki faktoryzacji zostały opracowane w celu efektywnego rozwiązywania problemów, dla których miały zastosowanie przybliżenia kamery ortograficznej, a następnie rozszerzone na przypadek perspektywiczny.</p>
+<p>W końcu zaczęto stosować pełną optymalizację globalną która później została uznana za tożsama z technikami dopasowania wiązki, tradycyjnie stosowanymi w fotogrametrii. W pełni zautomatyzowane systemy modelowania 3D zostały zbudowane przy użyciu tych technik.</p>
+<p>Prace rozpoczęte w latach 80-tych nad wykorzystaniem szczegółowych pomiarów barwy i natężenia światła w połączeniu z dokładnymi modelami fizycznymi transportu promieniowania i tworzenia kolorowych obrazów stworzyły własną dziedzinę znaną jako widzenie oparte na fizyce. Algorytmy stereo na podstawie wielu obrazów, które tworzą kompletne powierzchnie 3D były również aktywnym tematem badań, który jest aktualny do dziś.</p>
+<p>Algorytmy śledzenia również uległy dużej poprawie, w tym śledzenie konturów z wykorzystaniem aktywnych konturów, takich jak węże <span class="citation" data-cites="kassSnakesActiveContour1988">(<a href="references.html#ref-kassSnakesActiveContour1988" role="doc-biblioref">Kass, Witkin, i Terzopoulos 1988</a>)</span>, filtry cząsteczkowe <span class="citation" data-cites="blakeActiveContoursApplication2012">(<a href="references.html#ref-blakeActiveContoursApplication2012" role="doc-biblioref">Blake i Isard 2012</a>)</span> i zbiorów poziomnicowych (ang. <em>level set</em>) <span class="citation" data-cites="malladiShapeModelingFront1995">(<a href="references.html#ref-malladiShapeModelingFront1995" role="doc-biblioref">Malladi, Sethian, i Vemuri 1995</a>)</span>, a także techniki oparte na intensywności (bezpośrednie), często stosowane do śledzenia twarzy.</p>
+<div id="fig-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-01-12 o 17.38.26.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;2.3: Przykład śledzenia twarzy przez algorytm</figcaption><p></p>
+</figure>
+</div>
+<p>Segmentacja obrazów, temat, który jest aktywny od początku wizji komputerowej, był również aktywnym tematem badań, produkując techniki oparte na minimalnej energii i minimalnej długości opisu, znormalizowanych cięciach i średnim przesunięciu.</p>
+<p>Zaczęły pojawiać się techniki uczenia statystycznego, najpierw w zastosowaniu analizy składowych głównych, eigenface do rozpoznawania twarzy oraz liniowych systemów dynamicznych do śledzenia krzywych.</p>
+<p>Być może najbardziej zauważalnym rozwojem w dziedzinie widzenia komputerowego w tej dekadzie była zwiększona interakcja z grafiką komputerową, zwłaszcza w interdyscyplinarnym obszarze modelowania i renderowania opartego na obrazach. Pomysł manipulowania obrazami świata rzeczywistego bezpośrednio w celu tworzenia nowych animacji po raz pierwszy stał się znany dzięki technikom morfingu obrazu.</p>
+</section>
+<section id="lata-00" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="lata-00"><span class="header-section-number">2.4</span> Lata ’00</h2>
+<p>Ta dekada kontynuowała pogłębianie interakcji pomiędzy dziedzinami wizji i grafiki, ale co ważniejsze, przyjęła podejścia oparte na danych i uczeniu się jako kluczowe komponenty wizji. Wiele z tematów wprowadzonych w rubryce renderingu opartego na obrazie, takich jak zszywanie obrazów, przechwytywanie i renderowanie pola świetlnego oraz przechwytywanie obrazów o wysokim zakresie dynamicznym (HDR) poprzez bracketing ekspozycji, zostało ponownie ochrzczonych mianem fotografii obliczeniowej, aby potwierdzić zwiększone wykorzystanie takich technik w codziennej fotografii cyfrowej. Na przykład, szybkie przyjęcie bracketingu ekspozycji do tworzenia obrazów o wysokim zakresie dynamicznym wymagało opracowania algorytmów kompresji dynamiki, aby przekształcić takie obrazy z powrotem do wyników możliwych do wyświetlenia. Oprócz łączenia wielu ekspozycji, opracowano techniki łączenia obrazów z lampą błyskową z ich odpowiednikami bez lampy błyskowej.</p>
+<div id="fig-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-01-12 o 17.56.45.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;2.4: Przykład rozpoznawania obiektów</figcaption><p></p>
+</figure>
+</div>
+<p>Drugim wartym uwagi trendem w tej dekadzie było pojawienie się technik opartych na cechach (połączonych z uczeniem) do rozpoznawania obiektów. Niektóre z godnych uwagi prac w tej dziedzinie obejmują model konstelacji <span class="citation" data-cites="ponceCategoryLevelObjectRecognition2007 fergusWeaklySupervisedScaleInvariant2007">(<a href="references.html#ref-ponceCategoryLevelObjectRecognition2007" role="doc-biblioref">Ponce i in. 2007</a>; <a href="references.html#ref-fergusWeaklySupervisedScaleInvariant2007" role="doc-biblioref">Fergus, Perona, i Zisserman 2007</a>)</span> oraz struktury obrazowe <span class="citation" data-cites="felzenszwalbPictorialStructuresObject2005">(<a href="references.html#ref-felzenszwalbPictorialStructuresObject2005" role="doc-biblioref">Felzenszwalb i Huttenlocher 2005</a>)</span>. Techniki oparte na cechach dominują również w innych zadaniach rozpoznawania, takich jak rozpoznawanie scen, panoram i lokalizacji. I chociaż cechy oparte na punktach zainteresowania (patch-based) dominują w obecnych badaniach, niektóre grupy zajmują się rozpoznawaniem na podstawie konturów i segmentacji regionów.</p>
+<p>Innym istotnym trendem tej dekady było opracowanie bardziej wydajnych algorytmów dla złożonych problemów optymalizacji globalnej. Chociaż trend ten rozpoczął się od prac nad cięciami grafów, duży postęp dokonał się również w algorytmach przekazywania wiadomości, takich jak loopy belief propagation (LBP).</p>
+<p>Najbardziej zauważalnym trendem tej dekady, który do tej pory całkowicie opanował rozpoznawanie obrazu i większość innych aspektów widzenia komputerowego, było zastosowanie zaawansowanych technik uczenia maszynowego do problemów widzenia komputerowego. Trend ten zbiegł się w czasie ze zwiększoną dostępnością ogromnych ilości częściowo oznakowanych danych w Internecie, a także ze znacznym wzrostem mocy obliczeniowej, co sprawiło, że uczenie się kategorii obiektów bez użycia starannego nadzoru człowieka stało się bardziej realne.</p>
+</section>
+<section id="lata-10" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="lata-10"><span class="header-section-number">2.5</span> Lata ’10</h2>
+<p>Trend do wykorzystywania dużych etykietowanych zbiorów danych do rozwoju algorytmów uczenia maszynowego stał się falą, która całkowicie zrewolucjonizowała rozwój algorytmów rozpoznawania obrazów, a także innych aplikacji, takich jak denoising i przepływ optyczny, które wcześniej wykorzystywały techniki Bayesa i optymalizacji globalnej. Tendencję tę umożliwił rozwój wysokiej jakości wielkoskalowych anotowanych zbiorów danych, takich jak ImageNet, Microsoft COCO i LVIS. Te zbiory danych dostarczyły nie tylko wiarygodnych metryk do śledzenia postępów algorytmów rozpoznawania i segmentacji semantycznej, ale co ważniejsze, wystarczającej ilości etykietowanych danych do opracowania kompletnych rozwiązań opartych na uczeniu maszynowym.</p>
+<p>Innym ważnym trendem był dramatyczny wzrost mocy obliczeniowej dostępny dzięki rozwojowi algorytmów ogólnego przeznaczenia (data-parallel) na jednostkach przetwarzania graficznego (GPGPU). Przełomowa głęboka sieć neuronowa SuperVision (“AlexNet”), która jako pierwsza wygrała coroczne zawody w rozpoznawaniu obrazów na dużą skalę ImageNet, opierała się na treningu na GPU, a także na szeregu usprawnień technicznych, które przyczyniły się dramatycznie do wzrostu jej wydajności. Po opublikowaniu tej pracy postęp w wykorzystaniu głębokich architektur konwolucyjnych gwałtownie przyspieszył, do tego stopnia, że obecnie są one jedyną architekturą braną pod uwagę w zadaniach rozpoznawania i segmentacji semantycznej, a także preferowaną architekturą w wielu innych zadaniach wizyjnych, w tym w zadaniach przepływu optycznego, denoisingu i wnioskowania o głębi monokularnej <span class="citation" data-cites="lecunDeepLearning2015">(<a href="references.html#ref-lecunDeepLearning2015" role="doc-biblioref">LeCun, Bengio, i Hinton 2015</a>)</span>.</p>
+<p>Duże zbiory danych i architektury GPU, w połączeniu z szybkim upowszechnianiem pomysłów poprzez pojawiające się w odpowiednim czasie publikacje na arXiv, a także rozwój języków głębokiego uczenia i otwarty dostęp do modeli sieci neuronowych, przyczyniły się do gwałtownego rozwoju tej dziedziny, zarówno pod względem szybkich postępów i możliwości, jak i samej liczby publikacji i badaczy zajmujących się obecnie tymi tematami. Umożliwiły one również rozszerzenie podejść do rozpoznawania obrazów na zadania związane z rozumieniem wideo, takie jak rozpoznawanie akcji, a także zadania regresji strukturalnej, takie jak estymacja w czasie rzeczywistym wieloosobowej pozy ciała.</p>
+<p>Specjalistyczne czujniki i sprzęt do zadań związanych z widzeniem komputerowym również stale się rozwijały. Wprowadzona w 2010 r. kamera głębi <em>Microsoft Kinect</em> szybko stała się podstawowym elementem wielu systemów modelowania 3D i śledzenia osób. W ciągu dekady systemy modelowania i śledzenia kształtu ciała 3D nadal się rozwijały, do tego stopnia, że obecnie możliwe jest wnioskowanie o modelu 3D osoby wraz z gestami i ekspresją na podstawie jednego obrazu.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-barnardComputationalStereo1982" class="csl-entry" role="doc-biblioentry">
+Barnard, Stephen T., i Martin A. Fischler. 1982. <span>„Computational <span>Stereo</span>”</span>. <em>ACM Computing Surveys</em> 14 (4): 553–72. <a href="https://doi.org/10.1145/356893.356896">https://doi.org/10.1145/356893.356896</a>.
+</div>
+<div id="ref-barrowComputationalVision1981" class="csl-entry" role="doc-biblioentry">
+Barrow, H. G., i J. M. Tenenbaum. 1981. <span>„Computational Vision”</span>. <em>Proceedings of the IEEE</em> 69 (5): 572–95. <a href="https://doi.org/10.1109/PROC.1981.12026">https://doi.org/10.1109/PROC.1981.12026</a>.
+</div>
+<div id="ref-blakeActiveContoursApplication2012" class="csl-entry" role="doc-biblioentry">
+Blake, Andrew, i Michael Isard. 2012. <em>Active <span>Contours</span>: <span>The Application</span> of <span>Techniques</span> from <span>Graphics</span>, <span>Vision</span>, <span>Control Theory</span> and <span>Statistics</span> to <span>Visual Tracking</span> of <span>Shapes</span> in <span>Motion</span></em>. <span>Springer Science &amp; Business Media</span>.
+</div>
+<div id="ref-blakeSurfaceDescriptionsStereo1985" class="csl-entry" role="doc-biblioentry">
+Blake, Andrew, Andrew Zisserman, i Greg Knowles. 1985. <span>„Surface Descriptions from Stereo and Shading”</span>. <em>Image and Vision Computing</em>, Papers from the 1985 <span>Alvey Computer Vision</span> i <span>Image Interpretation Meeting</span>, 3 (4): 183–91. <a href="https://doi.org/10.1016/0262-8856(85)90006-X">https://doi.org/10.1016/0262-8856(85)90006-X</a>.
+</div>
+<div id="ref-cannyComputationalApproachEdge1986" class="csl-entry" role="doc-biblioentry">
+Canny, John. 1986. <span>„A <span>Computational Approach</span> to <span>Edge Detection</span>”</span>. <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em> PAMI-8 (6): 679–98. <a href="https://doi.org/10.1109/TPAMI.1986.4767851">https://doi.org/10.1109/TPAMI.1986.4767851</a>.
+</div>
+<div id="ref-CooperativeComputationStereo" class="csl-entry" role="doc-biblioentry">
+<span>„Cooperative <span>Computation</span> of <span>Stereo Disparity</span> | <span>Science</span>”</span>. b.d. https://www.science.org/doi/10.1126/science.968482.
+</div>
+<div id="ref-devPerceptionDepthSurfaces1975" class="csl-entry" role="doc-biblioentry">
+Dev, Parvati. 1975. <span>„Perception of Depth Surfaces in Random-Dot Stereograms : A Neural Model”</span>. <em>International Journal of Man-Machine Studies</em> 7 (4): 511–28. <a href="https://doi.org/10.1016/S0020-7373(75)80030-7">https://doi.org/10.1016/S0020-7373(75)80030-7</a>.
+</div>
+<div id="ref-felzenszwalbPictorialStructuresObject2005" class="csl-entry" role="doc-biblioentry">
+Felzenszwalb, Pedro F., i Daniel P. Huttenlocher. 2005. <span>„Pictorial <span>Structures</span> for <span>Object Recognition</span>”</span>. <em>International Journal of Computer Vision</em> 61 (1): 55–79. <a href="https://doi.org/10.1023/B:VISI.0000042934.15159.49">https://doi.org/10.1023/B:VISI.0000042934.15159.49</a>.
+</div>
+<div id="ref-fergusWeaklySupervisedScaleInvariant2007" class="csl-entry" role="doc-biblioentry">
+Fergus, R., P. Perona, i A. Zisserman. 2007. <span>„Weakly <span>Supervised Scale-Invariant Learning</span> of <span>Models</span> for <span>Visual Recognition</span>”</span>. <em>International Journal of Computer Vision</em> 71 (3): 273–303. <a href="https://doi.org/10.1007/s11263-006-8707-x">https://doi.org/10.1007/s11263-006-8707-x</a>.
+</div>
+<div id="ref-fischlerReadingsComputerVision1987" class="csl-entry" role="doc-biblioentry">
+Fischler, M., i O. Firschein. 1987. <span>„Readings in Computer Vision: Issues, Problems, Principles, and Paradigms”</span>. W.
+</div>
+<div id="ref-hansonComputerVisionSystems1978" class="csl-entry" role="doc-biblioentry">
+Hanson, Allen. 1978. <em>Computer <span>Vision Systems</span></em>. <span>Elsevier</span>.
+</div>
+<div id="ref-hornObtainingShapeShading" class="csl-entry" role="doc-biblioentry">
+Horn, Berthold K P. b.d. <span>„Obtaining <span>Shape</span> from <span>Shading Information</span>”</span>.
+</div>
+<div id="ref-kassSnakesActiveContour1988" class="csl-entry" role="doc-biblioentry">
+Kass, Michael, Andrew Witkin, i Demetri Terzopoulos. 1988. <span>„Snakes: <span>Active</span> Contour Models”</span>. <em>International Journal of Computer Vision</em> 1 (4): 321–31. <a href="https://doi.org/10.1007/BF00133570">https://doi.org/10.1007/BF00133570</a>.
+</div>
+<div id="ref-lecunDeepLearning2015" class="csl-entry" role="doc-biblioentry">
+LeCun, Yann, Yoshua Bengio, i Geoffrey Hinton. 2015. <span>„Deep Learning”</span>. <em>Nature</em> 521 (7553): 436–44. <a href="https://doi.org/10.1038/nature14539">https://doi.org/10.1038/nature14539</a>.
+</div>
+<div id="ref-malladiShapeModelingFront1995" class="csl-entry" role="doc-biblioentry">
+Malladi, R., J. A. Sethian, i B. C. Vemuri. 1995. <span>„Shape Modeling with Front Propagation: A Level Set Approach”</span>. <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em> 17 (2): 158–75. <a href="https://doi.org/10.1109/34.368173">https://doi.org/10.1109/34.368173</a>.
+</div>
+<div id="ref-mindas2007" class="csl-entry" role="doc-biblioentry">
+<span>„Mind as Machine: A History of Cognitive Science”</span>. 2007. <em>Choice Reviews Online</em> 44 (11). <a href="https://doi.org/10.5860/choice.44-6202">https://doi.org/10.5860/choice.44-6202</a>.
+</div>
+<div id="ref-mundyGeometricInvarianceComputer1992" class="csl-entry" role="doc-biblioentry">
+Mundy, Joseph L., i Andrew Zisserman, red. 1992. <em>Geometric Invariance in Computer Vision</em>. <span>Cambridge, MA, USA</span>: <span>MIT Press</span>.
+</div>
+<div id="ref-nalwaDetectingEdges1986" class="csl-entry" role="doc-biblioentry">
+Nalwa, Vishvjit S., i Thomas O. Binford. 1986. <span>„On <span>Detecting Edges</span>”</span>. <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em> PAMI-8 (6): 699–714. <a href="https://doi.org/10.1109/TPAMI.1986.4767852">https://doi.org/10.1109/TPAMI.1986.4767852</a>.
+</div>
+<div id="ref-ponceCategoryLevelObjectRecognition2007" class="csl-entry" role="doc-biblioentry">
+Ponce, Jean, Martial Hebert, Cordelia Schmid, i Andrew Zisserman. 2007. <em>Toward <span>Category-Level Object Recognition</span></em>. <span>Springer</span>.
+</div>
+<div id="ref-robertsMachinePerceptionThreedimensional1980" class="csl-entry" role="doc-biblioentry">
+Roberts, Lawrence G. 1980. <em>Machine <span>Perception</span> of <span>Three-Dimensional Solids</span></em>. <span>Garland Pub.</span>
+</div>
+<div id="ref-winston1976" class="csl-entry" role="doc-biblioentry">
+Winston, Patrick Henry. 1976. <span>„The Psychology of Computer Vision”</span>. <em>Pattern Recognition</em> 8 (3): 193. <a href="https://doi.org/10.1016/0031-3203(76)90020-0">https://doi.org/10.1016/0031-3203(76)90020-0</a>.
+</div>
+<div id="ref-witkinRecoveringSurfaceShape1981" class="csl-entry" role="doc-biblioentry">
+Witkin, Andrew P. 1981. <span>„Recovering Surface Shape and Orientation from Texture”</span>. <em>Artificial Intelligence</em> 17 (1): 17–45. <a href="https://doi.org/10.1016/0004-3702(81)90019-9">https://doi.org/10.1016/0004-3702(81)90019-9</a>.
+</div>
+<div id="ref-woodhamAnalysingImagesCurved1981" class="csl-entry" role="doc-biblioentry">
+Woodham, Robert J. 1981. <span>„Analysing Images of Curved Surfaces”</span>. <em>Artificial Intelligence</em> 17 (1): 117–40. <a href="https://doi.org/10.1016/0004-3702(81)90022-9">https://doi.org/10.1016/0004-3702(81)90022-9</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Skopiowano!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Skopiowano!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Wprowadzenie</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./digt_img.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Obrazy cyfrowe</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Automatyczna analiza obrazu, Dariusz Majerek</div>   
+    <div class="nav-footer-right">Książka została napisana w <a href="https://quarto.org/">Quarto</a></div>
+  </div>
+</footer>
+
+
+
+</body></html>
