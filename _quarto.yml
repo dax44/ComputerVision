@@ -29,6 +29,8 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
+    - history.qmd
+    - digt_img.qmd
     - summary.qmd
     - references.qmd
 
