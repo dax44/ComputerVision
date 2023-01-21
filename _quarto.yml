@@ -44,7 +44,6 @@ format:
       light: pulse
       dark: slate
     code-link: true
-    mainfont: serif
     margin-left: 0em
     margin-right: 0em
 
