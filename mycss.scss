@@ -1,15 +1,20 @@
 /*-- scss:defaults --*/
 
-$primary: #637238 !default;
+$primary: #29850D !default;
 
 /*-- scss:rules --*/
 
 .sidebar-title {
-  color: #637238;
+  color: #29850D;
 }
 
 img.quarto-cover-image {
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+}
+
+div {
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 /* Headings ------------------------------------------------------ */
@@ -32,19 +37,8 @@ h1, h2, h3, h4, h5 {
   font-weight: normal;
 }
 
-/* Code ------------------------------------------------ */
-
 code {
-  color: #373a3c;
-}
-
-code a:any-link {
-  text-decoration: underline;
-  text-decoration-color: #ccc;
-}
-
-pre {
-  background-image: linear-gradient(160deg,#f8f8f8 0,#f1f1f1 100%);
+  font-size: 10pt;
 }
 
 /* Printing ------------------------------------------------ */

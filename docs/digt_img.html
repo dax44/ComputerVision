@@ -17,6 +17,88 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -26,7 +108,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./summary.html" rel="next">
+<link href="./transformations.html" rel="next">
 <link href="./history.html" rel="prev">
 <link href="./cover.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -151,7 +233,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Podsumowanie</span></a>
+  <a href="./transformations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Transformacje obrazów</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Podsumowanie</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -175,6 +262,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#jpeg" id="toc-jpeg" class="nav-link" data-scroll-target="#jpeg"><span class="toc-section-number">3.2.4</span>  JPEG</a></li>
   <li><a href="#exif" id="toc-exif" class="nav-link" data-scroll-target="#exif"><span class="toc-section-number">3.2.5</span>  EXIF</a></li>
   <li><a href="#bmp" id="toc-bmp" class="nav-link" data-scroll-target="#bmp"><span class="toc-section-number">3.2.6</span>  BMP</a></li>
+  <li><a href="#operacje-na-plikach" id="toc-operacje-na-plikach" class="nav-link" data-scroll-target="#operacje-na-plikach"><span class="toc-section-number">3.2.7</span>  Operacje na plikach</a></li>
   </ul>
 </li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
@@ -213,7 +301,7 @@ ul.task-list li input[type="checkbox"] {
 <li><p>wykorzystanie chlorku srebra przez Georga Fabricusa w 1556 r., który pod wpływem promieni słonecznych się zaczerniał,</p></li>
 <li><p>światłoczułość azotanu srebra, którą zaobserwował Johann Heinrich Schulze (1724 r.),</p></li>
 <li><p>Johann Heinrich Schulze uzyskał pierwsze odwzorowanie obrazu na emulsji światłoczułej sporządzonej z chlorku srebra na podkładzie z białej kredy (1725 r.),</p></li>
-<li><p>pierwsza fotografia, stworzona przez Francuza Josepha-Nicéphore'a Niepce'a na wypolerowanej płycie metalowej (1826 r.),</p></li>
+<li><p>pierwsza fotografia, stworzona przez Francuza Josepha-Nicéphore’a Niepce’a na wypolerowanej płycie metalowej (1826 r.),</p></li>
 <li><p>1839 – rok uznawany za właściwą datę wynalezienia fotografii. Francuz Louis Jacques Daguerre zademonstrował Akademii Francuskiej zdjęcie fotograficzne otrzymane na warstewce jodku srebra, powstałej w wyniku działania pary jodu na wypolerowaną płytę miedzianą pokrytą srebrem,</p></li>
 <li><p>w tym samym czasie nad otrzymywaniem obrazów tworzonych przez światło pracował angielski uczony William Henry Fox Talbot,</p></li>
 <li><p>1861 – fizykowi Jamesowi Clerkowi Maxwellowi udało się uzyskać pierwszą trwałą fotografię barwną,</p></li>
@@ -310,8 +398,733 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figcaption class="figure-caption">Porównanie formatów</figcaption><p></p>
 </figure>
 </div>
+</section><section id="operacje-na-plikach" class="level3" data-number="3.2.7"><h3 data-number="3.2.7" class="anchored" data-anchor-id="operacje-na-plikach">
+<span class="header-section-number">3.2.7</span> Operacje na plikach</h3>
+<p>Istnieje wiele zewnętrznych (w stosunku do środowiska R) profesjonalnych narzędzi do obróbki zdjęć. Wśród nich z pewnością należy wymienić: Adobe Photoshop, CorelDRAW, Gimp, PIXLR, FIji (ImageJ) i wiele innych. Część z nich jest komercyjna, a część darmowa. Osobiście do przetwarzania obrazów pochodzących z badań biologicznych, medycznych, czy inżynierskich polecam darmowy program Fiji, będący rozszerzeniem swojego pierwowzoru, czyli ImageJ.</p>
+<p>Również w samym środowisku R istnieje szereg bibliotek do obsługi obrazów:</p>
+<ul>
+<li>
+<code>imager</code> - pozwala na szybkie przetwarzanie obrazów w maksymalnie 4 wymiarach (dwa wymiary przestrzenne, jeden wymiar czasowy/głębokościowy, jeden wymiar koloru). Udostępnia większość tradycyjnych narzędzi do przetwarzania obrazów (filtrowanie, morfologia, transformacje, itp.), jak również różne funkcje do łatwej analizy danych obrazowych przy użyciu R.</li>
+<li>
+<code>imagerExtra</code> - poszerzenie zestawu funkcji pakietu <code>imager</code>.</li>
+<li>
+<code>magick</code> - dostarcza nowoczesnego i prostego zestawu narzędzi do przetwarzania obrazów w R. Obejmuje on ImageMagick STL, który jest najbardziej wszechstronną biblioteką przetwarzania obrazów typu open-source dostępną obecnie.</li>
+<li>
+<code>imageseg</code> - pakiet ogólnego przeznaczenia do segmentacji obrazów z wykorzystaniem modeli TensorFlow opartych na architekturze U-Net autorstwa <span class="citation" data-cites="ronnebergerUNetConvolutionalNetworks2015">Ronneberger, Fischer, i Brox (<a href="references.html#ref-ronnebergerUNetConvolutionalNetworks2015" role="doc-biblioref">2015</a>)</span> oraz architekturze U-Net++ autorstwa <span class="citation" data-cites="zhouUNetNestedUNet2018">Zhou i in. (<a href="references.html#ref-zhouUNetNestedUNet2018" role="doc-biblioref">2018</a>)</span>. Dostarcza wstępnie wytrenowane modele do oceny gęstości łanu i gęstości roślinności podszytu na podstawie zdjęć roślinności. Ponadto pakiet zapewnia workflow do łatwego tworzenia wejściowych modeli i architektur modeli dla segmentacji obrazów ogólnego przeznaczenia na podstawie obrazów w skali szarości lub kolorowych, zarówno dla segmentacji obrazów binarnych, jak i wieloklasowych.</li>
+<li>
+<code>pliman</code> - jest pakietem do analizy obrazów, ze szczególnym uwzględnieniem obrazów roślin. Jest użytecznym narzędziem do uzyskania informacji ilościowej dla obiektów docelowych. W kontekście obrazów roślin, ilościowe określanie powierzchni liści, nasilenia chorób, liczby zmian chorobowych, liczenie liczby ziaren, uzyskiwanie statystyk ziaren (np. długość i szerokość) można wykonać stosując pakiet <code>pliman</code>.</li>
+</ul>
+<div id="exm-1" class="exm theorem example">
+<p><span class="theorem-title"><strong>Przykład 3.1 </strong></span>W tym przykładzie przedstawiona zostanie procedura importu i eksportu obrazów do różnych formatów. Najpierw wczytamy zdjęcie wykonane telefonem (IPhone 12) zapisane w formacie TIFF, a następnie zapiszemy to zdjęcie w kilku innych formatach, by na końcu wczytać je wszystkie i porównać.</p>
+<div class="cell">
+<details><summary>Kod</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/magick/">magick</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://dahtah.github.io/imager/">imager</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/">gt</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># wczytywanie obrazu </span></span>
+<span><span class="va">img_orig</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span><span class="st">"images/IMG_3966.tiff"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># informacje o obrazie</span></span>
+<span><span class="va">img_orig_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/attributes.html">image_info</a></span><span class="op">(</span><span class="va">img_orig</span><span class="op">)</span></span>
+<span><span class="va">img_orig_info</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  format width height colorspace matte filesize density
+  &lt;chr&gt;  &lt;int&gt;  &lt;int&gt; &lt;chr&gt;      &lt;lgl&gt;    &lt;int&gt; &lt;chr&gt;  
+1 TIFF    3024   4032 sRGB       FALSE 36614010 72x72  </code></pre>
+</div>
+</div>
+<p>Jak widać obraz w formacie TIFF zajmuje bardzo dużo miejsca na dysku (36,6MB).</p>
+<div class="cell">
+<details><summary>Kod</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># eksport do GIF</span></span>
+<span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_write</a></span><span class="op">(</span><span class="va">img_orig</span>, path <span class="op">=</span> <span class="st">"images/img.gif"</span>, </span>
+<span>            format <span class="op">=</span> <span class="st">"gif"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># eksport do PNG</span></span>
+<span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_write</a></span><span class="op">(</span><span class="va">img_orig</span>, path <span class="op">=</span> <span class="st">"images/img.png"</span>, </span>
+<span>            format <span class="op">=</span> <span class="st">"png"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># eksport do JPEG z jakością 100%</span></span>
+<span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_write</a></span><span class="op">(</span><span class="va">img_orig</span>, path <span class="op">=</span> <span class="st">"images/img.jpeg"</span>, </span>
+<span>            quality <span class="op">=</span> <span class="fl">100</span>, format <span class="op">=</span> <span class="st">"jpeg"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># eksport do JPEG z jakością 75%</span></span>
+<span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_write</a></span><span class="op">(</span><span class="va">img_orig</span>, path <span class="op">=</span> <span class="st">"images/img2.jpeg"</span>, </span>
+<span>            quality <span class="op">=</span> <span class="fl">75</span>, format <span class="op">=</span> <span class="st">"jpeg"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># eksport do JPEG z jakością 50%</span></span>
+<span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_write</a></span><span class="op">(</span><span class="va">img_orig</span>, path <span class="op">=</span> <span class="st">"images/img3.jpeg"</span>, </span>
+<span>            quality <span class="op">=</span> <span class="fl">50</span>, format <span class="op">=</span> <span class="st">"jpeg"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># eksport do JPEG z jakością 25%</span></span>
+<span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_write</a></span><span class="op">(</span><span class="va">img_orig</span>, path <span class="op">=</span> <span class="st">"images/img4.jpeg"</span>, </span>
+<span>            quality <span class="op">=</span> <span class="fl">25</span>, format <span class="op">=</span> <span class="st">"jpeg"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Po zapisie pliki znacznie zmniejszyły swoją wielkość.</p>
+<div class="cell">
+<details><summary>Kod</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">img_gif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span><span class="st">"images/img.gif"</span><span class="op">)</span></span>
+<span><span class="va">img_gif_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/attributes.html">image_info</a></span><span class="op">(</span><span class="va">img_gif</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">img_png</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span><span class="st">"images/img.png"</span><span class="op">)</span></span>
+<span><span class="va">img_png_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/attributes.html">image_info</a></span><span class="op">(</span><span class="va">img_png</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">img_jpeg1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span><span class="st">"images/img.jpeg"</span><span class="op">)</span></span>
+<span><span class="va">img_jpeg1_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/attributes.html">image_info</a></span><span class="op">(</span><span class="va">img_jpeg1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">img_jpeg2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span><span class="st">"images/img2.jpeg"</span><span class="op">)</span></span>
+<span><span class="va">img_jpeg2_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/attributes.html">image_info</a></span><span class="op">(</span><span class="va">img_jpeg2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">img_jpeg3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span><span class="st">"images/img3.jpeg"</span><span class="op">)</span></span>
+<span><span class="va">img_jpeg3_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/attributes.html">image_info</a></span><span class="op">(</span><span class="va">img_jpeg3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">img_jpeg4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span><span class="st">"images/img4.jpeg"</span><span class="op">)</span></span>
+<span><span class="va">img_jpeg4_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/attributes.html">image_info</a></span><span class="op">(</span><span class="va">img_jpeg4</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">img_orig_info</span>, <span class="va">img_gif_info</span>, <span class="va">img_png_info</span>,</span>
+<span>          <span class="va">img_jpeg1_info</span>, <span class="va">img_jpeg2_info</span>, <span class="va">img_jpeg3_info</span>,</span>
+<span>          <span class="va">img_jpeg4_info</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="tbl-infos" class="anchored">
+
+<div id="upzbwosdnd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+:where(#upzbwosdnd) .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+:where(#upzbwosdnd) .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#upzbwosdnd) .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+:where(#upzbwosdnd) .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+:where(#upzbwosdnd) .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+:where(#upzbwosdnd) .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#upzbwosdnd) .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#upzbwosdnd) .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+:where(#upzbwosdnd) .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+:where(#upzbwosdnd) .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+:where(#upzbwosdnd) .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+:where(#upzbwosdnd) .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+:where(#upzbwosdnd) .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+:where(#upzbwosdnd) .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+:where(#upzbwosdnd) .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+:where(#upzbwosdnd) .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+:where(#upzbwosdnd) .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+:where(#upzbwosdnd) .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#upzbwosdnd) .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+:where(#upzbwosdnd) .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+:where(#upzbwosdnd) .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#upzbwosdnd) .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+:where(#upzbwosdnd) .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+:where(#upzbwosdnd) .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#upzbwosdnd) .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#upzbwosdnd) .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+:where(#upzbwosdnd) .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+:where(#upzbwosdnd) .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#upzbwosdnd) .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#upzbwosdnd) .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#upzbwosdnd) .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#upzbwosdnd) .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#upzbwosdnd) .gt_left {
+  text-align: left;
+}
+
+:where(#upzbwosdnd) .gt_center {
+  text-align: center;
+}
+
+:where(#upzbwosdnd) .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(#upzbwosdnd) .gt_font_normal {
+  font-weight: normal;
+}
+
+:where(#upzbwosdnd) .gt_font_bold {
+  font-weight: bold;
+}
+
+:where(#upzbwosdnd) .gt_font_italic {
+  font-style: italic;
+}
+
+:where(#upzbwosdnd) .gt_super {
+  font-size: 65%;
+}
+
+:where(#upzbwosdnd) .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+:where(#upzbwosdnd) .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+:where(#upzbwosdnd) .gt_indent_1 {
+  text-indent: 5px;
+}
+
+:where(#upzbwosdnd) .gt_indent_2 {
+  text-indent: 10px;
+}
+
+:where(#upzbwosdnd) .gt_indent_3 {
+  text-indent: 15px;
+}
+
+:where(#upzbwosdnd) .gt_indent_4 {
+  text-indent: 20px;
+}
+
+:where(#upzbwosdnd) .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table">
+<caption>Tabela&nbsp;3.1:  Podstawowe informacje o obrazach </caption>
+  
+  <thead class="gt_col_headings"><tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="format">format</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="width">width</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="height">height</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="colorspace">colorspace</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="matte">matte</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="filesize">filesize</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="density">density</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="format" class="gt_row gt_left">TIFF</td>
+<td headers="width" class="gt_row gt_right">3024</td>
+<td headers="height" class="gt_row gt_right">4032</td>
+<td headers="colorspace" class="gt_row gt_left">sRGB</td>
+<td headers="matte" class="gt_row gt_center">FALSE</td>
+<td headers="filesize" class="gt_row gt_right">36614010</td>
+<td headers="density" class="gt_row gt_left">72x72</td>
+</tr>
+<tr>
+<td headers="format" class="gt_row gt_left">GIF</td>
+<td headers="width" class="gt_row gt_right">3024</td>
+<td headers="height" class="gt_row gt_right">4032</td>
+<td headers="colorspace" class="gt_row gt_left">sRGB</td>
+<td headers="matte" class="gt_row gt_center">FALSE</td>
+<td headers="filesize" class="gt_row gt_right">7422827</td>
+<td headers="density" class="gt_row gt_left">72x72</td>
+</tr>
+<tr>
+<td headers="format" class="gt_row gt_left">PNG</td>
+<td headers="width" class="gt_row gt_right">3024</td>
+<td headers="height" class="gt_row gt_right">4032</td>
+<td headers="colorspace" class="gt_row gt_left">sRGB</td>
+<td headers="matte" class="gt_row gt_center">FALSE</td>
+<td headers="filesize" class="gt_row gt_right">11994144</td>
+<td headers="density" class="gt_row gt_left">28x28</td>
+</tr>
+<tr>
+<td headers="format" class="gt_row gt_left">JPEG</td>
+<td headers="width" class="gt_row gt_right">3024</td>
+<td headers="height" class="gt_row gt_right">4032</td>
+<td headers="colorspace" class="gt_row gt_left">sRGB</td>
+<td headers="matte" class="gt_row gt_center">FALSE</td>
+<td headers="filesize" class="gt_row gt_right">8211226</td>
+<td headers="density" class="gt_row gt_left">72x72</td>
+</tr>
+<tr>
+<td headers="format" class="gt_row gt_left">JPEG</td>
+<td headers="width" class="gt_row gt_right">3024</td>
+<td headers="height" class="gt_row gt_right">4032</td>
+<td headers="colorspace" class="gt_row gt_left">sRGB</td>
+<td headers="matte" class="gt_row gt_center">FALSE</td>
+<td headers="filesize" class="gt_row gt_right">1546461</td>
+<td headers="density" class="gt_row gt_left">72x72</td>
+</tr>
+<tr>
+<td headers="format" class="gt_row gt_left">JPEG</td>
+<td headers="width" class="gt_row gt_right">3024</td>
+<td headers="height" class="gt_row gt_right">4032</td>
+<td headers="colorspace" class="gt_row gt_left">sRGB</td>
+<td headers="matte" class="gt_row gt_center">FALSE</td>
+<td headers="filesize" class="gt_row gt_right">1043337</td>
+<td headers="density" class="gt_row gt_left">72x72</td>
+</tr>
+<tr>
+<td headers="format" class="gt_row gt_left">JPEG</td>
+<td headers="width" class="gt_row gt_right">3024</td>
+<td headers="height" class="gt_row gt_right">4032</td>
+<td headers="colorspace" class="gt_row gt_left">sRGB</td>
+<td headers="matte" class="gt_row gt_center">FALSE</td>
+<td headers="filesize" class="gt_row gt_right">691309</td>
+<td headers="density" class="gt_row gt_left">72x72</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<p>Pomimo znacznej różnicy w wielkości obrazów (w sensie miejsca zajmowanego na dysku) nie różnią się one znacznie jakością (przynajmniej na pierwszy rzut oka)</p>
+<div>
+<details><summary>Kod</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">img_orig</span></span>
+<span><span class="va">img_jpeg1</span></span>
+<span><span class="va">img_gif</span></span>
+<span><span class="va">img_png</span></span>
+<span><span class="va">img_jpeg2</span></span>
+<span><span class="va">img_jpeg3</span></span>
+<span><span class="va">img_jpeg4</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-razem-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="digt_img_files/figure-html/fig-razem-1.png" class="img-fluid figure-img" width="1512"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;3.3: TIFF</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-razem-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="digt_img_files/figure-html/fig-razem-2.png" class="img-fluid figure-img" width="1512"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;3.4: JPEG 100%</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-razem-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="digt_img_files/figure-html/fig-razem-3.gif" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;3.5: GIF</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-razem-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="digt_img_files/figure-html/fig-razem-4.png" class="img-fluid figure-img" width="1512"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;3.6: PNG</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-razem-5" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="digt_img_files/figure-html/fig-razem-5.png" class="img-fluid figure-img" width="1512"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;3.7: JPEG 75%</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-razem-6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="digt_img_files/figure-html/fig-razem-6.png" class="img-fluid figure-img" width="1512"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;3.8: JPEG 50%</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-razem-7" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="digt_img_files/figure-html/fig-razem-7.png" class="img-fluid figure-img" width="1512"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;3.9: JPEG 25%</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div>
+<details><summary>Kod</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/magick.html">magick2cimg</a></span><span class="op">(</span><span class="va">img_orig</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>channel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cc</span>,labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'R'</span>,<span class="st">'G'</span>,<span class="st">'B'</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">value</span>,col<span class="op">=</span><span class="va">channel</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">channel</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/magick.html">magick2cimg</a></span><span class="op">(</span><span class="va">img_jpeg1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>channel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cc</span>,labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'R'</span>,<span class="st">'G'</span>,<span class="st">'B'</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">value</span>,col<span class="op">=</span><span class="va">channel</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">channel</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/magick.html">magick2cimg</a></span><span class="op">(</span><span class="va">img_gif</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>channel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cc</span>,labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'R'</span>,<span class="st">'G'</span>,<span class="st">'B'</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">value</span>,col<span class="op">=</span><span class="va">channel</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">channel</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/magick.html">magick2cimg</a></span><span class="op">(</span><span class="va">img_png</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>channel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cc</span>,labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'R'</span>,<span class="st">'G'</span>,<span class="st">'B'</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">value</span>,col<span class="op">=</span><span class="va">channel</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">channel</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell quarto-layout-panel" data-hash="digt_img_cache/html/fig-hist_591775e293587a4d51afcfce3045f905">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-hist-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="digt_img_files/figure-html/fig-hist-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;3.10: Histogramy RGB dla pliku TIFF</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-hist-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="digt_img_files/figure-html/fig-hist-2.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;3.11: Histogray RGB dla pliku JPEG 100%</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-hist-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="digt_img_files/figure-html/fig-hist-3.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;3.12: Histogray RGB dla pliku GIF</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-hist-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="digt_img_files/figure-html/fig-hist-4.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;3.13: Histogray RGB dla pliku PNG</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-ronnebergerUNetConvolutionalNetworks2015" class="csl-entry" role="doc-biblioentry">
+Ronneberger, Olaf, Philipp Fischer, i Thomas Brox. 2015. <span>„U-<span>Net</span>: <span>Convolutional Networks</span> for <span>Biomedical Image Segmentation</span>”</span>. <span>arXiv</span>. <a href="https://doi.org/10.48550/arXiv.1505.04597">https://doi.org/10.48550/arXiv.1505.04597</a>.
+</div>
+<div id="ref-zhouUNetNestedUNet2018" class="csl-entry" role="doc-biblioentry">
+Zhou, Zongwei, Md Mahfuzur Rahman Siddiquee, Nima Tajbakhsh, i Jianming Liang. 2018. <span>„<span>UNet</span>++: <span>A Nested U-Net Architecture</span> for <span>Medical Image Segmentation</span>”</span>. <span>arXiv</span>. <a href="https://doi.org/10.48550/arXiv.1807.10165">https://doi.org/10.48550/arXiv.1807.10165</a>.
+</div>
+</div>
 </section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -565,8 +1378,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./summary.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Podsumowanie</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./transformations.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Transformacje obrazów</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

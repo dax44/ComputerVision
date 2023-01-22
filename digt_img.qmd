@@ -1,3 +1,10 @@
+---
+output: html_document
+execute: 
+  warning: false
+editor_options: 
+  chunk_output_type: console
+---
 # Obrazy cyfrowe
 
 Obrazy w formie cyfrowej są obecnie powszechnie obowiązującym standardem przechowywania, wyświetlania i modyfikowania obrazów.
@@ -14,73 +21,92 @@ library(knitr)
 include_graphics("images/Camera_obscura_1.jpg")
 ```
 
-
 -   wykorzystanie chlorku srebra przez Georga Fabricusa w 1556 r., który pod wpływem promieni słonecznych się zaczerniał,
 
 -   światłoczułość azotanu srebra, którą zaobserwował Johann Heinrich Schulze (1724 r.),
 
 -   Johann Heinrich Schulze uzyskał pierwsze odwzorowanie obrazu na emulsji światłoczułej sporządzonej z chlorku srebra na podkładzie z białej kredy (1725 r.),
 
--   pierwsza fotografia, stworzona przez Francuza Josepha-Nicéphore\'a Niepce\'a na wypolerowanej płycie metalowej (1826 r.),
+-   pierwsza fotografia, stworzona przez Francuza Josepha-Nicéphore'a Niepce'a na wypolerowanej płycie metalowej (1826 r.),
 
--   1839 -- rok uznawany za właściwą datę wynalezienia fotografii. Francuz Louis Jacques Daguerre zademonstrował Akademii Francuskiej zdjęcie fotograficzne otrzymane na warstewce jodku srebra, powstałej w wyniku działania pary jodu na wypolerowaną płytę miedzianą pokrytą srebrem,
+-   1839 -- rok uznawany za właściwą datę wynalezienia fotografii.
+    Francuz Louis Jacques Daguerre zademonstrował Akademii Francuskiej zdjęcie fotograficzne otrzymane na warstewce jodku srebra, powstałej w wyniku działania pary jodu na wypolerowaną płytę miedzianą pokrytą srebrem,
 
-- w tym samym czasie nad otrzymywaniem obrazów tworzonych przez światło pracował angielski uczony William Henry Fox Talbot,
+-   w tym samym czasie nad otrzymywaniem obrazów tworzonych przez światło pracował angielski uczony William Henry Fox Talbot,
 
-- 1861 – fizykowi Jamesowi Clerkowi Maxwellowi udało się uzyskać pierwszą trwałą fotografię barwną,
+-   1861 -- fizykowi Jamesowi Clerkowi Maxwellowi udało się uzyskać pierwszą trwałą fotografię barwną,
 
-- 1907 – bracia Lumière wprowadzili na rynek pierwsze szklane kolorowe płyty światłoczułe do fotografii barwnej (Autochrome). Były one produkowane na bazie barwionej skrobi ziemniaczanej. Autochromy pomimo nowatorskiego użycia koloru miały swoje wady to znaczy małą czułość, duże ziarno i konieczność używania statywu w przeciwieństwie do materiałów czarno-białych,
+-   1907 -- bracia Lumière wprowadzili na rynek pierwsze szklane kolorowe płyty światłoczułe do fotografii barwnej (Autochrome).
+    Były one produkowane na bazie barwionej skrobi ziemniaczanej.
+    Autochromy pomimo nowatorskiego użycia koloru miały swoje wady to znaczy małą czułość, duże ziarno i konieczność używania statywu w przeciwieństwie do materiałów czarno-białych,
 
-- 1935 – wprowadzono do sprzedaży pierwszy współczesny trójwarstwowy film barwny – Kodachrome,
+-   1935 -- wprowadzono do sprzedaży pierwszy współczesny trójwarstwowy film barwny -- Kodachrome,
 
-- większość współczesnych filmów barwnych, oprócz Kodachrome, wykorzystuje technologię stworzoną dla filmu Agfacolor w 1936 roku,
+-   większość współczesnych filmów barwnych, oprócz Kodachrome, wykorzystuje technologię stworzoną dla filmu Agfacolor w 1936 roku,
 
-- Od 1963 – jest dostępny natychmiastowy materiał kolorowy firmy Polaroid Corporation,
+-   Od 1963 -- jest dostępny natychmiastowy materiał kolorowy firmy Polaroid Corporation,
 
-- najpowszechniej stosowanym formatem zapisu analogowego obrazu wideo były taśmy VHS (ang. *Video Home System*) wprowadzone w 1976 roku przez firmę JVC. Nośnikiem używanym do zapisu zarówno obrazu, jak i dźwięku była taśma magnetyczna. Wcześniej tego rodzaju taśmy były wykorzystywane tylko do zapisywania dźwięku. Rozdzielczość pozioma obrazu w formacie VHS wynosi około 240 linii (dla obrazu kolorowego) i wynika z ograniczonego pasma dla sygnału koloru. Pod koniec lat 80 wprowadzono „ulepszoną” wersję VHS HQ, przy czym poprawiono w tej wersji głównie odczyt poprzez wprowadzenie systemu redukcji zakłóceń związanych z błędami odczytu taśmy (ang. *dropout’s*). Pozostałe parametry obrazu pozostały bez zmian. W formacie VHS fonia zapisywana jest wzdłuż taśmy przy krawędzi – przy przesuwie 2,239 cm/sek uzyskuje pasmo 80 Hz–10 kHz.
+-   najpowszechniej stosowanym formatem zapisu analogowego obrazu wideo były taśmy VHS (ang. *Video Home System*) wprowadzone w 1976 roku przez firmę JVC.
+    Nośnikiem używanym do zapisu zarówno obrazu, jak i dźwięku była taśma magnetyczna.
+    Wcześniej tego rodzaju taśmy były wykorzystywane tylko do zapisywania dźwięku.
+    Rozdzielczość pozioma obrazu w formacie VHS wynosi około 240 linii (dla obrazu kolorowego) i wynika z ograniczonego pasma dla sygnału koloru.
+    Pod koniec lat 80 wprowadzono „ulepszoną" wersję VHS HQ, przy czym poprawiono w tej wersji głównie odczyt poprzez wprowadzenie systemu redukcji zakłóceń związanych z błędami odczytu taśmy (ang. *dropout's*). Pozostałe parametry obrazu pozostały bez zmian. W formacie VHS fonia zapisywana jest wzdłuż taśmy przy krawędzi -- przy przesuwie 2,239 cm/sek uzyskuje pasmo 80 Hz--10 kHz.
 
-Chociaż prosta geometria kamery szczelinowej sprawia, że jest ona przydatna do zrozumienia podstawowych zasad tworzenia się obrazu, nigdy nie jest tak naprawdę wykorzystywana w praktyce. Jednym z problemów z kamerą szczelinową jest to, że wymaga ona bardzo małego otworu, aby uzyskać ostry obraz. To z kolei zmniejsza ilość przepuszczanego światła i prowadzi do ekstremalnie długich czasów naświetlania. W rzeczywistości stosuje się szklane soczewki lub systemy soczewek optycznych, których właściwości optyczne są znacznie lepsze w wielu aspektach, ale oczywiście są też znacznie bardziej złożone. W modelu (patrz @fig-soczewka) zakłada się, że soczewka jest symetryczna i nieskończenie cienka, tak że wszystkie przechodzące przez nią promienie świetlne przecinają wirtualną płaszczyznę w środku soczewki. Wynikowa geometria obrazu jest taka sama jak w przypadku kamery szczelinowej. Model ten nie jest wystarczająco złożony, aby objąć fizyczne szczegóły rzeczywistych układów soczewek, takie jak zniekształcenia geometryczne i różne właściwości załamania światła w różnych kolorach. Tak więc, choć ten prosty model wystarcza do naszych celów (tj. zrozumienia mechaniki pozyskiwania obrazu), w literaturze można znaleźć znacznie bardziej szczegółowe modele uwzględniające te dodatkowe złożoności.
+Chociaż prosta geometria kamery szczelinowej sprawia, że jest ona przydatna do zrozumienia podstawowych zasad tworzenia się obrazu, nigdy nie jest tak naprawdę wykorzystywana w praktyce.
+Jednym z problemów z kamerą szczelinową jest to, że wymaga ona bardzo małego otworu, aby uzyskać ostry obraz.
+To z kolei zmniejsza ilość przepuszczanego światła i prowadzi do ekstremalnie długich czasów naświetlania.
+W rzeczywistości stosuje się szklane soczewki lub systemy soczewek optycznych, których właściwości optyczne są znacznie lepsze w wielu aspektach, ale oczywiście są też znacznie bardziej złożone.
+W modelu (patrz @fig-soczewka) zakłada się, że soczewka jest symetryczna i nieskończenie cienka, tak że wszystkie przechodzące przez nią promienie świetlne przecinają wirtualną płaszczyznę w środku soczewki.
+Wynikowa geometria obrazu jest taka sama jak w przypadku kamery szczelinowej.
+Model ten nie jest wystarczająco złożony, aby objąć fizyczne szczegóły rzeczywistych układów soczewek, takie jak zniekształcenia geometryczne i różne właściwości załamania światła w różnych kolorach.
+Tak więc, choć ten prosty model wystarcza do naszych celów (tj. zrozumienia mechaniki pozyskiwania obrazu), w literaturze można znaleźć znacznie bardziej szczegółowe modele uwzględniające te dodatkowe złożoności.
 
+::: {#fig-elephants layout-ncol="2"}
+![Camera obscura](images/Zrzut%20ekranu%202023-01-21%20o%2020.16.05.png){#fig-camera}
 
-::: {#fig-elephants layout-ncol=2}
-
-![Camera obscura](images/Zrzut ekranu 2023-01-21 o 20.16.05.png){#fig-camera}
-
-![Soczewka](images/Zrzut ekranu 2023-01-21 o 20.16.19.png){#fig-soczewka}
+![Soczewka](images/Zrzut%20ekranu%202023-01-21%20o%2020.16.19.png){#fig-soczewka}
 
 Porównanie dwóch rozwiązań
 :::
 
+W przeciwieństwie do fotografii analogowej, fotografia cyfrowa nie wykorzystuje substancji chemicznej do utrwalenia obrazu ale zapisuje energię świetlną dostarczaną przez obiektyw do matrycy światłoczułej.
+Aby przekształcić ten obraz w obraz cyfrowy na naszym komputerze, konieczne są następujące trzy główne kroki:
 
-W przeciwieństwie do fotografii analogowej, fotografia cyfrowa nie wykorzystuje substancji chemicznej do utrwalenia obrazu ale zapisuje energię świetlną dostarczaną przez obiektyw do matrycy światłoczułej. Aby przekształcić ten obraz w obraz cyfrowy na naszym komputerze, konieczne są następujące trzy główne kroki:
+1.  Rozkład światła ciągłego musi być próbkowany przestrzennie.
+2.  Dalej funkcja ta musi być próbkowana w czasie, aby stworzyć pojedynczy (nieruchomy) obraz.
+3.  Wreszcie, wartości wynikowe muszą być skwantowane do skończonego zakresu liczb całkowitych (lub wartości zmiennoprzecinkowych), tak aby mogły być reprezentowane przez liczby.
 
-1. Rozkład światła ciągłego musi być próbkowany przestrzennie.
-2. Dalej funkcja ta musi być próbkowana w czasie, aby stworzyć pojedynczy (nieruchomy) obraz.
-3. Wreszcie, wartości wynikowe muszą być skwantowane do skończonego zakresu liczb całkowitych (lub wartości zmiennoprzecinkowych), tak aby mogły być reprezentowane przez liczby.
+Próbkowanie przestrzenne obrazu (czyli zamiana sygnału ciągłego na jego reprezentację dyskretną) zależy od geometrii elementów sensorycznych urządzenia akwizycyjnego (np. kamery cyfrowej lub wideo).
+Poszczególne elementy czujnika są ułożone w uporządkowanych rzędach, prawie zawsze pod kątem prostym do siebie, wzdłuż płaszczyzny czujnika (rys. -@fig-sensor).
+Aparaty cyfrowe rejestrują obraz za pomocą matrycy CCD (ang. *Charge-Coupled Device*) lub CMOS (ang.*Complementary Metal-Oxide-Semiconductor*), która przetwarza światło na sygnał cyfrowy.
 
-Próbkowanie przestrzenne obrazu (czyli zamiana sygnału ciągłego na jego reprezentację dyskretną) zależy od geometrii elementów sensorycznych urządzenia akwizycyjnego (np. kamery cyfrowej lub wideo). Poszczególne elementy czujnika są ułożone w uporządkowanych rzędach, prawie zawsze pod kątem prostym do siebie, wzdłuż płaszczyzny czujnika (rys. -@fig-sensor). Aparaty cyfrowe rejestrują obraz za pomocą matrycy CCD (ang. *Charge-Coupled Device*) lub CMOS (ang.*Complementary Metal-Oxide-Semiconductor*), która przetwarza światło na sygnał cyfrowy. 
+Próbkowanie czasowe odbywa się poprzez pomiar w regularnych odstępach czasu ilości światła padającego na każdy pojedynczy element czujnika.
+CCD w aparacie cyfrowym robi to poprzez wyzwolenie procesu ładowania, a następnie zmierzenie ilości ładunku elektrycznego, który nagromadził się w określonym czasie, w którym CCD była oświetlona.
 
-Próbkowanie czasowe odbywa się poprzez pomiar w regularnych odstępach czasu ilości światła padającego na każdy pojedynczy element czujnika. CCD w aparacie cyfrowym robi to poprzez wyzwolenie procesu ładowania, a następnie zmierzenie ilości ładunku elektrycznego, który nagromadził się w określonym czasie, w którym CCD była oświetlona.
+![Geometria sensora](images/Zrzut%20ekranu%202023-01-21%20o%2020.36.49.png){#fig-sensor}
 
+W celu przechowywania i przetwarzania wartości obrazu w komputerze są one powszechnie konwertowane do skali liczb całkowitych (np. $256 = 2^8$ lub $4096 = 2^{12}$).
+Sporadycznie w zastosowaniach profesjonalnych, takich jak obrazowanie medyczne, stosuje się wartości zmiennoprzecinkowe.
+Konwersja odbywa się za pomocą konwertera analogowo-cyfrowego, który jest zazwyczaj wbudowanym bezpośrednio w elektronikę czujnikiem, tak że konwersja następuje podczas rejestracji obrazu lub jest wykonywana przez specjalny interfejs.
 
+![Zapis cyfrowy obrazu](images/Zrzut%20ekranu%202023-01-21%20o%2020.56.20.png)
 
+Matryce CMOS są tańsze w produkcji, bardziej energooszczędne i mogą być łatwiej integrowane z innymi elementami elektronicznymi w aparacie, takimi jak procesor obrazu, a także z innymi funkcjami, takimi jak GPS, WiFi czy Bluetooth.
+Matryce CCD są bardziej wrażliwe na światło i mają lepszą jakość obrazu, zwłaszcza w warunkach słabego oświetlenia.
+Natomiast matryce CMOS są lepsze do zastosowań, w których ważna jest wysoka przepustowość i szybkość rejestracji obrazów oraz niskie zużycie energii.
 
-![Geometria sensora](images/Zrzut ekranu 2023-01-21 o 20.36.49.png){#fig-sensor}
+Najpowszechniej stosowany podział obrazów cyfrowych zapisanych na nośniku, to grafika rastrowa i grafika wektorowa.
+Grafika rastrowa (ang. *raster image*), zwana też grafiką bitmapową, to rodzaj grafiki, w której obraz jest składany z pojedynczych pikseli.
+Każdy piksel jest jakiegoś koloru i jest zapisany jako indywidualna jednostka danych.
+Obrazy rastrowe są zwykle zapisywane w formatach takich jak JPEG, PNG lub GIF.
 
-W celu przechowywania i przetwarzania wartości obrazu w komputerze są one powszechnie konwertowane do skali liczb całkowitych (np. $256 = 2^8$ lub $4096 = 2^{12}$). Sporadycznie w zastosowaniach profesjonalnych, takich jak obrazowanie medyczne, stosuje się wartości zmiennoprzecinkowe. Konwersja odbywa się za pomocą konwertera analogowo-cyfrowego, który jest zazwyczaj wbudowanym bezpośrednio w elektronikę czujnikiem, tak że konwersja następuje podczas rejestracji obrazu lub jest wykonywana przez specjalny interfejs.
-
-![Zapis cyfrowy obrazu](images/Zrzut ekranu 2023-01-21 o 20.56.20.png)
-
-Matryce CMOS są tańsze w produkcji, bardziej energooszczędne i mogą być łatwiej integrowane z innymi elementami elektronicznymi w aparacie, takimi jak procesor obrazu, a także z innymi funkcjami, takimi jak GPS, WiFi czy Bluetooth. Matryce CCD są bardziej wrażliwe na światło i mają lepszą jakość obrazu, zwłaszcza w warunkach słabego oświetlenia. Natomiast matryce CMOS są lepsze do zastosowań, w których ważna jest wysoka przepustowość i szybkość rejestracji obrazów oraz niskie zużycie energii.
-
-Najpowszechniej stosowany podział obrazów cyfrowych zapisanych na nośniku, to grafika rastrowa i grafika wektorowa. Grafika rastrowa (ang. *raster image*), zwana też grafiką bitmapową, to rodzaj grafiki, w której obraz jest składany z pojedynczych pikseli. Każdy piksel jest jakiegoś koloru i jest zapisany jako indywidualna jednostka danych. Obrazy rastrowe są zwykle zapisywane w formatach takich jak JPEG, PNG lub GIF.
-
-Grafika wektorowa (ang. *vector image*) to rodzaj grafiki, w której obraz jest składany z kształtów geometrycznych takich jak linie, koła i trójkąty. Każdy kształt jest opisany matematycznie i jest zapisany jako indywidualna jednostka danych. Obrazy wektorowe są zwykle zapisywane w formatach takich jak SVG, AI lub EPS.
+Grafika wektorowa (ang. *vector image*) to rodzaj grafiki, w której obraz jest składany z kształtów geometrycznych takich jak linie, koła i trójkąty.
+Każdy kształt jest opisany matematycznie i jest zapisany jako indywidualna jednostka danych.
+Obrazy wektorowe są zwykle zapisywane w formatach takich jak SVG, AI lub EPS.
 
 ![Grafika rastrowa vs wektorowa](images/Orc_-_Raster_vs_Vector_comparison.png)
 
-Główna różnica między grafiką rastrową a wektorową polega na tym, że obrazy rastrowe składają się z indywidualnych pikseli, podczas gdy obrazy wektorowe składają się z matematycznie opisanych kształtów. Obrazy rastrowe tracą jakość po powiększeniu, ponieważ piksele są widoczne, podczas gdy obrazy wektorowe zachowują jakość po powiększeniu, ponieważ są składane z kształtów matematycznych.
-Obie techniki, grafika rastrowa i wektorowa, mają swoje własne zalety i wady, i nie ma jednej techniki, która jest ogólnie uważana za bardziej dokładną.
+Główna różnica między grafiką rastrową a wektorową polega na tym, że obrazy rastrowe składają się z indywidualnych pikseli, podczas gdy obrazy wektorowe składają się z matematycznie opisanych kształtów. Obrazy rastrowe tracą jakość po powiększeniu, ponieważ piksele są widoczne, podczas gdy obrazy wektorowe zachowują jakość po powiększeniu, ponieważ są składane z kształtów matematycznych. Obie techniki, grafika rastrowa i wektorowa, mają swoje własne zalety i wady, i nie ma jednej techniki, która jest ogólnie uważana za bardziej dokładną.
 
 Grafika rastrowa jest bardziej odpowiednia do przedstawiania szczegółowych i skomplikowanych obrazów, takich jak zdjęcia lub malarstwo. Są one bardziej naturalne i realistyczne. Jednak, kiedy obrazy te są powiększane, ich jakość traci, ponieważ piksele są widoczne.
 
@@ -88,21 +114,23 @@ Grafika wektorowa jest lepsza do tworzenia prostych i precyzyjnych kształtów, 
 
 W ramach tego przedmiotu głównie będziemy się zajmować grafiką rastrową.
 
-Rozdzielczość jest jednym z najważniejszych czynników wpływających na jakość obrazu. Im więcej pikseli ma obraz, tym więcej szczegółów jest widocznych. Rozdzielczość obrazu określa wymiary przestrzenne obrazu w świecie rzeczywistym i jest podawana jako liczba elementów obrazu na jeden pomiar; na przykład w punktach na cal (dpi) lub liniach na cal (lpi) w przypadku produkcji poligraficznej lub w pikselach na kilometr w przypadku zdjęć satelitarnych. Jednocześnie, im więcej pikseli ma obraz, tym większy jest jego rozmiar pliku i tym więcej pamięci jest potrzebne do jego przechowywania. Wymiary obrazu przedstawiane są za pomocą liczby pikseli poziomo i pionowo, np. 1920x1080 pikseli. 
+Rozdzielczość jest jednym z najważniejszych czynników wpływających na jakość obrazu.
+Im więcej pikseli ma obraz, tym więcej szczegółów jest widocznych.
+Rozdzielczość obrazu określa wymiary przestrzenne obrazu w świecie rzeczywistym i jest podawana jako liczba elementów obrazu na jeden pomiar; na przykład w punktach na cal (dpi) lub liniach na cal (lpi) w przypadku produkcji poligraficznej lub w pikselach na kilometr w przypadku zdjęć satelitarnych. Jednocześnie, im więcej pikseli ma obraz, tym większy jest jego rozmiar pliku i tym więcej pamięci jest potrzebne do jego przechowywania. Wymiary obrazu przedstawiane są za pomocą liczby pikseli poziomo i pionowo, np.
+1920x1080 pikseli.
 
-Innym ważnym czynnikiem wpływającym na wielkość obrazu jest format pliku w jakim jest zapisany. Niektóre formaty są kompresowane co pozwala na zmniejszenie wielkości pliku przy zachowaniu jakości obrazu, inne natomiast nie pozwalają na kompresję i zwiększają rozmiar pliku.
+Innym ważnym czynnikiem wpływającym na wielkość obrazu jest format pliku w jakim jest zapisany.
+Niektóre formaty są kompresowane co pozwala na zmniejszenie wielkości pliku przy zachowaniu jakości obrazu, inne natomiast nie pozwalają na kompresję i zwiększają rozmiar pliku.
 
 ## Skale
 
-1. Skala szarości - dane obrazu w skali szarości składają się z pojedynczego kanału (ang. *channel*), który reprezentuje intensywność, jasność lub gęstość obrazu. W większości przypadków sens mają tylko wartości dodatnie, ponieważ liczby reprezentują natężenie energii świetlnej lub gęstość filmu, a więc nie mogą być ujemne, więc zwykle używa się całych liczb całkowitych z zakresu $0, \ldots , 2^{k - 1}$ są używane. Na przykład typowy obraz w skali szarości wykorzystuje $k = 8$ bitów (1 bajt) na piksel i wartości intensywności z zakresu $0,\ldots,255$, gdzie wartość 0 oznacza minimalną jasność (czerń), a 255 maksymalną jasność (biel).
-W wielu zastosowaniach profesjonalnej fotografii i druku, a także w medycynie i astronomii, 8 bitów na piksel nie jest wystarczające. W tych dziedzinach często spotyka się głębię obrazu 12, 14, a nawet 16 bitów. Zauważ, że głębia bitowa zwykle odnosi się do liczby bitów używanych do reprezentowania jednego składnika koloru, a nie liczby bitów potrzebnych do reprezentowania koloru piksela. Na przykład, zakodowany w RGB kolorowy obraz z 8-bitową głębią wymagałby 8 bitów dla każdego kanału, co daje w sumie 24 bity, podczas gdy ten sam obraz z 12-bitową głębią wymagałby w sumie 36 bitów.
+1.  Skala szarości - dane obrazu w skali szarości składają się z pojedynczego kanału (ang. *channel*), który reprezentuje intensywność, jasność lub gęstość obrazu. W większości przypadków sens mają tylko wartości dodatnie, ponieważ liczby reprezentują natężenie energii świetlnej lub gęstość filmu, a więc nie mogą być ujemne, więc zwykle używa się całych liczb całkowitych z zakresu $0, \ldots , 2^{k - 1}$ są używane. Na przykład typowy obraz w skali szarości wykorzystuje $k = 8$ bitów (1 bajt) na piksel i wartości intensywności z zakresu $0,\ldots,255$, gdzie wartość 0 oznacza minimalną jasność (czerń), a 255 maksymalną jasność (biel). W wielu zastosowaniach profesjonalnej fotografii i druku, a także w medycynie i astronomii, 8 bitów na piksel nie jest wystarczające. W tych dziedzinach często spotyka się głębię obrazu 12, 14, a nawet 16 bitów. Zauważ, że głębia bitowa zwykle odnosi się do liczby bitów używanych do reprezentowania jednego składnika koloru, a nie liczby bitów potrzebnych do reprezentowania koloru piksela. Na przykład, zakodowany w RGB kolorowy obraz z 8-bitową głębią wymagałby 8 bitów dla każdego kanału, co daje w sumie 24 bity, podczas gdy ten sam obraz z 12-bitową głębią wymagałby w sumie 36 bitów.
 
-2. Obrazy binarne (ang. *binary images*) - to specjalny rodzaj obrazu, w którym piksele mogą przyjmować tylko jedną z dwóch wartości, czarną lub białą. Wartości te są zwykle kodowane przy użyciu pojedynczego bitu (0/1) na piksel. Obrazy binarne są często wykorzystywane do reprezentowania grafiki liniowej, archiwizacji dokumentów, kodowania transmisji faksowych i oczywiście w druku elektronicznym.
+2.  Obrazy binarne (ang. *binary images*) - to specjalny rodzaj obrazu, w którym piksele mogą przyjmować tylko jedną z dwóch wartości, czarną lub białą. Wartości te są zwykle kodowane przy użyciu pojedynczego bitu (0/1) na piksel. Obrazy binarne są często wykorzystywane do reprezentowania grafiki liniowej, archiwizacji dokumentów, kodowania transmisji faksowych i oczywiście w druku elektronicznym.
 
-3. Obrazy kolorowe (ang. *color images*) - większość kolorowych obrazów opiera się na kolorach podstawowych: czerwonym, zielonym i niebieskim (RGB), zwykle wykorzystując 8 bitów dla każdego kanału. W tego rodzaju obrazach kolorowych, każdy piksel wymaga 3×8 = 24 bity do zakodowania wszystkich trzech składowych, a zakres każdej indywidualnej składowej koloru wynosi [0, 255]. Podobnie jak w przypadku obrazów w skali szarości, kolorowe obrazy z 30, 36 i 42 bitami na piksel są powszechnie używane w profesjonalnych aplikacjach. Wreszcie, podczas gdy większość obrazów kolorowych zawiera trzy składowe, obrazy z czterema lub więcej składowymi koloru są powszechne w druku, zwykle oparte na modelu koloru CMYK (Cyan-Magenta-Yellow- Black).
-Główna różnica między tymi dwiema paletami polega na tym, że RGB ma więcej możliwości kolorów, ponieważ jest w stanie wygenerować więcej odcieni niż CMYK, ale kolory wyświetlane przez RGB nie są takie same jak te, które otrzymujemy przy druku z CMYK. Kolory drukowane z CMYK mogą również różnić się od tych wyświetlanych na ekranie.
+3.  Obrazy kolorowe (ang. *color images*) - większość kolorowych obrazów opiera się na kolorach podstawowych: czerwonym, zielonym i niebieskim (RGB), zwykle wykorzystując 8 bitów dla każdego kanału. W tego rodzaju obrazach kolorowych, każdy piksel wymaga 3×8 = 24 bity do zakodowania wszystkich trzech składowych, a zakres każdej indywidualnej składowej koloru wynosi \[0, 255\]. Podobnie jak w przypadku obrazów w skali szarości, kolorowe obrazy z 30, 36 i 42 bitami na piksel są powszechnie używane w profesjonalnych aplikacjach. Wreszcie, podczas gdy większość obrazów kolorowych zawiera trzy składowe, obrazy z czterema lub więcej składowymi koloru są powszechne w druku, zwykle oparte na modelu koloru CMYK (Cyan-Magenta-Yellow- Black). Główna różnica między tymi dwiema paletami polega na tym, że RGB ma więcej możliwości kolorów, ponieważ jest w stanie wygenerować więcej odcieni niż CMYK, ale kolory wyświetlane przez RGB nie są takie same jak te, które otrzymujemy przy druku z CMYK. Kolory drukowane z CMYK mogą również różnić się od tych wyświetlanych na ekranie.
 
-4. Obrazy specjalne - są wymagane, jeżeli żaden z powyższych formatów standardowych nie jest wystarczający do przedstawienia wartości obrazu. Dwa popularne przykłady obrazów specjalnych to obrazy z wartościami ujemnymi oraz obrazy z wartościami zmiennoprzecinkowymi. Obrazy z wartościami ujemnymi powstają podczas etapów przetwarzania obrazu, takich jak filtrowanie w celu wykrywania krawędzi, a obrazy z wartościami zmiennoprzecinkowymi są często spotykane w zastosowaniach medycznych, biologicznych lub astronomicznych, gdzie wymagany jest zwiększony zakres liczbowy i precyzja. Te specjalne formaty są w większości przypadków specyficzne dla danego zastosowania i dlatego mogą być trudne do wykorzystania przez standardowe narzędzia do przetwarzania obrazów.
+4.  Obrazy specjalne - są wymagane, jeżeli żaden z powyższych formatów standardowych nie jest wystarczający do przedstawienia wartości obrazu. Dwa popularne przykłady obrazów specjalnych to obrazy z wartościami ujemnymi oraz obrazy z wartościami zmiennoprzecinkowymi. Obrazy z wartościami ujemnymi powstają podczas etapów przetwarzania obrazu, takich jak filtrowanie w celu wykrywania krawędzi, a obrazy z wartościami zmiennoprzecinkowymi są często spotykane w zastosowaniach medycznych, biologicznych lub astronomicznych, gdzie wymagany jest zwiększony zakres liczbowy i precyzja. Te specjalne formaty są w większości przypadków specyficzne dla danego zastosowania i dlatego mogą być trudne do wykorzystania przez standardowe narzędzia do przetwarzania obrazów.
 
 ## Formaty zapisu
 
@@ -112,7 +140,8 @@ TIFF (ang. *Tagged Image File Format*) jest formatem pliku, który jest używany
 
 ### GIF
 
-GIF (ang. *Graphics Interchange Format*) jest formatem pliku graficznego, który jest używany do przechowywania i wymiany obrazów w internecie. GIF jest formatem bezstratnym, ale jest kompresowany, co pozwala na zmniejszenie rozmiaru pliku i przyspieszenie jego przesyłania. Co ważne, GIF jest formatem obsługującym animacje, co oznacza, że może on przechowywać kilka klatek jako jeden plik, co pozwala na tworzenie animowanych obrazów, często używanych jako emotikony, ikony lub małe animacje na stronach internetowych. GIF jest również ograniczony do 256 kolorów, co oznacza, że nie jest on dobrym rozwiązaniem do przechowywania zdjęć o wysokiej jakości.
+GIF (ang. *Graphics Interchange Format*) jest formatem pliku graficznego, który jest używany do przechowywania i wymiany obrazów w internecie. GIF jest formatem bezstratnym, ale jest kompresowany, co pozwala na zmniejszenie rozmiaru pliku i przyspieszenie jego przesyłania.
+Co ważne, GIF jest formatem obsługującym animacje, co oznacza, że może on przechowywać kilka klatek jako jeden plik, co pozwala na tworzenie animowanych obrazów, często używanych jako emotikony, ikony lub małe animacje na stronach internetowych. GIF jest również ograniczony do 256 kolorów, co oznacza, że nie jest on dobrym rozwiązaniem do przechowywania zdjęć o wysokiej jakości.
 
 ### PNG
 
@@ -124,12 +153,172 @@ JPEG (ang. *Joint Photographic Experts Group*) to popularny format zapisu obraz�
 
 ### EXIF
 
-EXIF (ang. *Exchangeable Image File Format*) to format danych, który jest zapisywany w pliku obrazu cyfrowego, takim jak JPEG lub TIFF. Informacje EXIF zawierają szczegółowe dane dotyczące zdjęcia, takie jak data i godzina utworzenia zdjęcia, parametry aparatu fotograficznego (np. przysłona, czas naświetlania, ISO), dane dotyczące obiektywu, a także współrzędne GPS, jeśli zdjęcie zostało zrobione z użyciem aparatu z GPS. EXIF jest przydatny dla fotografów i programów do obróbki zdjęć, ponieważ pozwala na łatwe odczytanie i wykorzystanie tych danych.
+EXIF (ang. *Exchangeable Image File Format*) to format danych, który jest zapisywany w pliku obrazu cyfrowego, takim jak JPEG lub TIFF.
+Informacje EXIF zawierają szczegółowe dane dotyczące zdjęcia, takie jak data i godzina utworzenia zdjęcia, parametry aparatu fotograficznego (np. przysłona, czas naświetlania, ISO), dane dotyczące obiektywu, a także współrzędne GPS, jeśli zdjęcie zostało zrobione z użyciem aparatu z GPS.
+EXIF jest przydatny dla fotografów i programów do obróbki zdjęć, ponieważ pozwala na łatwe odczytanie i wykorzystanie tych danych.
 
 ### BMP
 
-BMP (ang. *Bitmap*) to format pliku obrazu, który jest przeznaczony do przechowywania obrazów rastrowych, takich jak zdjęcia, grafiki i mapy bitowe. BMP jest formatem pliku natywnym dla systemów operacyjnych Windows, co oznacza, że pliki tego formatu są bezpośrednio obsługiwane przez system Windows i nie wymagają dodatkowego oprogramowania do odczytu.
+BMP (ang. *Bitmap*) to format pliku obrazu, który jest przeznaczony do przechowywania obrazów rastrowych, takich jak zdjęcia, grafiki i mapy bitowe.
+BMP jest formatem pliku natywnym dla systemów operacyjnych Windows, co oznacza, że pliki tego formatu są bezpośrednio obsługiwane przez system Windows i nie wymagają dodatkowego oprogramowania do odczytu.
 
-BMP jest formatem bezstratnym, co oznacza, że po zapisie obrazu w tym formacie, jego jakość pozostaje taka sama jak przed zapisem. Pliki BMP są jednak dość duże, ponieważ nie są skompresowane, co oznacza, że zajmują więcej miejsca na dysku niż pliki skompresowane innymi formatami. BMP jest często używany do przechowywania obrazów w celach archiwizacyjnych, ponieważ zachowuje pełną jakość obrazu.
+BMP jest formatem bezstratnym, co oznacza, że po zapisie obrazu w tym formacie, jego jakość pozostaje taka sama jak przed zapisem.
+Pliki BMP są jednak dość duże, ponieważ nie są skompresowane, co oznacza, że zajmują więcej miejsca na dysku niż pliki skompresowane innymi formatami.
+BMP jest często używany do przechowywania obrazów w celach archiwizacyjnych, ponieważ zachowuje pełną jakość obrazu.
 
-![Porównanie formatów](images/Zrzut ekranu 2023-01-21 o 22.25.09.png)
+![Porównanie formatów](images/Zrzut%20ekranu%202023-01-21%20o%2022.25.09.png)
+
+### Operacje na plikach
+
+Istnieje wiele zewnętrznych (w stosunku do środowiska R) profesjonalnych narzędzi do obróbki zdjęć.
+Wśród nich z pewnością należy wymienić: Adobe Photoshop, CorelDRAW, Gimp, PIXLR, FIji (ImageJ) i wiele innych.
+Część z nich jest komercyjna, a część darmowa.
+Osobiście do przetwarzania obrazów pochodzących z badań biologicznych, medycznych, czy inżynierskich polecam darmowy program Fiji, będący rozszerzeniem swojego pierwowzoru, czyli ImageJ.
+
+Również w samym środowisku R istnieje szereg bibliotek do obsługi obrazów:
+
+-   `imager` - pozwala na szybkie przetwarzanie obrazów w maksymalnie 4 wymiarach (dwa wymiary przestrzenne, jeden wymiar czasowy/głębokościowy, jeden wymiar koloru). Udostępnia większość tradycyjnych narzędzi do przetwarzania obrazów (filtrowanie, morfologia, transformacje, itp.), jak również różne funkcje do łatwej analizy danych obrazowych przy użyciu R.
+-   `imagerExtra` - poszerzenie zestawu funkcji pakietu `imager`.
+-   `magick` - dostarcza nowoczesnego i prostego zestawu narzędzi do przetwarzania obrazów w R. Obejmuje on ImageMagick STL, który jest najbardziej wszechstronną biblioteką przetwarzania obrazów typu open-source dostępną obecnie.
+-   `imageseg` - pakiet ogólnego przeznaczenia do segmentacji obrazów z wykorzystaniem modeli TensorFlow opartych na architekturze U-Net autorstwa @ronnebergerUNetConvolutionalNetworks2015 oraz architekturze U-Net++ autorstwa @zhouUNetNestedUNet2018. Dostarcza wstępnie wytrenowane modele do oceny gęstości łanu i gęstości roślinności podszytu na podstawie zdjęć roślinności. Ponadto pakiet zapewnia workflow do łatwego tworzenia wejściowych modeli i architektur modeli dla segmentacji obrazów ogólnego przeznaczenia na podstawie obrazów w skali szarości lub kolorowych, zarówno dla segmentacji obrazów binarnych, jak i wieloklasowych.
+-   `pliman` - jest pakietem do analizy obrazów, ze szczególnym uwzględnieniem obrazów roślin. Jest użytecznym narzędziem do uzyskania informacji ilościowej dla obiektów docelowych. W kontekście obrazów roślin, ilościowe określanie powierzchni liści, nasilenia chorób, liczby zmian chorobowych, liczenie liczby ziaren, uzyskiwanie statystyk ziaren (np. długość i szerokość) można wykonać stosując pakiet `pliman`.
+
+::: {#exm-1 .exm}
+W tym przykładzie przedstawiona zostanie procedura importu i eksportu obrazów do różnych formatów. Najpierw wczytamy zdjęcie wykonane telefonem (IPhone 12) zapisane w formacie TIFF, a następnie zapiszemy to zdjęcie w kilku innych formatach, by na końcu wczytać je wszystkie i porównać.
+
+```{r}
+library(magick)
+library(imager)
+library(tidyverse)
+library(gt)
+
+# wczytywanie obrazu 
+img_orig <- image_read("images/IMG_3966.tiff")
+
+# informacje o obrazie
+img_orig_info <- image_info(img_orig)
+img_orig_info
+```
+
+Jak widać obraz w formacie TIFF zajmuje bardzo dużo miejsca na dysku (36,6MB).
+
+```{r}
+# eksport do GIF
+image_write(img_orig, path = "images/img.gif", 
+            format = "gif")
+
+# eksport do PNG
+image_write(img_orig, path = "images/img.png", 
+            format = "png")
+
+# eksport do JPEG z jakością 100%
+image_write(img_orig, path = "images/img.jpeg", 
+            quality = 100, format = "jpeg")
+
+# eksport do JPEG z jakością 75%
+image_write(img_orig, path = "images/img2.jpeg", 
+            quality = 75, format = "jpeg")
+
+# eksport do JPEG z jakością 50%
+image_write(img_orig, path = "images/img3.jpeg", 
+            quality = 50, format = "jpeg")
+
+# eksport do JPEG z jakością 25%
+image_write(img_orig, path = "images/img4.jpeg", 
+            quality = 25, format = "jpeg")
+```
+
+Po zapisie pliki znacznie zmniejszyły swoją wielkość.
+
+```{r}
+#| label: tbl-infos
+#| tbl-cap: Podstawowe informacje o obrazach
+img_gif <- image_read("images/img.gif")
+img_gif_info <- image_info(img_gif)
+
+img_png <- image_read("images/img.png")
+img_png_info <- image_info(img_png)
+
+img_jpeg1 <- image_read("images/img.jpeg")
+img_jpeg1_info <- image_info(img_jpeg1)
+
+img_jpeg2 <- image_read("images/img2.jpeg")
+img_jpeg2_info <- image_info(img_jpeg2)
+
+img_jpeg3 <- image_read("images/img3.jpeg")
+img_jpeg3_info <- image_info(img_jpeg3)
+
+img_jpeg4 <- image_read("images/img4.jpeg")
+img_jpeg4_info <- image_info(img_jpeg4)
+
+bind_rows(img_orig_info, img_gif_info, img_png_info,
+          img_jpeg1_info, img_jpeg2_info, img_jpeg3_info,
+          img_jpeg4_info) |> 
+  gt()
+```
+
+Pomimo znacznej różnicy w wielkości obrazów (w sensie miejsca zajmowanego na dysku) nie różnią się one znacznie jakością (przynajmniej na pierwszy rzut oka)
+
+```{r}
+#| layout-ncol: 2
+#| label: fig-razem
+#| fig-cap: 
+#|   - "TIFF"
+#|   - "JPEG 100%"
+#|   - "GIF"
+#|   - "PNG"
+#|   - "JPEG 75%"
+#|   - "JPEG 50%"
+#|   - "JPEG 25%"
+
+img_orig
+img_jpeg1
+img_gif
+img_png
+img_jpeg2
+img_jpeg3
+img_jpeg4
+```
+
+
+```{r}
+#| label: fig-hist
+#| layout-ncol: 2
+#| cache: true
+#| fig-cap: 
+#|    - "Histogramy RGB dla pliku TIFF"
+#|    - "Histogray RGB dla pliku JPEG 100%"
+#|    - "Histogray RGB dla pliku GIF"
+#|    - "Histogray RGB dla pliku PNG"
+
+magick2cimg(img_orig) |> 
+  as.data.frame() |> 
+  mutate(channel = factor(cc,labels=c('R','G','B'))) |>
+  ggplot(aes(value,col=channel))+
+  geom_histogram()+
+  facet_wrap(~ channel)
+
+magick2cimg(img_jpeg1) |> 
+  as.data.frame() |> 
+  mutate(channel = factor(cc,labels=c('R','G','B'))) |>
+  ggplot(aes(value,col=channel))+
+  geom_histogram()+
+  facet_wrap(~ channel)
+
+magick2cimg(img_gif) |> 
+  as.data.frame() |> 
+  mutate(channel = factor(cc,labels=c('R','G','B'))) |>
+  ggplot(aes(value,col=channel))+
+  geom_histogram()+
+  facet_wrap(~ channel)
+
+magick2cimg(img_png) |> 
+  as.data.frame() |> 
+  mutate(channel = factor(cc,labels=c('R','G','B'))) |>
+  ggplot(aes(value,col=channel))+
+  geom_histogram()+
+  facet_wrap(~ channel)
+```
+
+
+:::

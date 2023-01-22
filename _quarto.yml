@@ -31,6 +31,7 @@ book:
     - intro.qmd
     - history.qmd
     - digt_img.qmd
+    - transformations.qmd
     - summary.qmd
     - references.qmd
 
@@ -41,11 +42,14 @@ format:
   html:
     lang: pl
     theme:
-      light: pulse
-      dark: slate
+      light: [pulse, mycss.scss]
+      dark: [slate, mycss.scss]
     code-link: true
+    code-fold: true
     margin-left: 0em
     margin-right: 0em
+execute: 
+  warning: false
 
 editor: visual
 comments:
