@@ -87,6 +87,10 @@ Filtracja jest ważnym krokiem w przetwarzaniu obrazów, ponieważ pozwala na us
 
 Translacja (przesunięcie) i rotacja nie zmieniają rozmiarów i orientacji obrazu, natomiast skalowanie zmienia rozmiar obrazu ale zachowuje orientację i kąty. Przekształcenia afiniczne zachowują jedynie równoległość par prostych. Projekcje są przekształceniami polegającymi na zmianie perspektywy patrzenia na obraz dlatego jedyną własnością, która jest zachowana w transformowanym obrazie to linie proste.
 
+:::{.exm-2}
+
+## Przykłady różnych transformacji
+
 ```{r}
 #" fig-cap: Frink w oryginalnym rozmiarze
 library(magick)
@@ -110,3 +114,4 @@ image_scale(frink, "300x100!")
 image_rotate(frink, 90)
 ```
 
+:::
