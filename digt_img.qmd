@@ -5,6 +5,7 @@ execute:
 editor_options: 
   chunk_output_type: console
 ---
+
 # Obrazy cyfrowe
 
 Obrazy w formie cyfrowej są obecnie powszechnie obowiązującym standardem przechowywania, wyświetlania i modyfikowania obrazów.
@@ -77,7 +78,7 @@ Aby przekształcić ten obraz w obraz cyfrowy na naszym komputerze, konieczne s�
 3.  Wreszcie, wartości wynikowe muszą być skwantowane do skończonego zakresu liczb całkowitych (lub wartości zmiennoprzecinkowych), tak aby mogły być reprezentowane przez liczby.
 
 Próbkowanie przestrzenne obrazu (czyli zamiana sygnału ciągłego na jego reprezentację dyskretną) zależy od geometrii elementów sensorycznych urządzenia akwizycyjnego (np. kamery cyfrowej lub wideo).
-Poszczególne elementy czujnika są ułożone w uporządkowanych rzędach, prawie zawsze pod kątem prostym do siebie, wzdłuż płaszczyzny czujnika (rys. -@fig-sensor).
+Poszczególne elementy czujnika są ułożone w uporządkowanych rzędach, prawie zawsze pod kątem prostym do siebie, wzdłuż płaszczyzny czujnika (@fig-sensor).
 Aparaty cyfrowe rejestrują obraz za pomocą matrycy CCD (ang. *Charge-Coupled Device*) lub CMOS (ang.*Complementary Metal-Oxide-Semiconductor*), która przetwarza światło na sygnał cyfrowy.
 
 Próbkowanie czasowe odbywa się poprzez pomiar w regularnych odstępach czasu ilości światła padającego na każdy pojedynczy element czujnika.
@@ -106,17 +107,25 @@ Obrazy wektorowe są zwykle zapisywane w formatach takich jak SVG, AI lub EPS.
 
 ![Grafika rastrowa vs wektorowa](images/Orc_-_Raster_vs_Vector_comparison.png)
 
-Główna różnica między grafiką rastrową a wektorową polega na tym, że obrazy rastrowe składają się z indywidualnych pikseli, podczas gdy obrazy wektorowe składają się z matematycznie opisanych kształtów. Obrazy rastrowe tracą jakość po powiększeniu, ponieważ piksele są widoczne, podczas gdy obrazy wektorowe zachowują jakość po powiększeniu, ponieważ są składane z kształtów matematycznych. Obie techniki, grafika rastrowa i wektorowa, mają swoje własne zalety i wady, i nie ma jednej techniki, która jest ogólnie uważana za bardziej dokładną.
+Główna różnica między grafiką rastrową a wektorową polega na tym, że obrazy rastrowe składają się z indywidualnych pikseli, podczas gdy obrazy wektorowe składają się z matematycznie opisanych kształtów.
+Obrazy rastrowe tracą jakość po powiększeniu, ponieważ piksele są widoczne, podczas gdy obrazy wektorowe zachowują jakość po powiększeniu, ponieważ są składane z kształtów matematycznych.
+Obie techniki, grafika rastrowa i wektorowa, mają swoje własne zalety i wady, i nie ma jednej techniki, która jest ogólnie uważana za bardziej dokładną.
 
-Grafika rastrowa jest bardziej odpowiednia do przedstawiania szczegółowych i skomplikowanych obrazów, takich jak zdjęcia lub malarstwo. Są one bardziej naturalne i realistyczne. Jednak, kiedy obrazy te są powiększane, ich jakość traci, ponieważ piksele są widoczne.
+Grafika rastrowa jest bardziej odpowiednia do przedstawiania szczegółowych i skomplikowanych obrazów, takich jak zdjęcia lub malarstwo.
+Są one bardziej naturalne i realistyczne.
+Jednak, kiedy obrazy te są powiększane, ich jakość traci, ponieważ piksele są widoczne.
 
-Grafika wektorowa jest lepsza do tworzenia prostych i precyzyjnych kształtów, takich jak loga, ikony i ilustracje. Są one bardziej elastyczne i skalowalne, ponieważ składają się z matematycznie opisanych kształtów, co pozwala na powiększanie bez utraty jakości. Jednakże, nie są one tak naturalne i realistyczne jak obrazy rastrowe.
+Grafika wektorowa jest lepsza do tworzenia prostych i precyzyjnych kształtów, takich jak loga, ikony i ilustracje.
+Są one bardziej elastyczne i skalowalne, ponieważ składają się z matematycznie opisanych kształtów, co pozwala na powiększanie bez utraty jakości.
+Jednakże, nie są one tak naturalne i realistyczne jak obrazy rastrowe.
 
 W ramach tego przedmiotu głównie będziemy się zajmować grafiką rastrową.
 
 Rozdzielczość jest jednym z najważniejszych czynników wpływających na jakość obrazu.
 Im więcej pikseli ma obraz, tym więcej szczegółów jest widocznych.
-Rozdzielczość obrazu określa wymiary przestrzenne obrazu w świecie rzeczywistym i jest podawana jako liczba elementów obrazu na jeden pomiar; na przykład w punktach na cal (dpi) lub liniach na cal (lpi) w przypadku produkcji poligraficznej lub w pikselach na kilometr w przypadku zdjęć satelitarnych. Jednocześnie, im więcej pikseli ma obraz, tym większy jest jego rozmiar pliku i tym więcej pamięci jest potrzebne do jego przechowywania. Wymiary obrazu przedstawiane są za pomocą liczby pikseli poziomo i pionowo, np.
+Rozdzielczość obrazu określa wymiary przestrzenne obrazu w świecie rzeczywistym i jest podawana jako liczba elementów obrazu na jeden pomiar; na przykład w punktach na cal (dpi) lub liniach na cal (lpi) w przypadku produkcji poligraficznej lub w pikselach na kilometr w przypadku zdjęć satelitarnych.
+Jednocześnie, im więcej pikseli ma obraz, tym większy jest jego rozmiar pliku i tym więcej pamięci jest potrzebne do jego przechowywania.
+Wymiary obrazu przedstawiane są za pomocą liczby pikseli poziomo i pionowo, np.
 1920x1080 pikseli.
 
 Innym ważnym czynnikiem wpływającym na wielkość obrazu jest format pliku w jakim jest zapisany.
@@ -124,32 +133,58 @@ Niektóre formaty są kompresowane co pozwala na zmniejszenie wielkości pliku p
 
 ## Skale
 
-1.  Skala szarości - dane obrazu w skali szarości składają się z pojedynczego kanału (ang. *channel*), który reprezentuje intensywność, jasność lub gęstość obrazu. W większości przypadków sens mają tylko wartości dodatnie, ponieważ liczby reprezentują natężenie energii świetlnej lub gęstość filmu, a więc nie mogą być ujemne, więc zwykle używa się całych liczb całkowitych z zakresu $0, \ldots , 2^{k - 1}$ są używane. Na przykład typowy obraz w skali szarości wykorzystuje $k = 8$ bitów (1 bajt) na piksel i wartości intensywności z zakresu $0,\ldots,255$, gdzie wartość 0 oznacza minimalną jasność (czerń), a 255 maksymalną jasność (biel). W wielu zastosowaniach profesjonalnej fotografii i druku, a także w medycynie i astronomii, 8 bitów na piksel nie jest wystarczające. W tych dziedzinach często spotyka się głębię obrazu 12, 14, a nawet 16 bitów. Zauważ, że głębia bitowa zwykle odnosi się do liczby bitów używanych do reprezentowania jednego składnika koloru, a nie liczby bitów potrzebnych do reprezentowania koloru piksela. Na przykład, zakodowany w RGB kolorowy obraz z 8-bitową głębią wymagałby 8 bitów dla każdego kanału, co daje w sumie 24 bity, podczas gdy ten sam obraz z 12-bitową głębią wymagałby w sumie 36 bitów.
+1.  Skala szarości - dane obrazu w skali szarości składają się z pojedynczego kanału (ang. *channel*), który reprezentuje intensywność, jasność lub gęstość obrazu.
+    W większości przypadków sens mają tylko wartości dodatnie, ponieważ liczby reprezentują natężenie energii świetlnej lub gęstość filmu, a więc nie mogą być ujemne, więc zwykle używa się całych liczb całkowitych z zakresu $0, \ldots , 2^{k - 1}$ są używane.
+    Na przykład typowy obraz w skali szarości wykorzystuje $k = 8$ bitów (1 bajt) na piksel i wartości intensywności z zakresu $0,\ldots,255$, gdzie wartość 0 oznacza minimalną jasność (czerń), a 255 maksymalną jasność (biel).
+    W wielu zastosowaniach profesjonalnej fotografii i druku, a także w medycynie i astronomii, 8 bitów na piksel nie jest wystarczające.
+    W tych dziedzinach często spotyka się głębię obrazu 12, 14, a nawet 16 bitów.
+    Zauważ, że głębia bitowa zwykle odnosi się do liczby bitów używanych do reprezentowania jednego składnika koloru, a nie liczby bitów potrzebnych do reprezentowania koloru piksela.
+    Na przykład, zakodowany w RGB kolorowy obraz z 8-bitową głębią wymagałby 8 bitów dla każdego kanału, co daje w sumie 24 bity, podczas gdy ten sam obraz z 12-bitową głębią wymagałby w sumie 36 bitów.
 
-2.  Obrazy binarne (ang. *binary images*) - to specjalny rodzaj obrazu, w którym piksele mogą przyjmować tylko jedną z dwóch wartości, czarną lub białą. Wartości te są zwykle kodowane przy użyciu pojedynczego bitu (0/1) na piksel. Obrazy binarne są często wykorzystywane do reprezentowania grafiki liniowej, archiwizacji dokumentów, kodowania transmisji faksowych i oczywiście w druku elektronicznym.
+2.  Obrazy binarne (ang. *binary images*) - to specjalny rodzaj obrazu, w którym piksele mogą przyjmować tylko jedną z dwóch wartości, czarną lub białą.
+    Wartości te są zwykle kodowane przy użyciu pojedynczego bitu (0/1) na piksel.
+    Obrazy binarne są często wykorzystywane do reprezentowania grafiki liniowej, archiwizacji dokumentów, kodowania transmisji faksowych i oczywiście w druku elektronicznym.
 
-3.  Obrazy kolorowe (ang. *color images*) - większość kolorowych obrazów opiera się na kolorach podstawowych: czerwonym, zielonym i niebieskim (RGB), zwykle wykorzystując 8 bitów dla każdego kanału. W tego rodzaju obrazach kolorowych, każdy piksel wymaga 3×8 = 24 bity do zakodowania wszystkich trzech składowych, a zakres każdej indywidualnej składowej koloru wynosi \[0, 255\]. Podobnie jak w przypadku obrazów w skali szarości, kolorowe obrazy z 30, 36 i 42 bitami na piksel są powszechnie używane w profesjonalnych aplikacjach. Wreszcie, podczas gdy większość obrazów kolorowych zawiera trzy składowe, obrazy z czterema lub więcej składowymi koloru są powszechne w druku, zwykle oparte na modelu koloru CMYK (Cyan-Magenta-Yellow- Black). Główna różnica między tymi dwiema paletami polega na tym, że RGB ma więcej możliwości kolorów, ponieważ jest w stanie wygenerować więcej odcieni niż CMYK, ale kolory wyświetlane przez RGB nie są takie same jak te, które otrzymujemy przy druku z CMYK. Kolory drukowane z CMYK mogą również różnić się od tych wyświetlanych na ekranie.
+3.  Obrazy kolorowe (ang. *color images*) - większość kolorowych obrazów opiera się na kolorach podstawowych: czerwonym, zielonym i niebieskim (RGB), zwykle wykorzystując 8 bitów dla każdego kanału.
+    W tego rodzaju obrazach kolorowych, każdy piksel wymaga 3×8 = 24 bity do zakodowania wszystkich trzech składowych, a zakres każdej indywidualnej składowej koloru wynosi \[0, 255\].
+    Podobnie jak w przypadku obrazów w skali szarości, kolorowe obrazy z 30, 36 i 42 bitami na piksel są powszechnie używane w profesjonalnych aplikacjach.
+    Wreszcie, podczas gdy większość obrazów kolorowych zawiera trzy składowe, obrazy z czterema lub więcej składowymi koloru są powszechne w druku, zwykle oparte na modelu koloru CMYK (Cyan-Magenta-Yellow- Black).
+    Główna różnica między tymi dwiema paletami polega na tym, że RGB ma więcej możliwości kolorów, ponieważ jest w stanie wygenerować więcej odcieni niż CMYK, ale kolory wyświetlane przez RGB nie są takie same jak te, które otrzymujemy przy druku z CMYK.
+    Kolory drukowane z CMYK mogą również różnić się od tych wyświetlanych na ekranie.
 
-4.  Obrazy specjalne - są wymagane, jeżeli żaden z powyższych formatów standardowych nie jest wystarczający do przedstawienia wartości obrazu. Dwa popularne przykłady obrazów specjalnych to obrazy z wartościami ujemnymi oraz obrazy z wartościami zmiennoprzecinkowymi. Obrazy z wartościami ujemnymi powstają podczas etapów przetwarzania obrazu, takich jak filtrowanie w celu wykrywania krawędzi, a obrazy z wartościami zmiennoprzecinkowymi są często spotykane w zastosowaniach medycznych, biologicznych lub astronomicznych, gdzie wymagany jest zwiększony zakres liczbowy i precyzja. Te specjalne formaty są w większości przypadków specyficzne dla danego zastosowania i dlatego mogą być trudne do wykorzystania przez standardowe narzędzia do przetwarzania obrazów.
+4.  Obrazy specjalne - są wymagane, jeżeli żaden z powyższych formatów standardowych nie jest wystarczający do przedstawienia wartości obrazu.
+    Dwa popularne przykłady obrazów specjalnych to obrazy z wartościami ujemnymi oraz obrazy z wartościami zmiennoprzecinkowymi.
+    Obrazy z wartościami ujemnymi powstają podczas etapów przetwarzania obrazu, takich jak filtrowanie w celu wykrywania krawędzi, a obrazy z wartościami zmiennoprzecinkowymi są często spotykane w zastosowaniach medycznych, biologicznych lub astronomicznych, gdzie wymagany jest zwiększony zakres liczbowy i precyzja.
+    Te specjalne formaty są w większości przypadków specyficzne dla danego zastosowania i dlatego mogą być trudne do wykorzystania przez standardowe narzędzia do przetwarzania obrazów.
 
 ## Formaty zapisu
 
 ### TIFF
 
-TIFF (ang. *Tagged Image File Format*) jest formatem pliku, który jest używany do przechowywania i wymiany obrazów cyfrowych. Jest to format bezstratny, co oznacza, że po zapisaniu i odczytaniu obrazu jego jakość pozostaje taka sama. TIFF jest obsługiwany przez wiele programów do edycji obrazów i może być używany do przechowywania różnych rodzajów obrazów, w tym obrazów w skali szarości, kolorowych oraz map bitowych. Format TIFF jest często używany przez profesjonalnych fotografów i grafików, ponieważ pozwala na zachowanie wysokiej jakości obrazu i jest kompatybilny z wieloma programami i urządzeniami.
+TIFF (ang. *Tagged Image File Format*) jest formatem pliku, który jest używany do przechowywania i wymiany obrazów cyfrowych.
+Jest to format bezstratny, co oznacza, że po zapisaniu i odczytaniu obrazu jego jakość pozostaje taka sama.
+TIFF jest obsługiwany przez wiele programów do edycji obrazów i może być używany do przechowywania różnych rodzajów obrazów, w tym obrazów w skali szarości, kolorowych oraz map bitowych.
+Format TIFF jest często używany przez profesjonalnych fotografów i grafików, ponieważ pozwala na zachowanie wysokiej jakości obrazu i jest kompatybilny z wieloma programami i urządzeniami.
 
 ### GIF
 
-GIF (ang. *Graphics Interchange Format*) jest formatem pliku graficznego, który jest używany do przechowywania i wymiany obrazów w internecie. GIF jest formatem bezstratnym, ale jest kompresowany, co pozwala na zmniejszenie rozmiaru pliku i przyspieszenie jego przesyłania.
-Co ważne, GIF jest formatem obsługującym animacje, co oznacza, że może on przechowywać kilka klatek jako jeden plik, co pozwala na tworzenie animowanych obrazów, często używanych jako emotikony, ikony lub małe animacje na stronach internetowych. GIF jest również ograniczony do 256 kolorów, co oznacza, że nie jest on dobrym rozwiązaniem do przechowywania zdjęć o wysokiej jakości.
+GIF (ang. *Graphics Interchange Format*) jest formatem pliku graficznego, który jest używany do przechowywania i wymiany obrazów w internecie.
+GIF jest formatem bezstratnym, ale jest kompresowany, co pozwala na zmniejszenie rozmiaru pliku i przyspieszenie jego przesyłania.
+Co ważne, GIF jest formatem obsługującym animacje, co oznacza, że może on przechowywać kilka klatek jako jeden plik, co pozwala na tworzenie animowanych obrazów, często używanych jako emotikony, ikony lub małe animacje na stronach internetowych.
+GIF jest również ograniczony do 256 kolorów, co oznacza, że nie jest on dobrym rozwiązaniem do przechowywania zdjęć o wysokiej jakości.
 
 ### PNG
 
-PNG (ang. *Portable Network Graphics*) jest bezstratnym formatem pliku graficznego, który jest używany do przechowywania i wymiany obrazów w internecie. Podobnie jak GIF może być kompresowany w celu zmniejszenia rozmiaru pliku. Co ważne, format PNG jest formatem obsługującym przezroczystość, co oznacza, że może on przechowywać kanał alfa, który jest odpowiedzialny za przezroczystość obrazu, co pozwala na zastosowanie efektu przezroczystości na obrazie bez konieczności dodatkowego tworzenia specjalnego tła. PNG jest również w stanie przechowywać więcej kolorów niż GIF, co oznacza, że jest to lepsze rozwiązanie dla obrazów o wysokiej jakości.
+PNG (ang. *Portable Network Graphics*) jest bezstratnym formatem pliku graficznego, który jest używany do przechowywania i wymiany obrazów w internecie.
+Podobnie jak GIF może być kompresowany w celu zmniejszenia rozmiaru pliku.
+Co ważne, format PNG jest formatem obsługującym przezroczystość, co oznacza, że może on przechowywać kanał alfa, który jest odpowiedzialny za przezroczystość obrazu, co pozwala na zastosowanie efektu przezroczystości na obrazie bez konieczności dodatkowego tworzenia specjalnego tła.
+PNG jest również w stanie przechowywać więcej kolorów niż GIF, co oznacza, że jest to lepsze rozwiązanie dla obrazów o wysokiej jakości.
 
 ### JPEG
 
-JPEG (ang. *Joint Photographic Experts Group*) to popularny format zapisu obrazów cyfrowych, który jest szczególnie przydatny do przechowywania zdjęć. Format ten pozwala na kompresję pliku (stratną), dzięki czemu pliki JPEG są mniejsze niż pliki niekompresowane. Format ten jest szczególnie przydatny do przechowywania zdjęć z wysokim poziomem szczegółów, takich jak zdjęcia przyrody czy portrety.
+JPEG (ang. *Joint Photographic Experts Group*) to popularny format zapisu obrazów cyfrowych, który jest szczególnie przydatny do przechowywania zdjęć.
+Format ten pozwala na kompresję pliku (stratną), dzięki czemu pliki JPEG są mniejsze niż pliki niekompresowane.
+Format ten jest szczególnie przydatny do przechowywania zdjęć z wysokim poziomem szczegółów, takich jak zdjęcia przyrody czy portrety.
 
 ### EXIF
 
@@ -184,7 +219,8 @@ Również w samym środowisku R istnieje szereg bibliotek do obsługi obrazów:
 -   `pliman` - jest pakietem do analizy obrazów, ze szczególnym uwzględnieniem obrazów roślin. Jest użytecznym narzędziem do uzyskania informacji ilościowej dla obiektów docelowych. W kontekście obrazów roślin, ilościowe określanie powierzchni liści, nasilenia chorób, liczby zmian chorobowych, liczenie liczby ziaren, uzyskiwanie statystyk ziaren (np. długość i szerokość) można wykonać stosując pakiet `pliman`.
 
 ::: {#exm-1 .exm}
-W tym przykładzie przedstawiona zostanie procedura importu i eksportu obrazów do różnych formatów. Najpierw wczytamy zdjęcie wykonane telefonem (IPhone 12) zapisane w formacie TIFF, a następnie zapiszemy to zdjęcie w kilku innych formatach, by na końcu wczytać je wszystkie i porównać.
+W tym przykładzie przedstawiona zostanie procedura importu i eksportu obrazów do różnych formatów.
+Najpierw wczytamy zdjęcie wykonane telefonem (IPhone 12) zapisane w formacie TIFF, a następnie zapiszemy to zdjęcie w kilku innych formatach, by na końcu wczytać je wszystkie i porównać.
 
 ```{r}
 library(magick)
@@ -228,7 +264,7 @@ image_write(img_orig, path = "images/img4.jpeg",
             quality = 25, format = "jpeg")
 ```
 
-Po zapisie pliki znacznie zmniejszyły swoją wielkość.
+Po zapisie do innych formatów pliki znacznie zmniejszyły swoją wielkość.
 
 ```{r}
 #| label: tbl-infos
@@ -280,7 +316,6 @@ img_jpeg3
 img_jpeg4
 ```
 
-
 ```{r}
 #| label: fig-hist
 #| layout-ncol: 2
@@ -319,6 +354,4 @@ magick2cimg(img_png) |>
   geom_histogram()+
   facet_wrap(~ channel)
 ```
-
-
 :::

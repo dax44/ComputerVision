@@ -129,7 +129,7 @@ image_rotate(frink, 90)
 
 ## Rotacje obrazów
 
-Obroty o inne kąty niż pełne wielokrotności 90$\degree$ powodują pewne problemy, ponieważ po rotacji powstają piksele, które nie pokrywają żadnej wartości z oryginalnego obrazu, a część z nich zawiera kilka wartości (patrz -@fig-rotation1).
+Obroty o inne kąty niż pełne wielokrotności 90$\degree$ powodują pewne problemy, ponieważ po rotacji powstają piksele, które nie pokrywają żadnej wartości z oryginalnego obrazu, a część z nich zawiera kilka wartości (@fig-rotation1).
 Podobne zjawisko może powstać w sytuacji zmiany rozmiaru obrazów.
 W tych sytuacjach konieczna jest interpolacja pikseli zarówno "pustych", jak i "wypełnionych".
 
@@ -225,4 +225,3 @@ row2 <- imappend(im_list[5:7], "x")
 imappend(list(row1, row2), "y") |>
   plot(interp = F)
 ```
-
