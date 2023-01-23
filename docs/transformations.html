@@ -234,6 +234,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
 <li><a href="#przyk%C5%82ady-r%C3%B3%C5%BCnych-transformacji" id="toc-przykłady-różnych-transformacji" class="nav-link active" data-scroll-target="#przyk%C5%82ady-r%C3%B3%C5%BCnych-transformacji"><span class="toc-section-number">4.1</span>  Przykłady różnych transformacji</a></li>
+  <li><a href="#rotacje-obraz%C3%B3w" id="toc-rotacje-obrazów" class="nav-link" data-scroll-target="#rotacje-obraz%C3%B3w"><span class="toc-section-number">4.2</span>  Rotacje obrazów</a></li>
+  <li><a href="#zmiana-rozmiaru-obrazu" id="toc-zmiana-rozmiaru-obrazu" class="nav-link" data-scroll-target="#zmiana-rozmiaru-obrazu"><span class="toc-section-number">4.3</span>  Zmiana rozmiaru obrazu</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -304,12 +306,15 @@ y' &amp;= x \sin(\theta) + y \cos(\theta),
 <section id="przykłady-różnych-transformacji" class="level2 exm-2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="przykłady-różnych-transformacji">
 <span class="header-section-number">4.1</span> Przykłady różnych transformacji</h2>
 <div class="cell">
-<details><summary>Kod</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#" fig-cap: Frink w oryginalnym rozmiarze</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/magick/">magick</a></span><span class="op">)</span></span>
+<details><summary>Kod</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/magick/">magick</a></span><span class="op">)</span></span>
 <span><span class="va">frink</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span><span class="st">"https://jeroen.github.io/images/frink.png"</span><span class="op">)</span></span>
 <span><span class="va">frink</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<p><img src="transformations_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="110"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="transformations_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="110"></p>
+<p></p><figcaption class="figure-caption">Frink w oryginalnym rozmiarze</figcaption><p></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
@@ -342,10 +347,130 @@ y' &amp;= x \sin(\theta) + y \cos(\theta),
 </div>
 </div>
 </div>
-</section>
+</section><section id="rotacje-obrazów" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="rotacje-obrazów">
+<span class="header-section-number">4.2</span> Rotacje obrazów</h2>
+<p>Obroty o inne kąty niż pełne wielokrotności 90<span class="math inline">\(\degree\)</span> powodują pewne problemy, ponieważ po rotacji powstają piksele, które nie pokrywają żadnej wartości z oryginalnego obrazu, a część z nich zawiera kilka wartości (patrz -<a href="#fig-rotation1">Rysunek&nbsp;<span>4.1</span></a>). Podobne zjawisko może powstać w sytuacji zmiany rozmiaru obrazów. W tych sytuacjach konieczna jest interpolacja pikseli zarówno “pustych”, jak i “wypełnionych”.</p>
+<div id="fig-rotation1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-01-23 o 18.32.36.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;4.1: Przykład rotacji obrazu</figcaption><p></p>
+</figure>
+</div>
+<div id="fig-rotation2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><details><summary>Kod</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://dahtah.github.io/imager/">imager</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tensorflow.rstudio.com/">keras</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/dataset_mnist.html">dataset_mnist</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">im</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">train</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">2023</span>,,<span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">im</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/as.cimg.html">as.cimg</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">im_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/map_il.html">map_il</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">6</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imrotate.html">imrotate</a></span><span class="op">(</span><span class="va">im</span>, <span class="co"># Nearest Neighbour interp.</span></span>
+<span>                                 angle <span class="op">=</span> <span class="fl">15</span><span class="op">*</span><span class="va">.x</span>, </span>
+<span>                                 interpolation <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">row1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, axis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span>  </span>
+<span><span class="va">row2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, axis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">row1</span>,<span class="va">row2</span><span class="op">)</span>, <span class="st">"y"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>interp<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="co"># antialiasing off</span></span>
+<span></span>
+<span><span class="va">im_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/map_il.html">map_il</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">6</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imrotate.html">imrotate</a></span><span class="op">(</span><span class="va">im</span>, <span class="co"># linear interpolation</span></span>
+<span>                                 angle <span class="op">=</span> <span class="fl">15</span><span class="op">*</span><span class="va">.x</span>, </span>
+<span>                                 interpolation <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">row1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, axis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span>  </span>
+<span><span class="va">row2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, axis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">row1</span>,<span class="va">row2</span><span class="op">)</span>, <span class="st">"y"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>interp<span class="op">=</span><span class="cn">F</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">im_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/map_il.html">map_il</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">6</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imrotate.html">imrotate</a></span><span class="op">(</span><span class="va">im</span>, <span class="co"># cubic interpolation</span></span>
+<span>                                 angle <span class="op">=</span> <span class="fl">15</span><span class="op">*</span><span class="va">.x</span>, </span>
+<span>                                 interpolation <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">row1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, axis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span>  </span>
+<span><span class="va">row2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, axis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">row1</span>,<span class="va">row2</span><span class="op">)</span>, <span class="st">"y"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>interp<span class="op">=</span><span class="cn">F</span><span class="op">)</span> </span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-rotation2-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="transformations_files/figure-html/fig-rotation2-1.png" class="img-fluid figure-img" data-ref-parent="fig-rotation2" width="672"></p>
+<p></p><figcaption class="figure-caption">(a) Nearest Neighbour interpolation</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-rotation2-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="transformations_files/figure-html/fig-rotation2-2.png" class="img-fluid figure-img" data-ref-parent="fig-rotation2" width="672"></p>
+<p></p><figcaption class="figure-caption">(b) Linear interpolation</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-rotation2-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="transformations_files/figure-html/fig-rotation2-3.png" class="img-fluid figure-img" data-ref-parent="fig-rotation2" width="672"></p>
+<p></p><figcaption class="figure-caption">(c) Cubic interpolation</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;4.2: Przykład rotacji o wielokrotnośc <span class="math inline">\(15\degree\)</span></figcaption><p></p>
+</figure>
+</div>
+<p>Jak widać z powyższych wykresów rotacja wpływa na jakość obrazu, dlatego zaleca się nie stosować kilku występujących po sobie rotacji o kąty niebędące wielokrotnościami <span class="math inline">\(90\degree\)</span>.</p>
+<div class="cell">
+<details><summary>Kod</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">im2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imlist.html">imlist</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">im2</span><span class="op">[[</span><span class="va">i</span><span class="op">+</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imrotate.html">imrotate</a></span><span class="op">(</span><span class="va">im2</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, angle <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im2</span>, axis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>interp<span class="op">=</span><span class="cn">F</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-rotation3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="transformations_files/figure-html/fig-rotation3-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;4.3: Kilka iteracji rotacji obrazu. Każdy nastepny powstaje jako rotacja poprzedniego.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="zmiana-rozmiaru-obrazu" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="zmiana-rozmiaru-obrazu">
+<span class="header-section-number">4.3</span> Zmiana rozmiaru obrazu</h2>
+<p>W przypadku gdy zmieniamy rozmiar obrazu w proporcji 0.5, 2, 3 funkcja <code>imresize</code> korzysta z algorytmu opisanego na stronie <a href="http://www.scale2x.it/algorithm.html" class="uri">http://www.scale2x.it/algorithm.html</a>.</p>
+<div class="cell">
+<details><summary>Kod</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">im_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/map_il.html">map_il</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>,<span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/resize_uniform.html">imresize</a></span><span class="op">(</span><span class="va">im</span>, </span>
+<span>                                         scale <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span>, <span class="st">"x"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>interp <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="co"># antialiasing off</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-zooming1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="transformations_files/figure-html/fig-zooming1-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;4.4: Zmiana rozmiaru obrazu</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>W innych przypadkach wykorzystuje jedną z 7 opcji interpolacji:</p>
+<ul>
+<li>brak interpolacji (opcja -1);</li>
+<li>brak interpolacji ale dodatkowo powstała przestrzeń jest wypełniana zgodnie z warunkiem brzegowym <code>boundary_conditions</code> (opcja 0);</li>
+<li>interpolacja metodą najbliższego sąsiada (opcja 1);</li>
+<li>interpolacja metodą średniej kroczącej (opcja 2);</li>
+<li>interpolacja liniowa (opcja 3);</li>
+<li>interpolacja na siatce (opcja 4);</li>
+<li>interpolacja kubiczna (opcja 5);</li>
+<li>interpolacja Lanczosa (opcja 6).</li>
+</ul>
+<div class="cell">
+<details><summary>Kod</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">im_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/map_il.html">map_il</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/resize_uniform.html">imresize</a></span><span class="op">(</span><span class="va">im</span>, </span>
+<span>                                     scale <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>                                     interpolation <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">row1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="st">"x"</span><span class="op">)</span></span>
+<span><span class="va">row2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, <span class="st">"x"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">row1</span>, <span class="va">row2</span><span class="op">)</span>, <span class="st">"y"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>interp <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-zooming2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="transformations_files/figure-html/fig-zooming2-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;4.5: Zastosowania różnych interpolacji</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 
 
-</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
