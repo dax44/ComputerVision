@@ -81,6 +81,8 @@ Próbkowanie przestrzenne obrazu (czyli zamiana sygnału ciągłego na jego repr
 Poszczególne elementy czujnika są ułożone w uporządkowanych rzędach, prawie zawsze pod kątem prostym do siebie, wzdłuż płaszczyzny czujnika (@fig-sensor).
 Aparaty cyfrowe rejestrują obraz za pomocą matrycy CCD (ang. *Charge-Coupled Device*) lub CMOS (ang.*Complementary Metal-Oxide-Semiconductor*), która przetwarza światło na sygnał cyfrowy.
 
+![Fragmenty matryc CCD i CMOS](images/Zrzut%20ekranu%202023-01-26%20o%2017.32.32.png)
+
 Próbkowanie czasowe odbywa się poprzez pomiar w regularnych odstępach czasu ilości światła padającego na każdy pojedynczy element czujnika.
 CCD w aparacie cyfrowym robi to poprzez wyzwolenie procesu ładowania, a następnie zmierzenie ilości ładunku elektrycznego, który nagromadził się w określonym czasie, w którym CCD była oświetlona.
 
@@ -95,6 +97,8 @@ Konwersja odbywa się za pomocą konwertera analogowo-cyfrowego, który jest zaz
 Matryce CMOS są tańsze w produkcji, bardziej energooszczędne i mogą być łatwiej integrowane z innymi elementami elektronicznymi w aparacie, takimi jak procesor obrazu, a także z innymi funkcjami, takimi jak GPS, WiFi czy Bluetooth.
 Matryce CCD są bardziej wrażliwe na światło i mają lepszą jakość obrazu, zwłaszcza w warunkach słabego oświetlenia.
 Natomiast matryce CMOS są lepsze do zastosowań, w których ważna jest wysoka przepustowość i szybkość rejestracji obrazów oraz niskie zużycie energii.
+
+![Pojedyncza fotodioda](images/Zrzut%20ekranu%202023-01-26%20o%2017.34.40.png){width="500"}
 
 Najpowszechniej stosowany podział obrazów cyfrowych zapisanych na nośniku, to grafika rastrowa i grafika wektorowa.
 Grafika rastrowa (ang. *raster image*), zwana też grafiką bitmapową, to rodzaj grafiki, w której obraz jest składany z pojedynczych pikseli.
