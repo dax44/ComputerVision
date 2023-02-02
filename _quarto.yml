@@ -15,7 +15,7 @@ book:
   favicon: cover.png
   repo-url: https://github.com/dax44/ComputerVision/
   repo-actions: [issue]
-  sharing: [twitter,facebook]
+  sharing: [twitter]
   downloads: [pdf, epub]
   search: true
   twitter-card:
@@ -25,6 +25,9 @@ book:
     affiliation: Politechnika Lubelska
   date: last-modified
   sidebar: 
+    tools: 
+      - icon: twitter
+        href: https://twitter.com
     logo: images/logo.png
   chapters:
     - index.qmd
@@ -32,6 +35,7 @@ book:
     - history.qmd
     - digt_img.qmd
     - transformations.qmd
+    - point_trans.qmd
     - summary.qmd
     - references.qmd
 
@@ -42,12 +46,11 @@ format:
   html:
     lang: pl
     theme:
-      light: [pulse, mycss.scss]
-      dark: [slate, mycss.scss]
+      light: [simplex, mycss.scss]
+      dark: [solar, mycss.scss]
     code-link: true
     code-fold: true
-    margin-left: 0em
-    margin-right: 0em
+
 execute: 
   warning: false
 

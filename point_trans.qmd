@@ -1,0 +1,61 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Transformacje punktowe
+
+Transformacje obrazów, które odbywają się na poziomie pojedynczych pikseli nazywane są w literaturze tematu transformacjami punktowymi (ang. *point transformation*).
+Należą do nich między innymi:
+
+-   modyfikacja kontrastu,
+-   modyfikacja jasności,
+-   zmiana intensywności,
+-   odwracanie wartości piksela,
+-   kwantyzacja obrazów (ang. *posterizing*),
+-   progowanie,
+-   korekta gammy,
+-   transformacje kolorów.
+
+Wszystkie można opisać formułą
+
+$$
+g(x) = h(f(x)),
+$$
+
+gdzie $x = (i,j)$ jest położeniem transformowanego piksela, $f$ jest funkcja oryginalnego obrazu (przed przekształceniem)[^point_trans-1], natomiast $h$ jest zastosowaną transformacją.
+Wówczas $g$ opisuje transformację jako funkcję lokalizacji.
+
+[^point_trans-1]: informuje o nasyceniu barw w danej lokalizacji - pikselu
+
+Na potrzeby zmian w kontraście, czy jasności stosuje się przekształcenia postaci:
+
+$$
+g(x) = a(x)\cdot f(x)+b(x),
+$$
+
+gdzie $a(x)$ jest parametrem zmiany kontrastu, a $b(x)$ jest parametrem zmiany jasności[^point_trans-2].
+
+[^point_trans-2]: jeśli zmieniamy te parametry globalnie (dla całego obrazu) wówczas funkcje te są stałe
+
+```{r}
+#| label: fig-contr
+#| fig-cap: Zmiana kontrastu obrazu (podbicie o 50%)
+library(magick)
+library(imager)
+boats2 <- cimg2magick(boats)
+
+layout(t(1:2))
+plot(boats2)
+plot(image_contrast(boats2, sharpen = 150))
+```
+
+```{r}
+#| label: fig-brithness
+#| fig-cap: Zmiana jasności obrazu (podbicie o 50%)
+
+layout(t(1:2))
+plot(boats2)
+plot(image_modulate(boats2, brightness = 150))
+```
