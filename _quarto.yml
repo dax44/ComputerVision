@@ -53,5 +53,3 @@ execute:
   warning: false
 
 editor: visual
-comments:
-  hypothesis: true
