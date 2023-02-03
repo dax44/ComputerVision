@@ -243,6 +243,7 @@ img_orig_info
 Jak widać obraz w formacie TIFF zajmuje bardzo dużo miejsca na dysku (36,6MB).
 
 ```{r}
+#| eval: false
 # eksport do GIF
 image_write(img_orig, path = "images/img.gif", 
             format = "gif")
