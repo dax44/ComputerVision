@@ -34,7 +34,7 @@ book:
     - digt_img.qmd
     - transformations.qmd
     - point_trans.qmd
-    - summary.qmd
+    - filters.qmd
     - references.qmd
 
 bibliography: references.bib
