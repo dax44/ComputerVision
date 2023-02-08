@@ -250,6 +250,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#filtry-liniowe" id="toc-filtry-liniowe"><span class="toc-section-number">6.1</span> <span class="header-section-number">6.1</span> Filtry liniowe</a>
   <ul>
   <li><a href="#przykładowe-filtry-wygładzające-ang.-smoothing" id="toc-przykładowe-filtry-wygładzające-ang.-smoothing"><span class="toc-section-number">6.1.1</span> <span class="header-section-number">6.1.1</span> Przykładowe filtry wygładzające (ang. <em>smoothing</em>)</a></li>
+  <li><a href="#przykład-filtru-różnicującego" id="toc-przykład-filtru-różnicującego"><span class="toc-section-number">6.1.2</span> <span class="header-section-number">6.1.2</span> Przykład filtru różnicującego</a></li>
+  <li><a href="#formalny-zapis-operatorów-filtracji" id="toc-formalny-zapis-operatorów-filtracji"><span class="toc-section-number">6.1.3</span> <span class="header-section-number">6.1.3</span> Formalny zapis operatorów filtracji</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -432,12 +434,39 @@ I&#39;(u,v) = Offset+\frac{1}{Scale}\cdot \sum_{i,j\in R_H}I(u+i, v+j)\cdot H(i,
 <section id="przykładowe-filtry-wygładzające-ang.-smoothing" class="level3" data-number="6.1.1">
 <h3 data-number="6.1.1"><span class="header-section-number">6.1.1</span> Przykładowe filtry wygładzające (ang. <em>smoothing</em>)</h3>
 <ol type="1">
-<li><p>Filtr pudełkowy (ang <em>box</em>), którego zasada działania została już przedstawiona w <a href="#eq-1">Równanie <span class="quarto-unresolved-ref">eq-1</span></a> dla rozmiaru filtra 3x3 jest jednym z filtrów wygładzających. Im większy jest rozmiar filtra, tym większy stopień wygładzenia obrazu wyjściowego. Ten najprostszy ze wszystkich filtrów wygładzających, którego kształt 3D przypomina pudełko (rys. 5.8(a)), jest dobrze znany. Niestety, filtr pudełkowy jest daleki od optymalnego filtra wygładzającego ze względu na swoje dziwne zachowanie w przestrzeni częstotliwości, które jest spowodowane ostrym odcięciem wokół jego boków. Opisane w kategoriach częstotliwościowych wygładzanie odpowiada tzw. filtracji dolnoprzepustowej, czyli efektywnemu tłumieniu wszystkich składowych sygnału powyżej danej częstotliwości odcięcia. Filtr pudełkowy wytwarza jednak silne “dzwonienie” w przestrzeni częstotliwości i dlatego nie jest uważany za wysokiej jakości filtr wygładzający. Przypisanie tej samej wagi wszystkim pikselom obrazu w regionie filtru może też wydawać się dość doraźne. Zamiast tego należałoby prawdopodobnie oczekiwać, że silniejszy nacisk zostanie położony na piksele znajdujące się w pobliżu centrum filtra niż na te bardziej odległe. Ponadto filtry wygładzające powinny ewentualnie działać “izotropowo” (tzn. jednolicie w każdym kierunku), co z pewnością nie ma miejsca w przypadku filtra prostokątnego.</p></li>
-<li><p>Filtr gaussowski - z pewnością lepszy w tym kontekście wygładzania z względu na brak ostrych krawędzi jądra. Definiuje się go następująco</p></li>
+<li><p>Filtr pudełkowy (ang <em>box</em>), którego zasada działania została już przedstawiona w <a href="#eq-1">Równanie <span class="quarto-unresolved-ref">eq-1</span></a> dla rozmiaru filtra 3x3 jest jednym z filtrów wygładzających. Im większy jest rozmiar filtra, tym większy stopień wygładzenia obrazu wyjściowego. Ten najprostszy ze wszystkich filtrów wygładzających, którego kształt 3D przypomina pudełko (<a href="#fig-flt5">Rysunek <span class="quarto-unresolved-ref">fig-flt5</span></a> (a)), jest dobrze znany. Niestety, filtr pudełkowy jest daleki od optymalnego filtra wygładzającego ze względu na swoje dziwne zachowanie w przestrzeni częstotliwości, które jest spowodowane ostrym odcięciem wokół jego boków. Opisane w kategoriach częstotliwościowych wygładzanie odpowiada tzw. filtracji dolnoprzepustowej, czyli efektywnemu tłumieniu wszystkich składowych sygnału powyżej danej częstotliwości odcięcia. Filtr pudełkowy wytwarza jednak silne “dzwonienie” w przestrzeni częstotliwości i dlatego nie jest uważany za wysokiej jakości filtr wygładzający. Przypisanie tej samej wagi wszystkim pikselom obrazu w regionie filtru może też wydawać się dość doraźne. Zamiast tego należałoby prawdopodobnie oczekiwać, że silniejszy nacisk zostanie położony na piksele znajdujące się w pobliżu centrum filtra niż na te bardziej odległe. Ponadto filtry wygładzające powinny ewentualnie działać “izotropowo” (tzn. jednolicie w każdym kierunku), co z pewnością nie ma miejsca w przypadku filtra prostokątnego.</p></li>
+<li><p>Filtr gaussowski - z pewnością lepszy w tym kontekście wygładzania z względu na brak ostrych krawędzi jądra. Definiuje się go następująco <span class="math display">\[
+H^{G,\sigma}(x,y) = e^{-\frac{x^2+y^2}{2\sigma^2}},
+\]</span> gdzie <span class="math inline">\(\sigma\)</span> oznacza odchylenie standardowe rozkładu.</p></li>
 </ol>
-<p><span class="math display">\[
-H^{G,\sigma}(x,y) = e^{-\frac{}{}}
-\]</span></p>
+</section>
+<section id="przykład-filtru-różnicującego" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2"><span class="header-section-number">6.1.2</span> Przykład filtru różnicującego</h3>
+<p>Jeśli niektóre współczynniki filtra są ujemne, to obliczenie filtra można zinterpretować jako różnicę dwóch sum: suma ważona wszystkich pikseli z przypisanymi współczynnikami dodatnimi minus suma ważona pikseli z ujemnymi współczynnikami w regionie filtra RH , czyli</p>
+<p><span id="eq-gauss2"><span class="math display">\[
+\begin{align}
+  I&#39;(u,v)=&amp;\sum_{(i,j)\in R^+}I(u+i, v+j)\cdot \vert H(i,j)\vert -\\
+-&amp;\sum_{(i,j)\in R^-}I(u+i, v+j)\cdot \vert H(i,j)\vert,
+\end{align}
+\tag{6.4}\]</span></span></p>
+<p>gdzie <span class="math inline">\(R^-, R^+\)</span> oznaczają podział filtra na współczynniki ujemne <span class="math inline">\(H(i,j)&lt;0\)</span> i dodatnie <span class="math inline">\(H(i,j)&gt;0\)</span> odpowiednio. Na przykład filtr Laplace’a 5x5 na <a href="#fig-flt5">Rysunek <span class="quarto-unresolved-ref">fig-flt5</span></a> (c) oblicza różnicę między pikselem środkowym (o wadze 16) a sumą ważoną 12 otaczających go pikseli (o wagach -1 lub -2). Pozostałe 12 pikseli ma przypisane zerowe współczynniki i dlatego są one ignorowane w obliczeniach. Podczas gdy lokalne zmiany intensywności są wygładzane przez uśrednianie, możemy oczekiwać, że w przypadku różnic stanie się dokładnie odwrotnie - lokalne zmiany intensywności zostaną wzmocnione.</p>
+<div id="fig-flt5" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="images/Zrzut%20ekranu%202023-02-7%20o%2023.46.00.png" class="img-fluid" /></p>
+<p><figcaption>Rysunek 6.6: Przykłady różnych filtrów o rozmiarze 5x5. (a) filtr pudełkowy, (b) gaussowski, (c) Laplace’a (zwany także <em>Mexican Hut</em>)</figcaption></p>
+</figure>
+</div>
+</section>
+<section id="formalny-zapis-operatorów-filtracji" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3"><span class="header-section-number">6.1.3</span> Formalny zapis operatorów filtracji</h3>
+<p>Wspomniany zapis w równaniu <a href="#eq-filtr">Równanie <span class="quarto-unresolved-ref">eq-filtr</span></a> nazywany jest w literaturze operatorem korelacyjnym (ang. <em>correlation operator)</em>. Ma on jedną poważną wadę, ponieważ filtr zastosowany do obrazu z pojedynczym wtrąceniem (jednym pikselem świecącym) w rezultacie daje w obrazie wynikowym wartości filtra zrotowane o <span class="math inline">\(180\degree\)</span> (patrz )</p>
+<div id="fig-corr" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="images/Zrzut%20ekranu%202023-02-8%20o%2018.44.52.png" class="img-fluid" /></p>
+<p><figcaption>Rysunek 6.7: Zastosowanie operatora korelacyjnego na obrazie z jednym wtrąceniem</figcaption></p>
+</figure>
+</div>
+<p>Rozwiązaniem tej niedogodności jest wprowadzenie operatora konwolucyjnego (ang</p>
 <div id="quarto-navigation-envelope" class="hidden">
 <p><span class="hidden" data-render-id="quarto-int-sidebar-title">Automatyczna analiza obrazu</span> <span class="hidden" data-render-id="quarto-int-navbar-title">Automatyczna analiza obrazu</span> <span class="hidden" data-render-id="quarto-int-next">Bibliografia</span> <span class="hidden" data-render-id="quarto-int-prev"><span class="chapter-number">5</span>  <span class="chapter-title">Transformacje punktowe</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/index.html">Wstęp</span> <span class="hidden" data-render-id="quarto-int-sidebar:/intro.html"><span class="chapter-number">1</span>  <span class="chapter-title">Wprowadzenie</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/history.html"><span class="chapter-number">2</span>  <span class="chapter-title">Historia wizji komputerowej</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/digt_img.html"><span class="chapter-number">3</span>  <span class="chapter-title">Obrazy cyfrowe</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/transformations.html"><span class="chapter-number">4</span>  <span class="chapter-title">Transformacje geometryczne</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/point_trans.html"><span class="chapter-number">5</span>  <span class="chapter-title">Transformacje punktowe</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/filters.html"><span class="chapter-number">6</span>  <span class="chapter-title">Filtry</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/references.html">Bibliografia</span> <span class="hidden" data-render-id="footer-left">Automatyczna analiza obrazu, Dariusz Majerek</span> <span class="hidden" data-render-id="footer-right">Książka została napisana w <a href="https://quarto.org/">Quarto</a></span></p>
 </div>

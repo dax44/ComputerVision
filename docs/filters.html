@@ -226,6 +226,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
 <li><a href="#przyk%C5%82adowe-filtry-wyg%C5%82adzaj%C4%85ce-ang.-smoothing" id="toc-przykładowe-filtry-wygładzające-ang.-smoothing" class="nav-link" data-scroll-target="#przyk%C5%82adowe-filtry-wyg%C5%82adzaj%C4%85ce-ang.-smoothing"><span class="toc-section-number">6.1.1</span>  Przykładowe filtry wygładzające (ang. <em>smoothing</em>)</a></li>
   <li><a href="#przyk%C5%82ad-filtru-r%C3%B3%C5%BCnicuj%C4%85cego" id="toc-przykład-filtru-różnicującego" class="nav-link" data-scroll-target="#przyk%C5%82ad-filtru-r%C3%B3%C5%BCnicuj%C4%85cego"><span class="toc-section-number">6.1.2</span>  Przykład filtru różnicującego</a></li>
+  <li><a href="#formalny-zapis-operator%C3%B3w-filtracji" id="toc-formalny-zapis-operatorów-filtracji" class="nav-link" data-scroll-target="#formalny-zapis-operator%C3%B3w-filtracji"><span class="toc-section-number">6.1.3</span>  Formalny zapis operatorów filtracji</a></li>
+  <li><a href="#w%C5%82asno%C5%9Bci-filtr%C3%B3w-liniowych" id="toc-własności-filtrów-liniowych" class="nav-link" data-scroll-target="#w%C5%82asno%C5%9Bci-filtr%C3%B3w-liniowych"><span class="toc-section-number">6.1.4</span>  Własności filtrów liniowych</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#filtry-nieliniowe" id="toc-filtry-nieliniowe" class="nav-link" data-scroll-target="#filtry-nieliniowe"><span class="toc-section-number">6.2</span>  Filtry nieliniowe</a>
+  <ul class="collapse">
+<li><a href="#filtry-minimum-i-maksimum" id="toc-filtry-minimum-i-maksimum" class="nav-link" data-scroll-target="#filtry-minimum-i-maksimum"><span class="toc-section-number">6.2.1</span>  Filtry minimum i maksimum</a></li>
   </ul>
 </li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
@@ -422,8 +430,176 @@ H^{G,\sigma}(x,y) = e^{-\frac{x^2+y^2}{2\sigma^2}},
 <p>gdzie <span class="math inline">\(R^-, R^+\)</span> oznaczają podział filtra na współczynniki ujemne <span class="math inline">\(H(i,j)&lt;0\)</span> i dodatnie <span class="math inline">\(H(i,j)&gt;0\)</span> odpowiednio. Na przykład filtr Laplace’a 5x5 na <a href="#fig-flt5">Rysunek&nbsp;<span>6.6</span></a> (c) oblicza różnicę między pikselem środkowym (o wadze 16) a sumą ważoną 12 otaczających go pikseli (o wagach -1 lub -2). Pozostałe 12 pikseli ma przypisane zerowe współczynniki i dlatego są one ignorowane w obliczeniach. Podczas gdy lokalne zmiany intensywności są wygładzane przez uśrednianie, możemy oczekiwać, że w przypadku różnic stanie się dokładnie odwrotnie - lokalne zmiany intensywności zostaną wzmocnione.</p>
 <div id="fig-flt5" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-7 o 23.46.00.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;6.6: Przykłady różnych filtrów o rozmiarze 5x5. Na rysunku (a) jest filtr pudełkowy, na (b) gaussowski, a na (c) Laplace’a (zwany także <em>Mexican Hut</em>)</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;6.6: Przykłady różnych filtrów o rozmiarze 5x5. (a) filtr pudełkowy, (b) gaussowski, (c) Laplace’a (zwany także <em>Mexican Hut</em>)</figcaption><p></p>
 </figure>
+</div>
+</section><section id="formalny-zapis-operatorów-filtracji" class="level3" data-number="6.1.3"><h3 data-number="6.1.3" class="anchored" data-anchor-id="formalny-zapis-operatorów-filtracji">
+<span class="header-section-number">6.1.3</span> Formalny zapis operatorów filtracji</h3>
+<p>Wspomniany zapis w równaniu <a href="#eq-filtr">Równanie&nbsp;<span>6.2</span></a> nazywany jest w literaturze operatorem korelacyjnym (ang. <em>correlation operator)</em>. Ma on jedną poważną wadę, ponieważ filtr zastosowany do obrazu z pojedynczym wtrąceniem (jednym pikselem świecącym) w rezultacie daje w obrazie wynikowym wartości filtra zrotowane o <span class="math inline">\(180\degree\)</span> (patrz <a href="#fig-corr">Rysunek&nbsp;<span>6.7</span></a>).</p>
+<div id="fig-corr" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-8 o 18.44.52.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;6.7: Zastosowanie operatora korelacyjnego na obrazie z jednym wtrąceniem</figcaption><p></p>
+</figure>
+</div>
+<p>Rozwiązaniem tej niedogodności jest wprowadzenie operatora konwolucyjnego (ang. <em>convolution operator</em>). Definiuje się go w następujący sposób:</p>
+<p><span id="eq-conv"><span class="math display">\[
+I'(u,v) = \sum_{i,j\in R_H}I(u-i, v-j)\cdot H(i,j),
+\tag{6.5}\]</span></span></p>
+<p>zapisywany również w bardziej zwartej formie</p>
+<p><span id="eq-conv2"><span class="math display">\[
+I'=I*H.
+\tag{6.6}\]</span></span></p>
+<p>Aby pokazać związek pomiędzy oboma sposobami filtracji przekształćmy wzór <a href="#eq-conv">Równanie&nbsp;<span>6.5</span></a></p>
+<p><span id="eq-convcorr"><span class="math display">\[
+\begin{align}
+  I'(u,v) =&amp; \sum_{i,j\in R_H}I(u-i, v-j)\cdot H(i,j)=\\
+  =&amp;\sum_{i,j\in R_H}I(u+i, v+j)\cdot H(-i,-j)=\\
+  =&amp;\sum_{i,j\in R_H}I(u+i, v+j)\cdot H^*(i,j),
+\end{align}
+\tag{6.7}\]</span></span></p>
+<p>gdzie <span class="math inline">\(H^*(i,j)=H(-i,-j)\)</span>. Zmiana parametryzacji powoduje obrócenie wyniku o <span class="math inline">\(180\degree\)</span>.</p>
+<div id="fig-conv3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-8 o 18.45.03.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;6.8: Zastosowanie operatora konwolucyjnego do obrazu z jednym wtrąceniem</figcaption><p></p>
+</figure>
+</div>
+</section><section id="własności-filtrów-liniowych" class="level3" data-number="6.1.4"><h3 data-number="6.1.4" class="anchored" data-anchor-id="własności-filtrów-liniowych">
+<span class="header-section-number">6.1.4</span> Własności filtrów liniowych</h3>
+<p>Konwolucja liniowa jest odpowiednim modelem dla wielu rodzajów zjawisk naturalnych, w tym układów mechanicznych, akustycznych i optycznych. W szczególności istnieją silne formalne powiązania z reprezentacją Fouriera sygnałów w dziedzinie częstotliwości, które są niezwykle cenne dla zrozumienia złożonych zjawisk, takich jak próbkowanie i aliasing. Poniżej przedstawione zostaną własności konwolucji liniowej.</p>
+<section id="przemienność" class="level4" data-number="6.1.4.1"><h4 data-number="6.1.4.1" class="anchored" data-anchor-id="przemienność">
+<span class="header-section-number">6.1.4.1</span> Przemienność</h4>
+<p>Konwolucja liniowa jest przemienna, czyli dla dowolnego obrazu <span class="math inline">\(I\)</span> i jądra filtru <span class="math inline">\(H\)</span>, zachodzi</p>
+<p><span id="eq-przemiennosc"><span class="math display">\[
+I ∗ H = H ∗ I.
+\tag{6.8}\]</span></span></p>
+<p>Wynik jest więc taki sam, jeśli obraz i jądro filtra są wzajemnie zamienione, i nie ma różnicy, czy składamy obraz <span class="math inline">\(I\)</span> z jądrem <span class="math inline">\(H\)</span>, czy odwrotnie.</p>
+</section><section id="liniowość" class="level4" data-number="6.1.4.2"><h4 data-number="6.1.4.2" class="anchored" data-anchor-id="liniowość">
+<span class="header-section-number">6.1.4.2</span> Liniowość</h4>
+<p>Filtry liniowe nazywane są tak ze względu na właściwości liniowości operacji konwolucji, która przejawia się w różnych aspektach. Na przykład, jeśli obraz jest mnożony przez skalar <span class="math inline">\(s\in\mathbb{R},\)</span> to wynik konwolucji mnoży się o ten sam czynnik, czyli</p>
+<p><span id="eq-liniowosc1"><span class="math display">\[
+(s\cdot I)∗H = I ∗(s\cdot H) = s\cdot(I ∗H).
+\tag{6.9}\]</span></span></p>
+<p>Podobnie, jeśli dodamy dwa obrazy <span class="math inline">\(I_1\)</span>, <span class="math inline">\(I_2\)</span> piksel po pikselu i spleciemy wynikowy obraz za pomocą pewnego jądra <span class="math inline">\(H\)</span>, to taki sam wynik uzyskamy splatając każdy obraz osobno i dodając potem oba wyniki, czyli</p>
+<p><span id="eq-liniowosc2"><span class="math display">\[
+(I_1 +I_2)∗H = (I_1 ∗H)+(I_2 ∗H).
+\tag{6.10}\]</span></span></p>
+<p>Zaskakujące może być jednak to, że samo dodanie do obrazu stałej wartości <span class="math inline">\(b\)</span> nie powiększa wyniku splotu o taką samą ilość,</p>
+<p><span class="math display">\[
+(b+I)∗H\neq b+(I∗H),
+\]</span></p>
+<p>a więc nie jest częścią własności liniowości. Chociaż liniowość jest ważną własnością teoretyczną, należy zauważyć, że w praktyce filtry “liniowe” są często tylko częściowo liniowe z powodu błędów zaokrąglenia lub ograniczonego zakresu wartości wyjściowych.</p>
+</section><section id="łączność" class="level4" data-number="6.1.4.3"><h4 data-number="6.1.4.3" class="anchored" data-anchor-id="łączność">
+<span class="header-section-number">6.1.4.3</span> Łączność</h4>
+<p>Konwolucja liniowa jest łączna, co oznacza, że kolejność operacji na filtrze nie ma znaczenia, czyli,</p>
+<p><span id="eq-lacznosc"><span class="math display">\[
+(I∗H_1)∗H_2 =I∗(H_1 ∗H_2).
+\tag{6.11}\]</span></span></p>
+<p>Tak więc wiele filtrów może być zastosowanych w dowolnej kolejności, jak również wiele filtrów może być dowolnie łączonych w nowe filtry.</p>
+<p>Bezpośrednią konsekwencją łączności jest rozdzielność filtrów liniowych. Jeżeli jądro konwolucyjne <span class="math inline">\(H\)</span> można wyrazić jako złożenie wielu jąder <span class="math inline">\(H_i\)</span> w postaci</p>
+<p><span id="eq-rozlacznosc"><span class="math display">\[
+H = H1 ∗ H2 ∗ . . . ∗ Hn,
+\tag{6.12}\]</span></span></p>
+<p>wówczas (jako konsekwencja <a href="#eq-lacznosc">Równanie&nbsp;<span>6.11</span></a>) operacja filtru <span class="math inline">\(I ∗ H\)</span> może być wykonana jako ciąg konwolucji z jądrami składowymi <span class="math inline">\(H_i,\)</span></p>
+<p><span id="eq-lacznosc2"><span class="math display">\[
+I ∗ H = I ∗ (H_1 ∗ H_2 ∗ . . . ∗ H_n)
+= (\ldots((I ∗H_1)∗H_2)∗\ldots∗H_n).
+\tag{6.13}\]</span></span></p>
+<p>W zależności od rodzaju dekompozycji może to przynieść znaczne oszczędności obliczeniowe. O rozdzielczości filtrów możemy myśleć również nieco inaczej</p>
+<p><span class="math display">\[
+I'=(I*h_x)*h_y,
+\]</span> gdzie <span class="math inline">\(h_x, h_y\)</span> są filtrami 1D, które po wymnożeniu tworzą filtr o wymiarze <span class="math inline">\(k\times m\)</span>. Przykładowo</p>
+<p>$$</p>
+<span class="math display">\[\begin{bmatrix}
+  1,&amp;1,&amp;1,&amp;1,&amp;1\\
+  1,&amp;1,&amp;1,&amp;1,&amp;1\\
+  1,&amp;1,&amp;1,&amp;1,&amp;1
+\end{bmatrix}\]</span>
+<p>= H = h_x*h_y=</p>
+<span class="math display">\[\begin{bmatrix}
+  1\\
+  1\\
+  1
+\end{bmatrix}\]</span>
+<ul>
+<li><span class="math display">\[\begin{bmatrix}
+1,&amp;1,&amp;1,&amp;1,&amp;1
+\end{bmatrix}\]</span></li>
+</ul>
+<p>$${#eq-mnozenie}</p>
+<p>Stosując tą własność rozłączności możemy również przedstawić filtr o jądrze gassuowskim 2D, za pomocą mnożenia filtrów gaussowskich 1D.</p>
+<p><span id="eq-mnozenie2"><span class="math display">\[
+H^{G,\sigma}=h^{G,\sigma}_x*h^{G,\sigma}_y,
+\tag{6.14}\]</span></span></p>
+<p>gdzie <span class="math inline">\(h^{G,\sigma}_x,h^{G,\sigma}_y\)</span> są filtrami gaussowskimi 1D. Kolejność użytych filtrów ponownie nie ma znaczenia. Jeśli dla poszczególnych składowych odchylenia standardowe nie są równe, to filtr gaussowski 2D ma charakter eliptyczny.</p>
+<p>W algebrze filtrów liniowych istniej coś na kształt elementu neutralnego dla operacji splotu</p>
+<p><span id="eq-dirac"><span class="math display">\[
+I = \delta*I,
+\tag{6.15}\]</span></span></p>
+<p>gdzie</p>
+<p><span id="eq-dirac2"><span class="math display">\[
+\delta(u,v)=
+\begin{cases}
+  1, &amp;\text{ jeśli }u=v=0\\
+  0, &amp;\text{ w przeciwnym przypadku}
+\end{cases}
+\tag{6.16}\]</span></span></p>
+<p>Co ciekawe filtr ten nie zmienia jedynie samego obrazu ale również innych filtrów</p>
+<p><span id="eq-dirac3"><span class="math display">\[
+H=\delta*H=H*\delta.
+\tag{6.17}\]</span></span></p>
+</section></section></section><section id="filtry-nieliniowe" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="filtry-nieliniowe">
+<span class="header-section-number">6.2</span> Filtry nieliniowe</h2>
+<section id="filtry-minimum-i-maksimum" class="level3" data-number="6.2.1"><h3 data-number="6.2.1" class="anchored" data-anchor-id="filtry-minimum-i-maksimum">
+<span class="header-section-number">6.2.1</span> Filtry minimum i maksimum</h3>
+<p>Jak wszystkie inne filtry, filtry nieliniowe obliczają wynik w danej pozycji obrazu <span class="math inline">\((u,v)\)</span> z pikseli znajdujących się wewnątrz ruchomego regionu <span class="math inline">\(R_{u,v}\)</span> oryginalnego obrazu. Filtry te nazywane są “nieliniowymi”, ponieważ wartości pikseli źródłowych są łączone przez jakąś funkcję nieliniową. Najprostszymi ze wszystkich filtrów nieliniowych są filtry minimum i maksimum, zdefiniowane jako</p>
+<p><span id="eq-minmax"><span class="math display">\[
+\begin{align}
+  I'(u,v)=&amp;\min_{(i,j)\in R}\{I(u+i, v+j)\}\\
+  I'(u,v)=&amp;\max_{(i,j)\in R}\{I(u+i, v+j)\}
+\end{align}
+\tag{6.18}\]</span></span></p>
+<p>gdzie <span class="math inline">\(R\)</span> oznacza region filtra (zbiór współrzędnych filtra, zwykle kwadrat o rozmiarach 3x3 pikseli). <a href="#fig-min">Rysunek&nbsp;<span>6.10</span></a> ilustruje wpływ minimalnego filtra 1D na różne lokalne struktury sygnału.</p>
+<div id="fig-min" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-8 o 19.52.39.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;6.9: Zastosowanie filtru minimum 1D do różnych sygnałów wejściowych. Górny rząd przedstawia oryginalny sygnał, a dolny spleciony z filtrem minimum</figcaption><p></p>
+</figure>
+</div>
+<div class="cell" data-hash="filters_cache/html/fig-min_accfac6b0c14b65f472a0eb433e354db">
+<details><summary>Kod</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">kwiat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/load.image.html">load.image</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/kwiat.jpg"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/grayscale.html">grayscale</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">kwiat_noisy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/load.image.html">load.image</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/kwiat_salt_pepper.jpg"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/grayscale.html">grayscale</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">min_filter</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">im</span>, <span class="va">radius</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">stencil</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="op">-</span><span class="va">radius</span><span class="op">:</span><span class="va">radius</span>, dy <span class="op">=</span> <span class="op">-</span><span class="va">radius</span><span class="op">:</span><span class="va">radius</span><span class="op">)</span></span>
+<span>  <span class="va">filtered</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">0</span>, nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/cimg.dimensions.html">height</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/cimg.dimensions.html">width</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">range_x</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">radius</span><span class="op">)</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/cimg.dimensions.html">width</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span> <span class="op">-</span> <span class="va">radius</span><span class="op">)</span></span>
+<span>  <span class="va">range_y</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">radius</span><span class="op">)</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/cimg.dimensions.html">height</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span> <span class="op">-</span> <span class="va">radius</span><span class="op">)</span></span>
+<span>  <span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span><span class="va">range_x</span>, <span class="va">range_y</span><span class="op">)</span></span>
+<span>  <span class="va">dt</span><span class="op">$</span><span class="va">min</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">dt</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">row</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/get.stencil.html">get.stencil</a></span><span class="op">(</span><span class="va">im</span>, </span>
+<span>                                                       <span class="va">stencil</span>, </span>
+<span>                                                       x <span class="op">=</span> <span class="va">row</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>                                                       y <span class="op">=</span> <span class="va">row</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">filtered</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">$</span><span class="va">min</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/cimg.dimensions.html">height</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span><span class="op">-</span><span class="fl">2</span><span class="op">*</span><span class="va">radius</span>,</span>
+<span>           nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/cimg.dimensions.html">width</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span><span class="op">-</span><span class="fl">2</span><span class="op">*</span><span class="va">radius</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/imager/man/as.cimg.html">as.cimg</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    </span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">filtered</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">kwiat_filtered</span> <span class="op">&lt;-</span> <span class="fu">min_filter</span><span class="op">(</span><span class="va">kwiat</span>, radius <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">kwiat</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>main <span class="op">=</span> <span class="st">'oryginał'</span><span class="op">)</span></span>
+<span><span class="va">kwiat_filtered</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>main <span class="op">=</span> <span class="st">"kwiat z filtrem minimum"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-min" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="filters_files/figure-html/fig-min-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;6.10: Zastosowanie filtru minimum</figcaption><p></p>
+</figure>
+</div>
+</div>
 </div>
 
 

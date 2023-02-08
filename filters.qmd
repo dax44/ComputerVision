@@ -188,10 +188,9 @@ Powyższa formuła ma zastosowanie do filtrów o dowolnym rozmiarze i kształcie
     Ponadto filtry wygładzające powinny ewentualnie działać "izotropowo" (tzn. jednolicie w każdym kierunku), co z pewnością nie ma miejsca w przypadku filtra prostokątnego.
 
 2.  Filtr gaussowski - z pewnością lepszy w tym kontekście wygładzania z względu na brak ostrych krawędzi jądra.
-    Definiuje się go następująco
-$$
-H^{G,\sigma}(x,y) = e^{-\frac{x^2+y^2}{2\sigma^2}},
-$$ gdzie $\sigma$ oznacza odchylenie standardowe rozkładu.
+    Definiuje się go następująco $$
+    H^{G,\sigma}(x,y) = e^{-\frac{x^2+y^2}{2\sigma^2}},
+    $$ gdzie $\sigma$ oznacza odchylenie standardowe rozkładu.
 
 ### Przykład filtru różnicującego
 
@@ -209,4 +208,226 @@ Na przykład filtr Laplace'a 5x5 na @fig-flt5 (c) oblicza różnicę między pik
 Pozostałe 12 pikseli ma przypisane zerowe współczynniki i dlatego są one ignorowane w obliczeniach.
 Podczas gdy lokalne zmiany intensywności są wygładzane przez uśrednianie, możemy oczekiwać, że w przypadku różnic stanie się dokładnie odwrotnie - lokalne zmiany intensywności zostaną wzmocnione.
 
-![Przykłady różnych filtrów o rozmiarze 5x5. Na rysunku (a) jest filtr pudełkowy, na (b) gaussowski, a na (c) Laplace'a (zwany także *Mexican Hut*)](images/Zrzut%20ekranu%202023-02-7%20o%2023.46.00.png){#fig-flt5 fig-align="center"}
+![Przykłady różnych filtrów o rozmiarze 5x5. (a) filtr pudełkowy, (b) gaussowski, (c) Laplace'a (zwany także *Mexican Hut*)](images/Zrzut%20ekranu%202023-02-7%20o%2023.46.00.png){#fig-flt5 fig-align="center"}
+
+### Formalny zapis operatorów filtracji
+
+Wspomniany zapis w równaniu @eq-filtr nazywany jest w literaturze operatorem korelacyjnym (ang. *correlation operator)*.
+Ma on jedną poważną wadę, ponieważ filtr zastosowany do obrazu z pojedynczym wtrąceniem (jednym pikselem świecącym) w rezultacie daje w obrazie wynikowym wartości filtra zrotowane o $180\degree$ (patrz @fig-corr).
+
+![Zastosowanie operatora korelacyjnego na obrazie z jednym wtrąceniem](images/Zrzut%20ekranu%202023-02-8%20o%2018.44.52.png){#fig-corr fig-align="center"}
+
+Rozwiązaniem tej niedogodności jest wprowadzenie operatora konwolucyjnego (ang. *convolution operator*).
+Definiuje się go w następujący sposób:
+
+$$
+I'(u,v) = \sum_{i,j\in R_H}I(u-i, v-j)\cdot H(i,j),
+$$ {#eq-conv}
+
+zapisywany również w bardziej zwartej formie
+
+$$
+I'=I*H.
+$$ {#eq-conv2}
+
+Aby pokazać związek pomiędzy oboma sposobami filtracji przekształćmy wzór @eq-conv
+
+$$
+\begin{align}
+  I'(u,v) =& \sum_{i,j\in R_H}I(u-i, v-j)\cdot H(i,j)=\\
+  =&\sum_{i,j\in R_H}I(u+i, v+j)\cdot H(-i,-j)=\\
+  =&\sum_{i,j\in R_H}I(u+i, v+j)\cdot H^*(i,j),
+\end{align}
+$$ {#eq-convcorr}
+
+gdzie $H^*(i,j)=H(-i,-j)$.
+Zmiana parametryzacji powoduje obrócenie wyniku o $180\degree$.
+
+![Zastosowanie operatora konwolucyjnego do obrazu z jednym wtrąceniem](images/Zrzut%20ekranu%202023-02-8%20o%2018.45.03.png){#fig-conv3 fig-align="center"}
+
+### Własności filtrów liniowych
+
+Konwolucja liniowa jest odpowiednim modelem dla wielu rodzajów zjawisk naturalnych, w tym układów mechanicznych, akustycznych i optycznych.
+W szczególności istnieją silne formalne powiązania z reprezentacją Fouriera sygnałów w dziedzinie częstotliwości, które są niezwykle cenne dla zrozumienia złożonych zjawisk, takich jak próbkowanie i aliasing.
+Poniżej przedstawione zostaną własności konwolucji liniowej.
+
+#### Przemienność
+
+Konwolucja liniowa jest przemienna, czyli dla dowolnego obrazu $I$ i jądra filtru $H$, zachodzi
+
+$$
+I ∗ H = H ∗ I.
+$$ {#eq-przemiennosc}
+
+Wynik jest więc taki sam, jeśli obraz i jądro filtra są wzajemnie zamienione, i nie ma różnicy, czy składamy obraz $I$ z jądrem $H$, czy odwrotnie.
+
+#### Liniowość
+
+Filtry liniowe nazywane są tak ze względu na właściwości liniowości operacji konwolucji, która przejawia się w różnych aspektach.
+Na przykład, jeśli obraz jest mnożony przez skalar $s\in\mathbb{R},$ to wynik konwolucji mnoży się o ten sam czynnik, czyli
+
+$$
+(s\cdot I)∗H = I ∗(s\cdot H) = s\cdot(I ∗H).
+$$ {#eq-liniowosc1}
+
+Podobnie, jeśli dodamy dwa obrazy $I_1$, $I_2$ piksel po pikselu i spleciemy wynikowy obraz za pomocą pewnego jądra $H$, to taki sam wynik uzyskamy splatając każdy obraz osobno i dodając potem oba wyniki, czyli
+
+$$
+(I_1 +I_2)∗H = (I_1 ∗H)+(I_2 ∗H). 
+$$ {#eq-liniowosc2}
+
+Zaskakujące może być jednak to, że samo dodanie do obrazu stałej wartości $b$ nie powiększa wyniku splotu o taką samą ilość,
+
+$$
+(b+I)∗H\neq b+(I∗H),
+$$
+
+a więc nie jest częścią własności liniowości.
+Chociaż liniowość jest ważną własnością teoretyczną, należy zauważyć, że w praktyce filtry "liniowe" są często tylko częściowo liniowe z powodu błędów zaokrąglenia lub ograniczonego zakresu wartości wyjściowych.
+
+#### Łączność
+
+Konwolucja liniowa jest łączna, co oznacza, że kolejność operacji na filtrze nie ma znaczenia, czyli,
+
+$$
+(I∗H_1)∗H_2 =I∗(H_1 ∗H_2).
+$$ {#eq-lacznosc}
+
+Tak więc wiele filtrów może być zastosowanych w dowolnej kolejności, jak również wiele filtrów może być dowolnie łączonych w nowe filtry.
+
+Bezpośrednią konsekwencją łączności jest rozdzielność filtrów liniowych.
+Jeżeli jądro konwolucyjne $H$ można wyrazić jako złożenie wielu jąder $H_i$ w postaci
+
+$$
+H = H1 ∗ H2 ∗ . . . ∗ Hn, 
+$$ {#eq-rozlacznosc}
+
+wówczas (jako konsekwencja @eq-lacznosc) operacja filtru $I ∗ H$ może być wykonana jako ciąg konwolucji z jądrami składowymi $H_i,$
+
+$$
+I ∗ H = I ∗ (H_1 ∗ H_2 ∗ . . . ∗ H_n)
+= (\ldots((I ∗H_1)∗H_2)∗\ldots∗H_n).
+$$ {#eq-lacznosc2}
+
+W zależności od rodzaju dekompozycji może to przynieść znaczne oszczędności obliczeniowe.
+O rozdzielczości filtrów możemy myśleć również nieco inaczej
+
+$$
+I'=(I*h_x)*h_y,
+$$ gdzie $h_x, h_y$ są filtrami 1D, które po wymnożeniu tworzą filtr o wymiarze $k\times m$.
+Przykładowo
+
+\$\$
+
+```{=tex}
+\begin{bmatrix}
+  1,&1,&1,&1,&1\\
+  1,&1,&1,&1,&1\\
+  1,&1,&1,&1,&1
+\end{bmatrix}
+```
+= H = h_x\*h_y=
+
+```{=tex}
+\begin{bmatrix}
+  1\\
+  1\\
+  1
+\end{bmatrix}
+```
+-   
+
+    ```{=tex}
+    \begin{bmatrix}
+     1,&1,&1,&1,&1
+    \end{bmatrix}
+    ```
+
+\$\${#eq-mnozenie}
+
+Stosując tą własność rozłączności możemy również przedstawić filtr o jądrze gassuowskim 2D, za pomocą mnożenia filtrów gaussowskich 1D.
+
+$$
+H^{G,\sigma}=h^{G,\sigma}_x*h^{G,\sigma}_y,
+$$ {#eq-mnozenie2}
+
+gdzie $h^{G,\sigma}_x,h^{G,\sigma}_y$ są filtrami gaussowskimi 1D.
+Kolejność użytych filtrów ponownie nie ma znaczenia.
+Jeśli dla poszczególnych składowych odchylenia standardowe nie są równe, to filtr gaussowski 2D ma charakter eliptyczny.
+
+W algebrze filtrów liniowych istniej coś na kształt elementu neutralnego dla operacji splotu
+
+$$
+I = \delta*I,
+$$ {#eq-dirac}
+
+gdzie
+
+$$
+\delta(u,v)=
+\begin{cases}
+  1, &\text{ jeśli }u=v=0\\
+  0, &\text{ w przeciwnym przypadku}
+\end{cases}
+$$ {#eq-dirac2}
+
+Co ciekawe filtr ten nie zmienia jedynie samego obrazu ale również innych filtrów
+
+$$
+H=\delta*H=H*\delta.
+$$ {#eq-dirac3}
+
+## Filtry nieliniowe
+
+### Filtry minimum i maksimum
+
+Jak wszystkie inne filtry, filtry nieliniowe obliczają wynik w danej pozycji obrazu $(u,v)$ z pikseli znajdujących się wewnątrz ruchomego regionu $R_{u,v}$ oryginalnego obrazu.
+Filtry te nazywane są "nieliniowymi", ponieważ wartości pikseli źródłowych są łączone przez jakąś funkcję nieliniową.
+Najprostszymi ze wszystkich filtrów nieliniowych są filtry minimum i maksimum, zdefiniowane jako
+
+$$
+\begin{align}
+  I'(u,v)=&\min_{(i,j)\in R}\{I(u+i, v+j)\}\\
+  I'(u,v)=&\max_{(i,j)\in R}\{I(u+i, v+j)\}
+\end{align}
+$$ {#eq-minmax}
+
+gdzie $R$ oznacza region filtra (zbiór współrzędnych filtra, zwykle kwadrat o rozmiarach 3x3 pikseli).
+@fig-min ilustruje wpływ minimalnego filtra 1D na różne lokalne struktury sygnału.
+
+![Zastosowanie filtru minimum 1D do różnych sygnałów wejściowych. Górny rząd przedstawia oryginalny sygnał, a dolny spleciony z filtrem minimum](images/Zrzut%20ekranu%202023-02-8%20o%2019.52.39.png){#fig-min fig-align="center"}
+
+```{r}
+#| label: fig-min
+#| fig-cap: Zastosowanie filtru minimum
+#| cache: true
+
+kwiat <- load.image(file = "~/kwiat.jpg") |> grayscale()
+
+kwiat_noisy <- load.image(file = "~/kwiat_salt_pepper.jpg") |> grayscale()
+
+min_filter <- function(im, radius) {
+  stencil <- expand.grid(dx = -radius:radius, dy = -radius:radius)
+  filtered <- matrix(0, nrow = height(im), ncol = width(im))
+  range_x <- (1 + radius):(width(im) - radius)
+  range_y <- (1 + radius):(height(im) - radius)
+  dt <- expand.grid(range_x, range_y)
+  dt$min <- apply(dt, 1, function(row) min(get.stencil(im, 
+                                                       stencil, 
+                                                       x = row[1],
+                                                       y = row[2])))
+
+  filtered <- dt$min |> 
+    matrix(ncol = height(im)-2*radius,
+           nrow = width(im)-2*radius) |> 
+    as.cimg()
+    
+  return(filtered)
+}
+
+kwiat_filtered <- min_filter(kwiat, radius = 2)
+
+layout(t(1:2))
+kwiat |> plot(main = 'oryginał')
+kwiat_filtered |> plot(main = "kwiat z filtrem minimum")
+```
