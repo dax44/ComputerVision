@@ -407,10 +407,12 @@ H(u,v)=\begin{bmatrix}
   5,&amp;8,&amp;5\\
   3,&amp;5,&amp;3
 \end{bmatrix}.
-\]</span> Aby uniknąć wartości ujemnych, które mogłyby się pojawić w przypadku gdy jądro filtra zawierałoby wartości ujemne, stosuje się stałą przesunięcia (ang. <em>offset</em>). Wówczas <a href="#eq-filtr">Równanie&nbsp;<span>6.2</span></a> przyjmuje postać</p>
+\]</span></p>
+<p>Aby uniknąć wartości ujemnych, które mogłyby się pojawić w przypadku gdy jądro filtra zawierałoby wartości ujemne, stosuje się stałą przesunięcia (ang. <em>offset</em>). Wówczas <a href="#eq-filtr">Równanie&nbsp;<span>6.2</span></a> przyjmuje postać</p>
 <p><span class="math display">\[
 I'(u,v) = Offset+\frac{1}{Scale}\cdot \sum_{i,j\in R_H}I(u+i, v+j)\cdot H(i,j),
-\]</span> a <span class="math inline">\(H(i,j)\)</span> jest zdefiniowany na <span class="math inline">\(\mathbb{Z}\times\mathbb{Z}\)</span>. Chociaż najczęściej używa się filtrów kwadratowych, to nie ma przeszkód aby stosować również filtry prostokątne. Powyższa formuła ma zastosowanie do filtrów o dowolnym rozmiarze i kształcie.</p>
+\]</span></p>
+<p>a <span class="math inline">\(H(i,j)\)</span> jest zdefiniowany na <span class="math inline">\(\mathbb{Z}\times\mathbb{Z}\)</span>. Chociaż najczęściej używa się filtrów kwadratowych, to nie ma przeszkód aby stosować również filtry prostokątne. Powyższa formuła ma zastosowanie do filtrów o dowolnym rozmiarze i kształcie.</p>
 <section id="przykładowe-filtry-wygładzające-ang.-smoothing" class="level3" data-number="6.1.1"><h3 data-number="6.1.1" class="anchored" data-anchor-id="przykładowe-filtry-wygładzające-ang.-smoothing">
 <span class="header-section-number">6.1.1</span> Przykładowe filtry wygładzające (ang. <em>smoothing</em>)</h3>
 <ol type="1">
@@ -508,24 +510,25 @@ I ∗ H = I ∗ (H_1 ∗ H_2 ∗ . . . ∗ H_n)
 <p><span class="math display">\[
 I'=(I*h_x)*h_y,
 \]</span> gdzie <span class="math inline">\(h_x, h_y\)</span> są filtrami 1D, które po wymnożeniu tworzą filtr o wymiarze <span class="math inline">\(k\times m\)</span>. Przykładowo</p>
-<p>$$</p>
+$$
 <span class="math display">\[\begin{bmatrix}
   1,&amp;1,&amp;1,&amp;1,&amp;1\\
   1,&amp;1,&amp;1,&amp;1,&amp;1\\
   1,&amp;1,&amp;1,&amp;1,&amp;1
 \end{bmatrix}\]</span>
-<p>= H = h_x*h_y=</p>
+= H = h_x*h_y=
 <span class="math display">\[\begin{bmatrix}
   1\\
   1\\
   1
 \end{bmatrix}\]</span>
 <ul>
-<li><span class="math display">\[\begin{bmatrix}
-1,&amp;1,&amp;1,&amp;1,&amp;1
-\end{bmatrix}\]</span></li>
+<li>
+<span class="math display">\[\begin{bmatrix}
+    1,&amp;1,&amp;1,&amp;1,&amp;1
+   \end{bmatrix}\]</span>
+$${#eq-mnozenie}</li>
 </ul>
-<p>$${#eq-mnozenie}</p>
 <p>Stosując tą własność rozłączności możemy również przedstawić filtr o jądrze gassuowskim 2D, za pomocą mnożenia filtrów gaussowskich 1D.</p>
 <p><span id="eq-mnozenie2"><span class="math display">\[
 H^{G,\sigma}=h^{G,\sigma}_x*h^{G,\sigma}_y,

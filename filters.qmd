@@ -165,12 +165,16 @@ H(u,v)=\begin{bmatrix}
   5,&8,&5\\
   3,&5,&3
 \end{bmatrix}.
-$$ Aby uniknąć wartości ujemnych, które mogłyby się pojawić w przypadku gdy jądro filtra zawierałoby wartości ujemne, stosuje się stałą przesunięcia (ang. *offset*).
+$$ 
+
+Aby uniknąć wartości ujemnych, które mogłyby się pojawić w przypadku gdy jądro filtra zawierałoby wartości ujemne, stosuje się stałą przesunięcia (ang. *offset*).
 Wówczas @eq-filtr przyjmuje postać
 
 $$
 I'(u,v) = Offset+\frac{1}{Scale}\cdot \sum_{i,j\in R_H}I(u+i, v+j)\cdot H(i,j),
-$$ a $H(i,j)$ jest zdefiniowany na $\mathbb{Z}\times\mathbb{Z}$.
+$$ 
+
+a $H(i,j)$ jest zdefiniowany na $\mathbb{Z}\times\mathbb{Z}$.
 Chociaż najczęściej używa się filtrów kwadratowych, to nie ma przeszkód aby stosować również filtry prostokątne.
 Powyższa formuła ma zastosowanie do filtrów o dowolnym rozmiarze i kształcie.
 
@@ -317,33 +321,24 @@ I'=(I*h_x)*h_y,
 $$ gdzie $h_x, h_y$ są filtrami 1D, które po wymnożeniu tworzą filtr o wymiarze $k\times m$.
 Przykładowo
 
-\$\$
-
-```{=tex}
+$$
 \begin{bmatrix}
   1,&1,&1,&1,&1\\
   1,&1,&1,&1,&1\\
   1,&1,&1,&1,&1
 \end{bmatrix}
-```
-= H = h_x\*h_y=
-
-```{=tex}
+= H = h_x*h_y=
 \begin{bmatrix}
   1\\
   1\\
   1
 \end{bmatrix}
-```
--   
 
-    ```{=tex}
+*
     \begin{bmatrix}
      1,&1,&1,&1,&1
     \end{bmatrix}
-    ```
-
-\$\${#eq-mnozenie}
+$${#eq-mnozenie}
 
 Stosując tą własność rozłączności możemy również przedstawić filtr o jądrze gassuowskim 2D, za pomocą mnożenia filtrów gaussowskich 1D.
 
