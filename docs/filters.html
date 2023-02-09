@@ -234,8 +234,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a href="#filtry-nieliniowe" id="toc-filtry-nieliniowe" class="nav-link" data-scroll-target="#filtry-nieliniowe"><span class="toc-section-number">6.2</span>  Filtry nieliniowe</a>
   <ul class="collapse">
 <li><a href="#filtry-minimum-i-maksimum" id="toc-filtry-minimum-i-maksimum" class="nav-link" data-scroll-target="#filtry-minimum-i-maksimum"><span class="toc-section-number">6.2.1</span>  Filtry minimum i maksimum</a></li>
+  <li><a href="#filtr-medianowy" id="toc-filtr-medianowy" class="nav-link" data-scroll-target="#filtr-medianowy"><span class="toc-section-number">6.2.2</span>  Filtr medianowy</a></li>
   </ul>
 </li>
+  <li><a href="#obramowanie" id="toc-obramowanie" class="nav-link" data-scroll-target="#obramowanie"><span class="toc-section-number">6.3</span>  Obramowanie</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -565,10 +567,8 @@ H=\delta*H=H*\delta.
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.9: Zastosowanie filtru minimum 1D do różnych sygnałów wejściowych. Górny rząd przedstawia oryginalny sygnał, a dolny spleciony z filtrem minimum</figcaption><p></p>
 </figure>
 </div>
-<div class="cell" data-hash="filters_cache/html/fig-min_accfac6b0c14b65f472a0eb433e354db">
+<div class="cell" data-hash="filters_cache/html/fig-min_d7bb2711bfe570e432e18daef18beeab">
 <details><summary>Kod</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">kwiat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/load.image.html">load.image</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/kwiat.jpg"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/grayscale.html">grayscale</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">kwiat_noisy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/load.image.html">load.image</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/kwiat_salt_pepper.jpg"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/grayscale.html">grayscale</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">min_filter</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">im</span>, <span class="va">radius</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">stencil</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="op">-</span><span class="va">radius</span><span class="op">:</span><span class="va">radius</span>, dy <span class="op">=</span> <span class="op">-</span><span class="va">radius</span><span class="op">:</span><span class="va">radius</span><span class="op">)</span></span>
@@ -593,7 +593,7 @@ H=\delta*H=H*\delta.
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">kwiat</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>main <span class="op">=</span> <span class="st">'oryginał'</span><span class="op">)</span></span>
-<span><span class="va">kwiat_filtered</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>main <span class="op">=</span> <span class="st">"kwiat z filtrem minimum"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">kwiat_filtered</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>main <span class="op">=</span> <span class="st">"filtr minimum"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div id="fig-min" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="filters_files/figure-html/fig-min-1.png" class="img-fluid figure-img" width="672"></p>
@@ -602,9 +602,112 @@ H=\delta*H=H*\delta.
 </div>
 </div>
 </div>
+<p>W przypadku obrazów z wtrąceniami w kolorze białym lub czarnym efekt występowania tych wtrąceń jest potęgowany (patrz <a href="#fig-minmax2">Rysunek&nbsp;<span>6.11</span></a>). Filtr minimum wyciąga kolor czarny, natomiast filtr maksimum kolor biały.</p>
+<div>
+<details><summary>Kod</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">kwiat_noisy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/load.image.html">load.image</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/kwiat_salt_pepper.jpg"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/grayscale.html">grayscale</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">kwiat_noisy</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">kwiat_noisy</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/imager/man/erode.html">erode_square</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">kwiat_noisy</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/imager/man/erode.html">dilate_square</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-minmax2" class="cell quarto-layout-panel">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-minmax2-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="filters_files/figure-html/fig-minmax2-1.png" class="img-fluid figure-img" data-ref-parent="fig-minmax2" width="672"></p>
+<p></p><figcaption class="figure-caption">(a) Oryginał</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-minmax2-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="filters_files/figure-html/fig-minmax2-2.png" class="img-fluid figure-img" data-ref-parent="fig-minmax2" width="672"></p>
+<p></p><figcaption class="figure-caption">(b) Filtr minimum</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-minmax2-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="filters_files/figure-html/fig-minmax2-3.png" class="img-fluid figure-img" data-ref-parent="fig-minmax2" width="672"></p>
+<p></p><figcaption class="figure-caption">(c) Filtr maximum</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;6.11: Porównanie trzech obrazów</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section><section id="filtr-medianowy" class="level3" data-number="6.2.2"><h3 data-number="6.2.2" class="anchored" data-anchor-id="filtr-medianowy">
+<span class="header-section-number">6.2.2</span> Filtr medianowy</h3>
+<p>Nie da się oczywiście zaprojektować filtra, który usunie każdy szum i zachowa wszystkie ważne struktury obrazu, ponieważ żaden filtr nie jest w stanie rozróżnić, która zawartość obrazu jest ważna dla widza, a która nie. Popularny filtr medianowy jest z pewnością dobrym krokiem w tym kierunku.</p>
+<p>Filtr medianowy zastępuje każdy piksel obrazu medianą pikseli w bieżącym regionie filtra <span class="math inline">\(R\)</span>, czyli</p>
+<p><span id="eq-median"><span class="math display">\[
+I'(u,v)=\operatorname{Median}_{(i,j)\in R}\{I(u+i, v+j)\}.
+\tag{6.20}\]</span></span></p>
+<div id="fig-median" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 18.29.37.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;6.12: Zasada działania filtra medianowego</figcaption><p></p>
+</figure>
+</div>
+<p>Równanie (<a href="#eq-median">Równanie&nbsp;<span>6.20</span></a>) definiuje medianę zbioru wartości o nieparzystej liczebności. Jeśli długość boku filtrów prostokątnych jest nieparzysta (co zwykle ma miejsce), to liczba elementów w regionie filtrów również jest nieparzysta. W takim przypadku filtr medianowy nie tworzy żadnych nowych wartości pikseli. Jeśli jednak liczba elementów jest parzysta, to mediana posortowanego ciągu <span class="math inline">\(A = (a_0,\ldots,a_{2n-1})\)</span> jest definiowana jako średnia arytmetyczna dwóch sąsiednich wartości środkowych <span class="math inline">\(a_{n-1}\)</span> i <span class="math inline">\(a_n\)</span>. W ten sposób mogą być wprowadzone nowe wartości do obrazu.</p>
+<div class="cell">
+<details><summary>Kod</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">box_flt</span> <span class="op">&lt;-</span> <span class="va">kwiat_noisy</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/imager/man/boxblur.html">boxblur</a></span><span class="op">(</span>boxsize <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">median_flt</span> <span class="op">&lt;-</span> <span class="va">kwiat_noisy</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/imager/man/medianblur.html">medianblur</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">kwiat_noisy</span>, <span class="va">box_flt</span>, <span class="va">median_flt</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-median2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="filters_files/figure-html/fig-median2-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;6.13: Porównanie metod usuwania szumu. Na obrazie po lewej stronie naniesiony jest szum (znany jako <em>salt and papper</em>). Na środkowym szum jest usuwany filtrem pudełkowym (ang. <em>box filter</em>). Na obrazie po prawej szum jest usuwany filtrem medianowym.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details><summary>Kod</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">box_flt_big</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imsub.html">imsub</a></span><span class="op">(</span><span class="va">box_flt</span>, <span class="va">x</span> <span class="op"><a href="https://rdrr.io/pkg/imager/man/grapes-inr-grapes.html">%inr%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">450</span><span class="op">)</span>, <span class="va">y</span> <span class="op"><a href="https://rdrr.io/pkg/imager/man/grapes-inr-grapes.html">%inr%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">550</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">median_flt_big</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imsub.html">imsub</a></span><span class="op">(</span><span class="va">median_flt</span>, <span class="va">x</span> <span class="op"><a href="https://rdrr.io/pkg/imager/man/grapes-inr-grapes.html">%inr%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">450</span><span class="op">)</span>, <span class="va">y</span> <span class="op"><a href="https://rdrr.io/pkg/imager/man/grapes-inr-grapes.html">%inr%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">550</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">box_flt_big</span>, <span class="va">median_flt_big</span><span class="op">)</span>, <span class="st">"x"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-median3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="filters_files/figure-html/fig-median3-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;6.14: W powiększeniu ten efekt jest jeszcze lepiej widoczny</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Mediana jest statystyką porządkową i w pewnym sensie “większość” uwzględnianych wartości pikseli określa wynik. Pojedyncza wyjątkowo wysoka lub niska wartość (“odstająca”) nie może wpłynąć na wynik, a jedynie przesunąć go w górę lub w dół do następnej wartości. Dlatego mediana (w przeciwieństwie do średniej) jest uważana za miarę “odporną”. W zwykłym filtrze medianowym każdy piksel w regionie filtra ma taki sam wpływ, niezależnie od jego odległości od środka.</p>
+</section></section><section id="obramowanie" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="obramowanie">
+<span class="header-section-number">6.3</span> Obramowanie</h2>
+<p>Jak to zostało zaznaczone wcześniej zastosowanie jakiegokolwiek filtru (liniowego lub nieliniowego) wiąże się z pewna niedogodnością. Mianowicie wszystkie filtry kwadratowe czy prostokątne są kłopotliwe w zastosowaniu jeśli centrum (<em>hot spot</em>) filtra leży blisko brzegu obrazu. Teoretycznie filtry nie mogą być stosowane w miejscach, gdzie macierz filtrów nie jest w pełni zawarta w macierzy obrazu. Zatem każda operacja filtrująca zmniejszyłaby rozmiar obrazu wynikowego, co w większości zastosowań jest nie do przyjęcia. Choć nie istnieje formalnie poprawne remedium, istnieje kilka mniej lub bardziej praktycznych metod obsługi regionów granicznych:</p>
+<ol type="1">
+<li>Ustaw nieprzetworzone piksele na granicach na jakąś stałą wartość (np. “czarny”). Jest to z pewnością najprostsza metoda, ale w wielu sytuacjach nie do przyjęcia, ponieważ rozmiar obrazu jest stopniowo zmniejszany przez każdą operację filtra.</li>
+<li>Ustaw nieprzetworzone piksele na oryginalne (niefiltrowane) wartości obrazu. Zazwyczaj wyniki są również nie do przyjęcia, ze względu na zauważalną różnicę między przefiltrowanymi i nieprzetworzonymi fragmentami obrazu.</li>
+<li>Rozwiń obraz, “wypełniając” (ang. <em>padding</em>) dodatkowe piksele wokół niego i zastosuj filtr również do regionów granicznych. Na <a href="#fig-border">Rysunek&nbsp;<span>6.15</span></a> pokazano różne opcje wypełniania obrazów (obraz (a) jest oryginałem).
+<ol type="1">
+<li><p>Piksele poza obrazem mają stałą wartość (np. “czarny” lub “szary”, patrz <a href="#fig-border">Rysunek&nbsp;<span>6.15</span></a> (b)). Może to powodować silne artefakty na granicach obrazu, szczególnie w przypadku stosowania dużych filtrów.</p></li>
+<li><p>Piksele graniczne wykraczają poza granice obrazu (<a href="#fig-border">Rysunek&nbsp;<span>6.15</span></a> (c)). W miejscach występowania granic można spodziewać się jedynie niewielkich artefaktów. Metoda ta jest również prosta obliczeniowo i dlatego często jest uważana za najlepszy wybór.</p></li>
+<li><p>Obraz jest odbijany na każdej ze swoich czterech granic (<a href="#fig-border">Rysunek&nbsp;<span>6.15</span></a> (d)). Wyniki będą podobne jak w przypadku poprzedniej metody, o ile nie zostaną użyte bardzo duże filtry.</p></li>
+<li><p>Obraz powtarza się cyklicznie w kierunku poziomym i pionowym (<a href="#fig-border">Rysunek&nbsp;<span>6.15</span></a> (e)). Może się to początkowo wydawać dziwne, a wyniki na ogół nie są zadowalające. Jednak w dyskretnej analizie spektralnej obraz jest pośrednio traktowany również jako funkcja okresowa. Jeśli więc obraz jest filtrowany w dziedzinie częstotliwości, to wyniki będą równe filtracji w dziedzinie przestrzeni w ramach tego powtarzalnego modelu.</p></li>
+</ol>
+</li>
+</ol>
+<div id="fig-border" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 19.28.41.png" class="img-fluid figure-img" width="600"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;6.15: Różne sposoby obsługi obramowania</figcaption><p></p>
+</figure>
+</div>
+<p>Żadna z tych metod nie jest doskonała i zwykle, właściwy wybór zależy od rodzaju obrazu i zastosowanego filtra.</p>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
