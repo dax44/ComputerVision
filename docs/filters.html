@@ -510,34 +510,32 @@ I ∗ H = I ∗ (H_1 ∗ H_2 ∗ . . . ∗ H_n)
 <p><span class="math display">\[
 I'=(I*h_x)*h_y,
 \]</span> gdzie <span class="math inline">\(h_x, h_y\)</span> są filtrami 1D, które po wymnożeniu tworzą filtr o wymiarze <span class="math inline">\(k\times m\)</span>. Przykładowo</p>
-$$
-<span class="math display">\[\begin{bmatrix}
+<p><span id="eq-mnozenie"><span class="math display">\[
+\begin{bmatrix}
   1,&amp;1,&amp;1,&amp;1,&amp;1\\
   1,&amp;1,&amp;1,&amp;1,&amp;1\\
   1,&amp;1,&amp;1,&amp;1,&amp;1
-\end{bmatrix}\]</span>
+\end{bmatrix}
 = H = h_x*h_y=
-<span class="math display">\[\begin{bmatrix}
+\begin{bmatrix}
   1\\
   1\\
   1
-\end{bmatrix}\]</span>
-<ul>
-<li>
-<span class="math display">\[\begin{bmatrix}
-    1,&amp;1,&amp;1,&amp;1,&amp;1
-   \end{bmatrix}\]</span>
-$${#eq-mnozenie}</li>
-</ul>
+\end{bmatrix}
+\cdot
+    \begin{bmatrix}
+        1,&amp;1,&amp;1,&amp;1,&amp;1
+       \end{bmatrix}
+\tag{6.14}\]</span></span></p>
 <p>Stosując tą własność rozłączności możemy również przedstawić filtr o jądrze gassuowskim 2D, za pomocą mnożenia filtrów gaussowskich 1D.</p>
 <p><span id="eq-mnozenie2"><span class="math display">\[
 H^{G,\sigma}=h^{G,\sigma}_x*h^{G,\sigma}_y,
-\tag{6.14}\]</span></span></p>
+\tag{6.15}\]</span></span></p>
 <p>gdzie <span class="math inline">\(h^{G,\sigma}_x,h^{G,\sigma}_y\)</span> są filtrami gaussowskimi 1D. Kolejność użytych filtrów ponownie nie ma znaczenia. Jeśli dla poszczególnych składowych odchylenia standardowe nie są równe, to filtr gaussowski 2D ma charakter eliptyczny.</p>
 <p>W algebrze filtrów liniowych istniej coś na kształt elementu neutralnego dla operacji splotu</p>
 <p><span id="eq-dirac"><span class="math display">\[
 I = \delta*I,
-\tag{6.15}\]</span></span></p>
+\tag{6.16}\]</span></span></p>
 <p>gdzie</p>
 <p><span id="eq-dirac2"><span class="math display">\[
 \delta(u,v)=
@@ -545,11 +543,11 @@ I = \delta*I,
   1, &amp;\text{ jeśli }u=v=0\\
   0, &amp;\text{ w przeciwnym przypadku}
 \end{cases}
-\tag{6.16}\]</span></span></p>
+\tag{6.17}\]</span></span></p>
 <p>Co ciekawe filtr ten nie zmienia jedynie samego obrazu ale również innych filtrów</p>
 <p><span id="eq-dirac3"><span class="math display">\[
 H=\delta*H=H*\delta.
-\tag{6.17}\]</span></span></p>
+\tag{6.18}\]</span></span></p>
 </section></section></section><section id="filtry-nieliniowe" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="filtry-nieliniowe">
 <span class="header-section-number">6.2</span> Filtry nieliniowe</h2>
 <section id="filtry-minimum-i-maksimum" class="level3" data-number="6.2.1"><h3 data-number="6.2.1" class="anchored" data-anchor-id="filtry-minimum-i-maksimum">
@@ -560,7 +558,7 @@ H=\delta*H=H*\delta.
   I'(u,v)=&amp;\min_{(i,j)\in R}\{I(u+i, v+j)\}\\
   I'(u,v)=&amp;\max_{(i,j)\in R}\{I(u+i, v+j)\}
 \end{align}
-\tag{6.18}\]</span></span></p>
+\tag{6.19}\]</span></span></p>
 <p>gdzie <span class="math inline">\(R\)</span> oznacza region filtra (zbiór współrzędnych filtra, zwykle kwadrat o rozmiarach 3x3 pikseli). <a href="#fig-min">Rysunek&nbsp;<span>6.10</span></a> ilustruje wpływ minimalnego filtra 1D na różne lokalne struktury sygnału.</p>
 <div id="fig-min" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-8 o 19.52.39.png" class="img-fluid figure-img"></p>
