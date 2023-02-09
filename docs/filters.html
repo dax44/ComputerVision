@@ -89,7 +89,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./edge.html" rel="next">
 <link href="./point_trans.html" rel="prev">
 <link href="./cover.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -212,6 +212,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./edge.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Wykrywanie krawędzi i konturów</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Bibliografia</a>
   </div>
 </li>
@@ -237,7 +242,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#filtr-medianowy" id="toc-filtr-medianowy" class="nav-link" data-scroll-target="#filtr-medianowy"><span class="toc-section-number">6.2.2</span>  Filtr medianowy</a></li>
   </ul>
 </li>
-  <li><a href="#obramowanie" id="toc-obramowanie" class="nav-link" data-scroll-target="#obramowanie"><span class="toc-section-number">6.3</span>  Obramowanie</a></li>
+  <li><a href="#obramowania-obraz%C3%B3w" id="toc-obramowania-obrazów" class="nav-link" data-scroll-target="#obramowania-obraz%C3%B3w"><span class="toc-section-number">6.3</span>  Obramowania obrazów</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -684,8 +689,8 @@ I'(u,v)=\operatorname{Median}_{(i,j)\in R}\{I(u+i, v+j)\}.
 </div>
 </div>
 <p>Mediana jest statystyką porządkową i w pewnym sensie “większość” uwzględnianych wartości pikseli określa wynik. Pojedyncza wyjątkowo wysoka lub niska wartość (“odstająca”) nie może wpłynąć na wynik, a jedynie przesunąć go w górę lub w dół do następnej wartości. Dlatego mediana (w przeciwieństwie do średniej) jest uważana za miarę “odporną”. W zwykłym filtrze medianowym każdy piksel w regionie filtra ma taki sam wpływ, niezależnie od jego odległości od środka.</p>
-</section></section><section id="obramowanie" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="obramowanie">
-<span class="header-section-number">6.3</span> Obramowanie</h2>
+</section></section><section id="obramowania-obrazów" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="obramowania-obrazów">
+<span class="header-section-number">6.3</span> Obramowania obrazów</h2>
 <p>Jak to zostało zaznaczone wcześniej zastosowanie jakiegokolwiek filtru (liniowego lub nieliniowego) wiąże się z pewna niedogodnością. Mianowicie wszystkie filtry kwadratowe czy prostokątne są kłopotliwe w zastosowaniu jeśli centrum (<em>hot spot</em>) filtra leży blisko brzegu obrazu. Teoretycznie filtry nie mogą być stosowane w miejscach, gdzie macierz filtrów nie jest w pełni zawarta w macierzy obrazu. Zatem każda operacja filtrująca zmniejszyłaby rozmiar obrazu wynikowego, co w większości zastosowań jest nie do przyjęcia. Choć nie istnieje formalnie poprawne remedium, istnieje kilka mniej lub bardziej praktycznych metod obsługi regionów granicznych:</p>
 <ol type="1">
 <li>Ustaw nieprzetworzone piksele na granicach na jakąś stałą wartość (np. “czarny”). Jest to z pewnością najprostsza metoda, ale w wielu sytuacjach nie do przyjęcia, ponieważ rozmiar obrazu jest stopniowo zmniejszany przez każdą operację filtra.</li>
@@ -960,8 +965,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
-        <span class="nav-page-text">Bibliografia</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./edge.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Wykrywanie krawędzi i konturów</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -35,6 +35,7 @@ book:
     - transformations.qmd
     - point_trans.qmd
     - filters.qmd
+    - edge.qmd
     - references.qmd
 
 bibliography: references.bib

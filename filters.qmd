@@ -493,7 +493,7 @@ Pojedyncza wyjątkowo wysoka lub niska wartość ("odstająca") nie może wpłyn
 Dlatego mediana (w przeciwieństwie do średniej) jest uważana za miarę "odporną".
 W zwykłym filtrze medianowym każdy piksel w regionie filtra ma taki sam wpływ, niezależnie od jego odległości od środka.
 
-## Obramowanie
+## Obramowania obrazów
 
 Jak to zostało zaznaczone wcześniej zastosowanie jakiegokolwiek filtru (liniowego lub nieliniowego) wiąże się z pewna niedogodnością.
 Mianowicie wszystkie filtry kwadratowe czy prostokątne są kłopotliwe w zastosowaniu jeśli centrum (*hot spot*) filtra leży blisko brzegu obrazu.
