@@ -16,7 +16,6 @@ book:
   repo-url: https://github.com/dax44/ComputerVision/
   repo-actions: [issue]
   sharing: [twitter]
-  downloads: [pdf, epub]
   search: true
   author: 
   - name: Dariusz Majerek
