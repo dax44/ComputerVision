@@ -46,7 +46,7 @@ $$
 f'(x)=\frac{df}{dx}(x),
 $$ {#eq-gradient}
 
-powoduje dodatnie wahnięcie w tych miejscach, gdzie intensywność wzrasta i ujemne wahnięcie tam, gdzie wartość funkcji spada (fig-grad2 (c)).
+powoduje dodatnie wahnięcie w tych miejscach, gdzie intensywność wzrasta i ujemne wahnięcie tam, gdzie wartość funkcji spada (@fig-grad2 (c)).
 
 ![Przykładowy obraz z wyraźną zmianą jasności](images/Zrzut%20ekranu%202023-02-9%20o%2021.13.51.png){#fig-grad2 fig-align="center"}
 
@@ -103,7 +103,7 @@ H^D_v= \begin{bmatrix}
 \end{bmatrix}
 $$ {#eq-grad6}
 
-Rysunek 6.4 przedstawia wynik zastosowania filtrów gradientowych zdefiniowanych w @eq_grad5 i @eq-grad6 do syntetycznego obrazu testowego.
+Rysunek 6.4 przedstawia wynik zastosowania filtrów gradientowych zdefiniowanych w @eq-grad5 i @eq-grad6 do syntetycznego obrazu testowego.
 Widać wyraźnie zależność odpowiedzi filtrów od orientacji.
 Filtr gradientu poziomego $H_u^D$ reaguje najsilniej na szybkie zmiany wzdłuż kierunku poziomego, (czyli na krawędzie pionowe); analogicznie filtr gradientu pionowego $H_v^D$ reaguje najsilniej na krawędzie poziome.
 W płaskich obszarach obrazu (przedstawionych jako szare na @fig-grad4 (b, c)) reakcja filtra jest zerowa.
@@ -283,4 +283,94 @@ W swojej podstawowej (jednoskalowej) postaci operator Canny'ego wykonuje następ
 
 ![Zasada działania filtru Canny'ego](images/Zrzut%20ekranu%202023-02-9%20o%2023.54.54.png){#fig-edge5 fig-align="center" width="500"}
 
+## Wyostrzanie obrazu
 
+Wyostrzanie obrazów (ang. *sharpening*) jest częstym zadaniem, np.
+w celu poprawy ostrości po zeskanowaniu lub przeskalowaniu obrazu lub w celu wstępnej kompensacji późniejszej utraty ostrości w trakcie drukowania lub wyświetlania obrazu.
+Powszechnym podejściem do wyostrzania obrazu jest wzmacnianie wysokoczęstotliwościowych (ang. *hight-frequency amplifying*) składowych obrazu, które są głównie odpowiedzialne za postrzeganą ostrość obrazu i dla których najsilniejsze występują przy szybkich zmianach intensywności.
+W dalszej części opisujemy dwie metody sztucznego wyostrzania obrazu, które opierają się na technikach podobnych do detekcji krawędzi.
+
+### Filtr Laplace'a
+
+![Wyostrzanie obrazu za pomocą drugich pochodnych](images/Zrzut%20ekranu%202023-02-10%20o%2016.39.04.png){#fig-sharp1 fig-align="center" width="400"}
+
+Popularną metodą lokalizacji szybkich zmian intensywności są filtry oparte na drugich pochodnych funkcji obrazu.
+@fig-sharp1 ilustruje tę ideę dla obrazu 1D i ciągłej funkcji $f(x)$.
+Druga pochodna $f''(x)$ funkcji schodkowej pokazuje dodatni impuls na dolnym końcu przejścia i ujemny impuls na górnym końcu.
+Krawędź wyostrza się przez odjęcie pewnego ułamka w drugiej pochodnej $f''(x)$ od oryginalnej funkcji $f(x)$
+
+$$
+\hat{f}(x)=f(x)-w\cdot f''(x).
+$$ {#eq-sharp1}
+
+W zależności od współczynnika wagowego $w\geq0$, wyrażenie w @eq-sharp1 powoduje, że funkcja intensywności przeskakuje po obu stronach krawędzi, co powoduje wyolbrzymienie krawędzi i zwiększenie postrzeganej ostrości.
+
+Wyostrzenie funkcji 2D można uzyskać za pomocą drugich pochodnych w kierunku poziomym i pionowym połączonych tzw.
+operatorem Laplace'a.
+Operator Laplace'a $\nabla^2$ funkcji 2D $f(x, y)$ jest zdefiniowany jako suma drugich pochodnych cząstkowych wzdłuż kierunków $x$ i $y$:
+
+$$
+(\nabla^2f)(x,y)=\frac{\partial^2 f}{\partial^2 x}(x,y)+\frac{\partial^2 f}{\partial^2 y}(x,y).
+$$ {#eq-sharp2}
+
+Podobnie jak w przypadku pierwszych pochodnych, również drugie pochodne funkcji obrazu dyskretnego mogą być estymowane za pomocą zestawu prostych filtrów liniowych.
+Również w tym przypadku zaproponowano kilka wersji.
+Na przykład, dwa filtry 1D:
+
+$$
+\frac{\partial^2 f}{\partial^2 x}\approx H_x^L= \begin{bmatrix}
+  1 &-2 &1
+\end{bmatrix}\quad\text{i}\quad \frac{\partial^2 f}{\partial^2 y}\approx H_y^L=
+\begin{bmatrix}
+  1\\
+  -2\\
+  1
+\end{bmatrix}.
+$$ {#eq-sharp3}
+
+do szacowania drugich pochodnych odpowiednio wzdłuż kierunku $x$ i $y$, łączą się w filtr Laplace'a 2D:
+
+$$
+H^L= \begin{bmatrix}
+  0&1&0\\
+  1&-4&1\\
+  0&1&0
+\end{bmatrix}.
+$$ {#eq-sharp4}
+
+@fig-sharp2 przedstawia przykład zastosowania filtru Laplace'a $H^L$ do obrazu w skali szarości, gdzie wyraźnie widoczne są pary dodatnio i ujemnych szczytów po obu stronach każdej krawędzi.
+Filtr wydaje się niemal izotropowy pomimo grubego przybliżenia za pomocą małych filtrów.
+
+![Porównanie filtru Laplace'a z filtrami drugich pochodnych](images/Zrzut%20ekranu%202023-02-10%20o%2016.56.32.png){#fig-sharp2 fig-align="center" width="400"}
+
+### Metoda nieostrej maski
+
+Metoda nieostrej maski (ang. *unsharp masking)* (USM) to technika wyostrzania krawędzi, która jest szczególnie popularna w astronomii, druku cyfrowym i wielu innych dziedzinach przetwarzania obrazów.
+Termin ten wywodzi się z klasycznej fotografii, gdzie ostrość obrazu była optycznie zwiększana poprzez połączenie go z wygładzoną ("nieostrą") kopią.
+Proces ten jest w zasadzie taki sam dla obrazów cyfrowych.
+
+Pierwszym krokiem w filtrze USM jest odjęcie od oryginału wygładzonej wersji obrazu, która uwydatnia krawędzie.
+Wynik ten nazywany jest "maską".
+W fotografii analogowej wymagane wygładzenie uzyskiwano przez zwykłe rozogniskowanie obiektywu[^edge-4].
+Następnie maska jest ponownie dodawana do oryginału, w taki sposób, że krawędzie w obrazie są wyostrzone.
+Podsumowując, kroki zaangażowane w filtrowanie USM to:
+
+[^edge-4]: utratę ostrości
+
+1.  Obraz maski $M$ jest generowany przez odjęcie od obrazu oryginalnego $I$ jego wygładzonej wersji, uzyskanej przez filtrowanie za pomocą filtru $\tilde{H}$
+
+$$
+M\leftarrow I-(I*\tilde{H})=I-\tilde{I}.
+$${#eq-sharp5}
+
+Przyjmuje się, że jądro $\tilde{H}$ filtra wygładzającego jest znormalizowane.
+2. Aby uzyskać wyostrzony obraz $\check{I}$, maska $M$ jest dodawana do oryginalnego obrazu $I$ z odpowiednią wagą $a$, za pomocą której kontrolujemy stopień wyostrzenia
+
+$$
+\check{I}\leftarrow I+a\cdot M,
+$${#eq-sharp6}
+zatem podstawiając @eq-sharp5 otrzymujemy
+
+$$
+\check{I}\leftarrow I+a\cdot (I-\tilde{I})=(1+a)\cdot I-a\cdot \tilde{I}.
+$$

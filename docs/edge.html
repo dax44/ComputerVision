@@ -251,6 +251,13 @@ div.csl-indent {
 <li><a href="#przegl%C4%85d-filtr%C3%B3w-do-detekcji-kraw%C4%99dzi" id="toc-przegląd-filtrów-do-detekcji-krawędzi" class="nav-link" data-scroll-target="#przegl%C4%85d-filtr%C3%B3w-do-detekcji-kraw%C4%99dzi"><span class="toc-section-number">7.1.1</span>  Przegląd filtrów do detekcji krawędzi</a></li>
   </ul>
 </li>
+  <li>
+<a href="#wyostrzanie-obrazu" id="toc-wyostrzanie-obrazu" class="nav-link" data-scroll-target="#wyostrzanie-obrazu"><span class="toc-section-number">7.2</span>  Wyostrzanie obrazu</a>
+  <ul class="collapse">
+<li><a href="#filtr-laplacea" id="toc-filtr-laplacea" class="nav-link" data-scroll-target="#filtr-laplacea"><span class="toc-section-number">7.2.1</span>  Filtr Laplace’a</a></li>
+  <li><a href="#metoda-nieostrej-maski" id="toc-metoda-nieostrej-maski" class="nav-link" data-scroll-target="#metoda-nieostrej-maski"><span class="toc-section-number">7.2.2</span>  Metoda nieostrej maski</a></li>
+  </ul>
+</li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -299,7 +306,7 @@ div.csl-indent {
 <p><span id="eq-gradient"><span class="math display">\[
 f'(x)=\frac{df}{dx}(x),
 \tag{7.1}\]</span></span></p>
-<p>powoduje dodatnie wahnięcie w tych miejscach, gdzie intensywność wzrasta i ujemne wahnięcie tam, gdzie wartość funkcji spada (fig-grad2 (c)).</p>
+<p>powoduje dodatnie wahnięcie w tych miejscach, gdzie intensywność wzrasta i ujemne wahnięcie tam, gdzie wartość funkcji spada (<a href="#fig-grad2">Rysunek&nbsp;<span>7.2</span></a> (c)).</p>
 <div id="fig-grad2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 21.13.51.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;7.2: Przykładowy obraz z wyraźną zmianą jasności</figcaption><p></p>
@@ -339,7 +346,7 @@ H^D_v= \begin{bmatrix}
   0.5
 \end{bmatrix}
 \tag{7.6}\]</span></span></p>
-<p>Rysunek 6.4 przedstawia wynik zastosowania filtrów gradientowych zdefiniowanych w <span class="citation" data-cites="eq_grad5">(<a href="references.html#ref-eq_grad5" role="doc-biblioref"><strong>eq_grad5?</strong></a>)</span> i <a href="#eq-grad6">Równanie&nbsp;<span>7.6</span></a> do syntetycznego obrazu testowego. Widać wyraźnie zależność odpowiedzi filtrów od orientacji. Filtr gradientu poziomego <span class="math inline">\(H_u^D\)</span> reaguje najsilniej na szybkie zmiany wzdłuż kierunku poziomego, (czyli na krawędzie pionowe); analogicznie filtr gradientu pionowego <span class="math inline">\(H_v^D\)</span> reaguje najsilniej na krawędzie poziome. W płaskich obszarach obrazu (przedstawionych jako szare na <a href="#fig-grad4">Rysunek&nbsp;<span>7.4</span></a> (b, c)) reakcja filtra jest zerowa.</p>
+<p>Rysunek 6.4 przedstawia wynik zastosowania filtrów gradientowych zdefiniowanych w <a href="#eq-grad5">Równanie&nbsp;<span>7.5</span></a> i <a href="#eq-grad6">Równanie&nbsp;<span>7.6</span></a> do syntetycznego obrazu testowego. Widać wyraźnie zależność odpowiedzi filtrów od orientacji. Filtr gradientu poziomego <span class="math inline">\(H_u^D\)</span> reaguje najsilniej na szybkie zmiany wzdłuż kierunku poziomego, (czyli na krawędzie pionowe); analogicznie filtr gradientu pionowego <span class="math inline">\(H_v^D\)</span> reaguje najsilniej na krawędzie poziome. W płaskich obszarach obrazu (przedstawionych jako szare na <a href="#fig-grad4">Rysunek&nbsp;<span>7.4</span></a> (b, c)) reakcja filtra jest zerowa.</p>
 <div id="fig-grad4" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 21.38.12.png" class="img-fluid figure-img" width="500"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;7.4: Zastosowanie metody gradientowej do obrazu 2D</figcaption><p></p>
@@ -474,6 +481,68 @@ H^R_2= \begin{bmatrix}
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;7.9: Zasada działania filtru Canny’ego</figcaption><p></p>
 </figure>
 </div>
+</section></section></section><section id="wyostrzanie-obrazu" class="level2 page-columns page-full" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="wyostrzanie-obrazu">
+<span class="header-section-number">7.2</span> Wyostrzanie obrazu</h2>
+<p>Wyostrzanie obrazów (ang. <em>sharpening</em>) jest częstym zadaniem, np. w celu poprawy ostrości po zeskanowaniu lub przeskalowaniu obrazu lub w celu wstępnej kompensacji późniejszej utraty ostrości w trakcie drukowania lub wyświetlania obrazu. Powszechnym podejściem do wyostrzania obrazu jest wzmacnianie wysokoczęstotliwościowych (ang. <em>hight-frequency amplifying</em>) składowych obrazu, które są głównie odpowiedzialne za postrzeganą ostrość obrazu i dla których najsilniejsze występują przy szybkich zmianach intensywności. W dalszej części opisujemy dwie metody sztucznego wyostrzania obrazu, które opierają się na technikach podobnych do detekcji krawędzi.</p>
+<section id="filtr-laplacea" class="level3" data-number="7.2.1"><h3 data-number="7.2.1" class="anchored" data-anchor-id="filtr-laplacea">
+<span class="header-section-number">7.2.1</span> Filtr Laplace’a</h3>
+<div id="fig-sharp1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-10 o 16.39.04.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;7.10: Wyostrzanie obrazu za pomocą drugich pochodnych</figcaption><p></p>
+</figure>
+</div>
+<p>Popularną metodą lokalizacji szybkich zmian intensywności są filtry oparte na drugich pochodnych funkcji obrazu. <a href="#fig-sharp1">Rysunek&nbsp;<span>7.10</span></a> ilustruje tę ideę dla obrazu 1D i ciągłej funkcji <span class="math inline">\(f(x)\)</span>. Druga pochodna <span class="math inline">\(f''(x)\)</span> funkcji schodkowej pokazuje dodatni impuls na dolnym końcu przejścia i ujemny impuls na górnym końcu. Krawędź wyostrza się przez odjęcie pewnego ułamka w drugiej pochodnej <span class="math inline">\(f''(x)\)</span> od oryginalnej funkcji <span class="math inline">\(f(x)\)</span></p>
+<p><span id="eq-sharp1"><span class="math display">\[
+\hat{f}(x)=f(x)-w\cdot f''(x).
+\tag{7.12}\]</span></span></p>
+<p>W zależności od współczynnika wagowego <span class="math inline">\(w\geq0\)</span>, wyrażenie w <a href="#eq-sharp1">Równanie&nbsp;<span>7.12</span></a> powoduje, że funkcja intensywności przeskakuje po obu stronach krawędzi, co powoduje wyolbrzymienie krawędzi i zwiększenie postrzeganej ostrości.</p>
+<p>Wyostrzenie funkcji 2D można uzyskać za pomocą drugich pochodnych w kierunku poziomym i pionowym połączonych tzw. operatorem Laplace’a. Operator Laplace’a <span class="math inline">\(\nabla^2\)</span> funkcji 2D <span class="math inline">\(f(x, y)\)</span> jest zdefiniowany jako suma drugich pochodnych cząstkowych wzdłuż kierunków <span class="math inline">\(x\)</span> i <span class="math inline">\(y\)</span>:</p>
+<p><span id="eq-sharp2"><span class="math display">\[
+(\nabla^2f)(x,y)=\frac{\partial^2 f}{\partial^2 x}(x,y)+\frac{\partial^2 f}{\partial^2 y}(x,y).
+\tag{7.13}\]</span></span></p>
+<p>Podobnie jak w przypadku pierwszych pochodnych, również drugie pochodne funkcji obrazu dyskretnego mogą być estymowane za pomocą zestawu prostych filtrów liniowych. Również w tym przypadku zaproponowano kilka wersji. Na przykład, dwa filtry 1D:</p>
+<p><span id="eq-sharp3"><span class="math display">\[
+\frac{\partial^2 f}{\partial^2 x}\approx H_x^L= \begin{bmatrix}
+  1 &amp;-2 &amp;1
+\end{bmatrix}\quad\text{i}\quad \frac{\partial^2 f}{\partial^2 y}\approx H_y^L=
+\begin{bmatrix}
+  1\\
+  -2\\
+  1
+\end{bmatrix}.
+\tag{7.14}\]</span></span></p>
+<p>do szacowania drugich pochodnych odpowiednio wzdłuż kierunku <span class="math inline">\(x\)</span> i <span class="math inline">\(y\)</span>, łączą się w filtr Laplace’a 2D:</p>
+<p><span id="eq-sharp4"><span class="math display">\[
+H^L= \begin{bmatrix}
+  0&amp;1&amp;0\\
+  1&amp;-4&amp;1\\
+  0&amp;1&amp;0
+\end{bmatrix}.
+\tag{7.15}\]</span></span></p>
+<p><a href="#fig-sharp2">Rysunek&nbsp;<span>7.11</span></a> przedstawia przykład zastosowania filtru Laplace’a <span class="math inline">\(H^L\)</span> do obrazu w skali szarości, gdzie wyraźnie widoczne są pary dodatnio i ujemnych szczytów po obu stronach każdej krawędzi. Filtr wydaje się niemal izotropowy pomimo grubego przybliżenia za pomocą małych filtrów.</p>
+<div id="fig-sharp2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-10 o 16.56.32.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;7.11: Porównanie filtru Laplace’a z filtrami drugich pochodnych</figcaption><p></p>
+</figure>
+</div>
+</section><section id="metoda-nieostrej-maski" class="level3 page-columns page-full" data-number="7.2.2"><h3 data-number="7.2.2" class="anchored" data-anchor-id="metoda-nieostrej-maski">
+<span class="header-section-number">7.2.2</span> Metoda nieostrej maski</h3>
+<p>Metoda nieostrej maski (ang. <em>unsharp masking)</em> (USM) to technika wyostrzania krawędzi, która jest szczególnie popularna w astronomii, druku cyfrowym i wielu innych dziedzinach przetwarzania obrazów. Termin ten wywodzi się z klasycznej fotografii, gdzie ostrość obrazu była optycznie zwiększana poprzez połączenie go z wygładzoną (“nieostrą”) kopią. Proces ten jest w zasadzie taki sam dla obrazów cyfrowych.</p>
+<div class="page-columns page-full"><p>Pierwszym krokiem w filtrze USM jest odjęcie od oryginału wygładzonej wersji obrazu, która uwydatnia krawędzie. Wynik ten nazywany jest “maską”. W fotografii analogowej wymagane wygładzenie uzyskiwano przez zwykłe rozogniskowanie obiektywu<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Następnie maska jest ponownie dodawana do oryginału, w taki sposób, że krawędzie w obrazie są wyostrzone. Podsumowując, kroki zaangażowane w filtrowanie USM to:</p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;utratę ostrości</p></li></div></div>
+<ol type="1">
+<li>Obraz maski <span class="math inline">\(M\)</span> jest generowany przez odjęcie od obrazu oryginalnego <span class="math inline">\(I\)</span> jego wygładzonej wersji, uzyskanej przez filtrowanie za pomocą filtru <span class="math inline">\(\tilde{H}\)</span>
+</li>
+</ol>
+<p><span id="eq-sharp5"><span class="math display">\[
+M\leftarrow I-(I*\tilde{H})=I-\tilde{I}.
+\tag{7.16}\]</span></span></p>
+<p>Przyjmuje się, że jądro <span class="math inline">\(\tilde{H}\)</span> filtra wygładzającego jest znormalizowane. 2. Aby uzyskać wyostrzony obraz <span class="math inline">\(\check{I}\)</span>, maska <span class="math inline">\(M\)</span> jest dodawana do oryginalnego obrazu <span class="math inline">\(I\)</span> z odpowiednią wagą <span class="math inline">\(a\)</span>, za pomocą której kontrolujemy stopień wyostrzenia</p>
+<p><span id="eq-sharp6"><span class="math display">\[
+\check{I}\leftarrow I+a\cdot M,
+\tag{7.17}\]</span></span> zatem podstawiając <a href="#eq-sharp5">Równanie&nbsp;<span>7.16</span></a> otrzymujemy</p>
+<p><span class="math display">\[
+\check{I}\leftarrow I+a\cdot (I-\tilde{I})=(1+a)\cdot I-a\cdot \tilde{I}.
+\]</span></p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
@@ -496,7 +565,7 @@ Marr, D., i E. Hildreth. 1980. <span>„Theory of Edge Detection”</span>. <em>
 <span>„Picture <span>Processing</span> and <span>Psychopictorics</span> - 1st <span>Edition</span>”</span>. b.d. https://www.elsevier.com/books/picture-processing-and-psychopictorics/lipkin/978-0-12-451550-5.
 </div>
 </div>
-</section></section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
