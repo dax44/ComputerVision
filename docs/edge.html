@@ -519,6 +519,10 @@ H^L= \begin{bmatrix}
   0&amp;1&amp;0
 \end{bmatrix}.
 \tag{7.15}\]</span></span></p>
+<p>Wyostrzanie odbywa się poprzez odjęcie przekształconego obrazu przez filtr Laplace’a od oryginalnego z odpowiednią wagą <span class="math inline">\(w\)</span></p>
+<p><span id="eq-sharp45"><span class="math display">\[
+I'\leftarrow I-w\cdot (H^L*I).
+\tag{7.16}\]</span></span></p>
 <p><a href="#fig-sharp2">Rysunek&nbsp;<span>7.11</span></a> przedstawia przykład zastosowania filtru Laplace’a <span class="math inline">\(H^L\)</span> do obrazu w skali szarości, gdzie wyraźnie widoczne są pary dodatnio i ujemnych szczytów po obu stronach każdej krawędzi. Filtr wydaje się niemal izotropowy pomimo grubego przybliżenia za pomocą małych filtrów.</p>
 <div id="fig-sharp2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-10 o 16.56.32.png" class="img-fluid figure-img" width="400"></p>
@@ -535,14 +539,23 @@ H^L= \begin{bmatrix}
 </ol>
 <p><span id="eq-sharp5"><span class="math display">\[
 M\leftarrow I-(I*\tilde{H})=I-\tilde{I}.
-\tag{7.16}\]</span></span></p>
+\tag{7.17}\]</span></span></p>
 <p>Przyjmuje się, że jądro <span class="math inline">\(\tilde{H}\)</span> filtra wygładzającego jest znormalizowane. 2. Aby uzyskać wyostrzony obraz <span class="math inline">\(\check{I}\)</span>, maska <span class="math inline">\(M\)</span> jest dodawana do oryginalnego obrazu <span class="math inline">\(I\)</span> z odpowiednią wagą <span class="math inline">\(a\)</span>, za pomocą której kontrolujemy stopień wyostrzenia</p>
 <p><span id="eq-sharp6"><span class="math display">\[
 \check{I}\leftarrow I+a\cdot M,
-\tag{7.17}\]</span></span> zatem podstawiając <a href="#eq-sharp5">Równanie&nbsp;<span>7.16</span></a> otrzymujemy</p>
+\tag{7.18}\]</span></span> zatem podstawiając <a href="#eq-sharp5">Równanie&nbsp;<span>7.17</span></a> otrzymujemy</p>
 <p><span class="math display">\[
 \check{I}\leftarrow I+a\cdot (I-\tilde{I})=(1+a)\cdot I-a\cdot \tilde{I}.
-\]</span></p>
+\]</span> Jako filtr wygładzający <span class="math inline">\(\tilde{H}\)</span> można właściwie zastosować dowolny filtr wygładzający, choć najczęściej spotyka się w tym miejscu filtry gassowskie <span class="math inline">\(H^{G,\sigma}\)</span> o <span class="math inline">\(\sigma \in [1,20]\)</span>. Natomiast najczęściej przyjmowane wartości dla <span class="math inline">\(a\)</span> mieszczą się w przedziale [0.2,4].</p>
+<div class="cell">
+<details><summary>Kod</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">laplace_ftl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imsharpen.html">imsharpen</a></span><span class="op">(</span><span class="va">boats</span>, amplitude <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">boats</span><span class="op">)</span></span>
+<span><span class="va">laplace_ftl</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>interpolate <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="edge_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">

@@ -338,6 +338,12 @@ H^L= \begin{bmatrix}
 \end{bmatrix}.
 $$ {#eq-sharp4}
 
+Wyostrzanie odbywa się poprzez odjęcie przekształconego obrazu przez filtr Laplace'a od oryginalnego z odpowiednią wagą $w$
+
+$$
+I'\leftarrow I-w\cdot (H^L*I).
+$${#eq-sharp45}
+
 @fig-sharp2 przedstawia przykład zastosowania filtru Laplace'a $H^L$ do obrazu w skali szarości, gdzie wyraźnie widoczne są pary dodatnio i ujemnych szczytów po obu stronach każdej krawędzi.
 Filtr wydaje się niemal izotropowy pomimo grubego przybliżenia za pomocą małych filtrów.
 
@@ -374,3 +380,13 @@ zatem podstawiając @eq-sharp5 otrzymujemy
 $$
 \check{I}\leftarrow I+a\cdot (I-\tilde{I})=(1+a)\cdot I-a\cdot \tilde{I}.
 $$
+Jako filtr wygładzający $\tilde{H}$ można właściwie zastosować dowolny filtr wygładzający, choć  najczęściej spotyka się w tym miejscu filtry gassowskie $H^{G,\sigma}$ o $\sigma \in [1,20]$. Natomiast najczęściej przyjmowane wartości dla $a$ mieszczą się w przedziale [0.2,4].
+
+
+```{r}
+laplace_ftl <- imsharpen(boats, amplitude = 2)
+layout(t(1:2))
+plot(boats)
+laplace_ftl |> plot(interpolate = F)
+```
+
