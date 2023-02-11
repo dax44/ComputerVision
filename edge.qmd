@@ -20,7 +20,6 @@ Jak jednak powstają krawędzie i jak można je technicznie zlokalizować w obra
 #| label: fig-contour1
 #| fig-cap: Przykład detekcji konturów
 library(imager)
-library(tidyverse)
 
 layout(t(1:2))
 boats |> 
@@ -342,7 +341,7 @@ Wyostrzanie odbywa się poprzez odjęcie przekształconego obrazu przez filtr La
 
 $$
 I'\leftarrow I-w\cdot (H^L*I).
-$${#eq-sharp45}
+$$ {#eq-sharp45}
 
 @fig-sharp2 przedstawia przykład zastosowania filtru Laplace'a $H^L$ do obrazu w skali szarości, gdzie wyraźnie widoczne są pary dodatnio i ujemnych szczytów po obu stronach każdej krawędzi.
 Filtr wydaje się niemal izotropowy pomimo grubego przybliżenia za pomocą małych filtrów.
@@ -367,26 +366,40 @@ Podsumowując, kroki zaangażowane w filtrowanie USM to:
 
 $$
 M\leftarrow I-(I*\tilde{H})=I-\tilde{I}.
-$${#eq-sharp5}
+$$ {#eq-sharp5}
 
 Przyjmuje się, że jądro $\tilde{H}$ filtra wygładzającego jest znormalizowane.
-2. Aby uzyskać wyostrzony obraz $\check{I}$, maska $M$ jest dodawana do oryginalnego obrazu $I$ z odpowiednią wagą $a$, za pomocą której kontrolujemy stopień wyostrzenia
+2.
+Aby uzyskać wyostrzony obraz $\check{I}$, maska $M$ jest dodawana do oryginalnego obrazu $I$ z odpowiednią wagą $a$, za pomocą której kontrolujemy stopień wyostrzenia
 
 $$
 \check{I}\leftarrow I+a\cdot M,
-$${#eq-sharp6}
-zatem podstawiając @eq-sharp5 otrzymujemy
+$$ {#eq-sharp6} zatem podstawiając @eq-sharp5 otrzymujemy
 
 $$
 \check{I}\leftarrow I+a\cdot (I-\tilde{I})=(1+a)\cdot I-a\cdot \tilde{I}.
-$$
-Jako filtr wygładzający $\tilde{H}$ można właściwie zastosować dowolny filtr wygładzający, choć  najczęściej spotyka się w tym miejscu filtry gassowskie $H^{G,\sigma}$ o $\sigma \in [1,20]$. Natomiast najczęściej przyjmowane wartości dla $a$ mieszczą się w przedziale [0.2,4].
-
+$$ Jako filtr wygładzający $\tilde{H}$ można właściwie zastosować dowolny filtr wygładzający, choć najczęściej spotyka się w tym miejscu filtry gassowskie $H^{G,\sigma}$ o $\sigma \in [1,20]$.
+Natomiast najczęściej przyjmowane wartości dla $a$ mieszczą się w przedziale \[0.2,4\].
 
 ```{r}
-laplace_ftl <- imsharpen(boats, amplitude = 2)
-layout(t(1:2))
-plot(boats)
-laplace_ftl |> plot(interpolate = F)
-```
+#| label: fig-sharp4
+#| fig-cap: Wyostrzenie obrazu Leny. Pierwszy obraz w górnym rzędzie to oryginał, środkowy w górnym rzędzie to rozmyty obraz Leny filtrem gaussowskim, obraz po prawej w górnym rzędzie to maska. Obraz po lewej stronie w dolnym rzędzie to wyostrzony obraz Leny metodą USM. Środkowy obraz w dolnym rzędzie to filtr Laplace'a nałożony na Lenę, a obraz po prawej w dolnym rzędzie to wyostrzony obraz Leny metodą Laplace'a
 
+lena <- Rvision::image("images/lena.png")
+
+layout(matrix(1:6, 2, 3, byrow = TRUE))
+
+plot(lena)
+lena_blr <- Rvision::gaussianBlur(lena, 10, 10, 5, 5)
+plot(lena_blr)
+maska <- lena-lena_blr
+plot(maska)
+lena_sharp <- lena+maska
+plot(lena_sharp)
+
+lena_flt <- Rvision::filter2D(lena, matrix(c(0,1,0,
+                                    1,-4,1,
+                                    0,1,0), byrow = T, ncol = 3))
+plot(lena_flt)
+(lena-lena_flt) |>  plot()
+```

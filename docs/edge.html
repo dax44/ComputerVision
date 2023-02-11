@@ -162,22 +162,7 @@ div.csl-indent {
         <div class="sidebar-tools-main tools-wide">
     <a href="https://twitter.com" title="" class="sidebar-tool px-1"><i class="bi bi-twitter"></i></a>
     <a href="https://github.com/dax44/ComputerVision/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
-    <a href="" title="Download" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-download"></i></a>
-    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
-<li>
-          <a class="dropdown-item sidebar-tools-main-item" href="./Automatyczna-analiza-obrazu.pdf">
-            <i class="bi bi-bi-file-pdf pe-1"></i>
-          Download PDF
-          </a>
-        </li>
-        <li>
-          <a class="dropdown-item sidebar-tools-main-item" href="./Automatyczna-analiza-obrazu.epub">
-            <i class="bi bi-bi-journal pe-1"></i>
-          Download ePub
-          </a>
-        </li>
-    </ul>
-<a href="https://twitter.com/intent/tweet?url=%7Curl%7C" title="Twitter" class="sidebar-tool px-1"><i class="bi bi-twitter"></i></a>
+    <a href="https://twitter.com/intent/tweet?url=%7Curl%7C" title="Twitter" class="sidebar-tool px-1"><i class="bi bi-twitter"></i></a>
   <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
@@ -281,7 +266,6 @@ div.csl-indent {
 <p>Krawędzie i kontury odgrywają dominującą rolę w ludzkim widzeniu i prawdopodobnie także w wielu innych biologicznych systemach widzenia. Krawędzie nie tylko rzucają się w oczy, ale często można opisać lub zrekonstruować całą figurę na podstawie kilku kluczowych linii, jak pokazuje przykład na <a href="#fig-contour1">Rysunek&nbsp;<span>7.1</span></a>. Jak jednak powstają krawędzie i jak można je technicznie zlokalizować w obrazie?</p>
 <div class="cell">
 <details><summary>Kod</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://dahtah.github.io/imager/">imager</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">boats</span> <span class="op">|&gt;</span> </span>
@@ -548,12 +532,29 @@ M\leftarrow I-(I*\tilde{H})=I-\tilde{I}.
 \check{I}\leftarrow I+a\cdot (I-\tilde{I})=(1+a)\cdot I-a\cdot \tilde{I}.
 \]</span> Jako filtr wygładzający <span class="math inline">\(\tilde{H}\)</span> można właściwie zastosować dowolny filtr wygładzający, choć najczęściej spotyka się w tym miejscu filtry gassowskie <span class="math inline">\(H^{G,\sigma}\)</span> o <span class="math inline">\(\sigma \in [1,20]\)</span>. Natomiast najczęściej przyjmowane wartości dla <span class="math inline">\(a\)</span> mieszczą się w przedziale [0.2,4].</p>
 <div class="cell">
-<details><summary>Kod</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">laplace_ftl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imsharpen.html">imsharpen</a></span><span class="op">(</span><span class="va">boats</span>, amplitude <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">boats</span><span class="op">)</span></span>
-<span><span class="va">laplace_ftl</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>interpolate <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details><summary>Kod</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lena</span> <span class="op">&lt;-</span> <span class="fu">Rvision</span><span class="fu">::</span><span class="fu"><a href="https://swarm-lab.github.io/Rvision/reference/image.html">image</a></span><span class="op">(</span><span class="st">"images/lena.png"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">2</span>, <span class="fl">3</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lena</span><span class="op">)</span></span>
+<span><span class="va">lena_blr</span> <span class="op">&lt;-</span> <span class="fu">Rvision</span><span class="fu">::</span><span class="fu"><a href="https://swarm-lab.github.io/Rvision/reference/gaussianBlur.html">gaussianBlur</a></span><span class="op">(</span><span class="va">lena</span>, <span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lena_blr</span><span class="op">)</span></span>
+<span><span class="va">maska</span> <span class="op">&lt;-</span> <span class="va">lena</span><span class="op">-</span><span class="va">lena_blr</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">maska</span><span class="op">)</span></span>
+<span><span class="va">lena_sharp</span> <span class="op">&lt;-</span> <span class="va">lena</span><span class="op">+</span><span class="va">maska</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lena_sharp</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">lena_flt</span> <span class="op">&lt;-</span> <span class="fu">Rvision</span><span class="fu">::</span><span class="fu"><a href="https://swarm-lab.github.io/Rvision/reference/filter2D.html">filter2D</a></span><span class="op">(</span><span class="va">lena</span>, <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0</span>,</span>
+<span>                                    <span class="fl">1</span>,<span class="op">-</span><span class="fl">4</span>,<span class="fl">1</span>,</span>
+<span>                                    <span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">T</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lena_flt</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="va">lena</span><span class="op">-</span><span class="va">lena_flt</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<p><img src="edge_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<div id="fig-sharp4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="edge_files/figure-html/fig-sharp4-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;7.12: Wyostrzenie obrazu Leny. Pierwszy obraz w górnym rzędzie to oryginał, środkowy w górnym rzędzie to rozmyty obraz Leny filtrem gaussowskim, obraz po prawej w górnym rzędzie to maska. Obraz po lewej stronie w dolnym rzędzie to wyostrzony obraz Leny metodą USM. Środkowy obraz w dolnym rzędzie to filtr Laplace’a nałożony na Lenę, a obraz po prawej w dolnym rzędzie to wyostrzony obraz Leny metodą Laplace’a</figcaption><p></p>
+</figure>
+</div>
 </div>
 </div>
 
