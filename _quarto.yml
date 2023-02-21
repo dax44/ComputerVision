@@ -35,6 +35,7 @@ book:
     - point_trans.qmd
     - filters.qmd
     - edge.qmd
+    - morpho.qmd
     - references.qmd
 
 bibliography: references.bib

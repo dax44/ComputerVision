@@ -1,0 +1,131 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Filtry morfologiczne
+
+Omawiając filtr medianowy , zauważyliśmy, że ten typ filtra może w pewien sposób zmieniać struktury obrazów dwuwymiarowych.
+@fig-med1 ilustruje, w jaki sposób zaokrąglane są narożniki, wypełniane otwory o określonym rozmiarze oraz usuwane małe struktury, takie jak pojedyncze kropki lub cienkie linie.
+Filtr medianowy reaguje więc wybiórczo na lokalny kształt struktur obrazu, co jest właściwością, która może być przydatna do innych celów, jeśli można ją stosować nie tylko losowo, ale w sposób kontrolowany.
+Zmienianie lokalnej struktury w przewidywalny sposób jest właśnie tym, co potrafią robić filtry "morfologiczne", na których skupiamy się w tym rozdziale.
+
+![Zastosowanie filtra medianowego. (a) oryginalny obraz, (b) obraz z filtrem 3x3, (c) obraz z filtrem 5x5](images/Zrzut%20ekranu%202023-02-21%20o%2019.37.04.png){#fig-med1 fig-align="center"}
+
+W swojej pierwotnej formie filtry morfologiczne są ukierunkowane na obrazy binarne, obrazy o tylko dwóch możliwych wartościach pikseli, odpowiednio 0 i 1 lub czarny i biały.
+Obrazy binarne spotykane są w wielu miejscach, w szczególności w druku cyfrowym, transmisji dokumentów (fax) i przechowywaniu danych, czy też jako maski selekcyjne w edycji obrazów i filmów.
+Obrazy binarne można uzyskać z obrazów w skali szarości poprzez proste progowanie z użyciem globalnej lub lokalnie zmiennej wartości progowej.
+Piksele binarne o wartościach 1 i 0 oznaczamy odpowiednio jako piksele pierwszego planu i tła.
+W większości poniższych przykładów piksele pierwszego planu są przedstawione w kolorze czarnym, a piksele tła w kolorze białym, tak jak to się dzieje w druku.
+
+Pod koniec tego rozdziału przekonamy się, że filtry morfologiczne mają zastosowanie nie tylko do obrazów binarnych, ale także do obrazów w skali szarości, a nawet kolorowych, choć operacje te różnią się znacznie od ich binarnych odpowiedników.
+
+Naszym punktem wyjścia była obserwacja, że prosty filtr medianowy o wymiarach 3×3 pikseli może zaokrąglić większe struktury obrazu i usunąć mniejsze, takie jak punkty i cienkie linie, w obrazie binarnym.
+Może to być przydatne do eliminacji struktur, które są poniżej pewnego rozmiaru (np. do oczyszczenia obrazu z szumów lub zanieczyszczeń).
+Ale jak możemy kontrolować rozmiar i ewentualnie kształt struktur dotkniętych taką operacją?
+
+Chociaż jego efekty strukturalne mogą być interesujące, pomijamy w tym momencie filtr medianowy i zaczynamy to zadanie od początku.
+Załóżmy, że chcemy usunąć małe struktury z obrazu binarnego, nie zmieniając znacząco pozostałych większych struktur.
+Pomysł na realizacje tego zadania może być następujący:
+
+1.  Najpierw wszystkie struktury w obrazie są iteracyjnie "zmniejszane" (lub "kurczenie") przez odklejanie warstwy o określonej grubości wokół granic.
+2.  Kurczenie usuwa krok po kroku mniejsze struktury i pozostają tylko większe.
+3.  Pozostałe struktury są następnie powiększane o taką samą ilość.
+4.  W końcu większe regiony powinny powrócić do mniej więcej swoich pierwotnych kształtów, podczas gdy mniejsze regiony zniknęły z obrazu.
+
+!["Kurczenie" obrazu. (a) oryginał, (b) obraz z zidentyfikowanymi pikselami sąsiadującymi z tłem, (c) obraz po usunięciu pikseli zidentyfikowanych jako sąsiadujące z tłem](images/Zrzut%20ekranu%202023-02-21%20o%2019.50.06.png){#fig-shrunk fig-align="center" width="600"}
+
+Potrzebujemy do tego jedynie dwóch rodzajów operacji.
+" Kurczenie" oznacza usunięcie warstwy pikseli z regionu pierwszoplanowego wokół wszystkich jego granic na tle (@fig-shrunk).
+Z drugiej strony, "rośnięcie", dodaje warstwę pikseli wokół granicy regionu pierwszoplanowego (@fig-grow).
+
+!["Rośnięcie" obrazu. (a) oryginał, (b) identyfikacja pikseli sąsiadujących z tłem, (c) dodanie pikseli sąsiadujących z tłem](images/Zrzut%20ekranu%202023-02-21%20o%2019.50.15.png){#fig-grow fig-align="center" width="600"}
+
+## Identyfikacja sąsiadów
+
+W przypadku prostokątnych siatek pikseli powszechnie stosowane są dwie definicje "sąsiedztwa" ():
+
+-   cztery piksele sąsiadujące z danym pikselem w kierunku poziomym i pionowym;
+-   osiem sąsiadujących pikseli z analizowanym.
+
+![Definicje sąsiedztwa](images/Zrzut%20ekranu%202023-02-21%20o%2019.59.25.png){#fig-neigh1 fig-align="center" width="400"}
+
+## Podstawowe operacje morfologiczne
+
+Zmniejszanie i zwiększanie to rzeczywiście dwie najbardziej podstawowe operacje morfologiczne, które są określane odpowiednio jako "erozja" (ang. *erosion*) i "dylatacja" (ang. *dilation*).
+Operacje te są jednak znacznie bardziej ogólne niż zilustrowane w przykładzie.
+Wykraczają one daleko poza usuwanie lub dołączanie warstw pojedynczych pikseli i - w połączeniu - mogą wykonywać znacznie bardziej złożone operacje.
+
+### Element strukturyzujący
+
+Podobnie jak w przypadku macierzy współczynników filtru liniowego, właściwości filtru morfologicznego są określone przez elementy macierzy zwanej "elementem strukturyzującym".
+W morfologii binarnej element strukturyzujący (podobnie jak sam obraz) zawiera tylko wartości 0, a "gorący punkt" (ang. *hot spot*) wyznacza początek układu współrzędnych $H$ (@fig-hot-spot).
+Przy czym, hot spot nie musi znajdować się w środku elementu strukturyzującego, ani jego wartość nie musi być równa 1.
+
+![Element strukturyzujący](images/Zrzut%20ekranu%202023-02-21%20o%2020.09.20.png){#fig-hot-spot fig-align="center" width="400"}
+
+#### Zbiór punktowy
+
+Dla formalnej specyfikacji operacji morfologicznych pomocne jest czasem opisanie obrazów binarnych jako zbiorów punktów o współrzędnych 2D.
+Dla obrazu binarnego $I(u, v) \in \{0, 1\}$, odpowiadający zbiór punktów $\mathcal{Q}_I$ składa się z par współrzędnych $p = (u, v)$ wszystkich pikseli pierwszego planu,
+
+$$
+\mathcal{Q}_I =\{p\vert I(p)=1\}.
+$$ {#eq-fore1}
+
+Oczywiście, jak pokazano na rys, nie tylko obraz binarny $I$, ale również element strukturyzujący $H$ może być opisany jako zbiór punktów.
+
+![Obraz binarny z elementem strukturyzującym](images/Zrzut%20ekranu%202023-02-21%20o%2020.09.43.png){#fig-point1 fig-align="center" width="400"}
+
+Dzięki temu, że opisujemy je jako zbiory punktów, podstawowe operacje na obrazach binarnych można również wyrazić jako proste operacje na zbiorach.
+Na przykład, odwrócenie obrazu binarnego $I \rightarrow \bar{I}$ (czyli zamiana pierwszego planu i tła) jest równoważne zbudowaniu zbioru dopełniającego
+
+$$
+\mathcal{Q}_{\bar{I}}=\bar{\mathcal{Q}}_I=\{p\in \mathbb{Z}^2\vert p\in \mathcal{Q}_I\}.
+$$ {#eq-fore2}
+
+Łącząc dwa obrazy binarne $I_1$ i $I_2$ za pomocą operacji OR między odpowiadającymi im pikselami, otrzymany zbiór punktów jest unią indywidualnych zbiorów punktów $Q_{I_1}$ i $Q_{I_2}$.
+Ponieważ zbiór punktów $Q_I$ jest tylko alternatywną reprezentacją obrazu binarnego $I$ (tzn. $I = Q_I$), to w dalszej części będziemy używać synonimicznie obu notacji: obrazu i zbioru.
+
+#### Dylatacja
+
+Dylatacja jest operacją morfologiczną, która odpowiada naszemu intuicyjnemu pojęciu "wzrastania", omówionemu już wcześniej.
+Jako operacja na zbiorach, jest ona zdefiniowana jako
+
+$$
+I\oplus H= \{(p+q)| p\in I, q\in H \}.
+$$ {#eq-dil1}
+
+![Przykład dylatacji](images/Zrzut%20ekranu%202023-02-21%20o%2020.09.59.png){#fig-dil1 fig-align="center" width="400"}
+
+Tak więc zbiór punktów powstały w wyniku dylatacji jest sumą (wektorową) wszystkich możliwych par punktów współrzędnych z oryginalnych zbiorów $I$ i $H$, co ilustruje prosty przykład na @fig-dil1.
+Alternatywnie można postrzegać dylatację jako powielenie elementu struktury $H$ na każdy piksel pierwszego planu obrazu $I$ lub, odwrotnie, powielenie obrazu $I$ na każdy element pierwszego planu $H$.
+
+#### Erozja
+
+Quasi-odwrotnością dylatacji jest operacja erozji, ponownie zdefiniowana w notacji zbiorów jako
+
+$$
+I\ominus H= \{p\in \mathbb{Z}^2| (p+q)\in I, q\in H \}.
+$$ {#eq-eros1}
+
+Operację tę można zinterpretować następująco.
+Pozycja $p$ jest zawarta w wyniku $I \ominus H$ wtedy (i tylko wtedy), gdy element strukturyzujący $H$ - po umieszczeniu w tej pozycji $p$ - jest w całości zawarty w pikselach pierwszego planu oryginalnego obrazu.
+@fig-eros1 przedstawia przykład erozji.
+
+![Przykład erozji](images/Zrzut%20ekranu%202023-02-21%20o%2020.10.14.png){#fig-eros1 fig-align="center" width="400"}
+
+Filtr morfologiczny jest jednoznacznie określony przez (a) rodzaj operacji i (b) zawartość elementu strukturyzującego.
+Odpowiedni rozmiar i kształt elementu strukturyzującego zależy od zastosowania, rozdzielczości obrazu itp.
+W praktyce często stosuje się elementy strukturyzujące o quasi-kolistym kształcie.
+
+![Wyniki dylatacji i erozji z różnymi promieniami](images/Zrzut%20ekranu%202023-02-21%20o%2020.51.53.png){#fig-eros-dil fig-align="center" width="600"}
+
+Dylatacja z wykorzystaniem okrągłego (dyskowego) elementu strukturyzującego o promieniu $r$ powoduje dodanie warstwy o szerokości $r$ do każdej struktury pierwszoplanowej w obrazie.
+I odwrotnie, erozja z tym elementem strukturyzującym usuwa warstwy o tej samej szerokości.
+Na @fig-eros-dil przedstawiono wyniki dylatacji i erozji z użyciem dyskowych elementów strukturyzujących o różnych średnicach, zastosowanych do oryginalnego obrazu z rysunku.
+
+Wyniki dylatacji i erozji dla różnych innych elementów strukturyzujących pokazano na @fig-eros-dil2.
+
+![Wyniki dylatacji i erozji z różnymi filtrami](images/Zrzut%20ekranu%202023-02-21%20o%2020.55.14.png){#fig-eros-dil2 fig-align="center" width="600"}
