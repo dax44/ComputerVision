@@ -20,6 +20,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -30,7 +49,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./fourier.html" rel="next">
 <link href="./edge.html" rel="prev">
 <link href="./cover.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -160,6 +179,11 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./fourier.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Transformata Fouriera</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Bibliografia</a>
   </div>
 </li>
@@ -177,6 +201,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#podstawowe-operacje-morfologiczne" id="toc-podstawowe-operacje-morfologiczne" class="nav-link" data-scroll-target="#podstawowe-operacje-morfologiczne"><span class="toc-section-number">8.2</span>  Podstawowe operacje morfologiczne</a>
   <ul class="collapse">
   <li><a href="#element-strukturyzujący" id="toc-element-strukturyzujący" class="nav-link" data-scroll-target="#element-strukturyzujący"><span class="toc-section-number">8.2.1</span>  Element strukturyzujący</a></li>
+  </ul></li>
+  <li><a href="#operacje-morfologiczne-w-skali-szarości-i-na-obrazach-kolorowych" id="toc-operacje-morfologiczne-w-skali-szarości-i-na-obrazach-kolorowych" class="nav-link" data-scroll-target="#operacje-morfologiczne-w-skali-szarości-i-na-obrazach-kolorowych"><span class="toc-section-number">8.3</span>  Operacje morfologiczne w skali szarości i na obrazach kolorowych</a>
+  <ul class="collapse">
+  <li><a href="#element-strukturyzujący-1" id="toc-element-strukturyzujący-1" class="nav-link" data-scroll-target="#element-strukturyzujący-1"><span class="toc-section-number">8.3.1</span>  Element strukturyzujący</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
@@ -204,7 +232,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Omawiając filtr medianowy , zauważyliśmy, że ten typ filtra może w pewien sposób zmieniać struktury obrazów dwuwymiarowych. <a href="#fig-med1">Rysunek&nbsp;<span>8.1</span></a> ilustruje, w jaki sposób zaokrąglane są narożniki, wypełniane otwory o określonym rozmiarze oraz usuwane małe struktury, takie jak pojedyncze kropki lub cienkie linie. Filtr medianowy reaguje więc wybiórczo na lokalny kształt struktur obrazu, co jest właściwością, która może być przydatna do innych celów, jeśli można ją stosować nie tylko losowo, ale w sposób kontrolowany. Zmienianie lokalnej struktury w przewidywalny sposób jest właśnie tym, co potrafią robić filtry “morfologiczne”, na których skupiamy się w tym rozdziale.</p>
 <div id="fig-med1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="images/Zrzut ekranu 2023-02-21 o 19.37.04.png" class="img-fluid figure-img"></p>
+<p><img src="images/Zrzut ekranu 2023-02-21 o 19.37.04.png" class="img-fluid figure-img" width="600"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;8.1: Zastosowanie filtra medianowego. (a) oryginalny obraz, (b) obraz z filtrem 3x3, (c) obraz z filtrem 5x5</figcaption><p></p>
 </figure>
 </div>
@@ -318,8 +346,119 @@ I\ominus H= \{p\in \mathbb{Z}^2| (p+q)\in I, q\in H \}.
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;8.10: Wyniki dylatacji i erozji z różnymi filtrami</figcaption><p></p>
 </figure>
 </div>
+</section>
+<section id="otwarcie-i-zamknięcie" class="level4" data-number="8.2.1.4">
+<h4 data-number="8.2.1.4" class="anchored" data-anchor-id="otwarcie-i-zamknięcie"><span class="header-section-number">8.2.1.4</span> Otwarcie i zamknięcie</h4>
+<p>Złożenia funkcji dylatacji i erozji w odpowiedniej kolejności tworzą nowe transformacje nazywane otwarcie (ang. <em>opening</em>) i zamknięcie (ang. <em>closing</em>)<em>. S</em>ą one prawdopodobnie najczęściej używanymi przekształceniami morfologicznymi.</p>
+<p>Otwarcie binarne <span class="math inline">\(I\circ H\)</span> oznacza erozję, po której następuje dylatacja z tym samym elementem strukturyzującym <span class="math inline">\(H\)</span>, czyli</p>
+<p><span id="eq-opening"><span class="math display">\[
+I\circ H=(I\ominus H)\oplus H.
+\tag{8.5}\]</span></span></p>
+<p>Głównym efektem otwarcia jest to, że wszystkie struktury pierwszego planu, które są mniejsze niż element strukturyzujący, są eliminowane w pierwszym kroku (erozja). Pozostałe struktury są wygładzane przez dylatację i powiększane w przybliżeniu do ich pierwotnego rozmiaru, jak pokazano na przykładach na <a href="#fig-open-close">Rysunek&nbsp;<span>8.11</span></a>. Ten proces kurczenia się, a następnie wzrostu odpowiada idei eliminacji małych struktur, którą wstępnie naszkicowaliśmy wcześniej.</p>
+<div id="fig-open-close" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-22 o 16.35.22.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;8.11: Przykładowe zastosowania opening i closing</figcaption><p></p>
+</figure>
+</div>
+<p>Gdy odwrócimy kolejność erozji i dylatacji, otrzymaną operację nazywamy domknięciem i oznaczamy <span class="math inline">\(I\bullet H\)</span></p>
+<p><span id="eq-closing"><span class="math display">\[
+I\bullet H=(I\oplus H)\ominus H.
+\tag{8.6}\]</span></span></p>
+<p>Zamknięcie usuwa (zamyka) otwory i szczeliny w strukturach pierwszego planu, które są mniejsze niż element strukturyzujący <span class="math inline">\(H\)</span>. Kilka przykładów z typowymi elementami strukturyzującymi w kształcie dysku pokazano na <a href="#fig-open-close">Rysunek&nbsp;<span>8.11</span></a>.</p>
+</section>
+<section id="przerzedzanie" class="level4" data-number="8.2.1.5">
+<h4 data-number="8.2.1.5" class="anchored" data-anchor-id="przerzedzanie"><span class="header-section-number">8.2.1.5</span> Przerzedzanie</h4>
+<p>Rozrzedzanie (ang. <em>thininng</em>) zwana też szkieletyzacją (ang. <em>skeletonization</em>) jest powszechną techniką morfologiczną, której celem jest zmniejszenie struktur binarnych do maksymalnej szerokości jednego piksela bez dzielenia ich na wiele części. Osiąga się to poprzez iteracyjną erozję “warunkową”. Jest ona stosowana w lokalnym sąsiedztwie tylko wtedy, gdy pozostaje wystarczająco szeroka struktura i operacja nie powoduje separacji. Wymaga to, aby w zależności od lokalnej struktury obrazu, w każdej pozycji obrazu podejmowana była decyzja, czy można zastosować kolejny krok erozji, czy też nie. Operacja jest kontynuowana do momentu, gdy w obrazie wynikowym nie pojawią się już żadne zmiany. Wynika z tego, że w porównaniu ze zwykłą (“homogeniczną”) morfologią omówioną wcześniej, thinning jest kosztowny obliczeniowo. Częstym zastosowaniem rozrzedzania jest obliczanie “szkieletu” regionu binarnego, np. w celu strukturalnego dopasowania kształtów 2D.</p>
+<p>Rozrzedzanie znane jest również pod terminami wykrywanie linii środkowej i transformacji osi środkowej. Istnieje wiele różnych implementacji o zróżnicowanej złożoności i wydajności. Poniżej opisujemy klasyczny algorytm autorstwa <span class="citation" data-cites="zhang1984">Zhang i Suen (<a href="references.html#ref-zhang1984" role="doc-biblioref">1984</a>)</span> oraz jego implementację jako reprezentatywny przykład.</p>
+<p>Wejściem do tego algorytmu jest obraz binarny <span class="math inline">\(I\)</span>, w którym piksele pierwszego planu mają wartość 1, a piksele tła wartość 0. Algorytm skanuje obraz i w każdej pozycji <span class="math inline">\((u, v)\)</span> bada sąsiedztwo rozmiaru 3x3 z centralnym elementem <span class="math inline">\(P\)</span> i otaczającymi go wartościami <span class="math inline">\(N = (N_0, N_1, \ldots , N_7)\)</span>.</p>
+<p>W celu sklasyfikowania zawartości lokalnego sąsiedztwa <span class="math inline">\(N\)</span> definiujemy najpierw funkcję</p>
+<p><span id="eq-bn"><span class="math display">\[
+B(N)=N_0+N_1+\dots+N_7=\sum_{i=0}^7N_i,
+\tag{8.7}\]</span></span></p>
+<p>która zlicza piksele otaczającego tła. Definiujemy również tzw. liczbę łączności, która wyraża ile składowych binarnych jest połączonych poprzez bieżący piksel centralny w pozycji $(u, v)$. Wielkość ta jest równoważna liczbie przejść <span class="math inline">\(1\to 0\)</span> w ciągu <span class="math inline">\((N_0, . . . , N_7, N_0)\)</span>, lub wyrażona w sposób arytmetyczny</p>
+<p><span id="eq-cn"><span class="math display">\[
+C(N)=\sum_{i=0}^7N_i\cdot [N_i-N_{(i+1) \text{ mod }8}].
+\tag{8.8}\]</span></span></p>
+<p>Rysunek 9.19 przedstawia kilka wybranych przykładów dla sąsiedztwa <span class="math inline">\(N\)</span> oraz związane z nimi wartości funkcji <span class="math inline">\(B(N)\)</span> i <span class="math inline">\(C(N)\)</span>. Na podstawie powyższych funkcji definiujemy ostatecznie dwa predykaty booleańskie <span class="math inline">\(R_1,R_2\)</span> na sąsiedztwie <span class="math inline">\(N\)</span>.</p>
+<div id="fig-thinning" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-22 o 17.01.13.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;8.12: Przebieg rozrzedzania</figcaption><p></p>
+</figure>
+</div>
+<p>W zależności od wyniku <span class="math inline">\(R_1(N)\)</span> i <span class="math inline">\(R_2(N)\)</span> piksel pierwszego planu na środkowej pozycji <span class="math inline">\(N\)</span> jest albo usuwany (czyli erodowany), albo oznaczany jako nieusuwalny.</p>
+<div id="fig-thinning2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-22 o 17.06.19.png" class="img-fluid figure-img" width="600"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;8.13: Kolejne iteracje rozrzedzania</figcaption><p></p>
+</figure>
+</div>
+<p><a href="#fig-thinning2">Rysunek&nbsp;<span>8.13</span></a> ilustruje efekt rozrzedzania warstwa po warstwie wykonywanego przez kolejne iteracje tej procedury. W każdej iteracji selektywnie usuwana jest tylko jedna “warstwa” pikseli pierwszego planu.</p>
+</section>
+</section>
+</section>
+<section id="operacje-morfologiczne-w-skali-szarości-i-na-obrazach-kolorowych" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="operacje-morfologiczne-w-skali-szarości-i-na-obrazach-kolorowych"><span class="header-section-number">8.3</span> Operacje morfologiczne w skali szarości i na obrazach kolorowych</h2>
+<p>Operacje morfologiczne nie ograniczają się do obrazów binarnych, ale dotyczą również obrazów intensywnościowych (w skali szarości). W rzeczywistości, definicja morfologii skali szarości jest uogólnieniem morfologii binarnej, przy czym binarne operatory OR i AND zostały zastąpione przez arytmetyczne operatory MAX i MIN, odpowiednio. W konsekwencji procedury przeznaczone do morfologii w skali szarości mogą również wykonywać morfologię binarną (ale nie odwrotnie). W przypadku obrazów kolorowych, operacje w skali szarości są zwykle stosowane indywidualnie do każdego kanału kolorystycznego.</p>
+<section id="element-strukturyzujący-1" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="element-strukturyzujący-1"><span class="header-section-number">8.3.1</span> Element strukturyzujący</h3>
+<p>Inaczej niż w schemacie binarnym, elementy strukturyzujące dla morfologii w skali szarości nie są zdefiniowane jako zbiory punktów, lecz jako funkcje rzeczywiste 2D, czyli</p>
+<p><span id="eq-el-struk"><span class="math display">\[
+H(i,j)\in\mathbb{R}, \quad (i,j)\in\mathbb{Z}^2.
+\tag{8.9}\]</span></span></p>
+<p>Wartości w <span class="math inline">\(H\)</span> mogą być ujemne lub zerowe. Zauważmy jednak, że w przeciwieństwie do konwolucji liniowej, elementy zerowe w morfologii skali szarości mają na ogół swój udział w wyniku. Element strukturyzujący dla morfologii w skali szarości musi zatem wyraźnie rozróżniać komórki zawierające wartość 0 i komórki puste, na przykład</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-22 o 17.25.27.png" class="img-fluid figure-img" width="200"></p>
+</figure>
+</div>
+<section id="dylatacja-i-erozja" class="level4" data-number="8.3.1.1">
+<h4 data-number="8.3.1.1" class="anchored" data-anchor-id="dylatacja-i-erozja"><span class="header-section-number">8.3.1.1</span> Dylatacja i erozja</h4>
+<p>Wynik dylatacji w skali szarości <span class="math inline">\(I\oplus H\)</span> definiujemy jako maksimum wartości w <span class="math inline">\(H\)</span> dodane do wartości bieżącego podobrazu <span class="math inline">\(I\)</span>, czyli</p>
+<p><span id="eq-erosion3"><span class="math display">\[
+(I\oplus H)(u,v)=\max_{(i,j)\in H}(I(u+i,v+j)+H(i,j)).
+\tag{8.10}\]</span></span></p>
+<p>Podobnie wynik erozji w skali szarości to minimum różnic</p>
+<p><span id="eq-erosion4"><span class="math display">\[
+(I\ominus H)(u,v)=\max_{(i,j)\in H}(I(u+i,v+j)-H(i,j)).
+\tag{8.11}\]</span></span></p>
+<p>Na <a href="#fig-dilatation2">Rysunek&nbsp;<span>8.14</span></a> i <a href="#fig-erosion4">Rysunek&nbsp;<span>8.15</span></a> zademonstrowano na prostym przykładzie podstawowy proces, odpowiednio, dylatacji i erozji w skali szarości.</p>
+<div id="fig-dilatation2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-22 o 17.31.30.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;8.14: Przykład dylatacji w skali szarości</figcaption><p></p>
+</figure>
+</div>
+<div id="fig-erosion4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-22 o 17.32.00.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;8.15: Przykład erozji w skali szarości</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="otwarcie-i-domknięcie" class="level4" data-number="8.3.1.2">
+<h4 data-number="8.3.1.2" class="anchored" data-anchor-id="otwarcie-i-domknięcie"><span class="header-section-number">8.3.1.2</span> Otwarcie i domknięcie</h4>
+<p>Otwarcie i domknięcie na obrazach w skali szarości definiuje się, identycznie jak w przypadku binarnym, jako operacje złożone z dylatacji i erozji z tym samym elementem strukturyzującym. Kilka przykładów pokazano na rysunku 9.27 dla elementów strukturyzujących w kształcie dysku oraz na rysunku 9.29 dla różnych niestandardowych elementów strukturyzujących. Zauważ, że można uzyskać interesujące efekty, szczególnie w przypadku elementów strukturyzujących przypominających kształtem pędzel lub inne wzory pociągnięć.</p>
+<div id="fig-opening3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-22 o 17.39.43.png" class="img-fluid figure-img" width="600"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;8.16: Przykład otwarcia i zamknięcia z elementem strukturyzującym w kształcie dysku</figcaption><p></p>
+</figure>
+</div>
+<div id="fig-opening4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-22 o 17.45.12.png" class="img-fluid figure-img" width="600"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;8.17: Przykłady otwarcia i domknięcia z zastosowaniem różnych kształtów elementu strukturyzującego</figcaption><p></p>
+</figure>
+</div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-zhang1984" class="csl-entry" role="doc-biblioentry">
+Zhang, T. Y., i C. Y. Suen. 1984. <span>„A Fast Parallel Algorithm for Thinning Digital Patterns”</span>. <em>Communications of the ACM</em> 27 (3): 236–39. <a href="https://doi.org/10.1145/357994.358023">https://doi.org/10.1145/357994.358023</a>.
+</div>
+</div>
 </section>
 </section>
 </section>
@@ -666,8 +805,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
-        <span class="nav-page-text">Bibliografia</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./fourier.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Transformata Fouriera</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

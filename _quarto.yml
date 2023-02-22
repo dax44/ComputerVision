@@ -36,6 +36,7 @@ book:
     - filters.qmd
     - edge.qmd
     - morpho.qmd
+    - fourier.qmd
     - references.qmd
 
 bibliography: references.bib
