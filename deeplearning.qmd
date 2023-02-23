@@ -1,0 +1,236 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Deep learning
+
+Jak to zostało wspomniane na początku tej książki do automatycznej analizy obrazu wykorzystamy techniki z zakresu uczenia maszynowego, które mieszczą się pod pojęciem głębokiego uczenia (ang. *deep learning*).
+Uczenie maszynowe wynika bezpośrednio z pytania: czy komputer mógłby wyjść poza to, co wiemy i samodzielnie nauczyć się, jak wykonać określone zadanie?
+Czy komputer mógłby nas zaskoczyć?
+Czy zamiast programistów ręcznie tworzących reguły przetwarzania danych, komputer mógłby automatycznie nauczyć się tych reguł patrząc na dane?
+
+![Dwa schematy myślenia o programowaniu komputerów](images/Zrzut%20ekranu%202023-02-23%20o%2019.01.53.png){#fig-ml1 fig-align="center" width="400"}
+
+To pytanie otwiera drzwi do nowego paradygmatu programowania.
+W klasycznym programowaniu, paradygmacie symbolicznej AI, ludzie wprowadzają reguły (program) i dane, które mają być przetwarzane zgodnie z tymi regułami, a następnie otrzymują odpowiedzi (patrz @fig-ml1). W przypadku uczenia maszynowego, człowiek wprowadza dane oraz odpowiedzi oczekiwane na podstawie tych danych, a następnie otrzymuje reguły.
+Reguły te mogą być następnie zastosowane do nowych danych, aby uzyskać oryginalne odpowiedzi.
+
+System uczenia maszynowego jest raczej uczony niż programowany.
+Przedstawia się mu wiele przykładów związanych z zadaniem, a on znajduje w nich strukturę statystyczną, która w końcu pozwala mu wymyślić reguły automatyzacji zadania.
+Na przykład, jeśli chciałbyś zautomatyzować zadanie oznaczania zdjęć z wakacji, mógłbyś przedstawić systemowi uczenia maszynowego wiele przykładów zdjęć już oznaczonych przez ludzi, a system nauczyłby się statystycznych reguł kojarzenia konkretnych zdjęć z konkretnymi tagami.
+
+Chociaż uczenie maszynowe zaczęło się rozwijać dopiero w latach 90-tych, szybko stało się najpopularniejszą i odnoszącą największe sukcesy dziedziną AI, a trend ten jest napędzany przez dostępność szybszego sprzętu i większych zbiorów danych.
+Uczenie maszynowe jest ściśle związane ze statystyką matematyczną, ale różni się od niej na kilka ważnych sposobów.
+W przeciwieństwie do statystyki, uczenie maszynowe ma tendencję do zajmowania się dużymi, złożonymi zbiorami danych (takimi jak zbiór milionów obrazów, z których każdy składa się z dziesiątek tysięcy pikseli), dla których klasyczna analiza statystyczna byłaby niepraktyczna.
+W rezultacie, uczenie maszynowe, a zwłaszcza głębokie uczenie, wykazuje stosunkowo mało teorii matematycznej - być może zbyt mało - i jest zorientowane na inżynierię.
+Jest to praktyczna dyscyplina, w której pomysły są sprawdzane empirycznie znacznie częściej niż teoretycznie.
+
+## Uczenie się reprezentacji na podstawie danych
+
+Na to aby zdefiniować głębokie uczenie i zrozumieć różnicę między głębokim uczeniem a innymi podejściami do uczenia maszynowego, najpierw musimy mieć pewne pojęcie o tym, co robią algorytmy uczenia maszynowego.
+Właśnie stwierdziliśmy, że uczenie maszynowe odkrywa reguły wykonywania zadania przetwarzania danych, biorąc pod uwagę przykłady tego, co jest oczekiwane na wyjściu.
+Zatem, aby przeprowadzić uczenie maszynowe, potrzebujemy trzech rzeczy:
+
+-   Punkty danych wejściowych - na przykład, jeśli zadaniem jest rozpoznawanie mowy, tymi punktami danych mogą być pliki dźwiękowe osób mówiących. Jeśli zadanie polega na oznaczaniu obrazów, mogą to być pliki z obrazami.
+-   Przykłady oczekiwanych wyników - w zadaniu rozpoznawania mowy mogą to być generowane przez człowieka transkrypcje plików dźwiękowych. W zadaniu dotyczącym obrazów, oczekiwanymi danymi wyjściowymi mogą być tagi takie jak "pies", "kot" itd.
+-   Sposób pomiaru, czy algorytm dobrze wykonuje swoją pracę - jest on niezbędny do określenia odległości między aktualnym wyjściem algorytmu a jego oczekiwanym wyjściem. Pomiar jest używany jako sygnał zwrotny do dostosowania sposobu działania algorytmu. Ten krok dostosowawczy nazywamy uczeniem się modelu.
+
+Model uczenia maszynowego przekształca dane wejściowe w sensowne dane wyjściowe, a proces ten jest "uczony" przez ekspozycję na znane przykłady danych wejściowych i wyjściowych.
+Dlatego centralnym problemem w uczeniu maszynowym i głębokim uczeniu jest sensowne przekształcanie danych: innymi słowy, uczenie się użytecznych reprezentacji danych wejściowych - reprezentacji, które przybliżają nas do oczekiwanych wyników.
+Zanim przejdziemy dalej: co to jest reprezentacja?
+W gruncie rzeczy jest to inny sposób patrzenia na dane - reprezentacja lub kodowanie danych.
+Na przykład, kolorowy obraz może być zakodowany w formacie RGB lub w formacie HSV (barwa-nasycenie-wartość): są to dwie różne reprezentacje tych samych danych.
+Niektóre zadania, które mogą być trudne do rozwiązania przy jednej reprezentacji, mogą stać się łatwe przy drugiej.
+Na przykład zadanie "wybierz wszystkie czerwone piksele na obrazie" jest prostsze w formacie RBG, natomiast "spraw, by obraz był mniej nasycony" jest prostsze w formacie HSV.
+Modele uczenia maszynowego polegają na znalezieniu odpowiednich reprezentacji dla danych wejściowych - przekształceń danych, które czynią je bardziej przydatnymi do wykonania zadania, np.zadania klasyfikacji.
+
+Wszystkie algorytmy uczenia maszynowego polegają na automatycznym znajdowaniu takich przekształceń, które zmieniają dane w bardziej użyteczne reprezentacje dla danego zadania.
+Operacje te mogą być zmianami współrzędnych lub rzutami liniowymi, tłumaczeniami, operacjami nieliniowymi (takimi jak wybierz wszystkie punkty takie, że $x >0$) i tak dalej.
+Algorytmy uczenia maszynowego zazwyczaj nie są kreatywne w znajdowaniu tych przekształceń; po prostu przeszukują wcześniej zdefiniowany zestaw operacji, zwany przestrzenią hipotez.
+
+Tak więc, technicznie rzecz biorąc, uczenie maszynowe polega na poszukiwaniu użytecznych reprezentacji pewnych danych wejściowych, w ramach predefiniowanej przestrzeni możliwości, przy użyciu wskazówek pochodzących z jakiegoś sygnału zwrotnego.
+Ta prosta idea pozwala na rozwiązywanie niezwykle szerokiego zakresu zadań naturalnych dla człowieka, od rozpoznawania mowy po autonomiczne prowadzenie samochodu.
+
+Głębokie uczenie jest specyficzną dziedziną uczenia maszynowego: nowe podejście do uczenia się reprezentacji z danych, które kładzie nacisk na uczenie się kolejnych warstw coraz bardziej znaczących reprezentacji.
+Głębokie uczenie nie jest odniesieniem do jakiegokolwiek głębszego zrozumienia osiąganego przez to podejście; raczej oznacza ideę kolejnych warstw reprezentacji.
+To, ile warstw składa się na model danych, nazywane jest głębokością modelu.
+Innymi właściwymi nazwami dla tej dziedziny mogłyby być uczenie się reprezentacji warstwowych i uczenie się reprezentacji hierarchicznych.
+Nowoczesne uczenie głębokie często obejmuje dziesiątki, a nawet setki kolejnych warstw - i wszystkie one są uczone automatycznie na podstawie danych treningowych.
+Tymczasem inne podejścia do uczenia maszynowego koncentrują się na uczeniu się tylko jednej lub dwóch warstw reprezentacji danych; stąd czasem nazywa się je uczeniem płytkim.
+
+W głębokim uczeniu, te warstwowe reprezentacje są (prawie zawsze) uczone za pomocą modeli zwanych sieciami neuronowymi, zbudowanymi w dosłownych warstwach ułożonych jedna za drugą.
+Termin sieć neuronowa jest odniesieniem do neurobiologii, jednak mimo że niektóre z głównych koncepcji głębokiego uczenia zostały opracowane częściowo poprzez czerpanie inspiracji z naszego rozumienia mózgu, modele głębokiego uczenia nie są modelami mózgu.
+Nie ma dowodów na to, że mózg implementuje cokolwiek w rodzaju mechanizmów uczenia się wykorzystywanych w nowoczesnych modelach głębokiego uczenia.
+Możesz natknąć się na artykuły popularno-naukowe głoszące, że głębokie uczenie działa jak mózg lub było wzorowane na mózgu, ale to nie jest prawda.
+Byłoby to mylące, aby myśleć o głębokim uczeniu jako w jakikolwiek sposób związanym z neurobiologią.
+Dla naszych celów, głębokie uczenie jest matematyczną strukturą do uczenia się reprezentacji danych.
+
+Jak wyglądają reprezentacje wyuczone przez algorytm głębokiego uczenia?
+Przyjrzyjmy się, jak sieć o głębokości kilku warstw (patrz @fig-dl1) przekształca obraz cyfry w celu rozpoznania, jaka to cyfra.
+
+![Schemat działania sieci rozpoznającej cyfry](images/Zrzut%20ekranu%202023-02-23%20o%2019.22.38.png){#fig-dl1 fig-align="center" width="600"}
+
+Jak widać na @fig-dl2, sieć przekształca obraz cyfry w reprezentacje coraz bardziej różniące się od obrazu oryginalnego i coraz bardziej informujące o wyniku końcowym.
+Można myśleć o sieci głębokiej jak o wielostopniowej operacji destylacji informacji, gdzie informacja przechodzi przez kolejne filtry i wychodzi coraz bardziej oczyszczona (czyli przydatna w odniesieniu do jakiegoś zadania).
+
+![Przedstawienie zasady działania poszczególnych warstw sieci neuronowej w rozpoznawaniu cyfr](images/Zrzut%20ekranu%202023-02-23%20o%2019.24.25.png){#fig-dl2 fig-align="center" width="600"}
+
+Tak właśnie wygląda głębokie uczenie, technicznie rzecz biorąc: jest to wieloetapowy sposób uczenia się reprezentacji danych.
+To prosty pomysł - ale jak się okazuje, bardzo proste mechanizmy, odpowiednio skalowane, mogą w końcu wyglądać jak magia.
+
+## Jak działa deep learning?
+
+W tym wiemy już, że uczenie maszynowe polega na mapowaniu danych wejściowych (takich jak obrazy) na dane docelowe (takie jak etykieta "kot"), co odbywa się poprzez obserwację wielu przykładów danych wejściowych i danych docelowych.
+Wiemy też, że głębokie sieci neuronowe wykonują odwzorowanie danych wejściowych na docelowe poprzez głęboką sekwencję prostych transformacji danych (warstwy) i że te transformacje danych są uczone przez ekspozycję na przykłady.
+Przyjrzyjmy się teraz, jak to uczenie przebiega, konkretnie.
+
+Specyfikacja tego, co warstwa robi ze swoimi danymi wejściowymi, jest przechowywana w wagach warstwy (zwanych wagami synaptycznymi), które w istocie są zbiorem liczb.
+W sensie technicznym można powiedzieć, że transformacja wykonywana przez warstwę jest sparametryzowana przez jej wagi (patrz @fig-dl3). W tym kontekście uczenie oznacza znalezienie zestawu wartości dla wag wszystkich warstw w sieci, tak aby sieć poprawnie odwzorowywała przykładowe wejścia na przypisane im cele.
+Rzecz w tym, że głęboka sieć neuronowa może zawierać dziesiątki milionów parametrów.
+Znalezienie poprawnej wartości dla wszystkich z nich może wydawać się trudnym zadaniem, szczególnie biorąc pod uwagę fakt, że zmiana wartości jednego parametru wpłynie na zachowanie wszystkich pozostałych!
+
+![Sieć neuronowa parametryzowana przez wagi](images/Zrzut%20ekranu%202023-02-23%20o%2019.37.23.png){#fig-dl3 fig-align="center" width="400"}
+
+Aby coś kontrolować, trzeba najpierw móc to obserwować.
+Aby kontrolować wyjście sieci neuronowej, musisz być w stanie zmierzyć, jak daleko to wyjście jest od tego, czego się spodziewałeś.
+Jest to zadanie funkcji straty sieci, zwanej również funkcją celu.
+Funkcja straty bierze predykcje sieci oraz prawdziwy wynik (to, co chciałeś, aby sieć "wypluła") i oblicza wynik odległości, ujmując, jak dobrze sieć poradziła sobie z tym konkretnym przykładem (patrz @fig-dl4).
+
+![Funkcja straty mierząca jakość predykcji](images/Zrzut%20ekranu%202023-02-23%20o%2019.37.35.png){#fig-dl4 fig-align="center" width="400"}
+
+Podstawową sztuczką w uczeniu głębokim jest wykorzystanie wyniku jako sygnału zwrotnego do skorygowania wartości wag w kierunku, który obniży wynik straty dla bieżącego przykładu (patrz @fig-dl5). Ta korekta jest zadaniem optymalizatora, który implementuje coś, co nazywa się algorytmem wstecznej propagacji (ang. *backpropagation*): główny algorytm w uczeniu głębokim.
+W dalszej części wyjaśnimy bardziej szczegółowo, jak działa wsteczna propagacja.
+
+![Korekta wag wykorzystująca wartość funkcji straty](images/Zrzut%20ekranu%202023-02-23%20o%2019.37.48.png){#fig-dl5 fig-align="center" width="400"}
+
+Początkowo wagom sieci przypisane są losowe wartości, więc sieć wykonuje jedynie serię losowych przekształceń.
+Oczywiście jej wynik jest daleki od tego, jaki powinien być w idealnej sytuacji, a wynik funkcji straty jest bardzo wysoki.
+Ale z każdym przykładem, który sieć przetwarza, wagi są dostosowywane w prawidłowym kierunku, a wynik strat maleje.
+Jest to pętla treningowa, która powtarzana odpowiednią ilość razy (zwykle dziesiątki iteracji na tysiącach przykładów) daje wartości wag, które minimalizują funkcję straty.
+Sieć z minimalną stratą to taka, dla której wyjścia są tak bliskie celom, jak to tylko możliwe - sieć wytrenowana.
+
+## Krótki rys historyczny DL
+
+Około 2010 roku, mimo że sieci neuronowe były niemal całkowicie odrzucane przez ogół społeczności naukowej, kilka osób wciąż pracujących nad sieciami neuronowymi zaczęło dokonywać ważnych przełomów: grupy Geoffreya Hintona z Uniwersytetu w Toronto, Yoshua Bengio z Uniwersytetu w Montrealu, Yann LeCun z Uniwersytetu Nowojorskiego oraz IDSIA w Szwajcarii.
+
+W 2011 roku Dan Ciresan z IDSIA zaczął wygrywać akademickie konkursy klasyfikacji obrazów za pomocą trenowanych na GPU głębokich sieci neuronowych - był to pierwszy praktyczny sukces nowoczesnego uczenia głębokiego.
+Jednak przełomowy moment nastąpił w 2012 roku, gdy grupa Hintona wzięła udział w corocznym wyzwaniu ImageNet dotyczącym klasyfikacji obrazów na dużą skalę.
+Wyzwanie ImageNet było w tamtym czasie wyjątkowo trudne, polegało na klasyfikacji kolorowych obrazów o wysokiej rozdzielczości do 1000 różnych kategorii po przeszkoleniu na 1,4 mln obrazów.
+W 2011 roku dokładność zwycięskiego modelu, opartego na klasycznym podejściu do widzenia komputerowego, wyniosła zaledwie 74,3%.
+Następnie, w 2012 roku, zespół kierowany przez Alexa Krizhevsky'ego i wspierany przez Geoffreya Hintona był w stanie osiągnąć dokładność w pierwszej piątce[^deeplearning-1] na poziomie 83,6% - był to znaczący przełom.
+Od tego czasu co roku konkurs był zdominowany przez głębokie konwencjonalne sieci neuronowe.
+W 2015 roku zwycięzca osiągnął dokładność 96,4%, a zadanie klasyfikacji na ImageNet uznano za całkowicie rozwiązany problem.
+
+[^deeplearning-1]: (ang. *top 5 accuracy*) *-* oznacza, że wśród 5 kategorii z najwyższym prawdopodobieństwem jest prawdziwa klasa
+
+Od 2012 r.
+głębokie konwolucyjne sieci neuronowe (CovNets - *Convolutional Networks*) stały się algorytmem pierwszego wyboru dla wszystkich zadań widzenia komputerowego.
+Na najważniejszych konferencjach poświęconych widzeniu komputerowemu w 2015 i 2016 r.
+niemal niemożliwe było znalezienie prezentacji, które w jakiejś formie nie wiązałyby się z CovNets.
+Jednocześnie głębokie uczenie znalazło zastosowanie w wielu innych typach problemów, takich jak np.
+przetwarzanie języka naturalnego.
+W szerokim zakresie zastosowań całkowicie zastąpiło klasyczne modele SVM i drzewa decyzyjne.
+Na przykład przez kilka lat Europejska Organizacja Badań Jądrowych (CERN), używała metod opartych na drzewach decyzyjnych do analizy danych cząstek z detektora ATLAS w Wielkim Zderzaczu Hadronów (LHC); ale CERN ostatecznie przeszedł na głębokie sieci neuronowe oparte na Keras ze względu na ich wyższą wydajność i łatwość szkolenia na dużych zbiorach danych.
+
+Podstawowym powodem, dla którego uczenie głębokie odniosło sukces tak szybko, jest to, że oferowało lepszą wydajność w wielu problemach.
+Ale to nie jest jedyny powód.
+Głębokie uczenie ułatwia również rozwiązywanie problemów, ponieważ całkowicie automatyzuje to, co kiedyś było najbardziej kluczowym krokiem w procesie uczenia maszynowego: inżynierię cech.
+
+Poprzednie techniki uczenia maszynowego - uczenie głębokie - polegały jedynie na przekształceniu danych wejściowych w jedną lub dwie kolejne przestrzenie reprezentacji, zwykle poprzez proste przekształcenia, takie jak wielowymiarowe projekcje nieliniowe (SVM) lub drzewa decyzyjne.
+Jednak wyrafinowane reprezentacje wymagane przez złożone problemy zazwyczaj nie mogą być realizowane przez wspomniane techniki.
+W związku z tym, ludzie musieli zadać sobie wiele trudu, aby uczynić początkowe dane wejściowe bardziej podatnymi na przetwarzanie przez te metody: to znaczy, musieli ręcznie oparcować dobre warstwy reprezentacji dla swoich danych.
+Nazywa się to inżynierią cech.
+Uczenie głębokie całkowicie automatyzuje ten krok: w przypadku uczenia głębokiego, uczysz się wszystkich cech w jednym przejściu i nie musisz ich samodzielnie opracowywać.
+To znacznie uprościło przepływy pracy związane z uczeniem maszynowym, często zastępując skomplikowane, wieloetapowe potoki jednym, prostym, kompleksowym modelem uczenia głębokiego.
+
+Można zapytać, skoro sednem sprawy jest posiadanie wielu kolejnych warstw reprezentacji, to czy płytkie metody mogą być stosowane wielokrotnie, aby emulować efekty głębokiego uczenia?
+W praktyce, korzyść z zastosowania kilku metod płytkiego uczenia szybko maleje, ponieważ optymalna pierwsza warstwa reprezentacji w modelu trójwarstwowym nie jest optymalną pierwszą warstwą w modelu jedno- lub dwuwarstwowym.
+To, co jest przełomowe w uczeniu głębokim, to fakt, że pozwala ono modelowi uczyć się wszystkich warstw reprezentacji wspólnie, w tym samym czasie, a nie po kolei (zachłannie).
+Dzięki wspólnemu uczeniu cech, gdy model dostosowuje jedną ze swoich wewnętrznych cech, wszystkie inne cechy, które od niej zależą, automatycznie dostosowują się do tej zmiany, bez konieczności interwencji człowieka.
+Wszystko jest nadzorowane przez pojedynczy sygnał zwrotny: każda zmiana w modelu służy celowi końcowemu.
+Jest to znacznie potężniejsze niż składanie płytkich modeli, ponieważ pozwala na uczenie się złożonych, abstrakcyjnych reprezentacji poprzez rozbicie ich na długie serie pośrednich warstw; każda warstwa jest tylko prostym przekształceniem w stosunku do poprzedniej.
+
+Są to dwie zasadnicze cechy tego, jak głębokie uczenie uczy się z danych: przyrostowy, warstwa po warstwie sposób, w jaki korygowane są coraz bardziej złożone reprezentacje, oraz fakt, że te pośrednie, przyrostowe reprezentacje są uczone wspólnie, a każda warstwa jest aktualizowana, aby podążać zarówno za potrzebami reprezentacyjnymi warstwy powyżej, jak i potrzebami warstwy poniżej.
+Razem, te dwie właściwości sprawiły, że głębokie uczenie jest znacznie bardziej skuteczne niż poprzednie podejścia do uczenia maszynowego.
+
+Świetnym sposobem na poznanie aktualnego krajobrazu algorytmów i narzędzi uczenia maszynowego jest przyjrzenie się konkursom uczenia maszynowego na Kaggle.
+Dzięki wysoce konkurencyjnemu środowisku (niektóre konkursy mają tysiące uczestników i milionowe nagrody) i szerokiej gamie problemów uczenia maszynowego, Kaggle oferuje realistyczny sposób oceny tego, co działa, a co nie.
+Jaki więc rodzaj algorytmu niezawodnie wygrywa konkursy?
+Z jakich narzędzi korzystają najlepsi uczestnicy?\
+
+W 2016 roku Kaggle został zdominowany przez dwa podejścia: gradient boosting machines i deep learning.
+Konkretnie, gradient boosting jest używany do problemów, w których dostępne są ustrukturyzowane dane, podczas gdy głębokie uczenie jest używane do problemów percepcyjnych, takich jak klasyfikacja obrazów.
+Zwolennicy tego pierwszego rozwiązania prawie zawsze korzystają ze znakomitej biblioteki `XGBoost`.
+Tymczasem większość uczestników Kaggle wykorzystujących uczenie głębokie używa biblioteki `Keras`, ze względu na jej łatwość użycia i elastyczność.
+Zarówno `XGBoost`, jak i `Keras` wspierają dwa najpopularniejsze języki data science: R i Python.
+
+### Hardware
+
+W latach 1990-2010 procesory dostępne na rynku stały się szybsze o około 5000 razy.
+W rezultacie, obecnie możliwe jest uruchomienie małych modeli głębokiego uczenia na laptopie, podczas gdy 25 lat temu byłoby to niewykonalne.
+
+Jednak typowe modele głębokiego uczenia wykorzystywane w wizji komputerowej lub rozpoznawaniu mowy wymagają mocy obliczeniowej o kilka rzędów wielkości większej niż ta, którą może zapewnić laptop.
+Przez całą dekadę XXI wieku firmy takie jak NVIDIA i AMD inwestowały miliardy dolarów w rozwój szybkich, równoległych układów (procesorów graficznych \[GPU\]), które napędzały grafikę w coraz bardziej fotorealistycznych grach wideo - tanich, osobistych komputerów zaprojektowanych do renderowania złożonych scen 3D na ekranie w czasie rzeczywistym.
+Inwestycja ta przyniosła korzyści społeczności naukowej, gdy w 2007 roku NVIDIA wprowadziła CUDA (<https://developer.nvidia.com/about-cuda>), interfejs programistyczny dla swojej linii układów GPU.
+Niewielka liczba procesorów graficznych zaczęła zastępować klastry CPU w różnych złożonych zadaniach, począwszy od modelowania w fizyce.
+Głębokie sieci neuronowe, składające się głównie z wielu mnożeń macierzy, są również wysoce paralelizowalne i około 2011 roku niektórzy badacze zaczęli pisać implementacje CUDA sieci neuronowych - jednymi z pierwszych byli Dan Ciresan[@ciresanFlexibleHighPerformance] i Alex Krizhevsky[@krizhevsky2017].
+
+\
+Stało się tak, że rynek gier dofinansował superkomputery dla następnej generacji aplikacji sztucznej inteligencji.
+Czasami wielkie rzeczy zaczynają się do zabawy `r emoji::emoji("see_no_evil")`.
+Dziś NVIDIA Titan X, procesor graficzny dla graczy, który kosztował 1000 dolarów pod koniec 2015 roku, może zapewnić szczytową wydajność 6,6 TLOPS w pojedynczej precyzji: to znaczy 6,6 biliona operacji float32 na sekundę.
+To około 350 razy więcej niż to, co można wyciągnąć z nowoczesnego laptopa.
+Na Tytanie X trenowanie modelu ImageNet, który kilka lat temu wygrałby konkurs ILSVRC, zajmuje zaledwie kilka dni.
+Tymczasem duże firmy trenują modele głębokiego uczenia na klastrach składających się z setek jednostek GPU, takich jak NVIDIA K80, opracowanych specjalnie na potrzeby głębokiego uczenia.
+Sama moc obliczeniowa takich klastrów jest czymś, co nigdy nie byłoby możliwe bez nowoczesnych procesorów graficznych.
+
+Co więcej, branża głębokiego uczenia zaczyna wychodzić poza procesory graficzne i inwestuje w coraz bardziej wyspecjalizowane, wydajne układy do głębokiego uczenia.
+W 2016 roku, na corocznej konwencji I/O, Google ujawniło swój projekt procesora tensorowego (TPU): nowy układ scalony opracowany od podstaw w celu uruchamiania głębokich sieci neuronowych, który jest podobno 10 razy szybszy i znacznie bardziej energooszczędny niż topowe układy GPU.
+
+### Dane
+
+AI jest czasem zapowiadana jako nowa rewolucja przemysłowa.
+Jeśli głębokie uczenie jest maszyną parową tej rewolucji, to dane są jej węglem: surowcem, który zasila nasze inteligentne maszyny, bez którego nic nie byłoby możliwe.
+Jeśli chodzi o dane, to oprócz wykładniczego postępu w dziedzinie sprzętu do przechowywania danych w ciągu ostatnich 20 lat (zgodnie z prawem Moore'a[^deeplearning-2]), kluczowym czynnikiem był rozwój Internetu, dzięki któremu możliwe stało się gromadzenie i rozpowszechnianie bardzo dużych zbiorów danych na potrzeby uczenia maszynowego.
+Obecnie duże firmy pracują z zestawami danych obrazowych, zestawami danych wideo i zestawami danych w języku naturalnym, które nie mogłyby zostać zebrane bez Internetu.
+Przykładowo, generowane przez użytkowników tagi do obrazów w serwisie Flickr są skarbnicą danych dla wizji komputerowej.
+Podobnie jest z filmami z YouTube.
+A Wikipedia jest kluczowym zbiorem danych dla przetwarzania języka naturalnego.
+
+[^deeplearning-2]: mówi o tym, że liczba tranzystorów w procesorach rośnie wykładniczo
+
+Jeśli jest jakiś zbiór danych, który stał się katalizatorem rozwoju głębokiego uczenia, to jest to zbiór danych ImageNet, składający się z 1,4 miliona obrazów, które zostały ręcznie przypisane do 1000 kategorii obrazów (1 kategoria na obraz).
+Jednak to, co czyni ImageNet wyjątkowym, to nie tylko jego duży rozmiar, ale także coroczny konkurs z nim związany.
+Jak pokazuje Kaggle od 2010 roku, publiczne konkursy są doskonałym sposobem motywowania naukowców i inżynierów do przekraczania granic.
+Posiadanie wspólnych benchmarków, które badacze starają się pokonać, bardzo pomogło w niedawnym rozwoju uczenia głębokiego.
+
+### Algorytmy
+
+Oprócz sprzętu i danych, aż do późnych lat 2000 brakowało nam niezawodnego sposobu trenowania bardzo głębokich sieci neuronowych.
+W rezultacie sieci neuronowe były wciąż dość płytkie, wykorzystując tylko jedną lub dwie warstwy reprezentacji; nie były więc w stanie zabłysnąć w porównaniu z bardziej wyrafinowanymi płytkimi metodami, takimi jak SVM czy lasy losowe.
+Kluczowym problemem była propagacja gradientu przez głębokie stosy warstw.
+Sygnał zwrotny używany do trenowania sieci neuronowych zanikał wraz ze wzrostem liczby warstw.
+
+Zmieniło się to około 2009-2010 roku wraz z pojawieniem się kilku prostych, ale ważnych ulepszeń algorytmicznych, które pozwoliły na lepszą propagację gradientu:
+
+-   lepsze funkcje aktywacji dla warstw neuronowych;
+-   lepsze schematy inicjalizacji wag, począwszy od wstępnego szkolenia z podziałem na warstwy, które zostało szybko porzucone;
+-   lepsze schematy optymalizacji, takie jak RMSProp i Adam.
+
+Dopiero gdy te ulepszenia zaczęły umożliwiać trenowanie modeli z 10 lub więcej warstwami, uczenie głębokie zaczęło błyszczeć.
+Wreszcie w latach 2014, 2015 i 2016 odkryto jeszcze bardziej zaawansowane sposoby wspomagania propagacji gradientu, takie jak normalizacja partii (ang. *batch normalization*), połączenia resztkowe (ang. *residual connections*) czy konwolucje separowalne w głąb (ang. *depthwise separable convolutions*).
+Dziś możemy trenować od podstaw modele, które mają tysiące warstw głębokości.
+
+Czy jest coś szczególnego w głębokich sieciach neuronowych, co sprawia, że są one "właściwym" podejściem dla firm, w które należy inwestować i dla naukowców, którzy chcą się nimi zainteresować?
+Czy może głębokie uczenie się jest tylko modą, która może nie przetrwać?
+Czy za 20 lat nadal będziemy używać głębokich sieci neuronowych?
+
+Krótka odpowiedź brzmi: tak `r emoji::emoji("pray")` - głębokie uczenie ma kilka właściwości, które uzasadniają jego status jako rewolucji AI.
+Być może za dwie dekady nie będziemy używać sieci neuronowych, ale cokolwiek będziemy używać, będzie bezpośrednio dziedziczyć po nowoczesnym głębokim uczeniu i jego podstawowych koncepcjach.
+Najważniejsze właściwości można ogólnie podzielić na trzy kategorie:
+
+-   Prostota - głębokie uczenie eliminuje potrzebę inżynierii cech, zastępując złożone, wrażliwe i wymagające inżynierii potoki prostymi, kompleksowo wytrenowanymi modelami, które są zazwyczaj budowane przy użyciu tylko pięciu lub sześciu różnych operacji na tensorach.
+-   Skalowalność - głębokie uczenie jest bardzo podatne na równoległe przetwarzanie na układach GPU lub TPU. Dodatkowo, modele głębokiego uczenia są trenowane poprzez iterację na małych partiach danych, co pozwala na ich trenowanie na zbiorach danych o dowolnym rozmiarze. (Jedynym wąskim gardłem jest ilość dostępnej mocy obliczeniowej).
+-   Wszechstronność i możliwość ponownego wykorzystania - w przeciwieństwie do wielu wcześniejszych podejść do uczenia maszynowego, modele głębokiego uczenia mogą być trenowane na dodatkowych danych bez konieczności ponownego rozpoczynania od zera, co czyni je realnymi dla ciągłego uczenia się na bierząco - ważna właściwość dla bardzo dużych modeli produkcyjnych. Co więcej, wytrenowane modele głębokiego uczenia mogą być ponownie wykorzystane, na przykład, możliwe jest wzięcie modelu głębokiego uczenia wytrenowanego do klasyfikacji obrazów i wrzucenie go do potoku przetwarzania wideo.

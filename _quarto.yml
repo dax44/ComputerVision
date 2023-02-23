@@ -37,6 +37,7 @@ book:
     - edge.qmd
     - morpho.qmd
     - fourier.qmd
+    - deeplearning.qmd
     - references.qmd
 
 bibliography: references.bib

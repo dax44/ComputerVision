@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.203">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Automatyczna analiza obrazu - 10&nbsp; Deep learning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./fourier.html" rel="prev">
+<link href="./cover.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Brak wyników",
+    "search-matching-documents-text": "dopasowane dokumenty",
+    "search-copy-link-title": "Kopiuj link do wyszukiwania",
+    "search-hide-matches-text": "Ukryj dodatkowe dopasowania",
+    "search-more-match-text": "więcej dopasowań w tym dokumencie",
+    "search-more-matches-text": "więcej dopasowań w tym dokumencie",
+    "search-clear-button-title": "Wyczyść",
+    "search-detached-cancel-button-title": "Anuluj",
+    "search-submit-button-title": "Zatwierdź"
+  }
+}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./deeplearning.html">&lt;span class='chapter-number'&gt;10&lt;/span&gt;&nbsp; &lt;span class='chapter-title'&gt;Deep learning&lt;/span&gt;</a></li></ol></nav>
+      <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      </a>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Automatyczna analiza obrazu</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://twitter.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
+    <a href="https://github.com/dax44/ComputerVision/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/intent/tweet?url=%7Curl%7C" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Wstęp</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Wprowadzenie</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./history.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Historia wizji komputerowej</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./digt_img.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Obrazy cyfrowe</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Transformacje geometryczne</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./point_trans.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Transformacje punktowe</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./filters.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Filtry</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./edge.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Wykrywanie krawędzi i konturów</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./morpho.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Filtry morfologiczne</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fourier.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Transformata Fouriera</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./deeplearning.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Deep learning</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">Bibliografia</a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+<li><a href="#uczenie-si%C4%99-reprezentacji-na-podstawie-danych" id="toc-uczenie-się-reprezentacji-na-podstawie-danych" class="nav-link active" data-scroll-target="#uczenie-si%C4%99-reprezentacji-na-podstawie-danych"><span class="toc-section-number">10.1</span>  Uczenie się reprezentacji na podstawie danych</a></li>
+  <li><a href="#jak-dzia%C5%82a-deep-learning" id="toc-jak-działa-deep-learning" class="nav-link" data-scroll-target="#jak-dzia%C5%82a-deep-learning"><span class="toc-section-number">10.2</span>  Jak działa deep learning?</a></li>
+  <li>
+<a href="#kr%C3%B3tki-rys-historyczny-dl" id="toc-krótki-rys-historyczny-dl" class="nav-link" data-scroll-target="#kr%C3%B3tki-rys-historyczny-dl"><span class="toc-section-number">10.3</span>  Krótki rys historyczny DL</a>
+  <ul class="collapse">
+<li><a href="#hardware" id="toc-hardware" class="nav-link" data-scroll-target="#hardware"><span class="toc-section-number">10.3.1</span>  Hardware</a></li>
+  <li><a href="#dane" id="toc-dane" class="nav-link" data-scroll-target="#dane"><span class="toc-section-number">10.3.2</span>  Dane</a></li>
+  <li><a href="#algorytmy" id="toc-algorytmy" class="nav-link" data-scroll-target="#algorytmy"><span class="toc-section-number">10.3.3</span>  Algorytmy</a></li>
+  </ul>
+</li>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Deep learning</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header><p>Jak to zostało wspomniane na początku tej książki do automatycznej analizy obrazu wykorzystamy techniki z zakresu uczenia maszynowego, które mieszczą się pod pojęciem głębokiego uczenia (ang. <em>deep learning</em>). Uczenie maszynowe wynika bezpośrednio z pytania: czy komputer mógłby wyjść poza to, co wiemy i samodzielnie nauczyć się, jak wykonać określone zadanie? Czy komputer mógłby nas zaskoczyć? Czy zamiast programistów ręcznie tworzących reguły przetwarzania danych, komputer mógłby automatycznie nauczyć się tych reguł patrząc na dane?</p>
+<div id="fig-ml1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-23 o 19.01.53.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.1: Dwa schematy myślenia o programowaniu komputerów</figcaption><p></p>
+</figure>
+</div>
+<p>To pytanie otwiera drzwi do nowego paradygmatu programowania. W klasycznym programowaniu, paradygmacie symbolicznej AI, ludzie wprowadzają reguły (program) i dane, które mają być przetwarzane zgodnie z tymi regułami, a następnie otrzymują odpowiedzi (patrz <a href="#fig-ml1">Rysunek&nbsp;<span>10.1</span></a>). W przypadku uczenia maszynowego, człowiek wprowadza dane oraz odpowiedzi oczekiwane na podstawie tych danych, a następnie otrzymuje reguły. Reguły te mogą być następnie zastosowane do nowych danych, aby uzyskać oryginalne odpowiedzi.</p>
+<p>System uczenia maszynowego jest raczej uczony niż programowany. Przedstawia się mu wiele przykładów związanych z zadaniem, a on znajduje w nich strukturę statystyczną, która w końcu pozwala mu wymyślić reguły automatyzacji zadania. Na przykład, jeśli chciałbyś zautomatyzować zadanie oznaczania zdjęć z wakacji, mógłbyś przedstawić systemowi uczenia maszynowego wiele przykładów zdjęć już oznaczonych przez ludzi, a system nauczyłby się statystycznych reguł kojarzenia konkretnych zdjęć z konkretnymi tagami.</p>
+<p>Chociaż uczenie maszynowe zaczęło się rozwijać dopiero w latach 90-tych, szybko stało się najpopularniejszą i odnoszącą największe sukcesy dziedziną AI, a trend ten jest napędzany przez dostępność szybszego sprzętu i większych zbiorów danych. Uczenie maszynowe jest ściśle związane ze statystyką matematyczną, ale różni się od niej na kilka ważnych sposobów. W przeciwieństwie do statystyki, uczenie maszynowe ma tendencję do zajmowania się dużymi, złożonymi zbiorami danych (takimi jak zbiór milionów obrazów, z których każdy składa się z dziesiątek tysięcy pikseli), dla których klasyczna analiza statystyczna byłaby niepraktyczna. W rezultacie, uczenie maszynowe, a zwłaszcza głębokie uczenie, wykazuje stosunkowo mało teorii matematycznej - być może zbyt mało - i jest zorientowane na inżynierię. Jest to praktyczna dyscyplina, w której pomysły są sprawdzane empirycznie znacznie częściej niż teoretycznie.</p>
+<section id="uczenie-się-reprezentacji-na-podstawie-danych" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="uczenie-się-reprezentacji-na-podstawie-danych">
+<span class="header-section-number">10.1</span> Uczenie się reprezentacji na podstawie danych</h2>
+<p>Na to aby zdefiniować głębokie uczenie i zrozumieć różnicę między głębokim uczeniem a innymi podejściami do uczenia maszynowego, najpierw musimy mieć pewne pojęcie o tym, co robią algorytmy uczenia maszynowego. Właśnie stwierdziliśmy, że uczenie maszynowe odkrywa reguły wykonywania zadania przetwarzania danych, biorąc pod uwagę przykłady tego, co jest oczekiwane na wyjściu. Zatem, aby przeprowadzić uczenie maszynowe, potrzebujemy trzech rzeczy:</p>
+<ul>
+<li>Punkty danych wejściowych - na przykład, jeśli zadaniem jest rozpoznawanie mowy, tymi punktami danych mogą być pliki dźwiękowe osób mówiących. Jeśli zadanie polega na oznaczaniu obrazów, mogą to być pliki z obrazami.</li>
+<li>Przykłady oczekiwanych wyników - w zadaniu rozpoznawania mowy mogą to być generowane przez człowieka transkrypcje plików dźwiękowych. W zadaniu dotyczącym obrazów, oczekiwanymi danymi wyjściowymi mogą być tagi takie jak “pies”, “kot” itd.</li>
+<li>Sposób pomiaru, czy algorytm dobrze wykonuje swoją pracę - jest on niezbędny do określenia odległości między aktualnym wyjściem algorytmu a jego oczekiwanym wyjściem. Pomiar jest używany jako sygnał zwrotny do dostosowania sposobu działania algorytmu. Ten krok dostosowawczy nazywamy uczeniem się modelu.</li>
+</ul>
+<p>Model uczenia maszynowego przekształca dane wejściowe w sensowne dane wyjściowe, a proces ten jest “uczony” przez ekspozycję na znane przykłady danych wejściowych i wyjściowych. Dlatego centralnym problemem w uczeniu maszynowym i głębokim uczeniu jest sensowne przekształcanie danych: innymi słowy, uczenie się użytecznych reprezentacji danych wejściowych - reprezentacji, które przybliżają nas do oczekiwanych wyników. Zanim przejdziemy dalej: co to jest reprezentacja? W gruncie rzeczy jest to inny sposób patrzenia na dane - reprezentacja lub kodowanie danych. Na przykład, kolorowy obraz może być zakodowany w formacie RGB lub w formacie HSV (barwa-nasycenie-wartość): są to dwie różne reprezentacje tych samych danych. Niektóre zadania, które mogą być trudne do rozwiązania przy jednej reprezentacji, mogą stać się łatwe przy drugiej. Na przykład zadanie “wybierz wszystkie czerwone piksele na obrazie” jest prostsze w formacie RBG, natomiast “spraw, by obraz był mniej nasycony” jest prostsze w formacie HSV. Modele uczenia maszynowego polegają na znalezieniu odpowiednich reprezentacji dla danych wejściowych - przekształceń danych, które czynią je bardziej przydatnymi do wykonania zadania, np.zadania klasyfikacji.</p>
+<p>Wszystkie algorytmy uczenia maszynowego polegają na automatycznym znajdowaniu takich przekształceń, które zmieniają dane w bardziej użyteczne reprezentacje dla danego zadania. Operacje te mogą być zmianami współrzędnych lub rzutami liniowymi, tłumaczeniami, operacjami nieliniowymi (takimi jak wybierz wszystkie punkty takie, że <span class="math inline">\(x &gt;0\)</span>) i tak dalej. Algorytmy uczenia maszynowego zazwyczaj nie są kreatywne w znajdowaniu tych przekształceń; po prostu przeszukują wcześniej zdefiniowany zestaw operacji, zwany przestrzenią hipotez.</p>
+<p>Tak więc, technicznie rzecz biorąc, uczenie maszynowe polega na poszukiwaniu użytecznych reprezentacji pewnych danych wejściowych, w ramach predefiniowanej przestrzeni możliwości, przy użyciu wskazówek pochodzących z jakiegoś sygnału zwrotnego. Ta prosta idea pozwala na rozwiązywanie niezwykle szerokiego zakresu zadań naturalnych dla człowieka, od rozpoznawania mowy po autonomiczne prowadzenie samochodu.</p>
+<p>Głębokie uczenie jest specyficzną dziedziną uczenia maszynowego: nowe podejście do uczenia się reprezentacji z danych, które kładzie nacisk na uczenie się kolejnych warstw coraz bardziej znaczących reprezentacji. Głębokie uczenie nie jest odniesieniem do jakiegokolwiek głębszego zrozumienia osiąganego przez to podejście; raczej oznacza ideę kolejnych warstw reprezentacji. To, ile warstw składa się na model danych, nazywane jest głębokością modelu. Innymi właściwymi nazwami dla tej dziedziny mogłyby być uczenie się reprezentacji warstwowych i uczenie się reprezentacji hierarchicznych. Nowoczesne uczenie głębokie często obejmuje dziesiątki, a nawet setki kolejnych warstw - i wszystkie one są uczone automatycznie na podstawie danych treningowych. Tymczasem inne podejścia do uczenia maszynowego koncentrują się na uczeniu się tylko jednej lub dwóch warstw reprezentacji danych; stąd czasem nazywa się je uczeniem płytkim.</p>
+<p>W głębokim uczeniu, te warstwowe reprezentacje są (prawie zawsze) uczone za pomocą modeli zwanych sieciami neuronowymi, zbudowanymi w dosłownych warstwach ułożonych jedna za drugą. Termin sieć neuronowa jest odniesieniem do neurobiologii, jednak mimo że niektóre z głównych koncepcji głębokiego uczenia zostały opracowane częściowo poprzez czerpanie inspiracji z naszego rozumienia mózgu, modele głębokiego uczenia nie są modelami mózgu. Nie ma dowodów na to, że mózg implementuje cokolwiek w rodzaju mechanizmów uczenia się wykorzystywanych w nowoczesnych modelach głębokiego uczenia. Możesz natknąć się na artykuły popularno-naukowe głoszące, że głębokie uczenie działa jak mózg lub było wzorowane na mózgu, ale to nie jest prawda. Byłoby to mylące, aby myśleć o głębokim uczeniu jako w jakikolwiek sposób związanym z neurobiologią. Dla naszych celów, głębokie uczenie jest matematyczną strukturą do uczenia się reprezentacji danych.</p>
+<p>Jak wyglądają reprezentacje wyuczone przez algorytm głębokiego uczenia? Przyjrzyjmy się, jak sieć o głębokości kilku warstw (patrz <a href="#fig-dl1">Rysunek&nbsp;<span>10.2</span></a>) przekształca obraz cyfry w celu rozpoznania, jaka to cyfra.</p>
+<div id="fig-dl1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-23 o 19.22.38.png" class="img-fluid figure-img" width="600"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.2: Schemat działania sieci rozpoznającej cyfry</figcaption><p></p>
+</figure>
+</div>
+<p>Jak widać na <a href="#fig-dl2">Rysunek&nbsp;<span>10.3</span></a>, sieć przekształca obraz cyfry w reprezentacje coraz bardziej różniące się od obrazu oryginalnego i coraz bardziej informujące o wyniku końcowym. Można myśleć o sieci głębokiej jak o wielostopniowej operacji destylacji informacji, gdzie informacja przechodzi przez kolejne filtry i wychodzi coraz bardziej oczyszczona (czyli przydatna w odniesieniu do jakiegoś zadania).</p>
+<div id="fig-dl2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-23 o 19.24.25.png" class="img-fluid figure-img" width="600"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.3: Przedstawienie zasady działania poszczególnych warstw sieci neuronowej w rozpoznawaniu cyfr</figcaption><p></p>
+</figure>
+</div>
+<p>Tak właśnie wygląda głębokie uczenie, technicznie rzecz biorąc: jest to wieloetapowy sposób uczenia się reprezentacji danych. To prosty pomysł - ale jak się okazuje, bardzo proste mechanizmy, odpowiednio skalowane, mogą w końcu wyglądać jak magia.</p>
+</section><section id="jak-działa-deep-learning" class="level2" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="jak-działa-deep-learning">
+<span class="header-section-number">10.2</span> Jak działa deep learning?</h2>
+<p>W tym wiemy już, że uczenie maszynowe polega na mapowaniu danych wejściowych (takich jak obrazy) na dane docelowe (takie jak etykieta “kot”), co odbywa się poprzez obserwację wielu przykładów danych wejściowych i danych docelowych. Wiemy też, że głębokie sieci neuronowe wykonują odwzorowanie danych wejściowych na docelowe poprzez głęboką sekwencję prostych transformacji danych (warstwy) i że te transformacje danych są uczone przez ekspozycję na przykłady. Przyjrzyjmy się teraz, jak to uczenie przebiega, konkretnie.</p>
+<p>Specyfikacja tego, co warstwa robi ze swoimi danymi wejściowymi, jest przechowywana w wagach warstwy (zwanych wagami synaptycznymi), które w istocie są zbiorem liczb. W sensie technicznym można powiedzieć, że transformacja wykonywana przez warstwę jest sparametryzowana przez jej wagi (patrz <a href="#fig-dl3">Rysunek&nbsp;<span>10.4</span></a>). W tym kontekście uczenie oznacza znalezienie zestawu wartości dla wag wszystkich warstw w sieci, tak aby sieć poprawnie odwzorowywała przykładowe wejścia na przypisane im cele. Rzecz w tym, że głęboka sieć neuronowa może zawierać dziesiątki milionów parametrów. Znalezienie poprawnej wartości dla wszystkich z nich może wydawać się trudnym zadaniem, szczególnie biorąc pod uwagę fakt, że zmiana wartości jednego parametru wpłynie na zachowanie wszystkich pozostałych!</p>
+<div id="fig-dl3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-23 o 19.37.23.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.4: Sieć neuronowa parametryzowana przez wagi</figcaption><p></p>
+</figure>
+</div>
+<p>Aby coś kontrolować, trzeba najpierw móc to obserwować. Aby kontrolować wyjście sieci neuronowej, musisz być w stanie zmierzyć, jak daleko to wyjście jest od tego, czego się spodziewałeś. Jest to zadanie funkcji straty sieci, zwanej również funkcją celu. Funkcja straty bierze predykcje sieci oraz prawdziwy wynik (to, co chciałeś, aby sieć “wypluła”) i oblicza wynik odległości, ujmując, jak dobrze sieć poradziła sobie z tym konkretnym przykładem (patrz <a href="#fig-dl4">Rysunek&nbsp;<span>10.5</span></a>).</p>
+<div id="fig-dl4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-23 o 19.37.35.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.5: Funkcja straty mierząca jakość predykcji</figcaption><p></p>
+</figure>
+</div>
+<p>Podstawową sztuczką w uczeniu głębokim jest wykorzystanie wyniku jako sygnału zwrotnego do skorygowania wartości wag w kierunku, który obniży wynik straty dla bieżącego przykładu (patrz <a href="#fig-dl5">Rysunek&nbsp;<span>10.6</span></a>). Ta korekta jest zadaniem optymalizatora, który implementuje coś, co nazywa się algorytmem wstecznej propagacji (ang. <em>backpropagation</em>): główny algorytm w uczeniu głębokim. W dalszej części wyjaśnimy bardziej szczegółowo, jak działa wsteczna propagacja.</p>
+<div id="fig-dl5" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-23 o 19.37.48.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.6: Korekta wag wykorzystująca wartość funkcji straty</figcaption><p></p>
+</figure>
+</div>
+<p>Początkowo wagom sieci przypisane są losowe wartości, więc sieć wykonuje jedynie serię losowych przekształceń. Oczywiście jej wynik jest daleki od tego, jaki powinien być w idealnej sytuacji, a wynik funkcji straty jest bardzo wysoki. Ale z każdym przykładem, który sieć przetwarza, wagi są dostosowywane w prawidłowym kierunku, a wynik strat maleje. Jest to pętla treningowa, która powtarzana odpowiednią ilość razy (zwykle dziesiątki iteracji na tysiącach przykładów) daje wartości wag, które minimalizują funkcję straty. Sieć z minimalną stratą to taka, dla której wyjścia są tak bliskie celom, jak to tylko możliwe - sieć wytrenowana.</p>
+</section><section id="krótki-rys-historyczny-dl" class="level2 page-columns page-full" data-number="10.3"><h2 data-number="10.3" class="anchored" data-anchor-id="krótki-rys-historyczny-dl">
+<span class="header-section-number">10.3</span> Krótki rys historyczny DL</h2>
+<p>Około 2010 roku, mimo że sieci neuronowe były niemal całkowicie odrzucane przez ogół społeczności naukowej, kilka osób wciąż pracujących nad sieciami neuronowymi zaczęło dokonywać ważnych przełomów: grupy Geoffreya Hintona z Uniwersytetu w Toronto, Yoshua Bengio z Uniwersytetu w Montrealu, Yann LeCun z Uniwersytetu Nowojorskiego oraz IDSIA w Szwajcarii.</p>
+<div class="page-columns page-full"><p>W 2011 roku Dan Ciresan z IDSIA zaczął wygrywać akademickie konkursy klasyfikacji obrazów za pomocą trenowanych na GPU głębokich sieci neuronowych - był to pierwszy praktyczny sukces nowoczesnego uczenia głębokiego. Jednak przełomowy moment nastąpił w 2012 roku, gdy grupa Hintona wzięła udział w corocznym wyzwaniu ImageNet dotyczącym klasyfikacji obrazów na dużą skalę. Wyzwanie ImageNet było w tamtym czasie wyjątkowo trudne, polegało na klasyfikacji kolorowych obrazów o wysokiej rozdzielczości do 1000 różnych kategorii po przeszkoleniu na 1,4 mln obrazów. W 2011 roku dokładność zwycięskiego modelu, opartego na klasycznym podejściu do widzenia komputerowego, wyniosła zaledwie 74,3%. Następnie, w 2012 roku, zespół kierowany przez Alexa Krizhevsky’ego i wspierany przez Geoffreya Hintona był w stanie osiągnąć dokładność w pierwszej piątce<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> na poziomie 83,6% - był to znaczący przełom. Od tego czasu co roku konkurs był zdominowany przez głębokie konwencjonalne sieci neuronowe. W 2015 roku zwycięzca osiągnął dokładność 96,4%, a zadanie klasyfikacji na ImageNet uznano za całkowicie rozwiązany problem.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;(ang. <em>top 5 accuracy</em>) <em>-</em> oznacza, że wśród 5 kategorii z najwyższym prawdopodobieństwem jest prawdziwa klasa</p></li></div></div>
+<p>Od 2012 r. głębokie konwolucyjne sieci neuronowe (CovNets - <em>Convolutional Networks</em>) stały się algorytmem pierwszego wyboru dla wszystkich zadań widzenia komputerowego. Na najważniejszych konferencjach poświęconych widzeniu komputerowemu w 2015 i 2016 r. niemal niemożliwe było znalezienie prezentacji, które w jakiejś formie nie wiązałyby się z CovNets. Jednocześnie głębokie uczenie znalazło zastosowanie w wielu innych typach problemów, takich jak np. przetwarzanie języka naturalnego. W szerokim zakresie zastosowań całkowicie zastąpiło klasyczne modele SVM i drzewa decyzyjne. Na przykład przez kilka lat Europejska Organizacja Badań Jądrowych (CERN), używała metod opartych na drzewach decyzyjnych do analizy danych cząstek z detektora ATLAS w Wielkim Zderzaczu Hadronów (LHC); ale CERN ostatecznie przeszedł na głębokie sieci neuronowe oparte na Keras ze względu na ich wyższą wydajność i łatwość szkolenia na dużych zbiorach danych.</p>
+<p>Podstawowym powodem, dla którego uczenie głębokie odniosło sukces tak szybko, jest to, że oferowało lepszą wydajność w wielu problemach. Ale to nie jest jedyny powód. Głębokie uczenie ułatwia również rozwiązywanie problemów, ponieważ całkowicie automatyzuje to, co kiedyś było najbardziej kluczowym krokiem w procesie uczenia maszynowego: inżynierię cech.</p>
+<p>Poprzednie techniki uczenia maszynowego - uczenie głębokie - polegały jedynie na przekształceniu danych wejściowych w jedną lub dwie kolejne przestrzenie reprezentacji, zwykle poprzez proste przekształcenia, takie jak wielowymiarowe projekcje nieliniowe (SVM) lub drzewa decyzyjne. Jednak wyrafinowane reprezentacje wymagane przez złożone problemy zazwyczaj nie mogą być realizowane przez wspomniane techniki. W związku z tym, ludzie musieli zadać sobie wiele trudu, aby uczynić początkowe dane wejściowe bardziej podatnymi na przetwarzanie przez te metody: to znaczy, musieli ręcznie oparcować dobre warstwy reprezentacji dla swoich danych. Nazywa się to inżynierią cech. Uczenie głębokie całkowicie automatyzuje ten krok: w przypadku uczenia głębokiego, uczysz się wszystkich cech w jednym przejściu i nie musisz ich samodzielnie opracowywać. To znacznie uprościło przepływy pracy związane z uczeniem maszynowym, często zastępując skomplikowane, wieloetapowe potoki jednym, prostym, kompleksowym modelem uczenia głębokiego.</p>
+<p>Można zapytać, skoro sednem sprawy jest posiadanie wielu kolejnych warstw reprezentacji, to czy płytkie metody mogą być stosowane wielokrotnie, aby emulować efekty głębokiego uczenia? W praktyce, korzyść z zastosowania kilku metod płytkiego uczenia szybko maleje, ponieważ optymalna pierwsza warstwa reprezentacji w modelu trójwarstwowym nie jest optymalną pierwszą warstwą w modelu jedno- lub dwuwarstwowym. To, co jest przełomowe w uczeniu głębokim, to fakt, że pozwala ono modelowi uczyć się wszystkich warstw reprezentacji wspólnie, w tym samym czasie, a nie po kolei (zachłannie). Dzięki wspólnemu uczeniu cech, gdy model dostosowuje jedną ze swoich wewnętrznych cech, wszystkie inne cechy, które od niej zależą, automatycznie dostosowują się do tej zmiany, bez konieczności interwencji człowieka. Wszystko jest nadzorowane przez pojedynczy sygnał zwrotny: każda zmiana w modelu służy celowi końcowemu. Jest to znacznie potężniejsze niż składanie płytkich modeli, ponieważ pozwala na uczenie się złożonych, abstrakcyjnych reprezentacji poprzez rozbicie ich na długie serie pośrednich warstw; każda warstwa jest tylko prostym przekształceniem w stosunku do poprzedniej.</p>
+<p>Są to dwie zasadnicze cechy tego, jak głębokie uczenie uczy się z danych: przyrostowy, warstwa po warstwie sposób, w jaki korygowane są coraz bardziej złożone reprezentacje, oraz fakt, że te pośrednie, przyrostowe reprezentacje są uczone wspólnie, a każda warstwa jest aktualizowana, aby podążać zarówno za potrzebami reprezentacyjnymi warstwy powyżej, jak i potrzebami warstwy poniżej. Razem, te dwie właściwości sprawiły, że głębokie uczenie jest znacznie bardziej skuteczne niż poprzednie podejścia do uczenia maszynowego.</p>
+<p>Świetnym sposobem na poznanie aktualnego krajobrazu algorytmów i narzędzi uczenia maszynowego jest przyjrzenie się konkursom uczenia maszynowego na Kaggle. Dzięki wysoce konkurencyjnemu środowisku (niektóre konkursy mają tysiące uczestników i milionowe nagrody) i szerokiej gamie problemów uczenia maszynowego, Kaggle oferuje realistyczny sposób oceny tego, co działa, a co nie. Jaki więc rodzaj algorytmu niezawodnie wygrywa konkursy? Z jakich narzędzi korzystają najlepsi uczestnicy?<br></p>
+<p>W 2016 roku Kaggle został zdominowany przez dwa podejścia: gradient boosting machines i deep learning. Konkretnie, gradient boosting jest używany do problemów, w których dostępne są ustrukturyzowane dane, podczas gdy głębokie uczenie jest używane do problemów percepcyjnych, takich jak klasyfikacja obrazów. Zwolennicy tego pierwszego rozwiązania prawie zawsze korzystają ze znakomitej biblioteki <code>XGBoost</code>. Tymczasem większość uczestników Kaggle wykorzystujących uczenie głębokie używa biblioteki <code>Keras</code>, ze względu na jej łatwość użycia i elastyczność. Zarówno <code>XGBoost</code>, jak i <code>Keras</code> wspierają dwa najpopularniejsze języki data science: R i Python.</p>
+<section id="hardware" class="level3" data-number="10.3.1"><h3 data-number="10.3.1" class="anchored" data-anchor-id="hardware">
+<span class="header-section-number">10.3.1</span> Hardware</h3>
+<p>W latach 1990-2010 procesory dostępne na rynku stały się szybsze o około 5000 razy. W rezultacie, obecnie możliwe jest uruchomienie małych modeli głębokiego uczenia na laptopie, podczas gdy 25 lat temu byłoby to niewykonalne.</p>
+<p>Jednak typowe modele głębokiego uczenia wykorzystywane w wizji komputerowej lub rozpoznawaniu mowy wymagają mocy obliczeniowej o kilka rzędów wielkości większej niż ta, którą może zapewnić laptop. Przez całą dekadę XXI wieku firmy takie jak NVIDIA i AMD inwestowały miliardy dolarów w rozwój szybkich, równoległych układów (procesorów graficznych [GPU]), które napędzały grafikę w coraz bardziej fotorealistycznych grach wideo - tanich, osobistych komputerów zaprojektowanych do renderowania złożonych scen 3D na ekranie w czasie rzeczywistym. Inwestycja ta przyniosła korzyści społeczności naukowej, gdy w 2007 roku NVIDIA wprowadziła CUDA (<a href="https://developer.nvidia.com/about-cuda" class="uri">https://developer.nvidia.com/about-cuda</a>), interfejs programistyczny dla swojej linii układów GPU. Niewielka liczba procesorów graficznych zaczęła zastępować klastry CPU w różnych złożonych zadaniach, począwszy od modelowania w fizyce. Głębokie sieci neuronowe, składające się głównie z wielu mnożeń macierzy, są również wysoce paralelizowalne i około 2011 roku niektórzy badacze zaczęli pisać implementacje CUDA sieci neuronowych - jednymi z pierwszych byli Dan Ciresan<span class="citation" data-cites="ciresanFlexibleHighPerformance">(<a href="references.html#ref-ciresanFlexibleHighPerformance" role="doc-biblioref">Ciresan i in., b.d.</a>)</span> i Alex Krizhevsky<span class="citation" data-cites="krizhevsky2017">(<a href="references.html#ref-krizhevsky2017" role="doc-biblioref">Krizhevsky, Sutskever, i Hinton 2017</a>)</span>.</p>
+<p><br>
+Stało się tak, że rynek gier dofinansował superkomputery dla następnej generacji aplikacji sztucznej inteligencji. Czasami wielkie rzeczy zaczynają się do zabawy 🙈. Dziś NVIDIA Titan X, procesor graficzny dla graczy, który kosztował 1000 dolarów pod koniec 2015 roku, może zapewnić szczytową wydajność 6,6 TLOPS w pojedynczej precyzji: to znaczy 6,6 biliona operacji float32 na sekundę. To około 350 razy więcej niż to, co można wyciągnąć z nowoczesnego laptopa. Na Tytanie X trenowanie modelu ImageNet, który kilka lat temu wygrałby konkurs ILSVRC, zajmuje zaledwie kilka dni. Tymczasem duże firmy trenują modele głębokiego uczenia na klastrach składających się z setek jednostek GPU, takich jak NVIDIA K80, opracowanych specjalnie na potrzeby głębokiego uczenia. Sama moc obliczeniowa takich klastrów jest czymś, co nigdy nie byłoby możliwe bez nowoczesnych procesorów graficznych.</p>
+<p>Co więcej, branża głębokiego uczenia zaczyna wychodzić poza procesory graficzne i inwestuje w coraz bardziej wyspecjalizowane, wydajne układy do głębokiego uczenia. W 2016 roku, na corocznej konwencji I/O, Google ujawniło swój projekt procesora tensorowego (TPU): nowy układ scalony opracowany od podstaw w celu uruchamiania głębokich sieci neuronowych, który jest podobno 10 razy szybszy i znacznie bardziej energooszczędny niż topowe układy GPU.</p>
+</section><section id="dane" class="level3 page-columns page-full" data-number="10.3.2"><h3 data-number="10.3.2" class="anchored" data-anchor-id="dane">
+<span class="header-section-number">10.3.2</span> Dane</h3>
+<div class="page-columns page-full"><p>AI jest czasem zapowiadana jako nowa rewolucja przemysłowa. Jeśli głębokie uczenie jest maszyną parową tej rewolucji, to dane są jej węglem: surowcem, który zasila nasze inteligentne maszyny, bez którego nic nie byłoby możliwe. Jeśli chodzi o dane, to oprócz wykładniczego postępu w dziedzinie sprzętu do przechowywania danych w ciągu ostatnich 20 lat (zgodnie z prawem Moore’a<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>), kluczowym czynnikiem był rozwój Internetu, dzięki któremu możliwe stało się gromadzenie i rozpowszechnianie bardzo dużych zbiorów danych na potrzeby uczenia maszynowego. Obecnie duże firmy pracują z zestawami danych obrazowych, zestawami danych wideo i zestawami danych w języku naturalnym, które nie mogłyby zostać zebrane bez Internetu. Przykładowo, generowane przez użytkowników tagi do obrazów w serwisie Flickr są skarbnicą danych dla wizji komputerowej. Podobnie jest z filmami z YouTube. A Wikipedia jest kluczowym zbiorem danych dla przetwarzania języka naturalnego.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;mówi o tym, że liczba tranzystorów w procesorach rośnie wykładniczo</p></li></div></div>
+<p>Jeśli jest jakiś zbiór danych, który stał się katalizatorem rozwoju głębokiego uczenia, to jest to zbiór danych ImageNet, składający się z 1,4 miliona obrazów, które zostały ręcznie przypisane do 1000 kategorii obrazów (1 kategoria na obraz). Jednak to, co czyni ImageNet wyjątkowym, to nie tylko jego duży rozmiar, ale także coroczny konkurs z nim związany. Jak pokazuje Kaggle od 2010 roku, publiczne konkursy są doskonałym sposobem motywowania naukowców i inżynierów do przekraczania granic. Posiadanie wspólnych benchmarków, które badacze starają się pokonać, bardzo pomogło w niedawnym rozwoju uczenia głębokiego.</p>
+</section><section id="algorytmy" class="level3" data-number="10.3.3"><h3 data-number="10.3.3" class="anchored" data-anchor-id="algorytmy">
+<span class="header-section-number">10.3.3</span> Algorytmy</h3>
+<p>Oprócz sprzętu i danych, aż do późnych lat 2000 brakowało nam niezawodnego sposobu trenowania bardzo głębokich sieci neuronowych. W rezultacie sieci neuronowe były wciąż dość płytkie, wykorzystując tylko jedną lub dwie warstwy reprezentacji; nie były więc w stanie zabłysnąć w porównaniu z bardziej wyrafinowanymi płytkimi metodami, takimi jak SVM czy lasy losowe. Kluczowym problemem była propagacja gradientu przez głębokie stosy warstw. Sygnał zwrotny używany do trenowania sieci neuronowych zanikał wraz ze wzrostem liczby warstw.</p>
+<p>Zmieniło się to około 2009-2010 roku wraz z pojawieniem się kilku prostych, ale ważnych ulepszeń algorytmicznych, które pozwoliły na lepszą propagację gradientu:</p>
+<ul>
+<li>lepsze funkcje aktywacji dla warstw neuronowych;</li>
+<li>lepsze schematy inicjalizacji wag, począwszy od wstępnego szkolenia z podziałem na warstwy, które zostało szybko porzucone;</li>
+<li>lepsze schematy optymalizacji, takie jak RMSProp i Adam.</li>
+</ul>
+<p>Dopiero gdy te ulepszenia zaczęły umożliwiać trenowanie modeli z 10 lub więcej warstwami, uczenie głębokie zaczęło błyszczeć. Wreszcie w latach 2014, 2015 i 2016 odkryto jeszcze bardziej zaawansowane sposoby wspomagania propagacji gradientu, takie jak normalizacja partii (ang. <em>batch normalization</em>), połączenia resztkowe (ang. <em>residual connections</em>) czy konwolucje separowalne w głąb (ang. <em>depthwise separable convolutions</em>). Dziś możemy trenować od podstaw modele, które mają tysiące warstw głębokości.</p>
+<p>Czy jest coś szczególnego w głębokich sieciach neuronowych, co sprawia, że są one “właściwym” podejściem dla firm, w które należy inwestować i dla naukowców, którzy chcą się nimi zainteresować? Czy może głębokie uczenie się jest tylko modą, która może nie przetrwać? Czy za 20 lat nadal będziemy używać głębokich sieci neuronowych?</p>
+<p>Krótka odpowiedź brzmi: tak 🙏 - głębokie uczenie ma kilka właściwości, które uzasadniają jego status jako rewolucji AI. Być może za dwie dekady nie będziemy używać sieci neuronowych, ale cokolwiek będziemy używać, będzie bezpośrednio dziedziczyć po nowoczesnym głębokim uczeniu i jego podstawowych koncepcjach. Najważniejsze właściwości można ogólnie podzielić na trzy kategorie:</p>
+<ul>
+<li>Prostota - głębokie uczenie eliminuje potrzebę inżynierii cech, zastępując złożone, wrażliwe i wymagające inżynierii potoki prostymi, kompleksowo wytrenowanymi modelami, które są zazwyczaj budowane przy użyciu tylko pięciu lub sześciu różnych operacji na tensorach.</li>
+<li>Skalowalność - głębokie uczenie jest bardzo podatne na równoległe przetwarzanie na układach GPU lub TPU. Dodatkowo, modele głębokiego uczenia są trenowane poprzez iterację na małych partiach danych, co pozwala na ich trenowanie na zbiorach danych o dowolnym rozmiarze. (Jedynym wąskim gardłem jest ilość dostępnej mocy obliczeniowej).</li>
+<li>Wszechstronność i możliwość ponownego wykorzystania - w przeciwieństwie do wielu wcześniejszych podejść do uczenia maszynowego, modele głębokiego uczenia mogą być trenowane na dodatkowych danych bez konieczności ponownego rozpoczynania od zera, co czyni je realnymi dla ciągłego uczenia się na bierząco - ważna właściwość dla bardzo dużych modeli produkcyjnych. Co więcej, wytrenowane modele głębokiego uczenia mogą być ponownie wykorzystane, na przykład, możliwe jest wzięcie modelu głębokiego uczenia wytrenowanego do klasyfikacji obrazów i wrzucenie go do potoku przetwarzania wideo.</li>
+</ul>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-ciresanFlexibleHighPerformance" class="csl-entry" role="doc-biblioentry">
+Ciresan, Dan C, Ueli Meier, Jonathan Masci, Luca M Gambardella, i Jurgen Schmidhuber. b.d. <span>„Flexible, <span>High Performance Convolutional Neural Networks</span> for <span>Image Classification</span>”</span>.
+</div>
+<div id="ref-krizhevsky2017" class="csl-entry" role="doc-biblioentry">
+Krizhevsky, Alex, Ilya Sutskever, i Geoffrey E. Hinton. 2017. <span>„ImageNet Classification with Deep Convolutional Neural Networks”</span>. <em>Communications of the ACM</em> 60 (6): 84–90. <a href="https://doi.org/10.1145/3065386">https://doi.org/10.1145/3065386</a>.
+</div>
+</div>
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Skopiowano!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Skopiowano!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./fourier.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Transformata Fouriera</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">Bibliografia</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">Automatyczna analiza obrazu, Dariusz Majerek</div>   
+    <div class="nav-footer-right">Książka została napisana w <a href="https://quarto.org/">Quarto</a></div>
+  </div>
+</footer>
+
+
+</body></html>
