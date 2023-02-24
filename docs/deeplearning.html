@@ -17,6 +17,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
@@ -194,6 +257,14 @@ div.csl-indent {
   <li><a href="#algorytmy" id="toc-algorytmy" class="nav-link" data-scroll-target="#algorytmy"><span class="toc-section-number">10.3.3</span>  Algorytmy</a></li>
   </ul>
 </li>
+  <li>
+<a href="#elementy-deep-learning" id="toc-elementy-deep-learning" class="nav-link" data-scroll-target="#elementy-deep-learning"><span class="toc-section-number">10.4</span>  Elementy Deep Learning</a>
+  <ul class="collapse">
+<li><a href="#operacje-na-danych" id="toc-operacje-na-danych" class="nav-link" data-scroll-target="#operacje-na-danych"><span class="toc-section-number">10.4.1</span>  Operacje na danych</a></li>
+  <li><a href="#optymalizacja-gradientowa" id="toc-optymalizacja-gradientowa" class="nav-link" data-scroll-target="#optymalizacja-gradientowa"><span class="toc-section-number">10.4.2</span>  Optymalizacja gradientowa</a></li>
+  <li><a href="#wsteczna-propagacja-b%C5%82%C4%99du" id="toc-wsteczna-propagacja-błędu" class="nav-link" data-scroll-target="#wsteczna-propagacja-b%C5%82%C4%99du"><span class="toc-section-number">10.4.3</span>  Wsteczna propagacja błędu</a></li>
+  </ul>
+</li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -308,7 +379,411 @@ Stało się tak, że rynek gier dofinansował superkomputery dla następnej gene
 <li>Prostota - głębokie uczenie eliminuje potrzebę inżynierii cech, zastępując złożone, wrażliwe i wymagające inżynierii potoki prostymi, kompleksowo wytrenowanymi modelami, które są zazwyczaj budowane przy użyciu tylko pięciu lub sześciu różnych operacji na tensorach.</li>
 <li>Skalowalność - głębokie uczenie jest bardzo podatne na równoległe przetwarzanie na układach GPU lub TPU. Dodatkowo, modele głębokiego uczenia są trenowane poprzez iterację na małych partiach danych, co pozwala na ich trenowanie na zbiorach danych o dowolnym rozmiarze. (Jedynym wąskim gardłem jest ilość dostępnej mocy obliczeniowej).</li>
 <li>Wszechstronność i możliwość ponownego wykorzystania - w przeciwieństwie do wielu wcześniejszych podejść do uczenia maszynowego, modele głębokiego uczenia mogą być trenowane na dodatkowych danych bez konieczności ponownego rozpoczynania od zera, co czyni je realnymi dla ciągłego uczenia się na bierząco - ważna właściwość dla bardzo dużych modeli produkcyjnych. Co więcej, wytrenowane modele głębokiego uczenia mogą być ponownie wykorzystane, na przykład, możliwe jest wzięcie modelu głębokiego uczenia wytrenowanego do klasyfikacji obrazów i wrzucenie go do potoku przetwarzania wideo.</li>
+</ul></section></section><section id="elementy-deep-learning" class="level2 page-columns page-full" data-number="10.4"><h2 data-number="10.4" class="anchored" data-anchor-id="elementy-deep-learning">
+<span class="header-section-number">10.4</span> Elementy Deep Learning</h2>
+<p>Zrozumienie głębokiego uczenia wymaga znajomości wielu prostych pojęć matematycznych: tensorów, operacji na tensorach, różniczkowania, spadku gradientu itp. Naszym celem w tym rozdziale będzie zbudowanie intuicji na temat tych pojęć bez nadmiernego zagłębiania się w technikę. W szczególności, będziemy unikać notacji matematycznej, która może być drażniąca dla osób nieposiadających żadnego wykształcenia matematycznego, a nie jest niezbędna do dobrego wytłumaczenia.</p>
+<p>Aby dodać trochę kontekstu dla tensorów i spadku gradientu, rozpoczniemy podrozdział od praktycznego przykładu sieci neuronowej. Następnie przejdziemy przez każde nowe pojęcie, które zostało wprowadzone, punkt po punkcie. Pamiętaj, że pojęcia te będą niezbędne do zrozumienia praktycznych przykładów, które pojawią się w kolejnych rozdziałach!</p>
+<p>Przyjrzyjmy się konkretnemu przykładowi sieci neuronowej, która wykorzystuje pakiet <code>keras</code> do nauki klasyfikacji ręcznie pisanych cyfr.</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tensorflow.rstudio.com/">keras</a></span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Problemem, który postaramy się rozwiązać jest klasyfikacja obrazów pisma ręcznego w skali szarości (28 pikseli na 28 pikseli) do 10 kategorii (od 0 do 9). Użyjemy zestawu danych MNIST, klasycznego zestawu danych w społeczności ML, który istnieje prawie tak długo jak sama dziedzina i jest intensywnie badany. Jest to zestaw 60 000 obrazów treningowych oraz 10 000 obrazów testowych, zebranych przez National Institute of Standards and Technology (NIST w MNIST) w latach 80. Możesz myśleć o “rozwiązywaniu” MNIST jako o “Hello World” głębokiego uczenia - to jest to, co robisz, aby zweryfikować, że twoje algorytmy działają zgodnie z oczekiwaniami. Gdy staniesz się praktykiem uczenia maszynowego, zobaczysz, że MNIST pojawia się raz za razem, w pracach naukowych, wpisach na blogach i tak dalej. Kilka próbek MNIST można zobaczyć na <a href="#fig-mnist1">Rysunek&nbsp;<span>10.7</span></a>.</p>
+<div id="fig-mnist1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-24 o 17.57.00.png" class="img-fluid figure-img" width="600"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.7: Kilka przykładów obrazów ze zbioru MNIST</figcaption><p></p>
+</figure>
+</div>
+<div class="callout callout-style-default callout-caution callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Zagrożenie
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>W uczeniu maszynowym kategoria w problemie klasyfikacyjnym nazywana jest klasą. Punkty danych są nazywane próbkami. Klasa związana z konkretną próbką nazywana jest etykietą (ang. <em>label</em>).</p>
+</div>
+</div>
+<p>Zbiór danych MNIST jest wstępnie załadowany do <code>keras</code> w postaci list <code>train</code> i <code>test</code>, z których każda zawiera zestaw obrazów (x) i związanych z nimi etykiet (y):</p>
+<div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-2_fedf61c1f3e72503192f6e2e3613d6e7">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mnist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/dataset_mnist.html">dataset_mnist</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">train_images</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">train</span><span class="op">$</span><span class="va">x</span></span>
+<span><span class="va">train_labels</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">train</span><span class="op">$</span><span class="va">y</span></span>
+<span><span class="va">test_images</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">test</span><span class="op">$</span><span class="va">x</span></span>
+<span><span class="va">test_labels</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">test</span><span class="op">$</span><span class="va">y</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><code>train_images</code> i <code>train_labels</code> tworzą zbiór treningowy, czyli dane, na podstawie których model będzie się uczył. Model będzie następnie testowany na zbiorze testowym, <code>test_images</code> i <code>test_labels</code> . Obrazy są zakodowane jako tablice 3D, a etykiety to tablica 1D z cyframi od 0 do 9. Pomiędzy obrazami i etykietami istnieje korespondencja jeden do jednego.</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">train_images</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code> int [1:60000, 1:28, 1:28] 0 0 0 0 0 0 0 0 0 0 ...</code></pre>
+</div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">train_labels</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code> int [1:60000(1d)] 5 0 4 1 9 2 1 3 1 4 ...</code></pre>
+</div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">test_images</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code> int [1:10000, 1:28, 1:28] 0 0 0 0 0 0 0 0 0 0 ...</code></pre>
+</div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">test_labels</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code> int [1:10000(1d)] 7 2 1 0 4 1 4 9 5 9 ...</code></pre>
+</div>
+</div>
+<p>Przepływ pracy (ang. <em>workflow</em>) będzie następujący: najpierw podamy sieci neuronowej dane treningowe, <code>train_images</code> i <code>train_labels</code>. Następnie sieć nauczy się kojarzyć obrazy i etykiety. Na koniec poprosimy sieć o stworzenie przewidywań dla <code>test_images</code> i sprawdzimy, czy te przewidywania pasują do etykiet z <code>test_labels</code>.</p>
+<div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-4_bfd70e0c37cab0209c01411074e22a1a">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">network</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model_sequential.html">keras_model_sequential</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">512</span>, activation <span class="op">=</span> <span class="st">"relu"</span>, input_shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">28</span> <span class="op">*</span> <span class="fl">28</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">10</span>, activation <span class="op">=</span> <span class="st">"softmax"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Podstawowym elementem konstrukcyjnym sieci neuronowych jest warstwa, moduł przetwarzania danych, o którym można myśleć jak o filtrze dla danych. Niektóre dane przychodzą i wychodzą w bardziej użytecznej formie. W szczególności, warstwy wyodrębniają reprezentacje z danych, które są do nich wprowadzane - miejmy nadzieję, że reprezentacje, które są bardziej znaczące dla danego problemu. Większość głębokiego uczenia polega na łączeniu prostych warstw, które implementują formę stopniowej destylacji danych. Model głębokiego uczenia jest jak sito do przetwarzania danych, złożone z szeregu coraz bardziej wyrafinowanych filtrów danych - warstw.</p>
+<p>Nasza sieć składa się z dwóch warstw, które są gęsto połączonymi (zwanymi też w pełni połączonymi - ang. <em>fully connected</em>) warstwami neuronowymi. Druga (i ostatnia) warstwa jest 10-kierunkową warstwą softmax, co oznacza, że zwróci tablicę 10 wyników prawdopodobieństwa (sumujących się do 1). Każdy wynik będzie oznaczał prawdopodobieństwo, że aktualny obraz cyfry należy do jednej z naszych 10 klas cyfr.</p>
+<p>Aby sieć była gotowa do treningu, musimy wybrać jeszcze trzy rzeczy, w ramach kroku kompilacji:</p>
+<ul>
+<li>Funkcję straty - jak sieć będzie w stanie zmierzyć, jak dobrą pracę wykonuje na danych treningowych, a tym samym czy będzie w stanie kierować się we właściwym kierunku.</li>
+<li>Optymalizator - mechanizm, dzięki któremu sieć będzie się aktualizować w oparciu o dane, które widzi i swoją funkcję straty.</li>
+<li>Metryki, które należy monitorować podczas treningu i testów - tutaj zajmiemy się tylko dokładnością (frakcją obrazów, które zostały poprawnie sklasyfikowane - ang. <em>accuracy</em>).</li>
 </ul>
+<p>Dokładne przeznaczenie funkcji straty i optymalizatora zostanie wyjaśnione w kolejnych rozdziałach.</p>
+<div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-5_362b131e9423ed281d81da1a2d76781c">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span></span>
+<span>  optimizer <span class="op">=</span> <span class="st">"rmsprop"</span>,</span>
+<span>  loss <span class="op">=</span> <span class="st">"categorical_crossentropy"</span>,</span>
+<span>  metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"accuracy"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Zauważ, że funkcja <code><a href="https://generics.r-lib.org/reference/compile.html">compile()</a></code> modyfikuje sieć na bieżąco (zamiast zwracać nowy obiekt sieci, co jest bardziej typowe dla R). Powód tego opiszemy, gdy powrócimy do przykładu w dalszej części rozdziału.</p>
+<p>Przed treningiem wstępnie przetworzymy dane, zmieniając ich kształt na taki, jakiego oczekuje sieć, i skalując je tak, by wszystkie wartości mieściły się w przedziale [0, 1]. Poprzednio nasze obrazy treningowe, na przykład, były przechowywane w tablicy o kształcie <code>(60000, 28, 28)</code> typu <code>integer</code> z wartościami w przedziale [0, 255]. Przekształcamy go w podwójną tablicę kształtu <code>(60000, 28 * 28)</code> z wartościami w przedziale [0,1].</p>
+<div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-6_496d486d00834c24faa318baf5f45336">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">train_images</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/array_reshape.html">array_reshape</a></span><span class="op">(</span><span class="va">train_images</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">60000</span>, <span class="fl">28</span> <span class="op">*</span> <span class="fl">28</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">train_images</span> <span class="op">&lt;-</span> <span class="va">train_images</span> <span class="op">/</span> <span class="fl">255</span></span>
+<span><span class="va">test_images</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/array_reshape.html">array_reshape</a></span><span class="op">(</span><span class="va">test_images</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10000</span>, <span class="fl">28</span> <span class="op">*</span> <span class="fl">28</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">test_images</span> <span class="op">&lt;-</span> <span class="va">test_images</span> <span class="op">/</span> <span class="fl">255</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Zauważ, że używamy funkcji <code><a href="https://rstudio.github.io/reticulate/reference/array_reshape.html">array_reshape()</a></code> zamiast funkcji <code><a href="https://rdrr.io/r/base/dim.html">dim()</a></code> do zmiany kształtu tablicy. Powód tego omówimy później, kiedy będziemy mówić o przekształcaniu tensorów. Musimy również zakodować etykiety w sposób kategoryczny.</p>
+<div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-7_28d63e0e0f078c20e12c43e97b709e5f">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">train_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/to_categorical.html">to_categorical</a></span><span class="op">(</span><span class="va">train_labels</span><span class="op">)</span></span>
+<span><span class="va">test_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/to_categorical.html">to_categorical</a></span><span class="op">(</span><span class="va">test_labels</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Teraz jesteśmy gotowi do trenowania sieci, co w <code>keras</code> odbywa się poprzez wywołanie metody <code>fit</code> sieci - dopasowujemy model do danych treningowych:</p>
+<div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-8_879fceaa3973ae3c539ce58814e96936">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span><span class="va">train_images</span>, <span class="va">train_labels</span>, epochs <span class="op">=</span> <span class="fl">5</span>, batch_size <span class="op">=</span> <span class="fl">128</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Podczas treningu wyświetlane są dwie wielkości: strata sieci na danych treningowych oraz dokładność sieci na danych treningowych. Szybko osiągamy dokładność 0,989 (98,9%) na danych treningowych. Teraz sprawdźmy, czy model dobrze radzi sobie również na zbiorze testowym:</p>
+<div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-9_6c7090cd2f5e105fad5466214c75a717">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">metrics</span> <span class="op">&lt;-</span> <span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">test_images</span>, <span class="va">test_labels</span><span class="op">)</span></span>
+<span><span class="va">metrics</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>      loss   accuracy 
+0.07629414 0.97790003 </code></pre>
+</div>
+</div>
+<p>Dokładność zestawu testowego okazuje się wynosić 97,8% - to sporo mniej niż dokładność zestawu treningowego. Ta różnica między dokładnością treningu a dokładnością testu jest przykładem nadmiernego dopasowania (fakt, że modele uczenia maszynowego mają tendencję do osiągania gorszych wyników na nowych danych niż na danych treningowych). Wygenerujmy przewidywania dla pierwszych 10 próbek zbioru testowego:</p>
+<div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-10_57bddd67053e1e741c2540e3d41b5e23">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">test_images</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/k_argmax.html">k_argmax</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>tf.Tensor([7 2 1 0 4 1 4 9 5 9], shape=(10), dtype=int64)</code></pre>
+</div>
+</div>
+<p>Na tym kończymy nasz pierwszy przykład - właśnie zobaczyłeś, jak można zbudować i wytrenować sieć neuronową do klasyfikacji pisma ręcznego w mniej niż 20 liniach kodu R. W następnym rozdziale omówimy szczegółowo każdy element, który użyliśmy i wyjaśnimy, co on robi. Dowiesz się o tensorach, obiektach przechowujących dane w sieci; o operacjach na tensorach, z których składają się warstwy; oraz o spadku gradientu, który pozwala sieci uczyć się na przykładach treningowych.</p>
+<section id="operacje-na-danych" class="level3 page-columns page-full" data-number="10.4.1"><h3 data-number="10.4.1" class="anchored" data-anchor-id="operacje-na-danych">
+<span class="header-section-number">10.4.1</span> Operacje na danych</h3>
+<p>W poprzednim przykładzie zaczynaliśmy od danych przechowywanych w wielowymiarowych tablicach, zwanych również tensorami. Wszystkie obecne systemy uczenia maszynowego używają tensorów jako podstawowej struktury danych. Tensory są fundamentalne dla tej dziedziny - tak fundamentalne, że Google’s TensorFlow został nazwany na ich cześć. Czym więc jest tensor?</p>
+<p>Tensory są uogólnieniem wektorów i macierzy na dowolną liczbę wymiarów (zauważ, że w kontekście tensorów “wymiar” jest często nazywany “osią”). W R wektory są używane do tworzenia i manipulowania tensorami 1D, a matryce są używane do tensorów 2D. Dla wymiarów wyższego rzędu używane są obiekty tablicowe (które obsługują dowolną liczbę wymiarów).</p>
+<section id="skalary" class="level4" data-number="10.4.1.1"><h4 data-number="10.4.1.1" class="anchored" data-anchor-id="skalary">
+<span class="header-section-number">10.4.1.1</span> Skalary</h4>
+<p>Tensor, który zawiera tylko jedną liczbę nazywany jest skalarem (lub tensorem skalarnym, lub tensorem 0-wymiarowym, lub tensorem 0D). Chociaż R nie ma typu danych do reprezentowania skalarów (wszystkie obiekty numeryczne są wektorami, macierzami lub tablicami), wektor R, który ma zawsze długość 1, jest koncepcyjnie podobny do skalara.</p>
+</section><section id="wektory" class="level4" data-number="10.4.1.2"><h4 data-number="10.4.1.2" class="anchored" data-anchor-id="wektory">
+<span class="header-section-number">10.4.1.2</span> Wektory</h4>
+<p>Jednowymiarowa tablica liczb nazywana jest wektorem lub tensorem 1D. Mówi się, że tensor 1D ma dokładnie jedną oś. Możemy przekonwertować wektor R na obiekt tablicowy (<code>array</code>), aby sprawdzić jego wymiary:</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">3</span>, <span class="fl">6</span>, <span class="fl">14</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code> num [1:5] 12 3 6 14 10</code></pre>
+</div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/array.html">as.array</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+</div>
+<p>Wektor ten ma pięć wpisów i dlatego nazywany jest wektorem 5-wymiarowym. Nie należy mylić wektora 5D z tensorem 5D! Wektor 5D ma tylko jedną oś i ma pięć wymiarów wzdłuż swojej osi, podczas gdy tensor 5D ma pięć osi (i może mieć dowolną liczbę wymiarów wzdłuż każdej osi). Wymiarowość może oznaczać albo liczbę wpisów wzdłuż konkretnej osi (jak w przypadku naszego wektora 5D), albo liczbę osi w tensorze (jak tensor 5D), co może być czasem mylące. W tym drugim przypadku technicznie poprawniej jest mówić o tensorze rzędu 5 (ranga tensora to liczba osi), ale niejednoznaczny zapis tensor 5D jest powszechny niezależnie od tego.</p>
+</section><section id="macierze" class="level4" data-number="10.4.1.3"><h4 data-number="10.4.1.3" class="anchored" data-anchor-id="macierze">
+<span class="header-section-number">10.4.1.3</span> Macierze</h4>
+<p>Dwuwymiarowa tablica liczb to macierz, czyli tensor 2D. Macierz ma dwie osie (często nazywane wierszami i kolumnami). Możesz wizualnie zinterpretować macierz jako prostokątną siatkę liczb:</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">*</span><span class="fl">5</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">x</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4] [,5]
+[1,]    0    0    0    0    0
+[2,]    0    0    0    0    0
+[3,]    0    0    0    0    0</code></pre>
+</div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 5</code></pre>
+</div>
+</div>
+</section><section id="tensory" class="level4" data-number="10.4.1.4"><h4 data-number="10.4.1.4" class="anchored" data-anchor-id="tensory">
+<span class="header-section-number">10.4.1.4</span> Tensory</h4>
+<p>Jeśli spakujemy takie macierze do nowej tablicy, otrzymamy tensor 3D, który możemy wizualnie zinterpretować jako sześcian liczb:</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">*</span><span class="fl">3</span><span class="op">*</span><span class="fl">2</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code> num [1:2, 1:3, 1:2] 0 0 0 0 0 0 0 0 0 0 ...</code></pre>
+</div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 3 2</code></pre>
+</div>
+</div>
+<p>Pakując tensory 3D w tablicy, możesz stworzyć tensor 4D i tak dalej. W głębokim uczeniu się, generalnie będziesz manipulować tensorami, które są 0D do 4D, a tensory 5D pojawią się, jeśli będziesz przetwarzać dane wideo.</p>
+</section><section id="kluczowe-własności" class="level4 page-columns page-full" data-number="10.4.1.5"><h4 data-number="10.4.1.5" class="anchored" data-anchor-id="kluczowe-własności">
+<span class="header-section-number">10.4.1.5</span> Kluczowe własności</h4>
+<p>Tensor jest określony przez trzy kluczowe atrybuty:</p>
+<ul>
+<li>Liczba osi - np. tensor 3D ma trzy osie, a macierz dwie osie.</li>
+<li>Kształt - to wektor liczb całkowitych, który opisuje, ile wymiarów ma tensor wzdłuż każdej osi. Na przykład poprzedni przykład macierzy ma kształt (3, 5), a przykład tensora 3D ma kształt (3, 3, 5). Wektor ma kształt z pojedynczym elementem, o wymiarze 5. Możesz sprawdzić wymiary dowolnej tablicy za pomocą funkcji <code><a href="https://rdrr.io/r/base/dim.html">dim()</a></code>.</li>
+<li>Typ danych - typ danych zawartych w tensorze; na przykład, typem tensora może być liczba całkowita lub podwójna<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. W rzadkich przypadkach możesz zobaczyć tensor znakowy<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Ponieważ jednak tensory żyją we wstępnie przydzielonych segmentach pamięci, a łańcuchy znaków, będąc zmiennej długości, wykluczyłyby użycie tej implementacji, są one rzadziej używane.</li>
+</ul>
+<div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;float - czyli liczba rzeczywista</p></li><li id="fn4"><p><sup>4</sup>&nbsp;typu <code>character</code></p></li></div><p>Aby to skonkretyzować, spójrzmy na dane, które przetwarzaliśmy w przykładzie MNIST. Najpierw ładujemy zbiór danych MNIST:</p>
+<div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-14_ea3d96b8d181d853268ddaa979c2afdb">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">train_images</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">train</span><span class="op">$</span><span class="va">x</span></span>
+<span><span class="va">train_labels</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">train</span><span class="op">$</span><span class="va">y</span></span>
+<span><span class="va">test_images</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">test</span><span class="op">$</span><span class="va">x</span></span>
+<span><span class="va">test_labels</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">test</span><span class="op">$</span><span class="va">y</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">train_images</span><span class="op">)</span><span class="op">)</span> <span class="co"># trzy osie</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">train_images</span><span class="op">)</span> <span class="co"># kształt</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 60000    28    28</code></pre>
+</div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">train_images</span><span class="op">)</span> <span class="co"># typ danych</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] "integer"</code></pre>
+</div>
+</div>
+<p>Jak więc widać jest to tensor 3D liczb całkowitych. Dokładniej, jest to tablica 60000 macierzy 28 × 28 liczb całkowitych. Każda taka macierz jest obrazem w skali szarości, o współczynnikach od 0 do 255. Wykreślmy piątą cyfrę w tym tensorze 3D:</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">digit</span> <span class="op">&lt;-</span> <span class="va">train_images</span><span class="op">[</span><span class="fl">5</span>,,<span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html">as.raster</a></span><span class="op">(</span><span class="va">digit</span>, max <span class="op">=</span> <span class="fl">255</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="deeplearning_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section><section id="operacje-na-tensorach" class="level4" data-number="10.4.1.6"><h4 data-number="10.4.1.6" class="anchored" data-anchor-id="operacje-na-tensorach">
+<span class="header-section-number">10.4.1.6</span> Operacje na tensorach</h4>
+<p>W poprzednim przykładzie wybraliśmy konkretną cyfrę wzdłuż pierwszej osi za pomocą składni <code>train_images[i,,]</code>. Wybieranie konkretnych elementów w tensorze nazywa się <em>tensor slicing</em>. Przyjrzyjmy się operacjom <em>tensor slicing</em>, które można wykonać na tablicach R. Poniżej wybrano cyfry od #10 do #99 i umieszczono je w tablicy o kształcie <code>(90, 28, 28)</code>:</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_slice</span> <span class="op">&lt;-</span> <span class="va">train_images</span><span class="op">[</span><span class="fl">10</span><span class="op">:</span><span class="fl">99</span>,,<span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">my_slice</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 90 28 28</code></pre>
+</div>
+</div>
+<p>Generalnie, możesz wybrać pomiędzy dwoma dowolnymi indeksami wzdłuż każdej osi tensora. Na przykład, aby wybrać 14 × 14 pikseli w prawym dolnym rogu wszystkich obrazów, użyj:</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_slice</span> <span class="op">&lt;-</span> <span class="va">train_images</span><span class="op">[</span>, <span class="fl">15</span><span class="op">:</span><span class="fl">28</span>, <span class="fl">15</span><span class="op">:</span><span class="fl">28</span><span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Generalnie, pierwszą osią we wszystkich tensorach danych, z którymi zetkniesz się w głębokim uczeniu, będzie oś próbek (czasami nazywana wymiarem próbek). W przykładzie MNIST, próbki to obrazy cyfr. Ponadto, modele głębokiego uczenia nie przetwarzają całego zbioru danych na raz, ale raczej dzielą dane na małe partie (ang. <em>batch</em>). Konkretnie, oto jedna partia naszych cyfr MNIST, o rozmiarze partii 128:</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">batch</span> <span class="op">&lt;-</span> <span class="va">train_images</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">128</span>,,<span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Gdy rozważamy tensor partii, pierwsza oś nazywana jest osią partii lub wymiarem partii. Jest to termin, który często spotkasz podczas korzystania z <code>keras</code> i innych bibliotek uczenia głębokiego.</p>
+<p>Uściślijmy tensory danych za pomocą kilku przykładów podobnych do tego, co napotkasz później. Dane, którymi będziesz manipulował, prawie zawsze będą należały do jednej z następujących kategorii:</p>
+<ul>
+<li>Dane wektorowe-2D tensory kształtu (próbki, cechy);</li>
+<li>Dane czasowe lub dane sekwencyjne-3D tensory kształtu (próbki, kroki czasowe, cechy);</li>
+<li>Obrazy-4D tensory kształtu (próbki, wysokość, szerokość, kanały) lub (próbki, kanały, wysokość, szerokość);</li>
+<li>Wideo-5D tensory kształtu (próbki, klatki, wysokość, szerokość, kanały) lub (próbki, klatki, kanały, wysokość, szerokość).</li>
+</ul>
+<p>Dane wektorowe są najczęściej spotykanym przykładem formatu danych. W takim zbiorze danych każdy pojedynczy punkt danych może być zakodowany jako wektor, a więc partia danych będzie zakodowana jako tensor 2D (czyli tablica wektorów), gdzie pierwsza oś jest osią próbek, a druga osią cech. Przyjrzyjmy się dwóm przykładom:</p>
+<ul>
+<li>Aktuarialny zbiór danych osób, gdzie rozpatrujemy wiek, kod i dochód każdej osoby. Każda osoba może być scharakteryzowana jako wektor 3 wartości, a zatem cały zbiór danych 100000 osób może być przechowywany w tensorze 2D o kształcie <code>(100000, 3)</code>.</li>
+<li>Zbiór dokumentów tekstowych, gdzie każdy dokument reprezentujemy poprzez zliczanie ile razy pojawia się w nim każde słowo (ze słownika 20000 słów). Każdy dokument można zakodować jako wektor 20000 wartości (po jednym zliczeniu na słowo w słowniku), a zatem cały zbiór 500 dokumentów można zapisać w tensorze kształtu <code>(500, 20000)</code>.</li>
+</ul>
+<p>Gdy w danych ważny się czas (lub kolejność sekwencji), sensowne jest przechowywanie ich w tensorze 3D z wyraźną osią czasu. Każda próbka może być zakodowana jako ciąg wektorów (tensor 2D), a zatem partia danych będzie zakodowana jako tensor 3D (patrz <a href="#fig-tensor1">Rysunek&nbsp;<span>10.8</span></a>).</p>
+<div id="fig-tensor1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-24 o 18.59.47.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.8: Schemat zapisu danych sekwencyjnych</figcaption><p></p>
+</figure>
+</div>
+<p>Oś czasu jest zawsze drugą osią, zgodnie z konwencją. Przyjrzyjmy się kilku przykładom:</p>
+<ul>
+<li>Zbiór danych o cenach akcji. Co minutę zapisujemy aktualną cenę akcji, najwyższą cenę w danej minucie oraz najniższą cenę w danej minucie. Tak więc każda minuta jest zakodowana jako wektor 3D, cały dzień handlu jest zakodowany jako tensor 2D o kształcie <code>(390, 3)</code> (jest 390 minut w dniu handlu), a 250 dni danych może być przechowywanych w tensorze 3D o kształcie <code>(250, 390, 3)</code>. W tym przypadku każda próbka to jeden dzień danych.</li>
+<li>Zbiór danych tweetów, gdzie każdy tweet kodujemy jako ciąg 140 znaków z alfabetu 128 unikalnych znaków. W tym ustawieniu każdy znak może być zakodowany jako wektor binarny o rozmiarze 128 (wektor wszystkich zer, z wyjątkiem wpisu 1 w indeksie odpowiadającym znakowi). Następnie każdy tweet może być zakodowany jako tensor 2D o kształcie <code>(140, 128)</code>, a zbiór danych 1 miliona tweetów może być przechowywany w tensorze o kształcie <code>(1000000, 140, 128)</code>.</li>
+</ul>
+<p>Obrazy mają zazwyczaj trzy wymiary: wysokość, szerokość i głębię koloru. Choć obrazy w skali szarości (jak nasze cyfry MNIST) mają tylko jeden kanał koloru i mogłyby być przechowywane w tensorach 2D, to konwencjonalnie tensory obrazów są zawsze trójwymiarowe, z jednowymiarowym kanałem koloru dla obrazów w skali szarości. Partia 128 obrazów w skali szarości o rozmiarach 256 × 256 mogłaby więc być przechowywana w tensorze o kształcie <code>(128, 256, 256, 1)</code>, a partia 128 obrazów kolorowych - w tensorze o kształcie <code>(128, 256, 256, 3)</code> (patrz <a href="#fig-tensor2">Rysunek&nbsp;<span>10.9</span></a>).</p>
+<div id="fig-tensor2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-24 o 19.04.18.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.9: Zapis kolorowego obrazu</figcaption><p></p>
+</figure>
+</div>
+<p>Istnieją dwie konwencje dla kształtów tensorów obrazów: konwencja <em>channels-last</em> (używana przez TensorFlow) i konwencja <em>channels-firs</em>t (używana przez Theano). Framework uczenia maszynowego TensorFlow, od Google, umieszcza oś głębokości koloru na końcu: <code>(sample, height, width, color_depth)</code>. Tymczasem Theano umieszcza oś głębi koloru zaraz po osi wsadowej: <code>(sample, color_depth, height, width)</code>. Keras zapewniają wsparcie dla obu formatów.</p>
+<p>Dane wideo są jednym z niewielu typów danych ze świata rzeczywistego, dla których będziesz potrzebował tensorów 5D. Wideo może być rozumiane jako sekwencja klatek, z których każda jest obrazem kolorowym. Ponieważ każda klatka może być przechowywana w tensorze 3D <code>(wysokość, szerokość, głębokość koloru)</code>, sekwencja klatek może być przechowywana w tensorze 4D <code>(klatki, wysokość, szerokość, głębokość koloru)</code>, a zatem partia różnych filmów może być przechowywana w tensorze 5D o kształcie <code>(próbki, klatki, wysokość, szerokość, głębokość koloru)</code>.</p>
+<p>Na przykład 60-sekundowy klip wideo YouTube o wymiarach 256 × 144, próbkowany z prędkością 4 klatek na sekundę, miałby 240 klatek. Partia czterech takich klipów wideo byłaby przechowywana w tensorze o kształcie <code>(4, 240, 256, 144, 3)</code>. To w sumie 106168320 wartości! Jeśli typ danych tensora to <em>double</em>, to każda wartość jest przechowywana w 64 bitach, więc tensor reprezentowałby 810 MB. Sporo 😱! Filmy, które spotykasz w prawdziwym życiu są znacznie lżejsze, ponieważ nie są przechowywane w <code>float32</code> i zazwyczaj są silnie skompresowane (jak w formacie MPEG).</p>
+<p>Podobnie jak każdy program komputerowy może być ostatecznie zredukowany do małego zestawu operacji binarnych na wejściach binarnych (AND, OR, NOR, i tak dalej), wszystkie transformacje uczone przez głębokie sieci neuronowe mogą być zredukowane do garści operacji tensorowych stosowanych do tensorów danych liczbowych. Na przykład, możliwe jest dodawanie tensorów, mnożenie tensorów i tak dalej. W naszym początkowym przykładzie budowaliśmy naszą sieć poprzez układanie gęstych warstw jedna na drugiej. Instancja warstwy wygląda tak:</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">512</span>, activation <span class="op">=</span> <span class="st">"relu"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Warstwa ta może być interpretowana jako funkcja, która przyjmuje na wejście tensor 2D i zwraca inny tensor 2D - nową reprezentację tensora wejściowego. Można ją też przedstawić inaczej (gdzie <code>W</code> jest tensorem 2D, a <code>b</code> jest wektorem):</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># nie wykonuj</span></span>
+<span><span class="va">output</span> <span class="op">=</span> <span class="fu">relu</span><span class="op">(</span><span class="fu">dot</span><span class="op">(</span><span class="va">W</span>, <span class="va">input</span><span class="op">)</span> <span class="op">+</span> <span class="va">b</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Mamy tu trzy operacje na tensorach: iloczyn (<code>dot</code>) między tensorem wejściowym a tensorem <code>W</code>, dodawanie (<code>+</code>) między wynikowym tensorem 2D wektorem <code>b</code> i wreszcie operację <code>relu</code>, gdzie <code>relu(x)</code> to <code>max(x, 0)</code>.</p>
+<p>Operacja <code>relu</code> i dodawanie są operacjami typu <em>element-wise</em>: operacjami, które są stosowane niezależnie do każdego wpisu w rozważanych tensorach. Oznacza to, że operacje te są bardzo podatne na wektoryzacje. W praktyce, gdy mamy do czynienia z tablicami R, operacje te są dostępne jako dobrze zoptymalizowane wbudowane funkcje R, które same delegują ciężką pracę do BLAS (Basic Linear Algebra Subprograms). BLAS to niskopoziomowe, wysoce wektoryzowalne, wydajne procedury manipulacji tensorami, zwykle zaimplementowane w Fortranie lub C.</p>
+<p>Operacje na tensorach można wykonywać również wtedy, gdy są one innych wymiarów. Przykładowo:</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># x is a tensor of random values with shape (64, 3, 32, 10)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">64</span>, <span class="fl">3</span>, <span class="fl">32</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code> num [1:64, 1:3, 1:32, 1:10] 3 7 2 3 5 6 4 8 3 8 ...</code></pre>
+</div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># y is a tensor of 5s of shape (32, 10)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="fl">5</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">32</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code> num [1:32, 1:10] 5 5 5 5 5 5 5 5 5 5 ...</code></pre>
+</div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># The output z has shape (64, 3, 32, 10) like x</span></span>
+<span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sweep.html">sweep</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="va">y</span>, <span class="va">pmax</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code> num [1:64, 1:3, 1:32, 1:10] 5 7 5 5 5 6 5 8 5 8 ...</code></pre>
+</div>
+</div>
+<p>Operacja <code>dot</code>, zwana również iloczynem tensorowym jest najczęściej spotykaną, najbardziej użyteczną operacją na tensorach. W przeciwieństwie do operacji <em>element-wise</em>, łączy ona wpisy w tensorach wejściowych. Iloczyny tensorowe wykorzystują operator <code>%*%</code>. Zauważ, że gdy tylko jeden z dwóch tensorów ma więcej niż jeden wymiar, <code>%*%</code> nie jest symetryczny, czyli że <code>x %*% y</code> nie jest taki sam jak <code>y %*% x</code>.</p>
+<div id="fig-tensor3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-24 o 19.35.48.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.10: Iloczyn tensorów</figcaption><p></p>
+</figure>
+</div>
+<p>Trzecim bardzo ważnym rodzajem operacji na tensorach jest przekształcanie tensorów. Chociaż nie było ono używane w gęstych warstwach w naszym pierwszym przykładzie sieci neuronowej, używaliśmy go, gdy wstępnie przetwarzaliśmy dane o cyfrach przed wprowadzeniem ich do naszej sieci:</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">train_images</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">train</span><span class="op">$</span><span class="va">x</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">train_images</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code> int [1:60000, 1:28, 1:28] 0 0 0 0 0 0 0 0 0 0 ...</code></pre>
+</div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">train_images</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/array_reshape.html">array_reshape</a></span><span class="op">(</span><span class="va">train_images</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">60000</span>, <span class="fl">28</span> <span class="op">*</span> <span class="fl">28</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">train_images</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code> int [1:60000, 1:784] 0 0 0 0 0 0 0 0 0 0 ...</code></pre>
+</div>
+</div>
+<p>Przekształcenie tensora oznacza zmianę rozmieszczenia jego wierszy i kolumn tak, by pasowały do docelowego kształtu. Oczywiście, przekształcony tensor ma taką samą całkowitą liczbę współczynników jak tensor początkowy.</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>,</span>
+<span>                <span class="fl">2</span>, <span class="fl">3</span>,</span>
+<span>                <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>,</span>
+<span>             nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">x</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    0    1
+[2,]    2    3
+[3,]    4    5</code></pre>
+</div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/array_reshape.html">array_reshape</a></span><span class="op">(</span><span class="va">x</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">x</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>     [,1]
+[1,]    0
+[2,]    1
+[3,]    2
+[4,]    3
+[5,]    4
+[6,]    5</code></pre>
+</div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/array_reshape.html">array_reshape</a></span><span class="op">(</span><span class="va">x</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">x</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    0    1    2
+[2,]    3    4    5</code></pre>
+</div>
+</div>
+<p>Szczególnym przypadkiem przekształcenia, który jest powszechnie spotykany, jest transpozycja.</p>
+</section></section><section id="optymalizacja-gradientowa" class="level3" data-number="10.4.2"><h3 data-number="10.4.2" class="anchored" data-anchor-id="optymalizacja-gradientowa">
+<span class="header-section-number">10.4.2</span> Optymalizacja gradientowa</h3>
+<p>Jak widziałeś wyżej, każda warstwa neuronowa z naszego pierwszego przykładu sieci przekształca swoje dane wejściowe w następujący sposób:</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">output</span> <span class="op">=</span> <span class="fu">relu</span><span class="op">(</span><span class="fu">dot</span><span class="op">(</span><span class="va">input</span>, <span class="va">W</span><span class="op">)</span><span class="op">+</span><span class="va">b</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>W tym wyrażeniu <code>W</code> i <code>b</code> są tensorami będącymi atrybutami warstwy. Nazywamy je wagami lub parametrami trenowanymi warstwy (odpowiednio atrybuty kernel i bias). Wagi te zawierają informacje wyuczone przez sieć w wyniku ekspozycji na dane treningowe.</p>
+<p>Początkowo te macierze wag są wypełnione małymi losowymi wartościami (krok zwany inicjalizacją losową). Oczywiście nie ma powodu, by oczekiwać, że <code>relu(dot(W, input) + b)</code>, gdy <code>W</code> i <code>b</code> są losowe, da jakąkolwiek użyteczną reprezentację. Następnym krokiem jest stopniowe dostosowanie tych wag, w oparciu o sygnał zwrotny. To stopniowe dopasowywanie, zwane również treningiem, jest w zasadzie nauką, o którą chodzi w uczeniu modeli.</p>
+<p>Dzieje się to w ramach tak zwanej pętli treningowej, która schematycznie wygląda następująco. Powtarzaj te kroki w pętli, tak długo jak to konieczne:</p>
+<ol type="1">
+<li>Wylosuj partię próbek treningowych <code>x</code> i odpowiadające im cele <code>y</code>.</li>
+<li>Uruchom sieć na <code>x</code> (nazywane przejściem w przód), aby uzyskać predykcje <code>y_pred</code>.</li>
+<li>Oblicz stratę sieci na partii, czyli miarę niedopasowania między <code>y_pred</code> a <code>y</code>.</li>
+<li>Zaktualizuj wszystkie wagi sieci w taki sposób, aby nieznacznie zmniejszyć stratę na tej partii.</li>
+</ol>
+<p>W końcu otrzymamy sieć, która ma bardzo niską stratę na swoich danych treningowych: to znaczy, niskie rozbieżności między przewidywaniami <code>y_pred</code> i oczekiwanymi celami <code>y</code>. Ze wszystkich powyższych kroków pierwsze trzy wydają się oczywiste, natomiast 4 jest nieco trudniejszy - aktualizacja wag sieci. Biorąc pod uwagę indywidualny współczynnik wagowy w sieci, jak można obliczyć, czy współczynnik ten powinien być zwiększony czy zmniejszony i o ile?</p>
+<p>Ponieważ wszystkie operacje używane w sieci są różniczkowalne, to można obliczyć gradient funkcji straty względem współczynników sieci. Następnie możesz skorygować współczynniki wagowe w kierunku przeciwnym do gradientu, zmniejszając w ten sposób stratę.</p>
+<p>Biorąc pod uwagę funkcję różniczkowalną, teoretycznie możliwe jest znalezienie jej minimum analitycznie: wiadomo, że minimum funkcji to punkt, w którym pochodna jest równa 0, więc wszystko, co musimy zrobić, to znaleźć wszystkie punkty, w których pochodna zmierza do 0 i sprawdzić, dla którego z tych punktów funkcja ma najmniejszą wartość.</p>
+<p>W przypadku sieci neuronowej oznacza to analityczne znalezienie kombinacji wartości wag, która daje najmniejszą możliwą funkcję straty. Można to zrobić rozwiązując równanie <code>gradient(f)(W) = 0</code> dla <code>W</code>. Jest to równanie wielomianowe o <span class="math inline">\(N\)</span> zmiennych, gdzie <span class="math inline">\(N\)</span> jest liczbą współczynników w sieci. Chociaż możliwe byłoby rozwiązanie takiego równania dla dla <span class="math inline">\(N = 2\)</span> lub <span class="math inline">\(N = 3\)</span>, to zrobienie tego jest niepraktyczne dla rzeczywistych sieci neuronowych, gdzie liczba parametrów nigdy nie jest mniejsza niż kilka tysięcy, a często może wynosić kilkadziesiąt milionów.</p>
+<p>Zamiast tego możesz użyć czteroetapowego algorytmu przedstawionego na początku tej sekcji: modyfikujesz parametry po trochu w oparciu o bieżącą wartość straty na losowej partii danych. Ponieważ mamy do czynienia z funkcją różniczkowalną, możemy obliczyć jej gradient, co daje efektywny sposób implementacji kroku 4. Jeśli zaktualizujesz wagi w kierunku przeciwnym do gradientu, strata będzie za każdym razem nieco mniejsza:</p>
+<ol type="1">
+<li>Wylosuj partię próbek treningowych <code>x</code> i odpowiadające im cele <code>y</code>.</li>
+<li>Uruchom sieć na <code>x</code>, aby uzyskać predykcje <code>y_pred</code>.</li>
+<li>Oblicz stratę sieci na partii, czyli miarę niedopasowania między <code>y_pred</code> a <code>y.</code>
+</li>
+<li>Oblicz gradient straty względem parametrów sieci (przejście wsteczne).</li>
+<li>Skoryguj (nieznacznie) parametry sieci w kierunku przeciwnym do gradientu - na przykład <code>W =W - (krok * gradient)</code> - tym samym zmniejszając nieco stratę na partii.</li>
+</ol>
+<p>To, co właśnie opisaliśmy, nazywa się metodą <em>minibatch stochastic gradient descent</em> (minibatch SGD). Termin stochastyczny odnosi się do faktu, że każda partia danych jest losowana.</p>
+<p>Jak widać, intuicyjnie ważne jest, aby wybrać rozsądną wartość współczynnika kroku. Jeśli jest on zbyt mały, zejście w dół krzywej zajmie wiele iteracji i może utknąć w lokalnym minimum. Jeśli krok jest zbyt duży, twoje aktualizacje mogą skończyć się zabraniem cię do całkowicie losowych miejsc na krzywej.</p>
+<p>Zauważ, że wariant algorytmu mini-batch SGD polegający na losowaniu pojedynczej próbki i <code>y</code> w każdej iteracji, zamiast losowania partii danych. Wówczas byłby to oryginalny algorytm SGD, który jest mniej wydajny.</p>
+<p>Oprócz wspomnianej metody mini-batch SGD istnieje wiele innych, dużo bardziej skutecznych metod optymalizacji parametrów wagowych modelu. Wśród nich należy wymienić:</p>
+<ul>
+<li>RMSprop</li>
+<li>Adagrad</li>
+<li>Adamax</li>
+<li>mini-batch SGD with Momentum</li>
+<li>mini-batch SGD with Nesterov Momentum</li>
+<li>Adam (chyba najpopularniejsza)</li>
+<li>Nadam</li>
+</ul>
+<p>Istnieją również odmiany wspominanych wyżej metod z planami. Owe plany są przepisami na to jak współczynnik szybkości uczenia ma się zmieniać w kolejnych iteracjach.</p>
+<div id="fig-sgd1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="https://cs231n.github.io/assets/nn3/opt2.gif" class="img-fluid figure-img" width="600"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.11: Optymalizacja wag z wykorzystaniem różnych technik</figcaption><p></p>
+</figure>
+</div>
+</section><section id="wsteczna-propagacja-błędu" class="level3" data-number="10.4.3"><h3 data-number="10.4.3" class="anchored" data-anchor-id="wsteczna-propagacja-błędu">
+<span class="header-section-number">10.4.3</span> Wsteczna propagacja błędu</h3>
+<p>Wsteczna propagacja błędu (ang. <em>backpropagation</em>) jest metodą instruującą algorytm jak korygować wagi sieci. Korzysta ona z prawa znanego w matematyce jako <em>chain rule</em></p>
+<p><span id="eq-chain-rule"><span class="math display">\[
+[f(g(x))]'=f'(g(x))\cdot g'(x).
+\tag{10.1}\]</span></span></p>
+<p><em>Backpropagation</em> rozpoczyna się od końcowej wartości straty i działa wstecz od górnych warstw do dolnych, stosując regułę łańcuchową do obliczenia wkładu, jaki każdy parametr miał w wartości straty.</p>
+<div id="fig-backprop1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="https://developer-blogs.nvidia.com/wp-content/uploads/2022/02/DS-Guide-to-Gradient-Descent_Pic5.gif" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.12: Zasada działania wstecznej propagacji błędu</figcaption><p></p>
+</figure>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">

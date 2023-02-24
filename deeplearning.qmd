@@ -1,5 +1,6 @@
 ---
 output: html_document
+code-fold: show
 editor_options: 
   chunk_output_type: console
 ---
@@ -14,7 +15,8 @@ Czy zamiast programistów ręcznie tworzących reguły przetwarzania danych, kom
 ![Dwa schematy myślenia o programowaniu komputerów](images/Zrzut%20ekranu%202023-02-23%20o%2019.01.53.png){#fig-ml1 fig-align="center" width="400"}
 
 To pytanie otwiera drzwi do nowego paradygmatu programowania.
-W klasycznym programowaniu, paradygmacie symbolicznej AI, ludzie wprowadzają reguły (program) i dane, które mają być przetwarzane zgodnie z tymi regułami, a następnie otrzymują odpowiedzi (patrz @fig-ml1). W przypadku uczenia maszynowego, człowiek wprowadza dane oraz odpowiedzi oczekiwane na podstawie tych danych, a następnie otrzymuje reguły.
+W klasycznym programowaniu, paradygmacie symbolicznej AI, ludzie wprowadzają reguły (program) i dane, które mają być przetwarzane zgodnie z tymi regułami, a następnie otrzymują odpowiedzi (patrz @fig-ml1).
+W przypadku uczenia maszynowego, człowiek wprowadza dane oraz odpowiedzi oczekiwane na podstawie tych danych, a następnie otrzymuje reguły.
 Reguły te mogą być następnie zastosowane do nowych danych, aby uzyskać oryginalne odpowiedzi.
 
 System uczenia maszynowego jest raczej uczony niż programowany.
@@ -87,7 +89,8 @@ Wiemy też, że głębokie sieci neuronowe wykonują odwzorowanie danych wejści
 Przyjrzyjmy się teraz, jak to uczenie przebiega, konkretnie.
 
 Specyfikacja tego, co warstwa robi ze swoimi danymi wejściowymi, jest przechowywana w wagach warstwy (zwanych wagami synaptycznymi), które w istocie są zbiorem liczb.
-W sensie technicznym można powiedzieć, że transformacja wykonywana przez warstwę jest sparametryzowana przez jej wagi (patrz @fig-dl3). W tym kontekście uczenie oznacza znalezienie zestawu wartości dla wag wszystkich warstw w sieci, tak aby sieć poprawnie odwzorowywała przykładowe wejścia na przypisane im cele.
+W sensie technicznym można powiedzieć, że transformacja wykonywana przez warstwę jest sparametryzowana przez jej wagi (patrz @fig-dl3).
+W tym kontekście uczenie oznacza znalezienie zestawu wartości dla wag wszystkich warstw w sieci, tak aby sieć poprawnie odwzorowywała przykładowe wejścia na przypisane im cele.
 Rzecz w tym, że głęboka sieć neuronowa może zawierać dziesiątki milionów parametrów.
 Znalezienie poprawnej wartości dla wszystkich z nich może wydawać się trudnym zadaniem, szczególnie biorąc pod uwagę fakt, że zmiana wartości jednego parametru wpłynie na zachowanie wszystkich pozostałych!
 
@@ -100,7 +103,8 @@ Funkcja straty bierze predykcje sieci oraz prawdziwy wynik (to, co chciałeś, a
 
 ![Funkcja straty mierząca jakość predykcji](images/Zrzut%20ekranu%202023-02-23%20o%2019.37.35.png){#fig-dl4 fig-align="center" width="400"}
 
-Podstawową sztuczką w uczeniu głębokim jest wykorzystanie wyniku jako sygnału zwrotnego do skorygowania wartości wag w kierunku, który obniży wynik straty dla bieżącego przykładu (patrz @fig-dl5). Ta korekta jest zadaniem optymalizatora, który implementuje coś, co nazywa się algorytmem wstecznej propagacji (ang. *backpropagation*): główny algorytm w uczeniu głębokim.
+Podstawową sztuczką w uczeniu głębokim jest wykorzystanie wyniku jako sygnału zwrotnego do skorygowania wartości wag w kierunku, który obniży wynik straty dla bieżącego przykładu (patrz @fig-dl5).
+Ta korekta jest zadaniem optymalizatora, który implementuje coś, co nazywa się algorytmem wstecznej propagacji (ang. *backpropagation*): główny algorytm w uczeniu głębokim.
 W dalszej części wyjaśnimy bardziej szczegółowo, jak działa wsteczna propagacja.
 
 ![Korekta wag wykorzystująca wartość funkcji straty](images/Zrzut%20ekranu%202023-02-23%20o%2019.37.48.png){#fig-dl5 fig-align="center" width="400"}
@@ -234,3 +238,494 @@ Najważniejsze właściwości można ogólnie podzielić na trzy kategorie:
 -   Prostota - głębokie uczenie eliminuje potrzebę inżynierii cech, zastępując złożone, wrażliwe i wymagające inżynierii potoki prostymi, kompleksowo wytrenowanymi modelami, które są zazwyczaj budowane przy użyciu tylko pięciu lub sześciu różnych operacji na tensorach.
 -   Skalowalność - głębokie uczenie jest bardzo podatne na równoległe przetwarzanie na układach GPU lub TPU. Dodatkowo, modele głębokiego uczenia są trenowane poprzez iterację na małych partiach danych, co pozwala na ich trenowanie na zbiorach danych o dowolnym rozmiarze. (Jedynym wąskim gardłem jest ilość dostępnej mocy obliczeniowej).
 -   Wszechstronność i możliwość ponownego wykorzystania - w przeciwieństwie do wielu wcześniejszych podejść do uczenia maszynowego, modele głębokiego uczenia mogą być trenowane na dodatkowych danych bez konieczności ponownego rozpoczynania od zera, co czyni je realnymi dla ciągłego uczenia się na bierząco - ważna właściwość dla bardzo dużych modeli produkcyjnych. Co więcej, wytrenowane modele głębokiego uczenia mogą być ponownie wykorzystane, na przykład, możliwe jest wzięcie modelu głębokiego uczenia wytrenowanego do klasyfikacji obrazów i wrzucenie go do potoku przetwarzania wideo.
+
+## Elementy Deep Learning
+
+Zrozumienie głębokiego uczenia wymaga znajomości wielu prostych pojęć matematycznych: tensorów, operacji na tensorach, różniczkowania, spadku gradientu itp.
+Naszym celem w tym rozdziale będzie zbudowanie intuicji na temat tych pojęć bez nadmiernego zagłębiania się w technikę.
+W szczególności, będziemy unikać notacji matematycznej, która może być drażniąca dla osób nieposiadających żadnego wykształcenia matematycznego, a nie jest niezbędna do dobrego wytłumaczenia.
+
+Aby dodać trochę kontekstu dla tensorów i spadku gradientu, rozpoczniemy podrozdział od praktycznego przykładu sieci neuronowej.
+Następnie przejdziemy przez każde nowe pojęcie, które zostało wprowadzone, punkt po punkcie.
+Pamiętaj, że pojęcia te będą niezbędne do zrozumienia praktycznych przykładów, które pojawią się w kolejnych rozdziałach!
+
+Przyjrzyjmy się konkretnemu przykładowi sieci neuronowej, która wykorzystuje pakiet `keras` do nauki klasyfikacji ręcznie pisanych cyfr.
+
+```{r}
+library(keras)
+```
+
+Problemem, który postaramy się rozwiązać jest klasyfikacja obrazów pisma ręcznego w skali szarości (28 pikseli na 28 pikseli) do 10 kategorii (od 0 do 9).
+Użyjemy zestawu danych MNIST, klasycznego zestawu danych w społeczności ML, który istnieje prawie tak długo jak sama dziedzina i jest intensywnie badany.
+Jest to zestaw 60 000 obrazów treningowych oraz 10 000 obrazów testowych, zebranych przez National Institute of Standards and Technology (NIST w MNIST) w latach 80.
+Możesz myśleć o "rozwiązywaniu" MNIST jako o "Hello World" głębokiego uczenia - to jest to, co robisz, aby zweryfikować, że twoje algorytmy działają zgodnie z oczekiwaniami.
+Gdy staniesz się praktykiem uczenia maszynowego, zobaczysz, że MNIST pojawia się raz za razem, w pracach naukowych, wpisach na blogach i tak dalej.
+Kilka próbek MNIST można zobaczyć na @fig-mnist1.
+
+![Kilka przykładów obrazów ze zbioru MNIST](images/Zrzut%20ekranu%202023-02-24%20o%2017.57.00.png){#fig-mnist1 fig-align="center" width="600"}
+
+::: callout-caution
+W uczeniu maszynowym kategoria w problemie klasyfikacyjnym nazywana jest klasą.
+Punkty danych są nazywane próbkami.
+Klasa związana z konkretną próbką nazywana jest etykietą (ang. *label*).
+:::
+
+Zbiór danych MNIST jest wstępnie załadowany do `keras` w postaci list `train` i `test`, z których każda zawiera zestaw obrazów (x) i związanych z nimi etykiet (y):
+
+```{r}
+#| cache: true
+mnist <- dataset_mnist()
+train_images <- mnist$train$x
+train_labels <- mnist$train$y
+test_images <- mnist$test$x
+test_labels <- mnist$test$y
+```
+
+`train_images` i `train_labels` tworzą zbiór treningowy, czyli dane, na podstawie których model będzie się uczył.
+Model będzie następnie testowany na zbiorze testowym, `test_images` i `test_labels` .
+Obrazy są zakodowane jako tablice 3D, a etykiety to tablica 1D z cyframi od 0 do 9.
+Pomiędzy obrazami i etykietami istnieje korespondencja jeden do jednego.
+
+```{r}
+str(train_images)
+str(train_labels)
+str(test_images)
+str(test_labels)
+```
+
+Przepływ pracy (ang. *workflow*) będzie następujący: najpierw podamy sieci neuronowej dane treningowe, `train_images` i `train_labels`.
+Następnie sieć nauczy się kojarzyć obrazy i etykiety.
+Na koniec poprosimy sieć o stworzenie przewidywań dla `test_images` i sprawdzimy, czy te przewidywania pasują do etykiet z `test_labels`.
+
+```{r}
+#| cache: true
+network <- keras_model_sequential() %>%
+  layer_dense(units = 512, activation = "relu", input_shape = c(28 * 28)) %>%
+  layer_dense(units = 10, activation = "softmax")
+```
+
+Podstawowym elementem konstrukcyjnym sieci neuronowych jest warstwa, moduł przetwarzania danych, o którym można myśleć jak o filtrze dla danych.
+Niektóre dane przychodzą i wychodzą w bardziej użytecznej formie.
+W szczególności, warstwy wyodrębniają reprezentacje z danych, które są do nich wprowadzane - miejmy nadzieję, że reprezentacje, które są bardziej znaczące dla danego problemu.
+Większość głębokiego uczenia polega na łączeniu prostych warstw, które implementują formę stopniowej destylacji danych.
+Model głębokiego uczenia jest jak sito do przetwarzania danych, złożone z szeregu coraz bardziej wyrafinowanych filtrów danych - warstw.
+
+Nasza sieć składa się z dwóch warstw, które są gęsto połączonymi (zwanymi też w pełni połączonymi - ang. *fully connected*) warstwami neuronowymi.
+Druga (i ostatnia) warstwa jest 10-kierunkową warstwą softmax, co oznacza, że zwróci tablicę 10 wyników prawdopodobieństwa (sumujących się do 1).
+Każdy wynik będzie oznaczał prawdopodobieństwo, że aktualny obraz cyfry należy do jednej z naszych 10 klas cyfr.
+
+Aby sieć była gotowa do treningu, musimy wybrać jeszcze trzy rzeczy, w ramach kroku kompilacji:
+
+-   Funkcję straty - jak sieć będzie w stanie zmierzyć, jak dobrą pracę wykonuje na danych treningowych, a tym samym czy będzie w stanie kierować się we właściwym kierunku.
+-   Optymalizator - mechanizm, dzięki któremu sieć będzie się aktualizować w oparciu o dane, które widzi i swoją funkcję straty.
+-   Metryki, które należy monitorować podczas treningu i testów - tutaj zajmiemy się tylko dokładnością (frakcją obrazów, które zostały poprawnie sklasyfikowane - ang. *accuracy*).
+
+Dokładne przeznaczenie funkcji straty i optymalizatora zostanie wyjaśnione w kolejnych rozdziałach.
+
+```{r}
+#| cache: true
+network %>% compile(
+  optimizer = "rmsprop",
+  loss = "categorical_crossentropy",
+  metrics = c("accuracy")
+)
+```
+
+Zauważ, że funkcja `compile()` modyfikuje sieć na bieżąco (zamiast zwracać nowy obiekt sieci, co jest bardziej typowe dla R).
+Powód tego opiszemy, gdy powrócimy do przykładu w dalszej części rozdziału.
+
+Przed treningiem wstępnie przetworzymy dane, zmieniając ich kształt na taki, jakiego oczekuje sieć, i skalując je tak, by wszystkie wartości mieściły się w przedziale \[0, 1\].
+Poprzednio nasze obrazy treningowe, na przykład, były przechowywane w tablicy o kształcie `(60000, 28, 28)` typu `integer` z wartościami w przedziale \[0, 255\].
+Przekształcamy go w podwójną tablicę kształtu `(60000, 28 * 28)` z wartościami w przedziale \[0,1\].
+
+```{r}
+#| cache: true
+
+train_images <- array_reshape(train_images, c(60000, 28 * 28))
+train_images <- train_images / 255
+test_images <- array_reshape(test_images, c(10000, 28 * 28))
+test_images <- test_images / 255
+```
+
+Zauważ, że używamy funkcji `array_reshape()` zamiast funkcji `dim()` do zmiany kształtu tablicy.
+Powód tego omówimy później, kiedy będziemy mówić o przekształcaniu tensorów.
+Musimy również zakodować etykiety w sposób kategoryczny.
+
+```{r}
+#| cache: true
+train_labels <- to_categorical(train_labels)
+test_labels <- to_categorical(test_labels)
+```
+
+Teraz jesteśmy gotowi do trenowania sieci, co w `keras` odbywa się poprzez wywołanie metody `fit` sieci - dopasowujemy model do danych treningowych:
+
+```{r}
+#| cache: true
+network %>% fit(train_images, train_labels, epochs = 5, batch_size = 128)
+```
+
+Podczas treningu wyświetlane są dwie wielkości: strata sieci na danych treningowych oraz dokładność sieci na danych treningowych.
+Szybko osiągamy dokładność 0,989 (98,9%) na danych treningowych.
+Teraz sprawdźmy, czy model dobrze radzi sobie również na zbiorze testowym:
+
+```{r}
+#| cache: true
+metrics <- network %>% evaluate(test_images, test_labels)
+metrics
+```
+
+Dokładność zestawu testowego okazuje się wynosić 97,8% - to sporo mniej niż dokładność zestawu treningowego.
+Ta różnica między dokładnością treningu a dokładnością testu jest przykładem nadmiernego dopasowania (fakt, że modele uczenia maszynowego mają tendencję do osiągania gorszych wyników na nowych danych niż na danych treningowych).
+Wygenerujmy przewidywania dla pierwszych 10 próbek zbioru testowego:
+
+```{r}
+#| cache: true
+network %>% predict(test_images[1:10,]) |> k_argmax()
+```
+
+Na tym kończymy nasz pierwszy przykład - właśnie zobaczyłeś, jak można zbudować i wytrenować sieć neuronową do klasyfikacji pisma ręcznego w mniej niż 20 liniach kodu R.
+W następnym rozdziale omówimy szczegółowo każdy element, który użyliśmy i wyjaśnimy, co on robi.
+Dowiesz się o tensorach, obiektach przechowujących dane w sieci; o operacjach na tensorach, z których składają się warstwy; oraz o spadku gradientu, który pozwala sieci uczyć się na przykładach treningowych.
+
+### Operacje na danych
+
+W poprzednim przykładzie zaczynaliśmy od danych przechowywanych w wielowymiarowych tablicach, zwanych również tensorami.
+Wszystkie obecne systemy uczenia maszynowego używają tensorów jako podstawowej struktury danych.
+Tensory są fundamentalne dla tej dziedziny - tak fundamentalne, że Google's TensorFlow został nazwany na ich cześć.
+Czym więc jest tensor?
+
+Tensory są uogólnieniem wektorów i macierzy na dowolną liczbę wymiarów (zauważ, że w kontekście tensorów "wymiar" jest często nazywany "osią").
+W R wektory są używane do tworzenia i manipulowania tensorami 1D, a matryce są używane do tensorów 2D.
+Dla wymiarów wyższego rzędu używane są obiekty tablicowe (które obsługują dowolną liczbę wymiarów).
+
+#### Skalary
+
+Tensor, który zawiera tylko jedną liczbę nazywany jest skalarem (lub tensorem skalarnym, lub tensorem 0-wymiarowym, lub tensorem 0D).
+Chociaż R nie ma typu danych do reprezentowania skalarów (wszystkie obiekty numeryczne są wektorami, macierzami lub tablicami), wektor R, który ma zawsze długość 1, jest koncepcyjnie podobny do skalara.
+
+#### Wektory
+
+Jednowymiarowa tablica liczb nazywana jest wektorem lub tensorem 1D.
+Mówi się, że tensor 1D ma dokładnie jedną oś.
+Możemy przekonwertować wektor R na obiekt tablicowy (`array`), aby sprawdzić jego wymiary:
+
+```{r}
+x <- c(12, 3, 6, 14, 10)
+str(x)
+dim(as.array(x))
+```
+
+Wektor ten ma pięć wpisów i dlatego nazywany jest wektorem 5-wymiarowym.
+Nie należy mylić wektora 5D z tensorem 5D!
+Wektor 5D ma tylko jedną oś i ma pięć wymiarów wzdłuż swojej osi, podczas gdy tensor 5D ma pięć osi (i może mieć dowolną liczbę wymiarów wzdłuż każdej osi).
+Wymiarowość może oznaczać albo liczbę wpisów wzdłuż konkretnej osi (jak w przypadku naszego wektora 5D), albo liczbę osi w tensorze (jak tensor 5D), co może być czasem mylące.
+W tym drugim przypadku technicznie poprawniej jest mówić o tensorze rzędu 5 (ranga tensora to liczba osi), ale niejednoznaczny zapis tensor 5D jest powszechny niezależnie od tego.
+
+#### Macierze
+
+Dwuwymiarowa tablica liczb to macierz, czyli tensor 2D.
+Macierz ma dwie osie (często nazywane wierszami i kolumnami).
+Możesz wizualnie zinterpretować macierz jako prostokątną siatkę liczb:
+
+```{r}
+x <- matrix(rep(0, 3*5), nrow = 3, ncol = 5)
+x
+dim(x)
+```
+
+#### Tensory
+
+Jeśli spakujemy takie macierze do nowej tablicy, otrzymamy tensor 3D, który możemy wizualnie zinterpretować jako sześcian liczb:
+
+```{r}
+x <- array(rep(0, 2*3*2), dim = c(2,3,2))
+str(x)
+dim(x)
+```
+
+Pakując tensory 3D w tablicy, możesz stworzyć tensor 4D i tak dalej.
+W głębokim uczeniu się, generalnie będziesz manipulować tensorami, które są 0D do 4D, a tensory 5D pojawią się, jeśli będziesz przetwarzać dane wideo.
+
+#### Kluczowe własności
+
+Tensor jest określony przez trzy kluczowe atrybuty:
+
+-   Liczba osi - np. tensor 3D ma trzy osie, a macierz dwie osie.
+-   Kształt - to wektor liczb całkowitych, który opisuje, ile wymiarów ma tensor wzdłuż każdej osi. Na przykład poprzedni przykład macierzy ma kształt (3, 5), a przykład tensora 3D ma kształt (3, 3, 5). Wektor ma kształt z pojedynczym elementem, o wymiarze 5. Możesz sprawdzić wymiary dowolnej tablicy za pomocą funkcji `dim()`.
+-   Typ danych - typ danych zawartych w tensorze; na przykład, typem tensora może być liczba całkowita lub podwójna[^deeplearning-3]. W rzadkich przypadkach możesz zobaczyć tensor znakowy[^deeplearning-4]. Ponieważ jednak tensory żyją we wstępnie przydzielonych segmentach pamięci, a łańcuchy znaków, będąc zmiennej długości, wykluczyłyby użycie tej implementacji, są one rzadziej używane.
+
+[^deeplearning-3]: float - czyli liczba rzeczywista
+
+[^deeplearning-4]: typu `character`
+
+Aby to skonkretyzować, spójrzmy na dane, które przetwarzaliśmy w przykładzie MNIST.
+Najpierw ładujemy zbiór danych MNIST:
+
+```{r}
+#| cache: true
+train_images <- mnist$train$x
+train_labels <- mnist$train$y
+test_images <- mnist$test$x
+test_labels <- mnist$test$y
+length(dim(train_images)) # trzy osie
+dim(train_images) # kształt
+typeof(train_images) # typ danych
+```
+
+Jak więc widać jest to tensor 3D liczb całkowitych.
+Dokładniej, jest to tablica 60000 macierzy 28 × 28 liczb całkowitych.
+Każda taka macierz jest obrazem w skali szarości, o współczynnikach od 0 do 255.
+Wykreślmy piątą cyfrę w tym tensorze 3D:
+
+```{r}
+digit <- train_images[5,,]
+plot(as.raster(digit, max = 255))
+```
+
+#### Operacje na tensorach
+
+W poprzednim przykładzie wybraliśmy konkretną cyfrę wzdłuż pierwszej osi za pomocą składni `train_images[i,,]`.
+Wybieranie konkretnych elementów w tensorze nazywa się *tensor slicing*.
+Przyjrzyjmy się operacjom *tensor slicing*, które można wykonać na tablicach R.
+Poniżej wybrano cyfry od #10 do #99 i umieszczono je w tablicy o kształcie `(90, 28, 28)`:
+
+```{r}
+my_slice <- train_images[10:99,,]
+dim(my_slice)
+```
+
+Generalnie, możesz wybrać pomiędzy dwoma dowolnymi indeksami wzdłuż każdej osi tensora.
+Na przykład, aby wybrać 14 × 14 pikseli w prawym dolnym rogu wszystkich obrazów, użyj:
+
+```{r}
+my_slice <- train_images[, 15:28, 15:28]
+```
+
+Generalnie, pierwszą osią we wszystkich tensorach danych, z którymi zetkniesz się w głębokim uczeniu, będzie oś próbek (czasami nazywana wymiarem próbek).
+W przykładzie MNIST, próbki to obrazy cyfr.
+Ponadto, modele głębokiego uczenia nie przetwarzają całego zbioru danych na raz, ale raczej dzielą dane na małe partie (ang. *batch*).
+Konkretnie, oto jedna partia naszych cyfr MNIST, o rozmiarze partii 128:
+
+```{r}
+batch <- train_images[1:128,,]
+```
+
+Gdy rozważamy tensor partii, pierwsza oś nazywana jest osią partii lub wymiarem partii.
+Jest to termin, który często spotkasz podczas korzystania z `keras` i innych bibliotek uczenia głębokiego.
+
+Uściślijmy tensory danych za pomocą kilku przykładów podobnych do tego, co napotkasz później.
+Dane, którymi będziesz manipulował, prawie zawsze będą należały do jednej z następujących kategorii:
+
+-   Dane wektorowe-2D tensory kształtu (próbki, cechy);
+-   Dane czasowe lub dane sekwencyjne-3D tensory kształtu (próbki, kroki czasowe, cechy);
+-   Obrazy-4D tensory kształtu (próbki, wysokość, szerokość, kanały) lub (próbki, kanały, wysokość, szerokość);
+-   Wideo-5D tensory kształtu (próbki, klatki, wysokość, szerokość, kanały) lub (próbki, klatki, kanały, wysokość, szerokość).
+
+Dane wektorowe są najczęściej spotykanym przykładem formatu danych.
+W takim zbiorze danych każdy pojedynczy punkt danych może być zakodowany jako wektor, a więc partia danych będzie zakodowana jako tensor 2D (czyli tablica wektorów), gdzie pierwsza oś jest osią próbek, a druga osią cech.
+Przyjrzyjmy się dwóm przykładom:
+
+-   Aktuarialny zbiór danych osób, gdzie rozpatrujemy wiek, kod i dochód każdej osoby. Każda osoba może być scharakteryzowana jako wektor 3 wartości, a zatem cały zbiór danych 100000 osób może być przechowywany w tensorze 2D o kształcie `(100000, 3)`.
+-   Zbiór dokumentów tekstowych, gdzie każdy dokument reprezentujemy poprzez zliczanie ile razy pojawia się w nim każde słowo (ze słownika 20000 słów). Każdy dokument można zakodować jako wektor 20000 wartości (po jednym zliczeniu na słowo w słowniku), a zatem cały zbiór 500 dokumentów można zapisać w tensorze kształtu `(500, 20000)`.
+
+Gdy w danych ważny się czas (lub kolejność sekwencji), sensowne jest przechowywanie ich w tensorze 3D z wyraźną osią czasu.
+Każda próbka może być zakodowana jako ciąg wektorów (tensor 2D), a zatem partia danych będzie zakodowana jako tensor 3D (patrz @fig-tensor1).
+
+![Schemat zapisu danych sekwencyjnych](images/Zrzut%20ekranu%202023-02-24%20o%2018.59.47.png){#fig-tensor1 fig-align="center" width="400"}
+
+Oś czasu jest zawsze drugą osią, zgodnie z konwencją.
+Przyjrzyjmy się kilku przykładom:
+
+-   Zbiór danych o cenach akcji. Co minutę zapisujemy aktualną cenę akcji, najwyższą cenę w danej minucie oraz najniższą cenę w danej minucie. Tak więc każda minuta jest zakodowana jako wektor 3D, cały dzień handlu jest zakodowany jako tensor 2D o kształcie `(390, 3)` (jest 390 minut w dniu handlu), a 250 dni danych może być przechowywanych w tensorze 3D o kształcie `(250, 390, 3)`. W tym przypadku każda próbka to jeden dzień danych.
+-   Zbiór danych tweetów, gdzie każdy tweet kodujemy jako ciąg 140 znaków z alfabetu 128 unikalnych znaków. W tym ustawieniu każdy znak może być zakodowany jako wektor binarny o rozmiarze 128 (wektor wszystkich zer, z wyjątkiem wpisu 1 w indeksie odpowiadającym znakowi). Następnie każdy tweet może być zakodowany jako tensor 2D o kształcie `(140, 128)`, a zbiór danych 1 miliona tweetów może być przechowywany w tensorze o kształcie `(1000000, 140, 128)`.
+
+Obrazy mają zazwyczaj trzy wymiary: wysokość, szerokość i głębię koloru.
+Choć obrazy w skali szarości (jak nasze cyfry MNIST) mają tylko jeden kanał koloru i mogłyby być przechowywane w tensorach 2D, to konwencjonalnie tensory obrazów są zawsze trójwymiarowe, z jednowymiarowym kanałem koloru dla obrazów w skali szarości.
+Partia 128 obrazów w skali szarości o rozmiarach 256 × 256 mogłaby więc być przechowywana w tensorze o kształcie `(128, 256, 256, 1)`, a partia 128 obrazów kolorowych - w tensorze o kształcie `(128, 256, 256, 3)` (patrz @fig-tensor2).
+
+![Zapis kolorowego obrazu](images/Zrzut%20ekranu%202023-02-24%20o%2019.04.18.png){#fig-tensor2 fig-align="center" width="400"}
+
+Istnieją dwie konwencje dla kształtów tensorów obrazów: konwencja *channels-last* (używana przez TensorFlow) i konwencja *channels-firs*t (używana przez Theano).
+Framework uczenia maszynowego TensorFlow, od Google, umieszcza oś głębokości koloru na końcu: `(sample, height, width, color_depth)`.
+Tymczasem Theano umieszcza oś głębi koloru zaraz po osi wsadowej: `(sample, color_depth, height, width)`.
+Keras zapewniają wsparcie dla obu formatów.
+
+Dane wideo są jednym z niewielu typów danych ze świata rzeczywistego, dla których będziesz potrzebował tensorów 5D.
+Wideo może być rozumiane jako sekwencja klatek, z których każda jest obrazem kolorowym.
+Ponieważ każda klatka może być przechowywana w tensorze 3D `(wysokość, szerokość, głębokość koloru)`, sekwencja klatek może być przechowywana w tensorze 4D `(klatki, wysokość, szerokość, głębokość koloru)`, a zatem partia różnych filmów może być przechowywana w tensorze 5D o kształcie `(próbki, klatki, wysokość, szerokość, głębokość koloru)`.
+
+Na przykład 60-sekundowy klip wideo YouTube o wymiarach 256 × 144, próbkowany z prędkością 4 klatek na sekundę, miałby 240 klatek.
+Partia czterech takich klipów wideo byłaby przechowywana w tensorze o kształcie `(4, 240, 256, 144, 3)`.
+To w sumie 106168320 wartości!
+Jeśli typ danych tensora to *double*, to każda wartość jest przechowywana w 64 bitach, więc tensor reprezentowałby 810 MB.
+Sporo `r emo::ji("fear")`!
+Filmy, które spotykasz w prawdziwym życiu są znacznie lżejsze, ponieważ nie są przechowywane w `float32` i zazwyczaj są silnie skompresowane (jak w formacie MPEG).
+
+Podobnie jak każdy program komputerowy może być ostatecznie zredukowany do małego zestawu operacji binarnych na wejściach binarnych (AND, OR, NOR, i tak dalej), wszystkie transformacje uczone przez głębokie sieci neuronowe mogą być zredukowane do garści operacji tensorowych stosowanych do tensorów danych liczbowych.
+Na przykład, możliwe jest dodawanie tensorów, mnożenie tensorów i tak dalej.
+W naszym początkowym przykładzie budowaliśmy naszą sieć poprzez układanie gęstych warstw jedna na drugiej.
+Instancja warstwy wygląda tak:
+
+```{r}
+#| eval: false
+layer_dense(units = 512, activation = "relu")
+```
+
+Warstwa ta może być interpretowana jako funkcja, która przyjmuje na wejście tensor 2D i zwraca inny tensor 2D - nową reprezentację tensora wejściowego.
+Można ją też przedstawić inaczej (gdzie `W` jest tensorem 2D, a `b` jest wektorem):
+
+```{r}
+#| eval: false
+
+# nie wykonuj
+output = relu(dot(W, input) + b)
+```
+
+Mamy tu trzy operacje na tensorach: iloczyn (`dot`) między tensorem wejściowym a tensorem `W`, dodawanie (`+`) między wynikowym tensorem 2D wektorem `b` i wreszcie operację `relu`, gdzie `relu(x)` to `max(x, 0)`.
+
+Operacja `relu` i dodawanie są operacjami typu *element-wise*: operacjami, które są stosowane niezależnie do każdego wpisu w rozważanych tensorach.
+Oznacza to, że operacje te są bardzo podatne na wektoryzacje.
+W praktyce, gdy mamy do czynienia z tablicami R, operacje te są dostępne jako dobrze zoptymalizowane wbudowane funkcje R, które same delegują ciężką pracę do BLAS (Basic Linear Algebra Subprograms).
+BLAS to niskopoziomowe, wysoce wektoryzowalne, wydajne procedury manipulacji tensorami, zwykle zaimplementowane w Fortranie lub C.
+
+Operacje na tensorach można wykonywać również wtedy, gdy są one innych wymiarów.
+Przykładowo:
+
+```{r}
+# x is a tensor of random values with shape (64, 3, 32, 10)
+x <- array(round(runif(1000, 0, 9)), dim = c(64, 3, 32, 10))
+str(x)
+
+# y is a tensor of 5s of shape (32, 10)
+y <- array(5, dim = c(32, 10))
+str(y)
+
+# The output z has shape (64, 3, 32, 10) like x
+z <- sweep(x, c(3, 4), y, pmax)
+str(z)
+```
+
+Operacja `dot`, zwana również iloczynem tensorowym jest najczęściej spotykaną, najbardziej użyteczną operacją na tensorach.
+W przeciwieństwie do operacji *element-wise*, łączy ona wpisy w tensorach wejściowych.
+Iloczyny tensorowe wykorzystują operator `%*%`.
+Zauważ, że gdy tylko jeden z dwóch tensorów ma więcej niż jeden wymiar, `%*%` nie jest symetryczny, czyli że `x %*% y` nie jest taki sam jak `y %*% x`.
+
+![Iloczyn tensorów](images/Zrzut%20ekranu%202023-02-24%20o%2019.35.48.png){#fig-tensor3 fig-align="center" width="400"}
+
+Trzecim bardzo ważnym rodzajem operacji na tensorach jest przekształcanie tensorów.
+Chociaż nie było ono używane w gęstych warstwach w naszym pierwszym przykładzie sieci neuronowej, używaliśmy go, gdy wstępnie przetwarzaliśmy dane o cyfrach przed wprowadzeniem ich do naszej sieci:
+
+```{r}
+train_images <- mnist$train$x
+str(train_images)
+train_images <- array_reshape(train_images, c(60000, 28 * 28))
+str(train_images)
+```
+
+Przekształcenie tensora oznacza zmianę rozmieszczenia jego wierszy i kolumn tak, by pasowały do docelowego kształtu.
+Oczywiście, przekształcony tensor ma taką samą całkowitą liczbę współczynników jak tensor początkowy.
+
+```{r}
+x <- matrix(c(0, 1,
+                2, 3,
+                4, 5),
+             nrow = 3, ncol = 2, byrow = TRUE)
+x
+x <- array_reshape(x, dim = c(6, 1)) 
+x
+
+x <- array_reshape(x, dim = c(2, 3))
+x
+```
+
+Szczególnym przypadkiem przekształcenia, który jest powszechnie spotykany, jest transpozycja.
+
+### Optymalizacja gradientowa
+
+Jak widziałeś wyżej, każda warstwa neuronowa z naszego pierwszego przykładu sieci przekształca swoje dane wejściowe w następujący sposób:
+
+```{r}
+#| eval: false
+
+output = relu(dot(input, W)+b)
+```
+
+W tym wyrażeniu `W` i `b` są tensorami będącymi atrybutami warstwy.
+Nazywamy je wagami lub parametrami trenowanymi warstwy (odpowiednio atrybuty kernel i bias).
+Wagi te zawierają informacje wyuczone przez sieć w wyniku ekspozycji na dane treningowe.
+
+Początkowo te macierze wag są wypełnione małymi losowymi wartościami (krok zwany inicjalizacją losową).
+Oczywiście nie ma powodu, by oczekiwać, że `relu(dot(W, input) + b)`, gdy `W` i `b` są losowe, da jakąkolwiek użyteczną reprezentację.
+Następnym krokiem jest stopniowe dostosowanie tych wag, w oparciu o sygnał zwrotny.
+To stopniowe dopasowywanie, zwane również treningiem, jest w zasadzie nauką, o którą chodzi w uczeniu modeli.
+
+Dzieje się to w ramach tak zwanej pętli treningowej, która schematycznie wygląda następująco.
+Powtarzaj te kroki w pętli, tak długo jak to konieczne:
+
+1.  Wylosuj partię próbek treningowych `x` i odpowiadające im cele `y`.
+2.  Uruchom sieć na `x` (nazywane przejściem w przód), aby uzyskać predykcje `y_pred`.
+3.  Oblicz stratę sieci na partii, czyli miarę niedopasowania między `y_pred` a `y`.
+4.  Zaktualizuj wszystkie wagi sieci w taki sposób, aby nieznacznie zmniejszyć stratę na tej partii.
+
+W końcu otrzymamy sieć, która ma bardzo niską stratę na swoich danych treningowych: to znaczy, niskie rozbieżności między przewidywaniami `y_pred` i oczekiwanymi celami `y`.
+Ze wszystkich powyższych kroków pierwsze trzy wydają się oczywiste, natomiast 4 jest nieco trudniejszy - aktualizacja wag sieci.
+Biorąc pod uwagę indywidualny współczynnik wagowy w sieci, jak można obliczyć, czy współczynnik ten powinien być zwiększony czy zmniejszony i o ile?
+
+Ponieważ wszystkie operacje używane w sieci są różniczkowalne, to można obliczyć gradient funkcji straty względem współczynników sieci.
+Następnie możesz skorygować współczynniki wagowe w kierunku przeciwnym do gradientu, zmniejszając w ten sposób stratę.
+
+Biorąc pod uwagę funkcję różniczkowalną, teoretycznie możliwe jest znalezienie jej minimum analitycznie: wiadomo, że minimum funkcji to punkt, w którym pochodna jest równa 0, więc wszystko, co musimy zrobić, to znaleźć wszystkie punkty, w których pochodna zmierza do 0 i sprawdzić, dla którego z tych punktów funkcja ma najmniejszą wartość.
+
+W przypadku sieci neuronowej oznacza to analityczne znalezienie kombinacji wartości wag, która daje najmniejszą możliwą funkcję straty.
+Można to zrobić rozwiązując równanie `gradient(f)(W) = 0` dla `W`.
+Jest to równanie wielomianowe o $N$ zmiennych, gdzie $N$ jest liczbą współczynników w sieci.
+Chociaż możliwe byłoby rozwiązanie takiego równania dla dla $N = 2$ lub $N = 3$, to zrobienie tego jest niepraktyczne dla rzeczywistych sieci neuronowych, gdzie liczba parametrów nigdy nie jest mniejsza niż kilka tysięcy, a często może wynosić kilkadziesiąt milionów.
+
+Zamiast tego możesz użyć czteroetapowego algorytmu przedstawionego na początku tej sekcji: modyfikujesz parametry po trochu w oparciu o bieżącą wartość straty na losowej partii danych.
+Ponieważ mamy do czynienia z funkcją różniczkowalną, możemy obliczyć jej gradient, co daje efektywny sposób implementacji kroku 4.
+Jeśli zaktualizujesz wagi w kierunku przeciwnym do gradientu, strata będzie za każdym razem nieco mniejsza:
+
+1.  Wylosuj partię próbek treningowych `x` i odpowiadające im cele `y`.
+2.  Uruchom sieć na `x`, aby uzyskać predykcje `y_pred`.
+3.  Oblicz stratę sieci na partii, czyli miarę niedopasowania między `y_pred` a `y.`
+4.  Oblicz gradient straty względem parametrów sieci (przejście wsteczne).
+5.  Skoryguj (nieznacznie) parametry sieci w kierunku przeciwnym do gradientu - na przykład `W =W - (krok * gradient)` - tym samym zmniejszając nieco stratę na partii.
+
+To, co właśnie opisaliśmy, nazywa się metodą *minibatch stochastic gradient descent* (minibatch SGD).
+Termin stochastyczny odnosi się do faktu, że każda partia danych jest losowana.
+
+Jak widać, intuicyjnie ważne jest, aby wybrać rozsądną wartość współczynnika kroku.
+Jeśli jest on zbyt mały, zejście w dół krzywej zajmie wiele iteracji i może utknąć w lokalnym minimum.
+Jeśli krok jest zbyt duży, twoje aktualizacje mogą skończyć się zabraniem cię do całkowicie losowych miejsc na krzywej.
+
+Zauważ, że wariant algorytmu mini-batch SGD polegający na losowaniu pojedynczej próbki i `y` w każdej iteracji, zamiast losowania partii danych.
+Wówczas byłby to oryginalny algorytm SGD, który jest mniej wydajny.
+
+Oprócz wspomnianej metody mini-batch SGD istnieje wiele innych, dużo bardziej skutecznych metod optymalizacji parametrów wagowych modelu.
+Wśród nich należy wymienić:
+
+-   RMSprop
+-   Adagrad
+-   Adamax
+-   mini-batch SGD with Momentum
+-   mini-batch SGD with Nesterov Momentum
+-   Adam (chyba najpopularniejsza)
+-   Nadam
+
+Istnieją również odmiany wspominanych wyżej metod z planami.
+Owe plany są przepisami na to jak współczynnik szybkości uczenia ma się zmieniać w kolejnych iteracjach.
+
+![Optymalizacja wag z wykorzystaniem różnych technik](https://cs231n.github.io/assets/nn3/opt2.gif){#fig-sgd1 fig-align="center" width="600"}
+
+### Wsteczna propagacja błędu
+
+Wsteczna propagacja błędu (ang. *backpropagation*) jest metodą instruującą algorytm jak korygować wagi sieci.
+Korzysta ona z prawa znanego w matematyce jako *chain rule*
+
+$$
+[f(g(x))]'=f'(g(x))\cdot g'(x).
+$$ {#eq-chain-rule}
+
+*Backpropagation* rozpoczyna się od końcowej wartości straty i działa wstecz od górnych warstw do dolnych, stosując regułę łańcuchową do obliczenia wkładu, jaki każdy parametr miał w wartości straty.
+
+![Zasada działania wstecznej propagacji błędu](https://developer-blogs.nvidia.com/wp-content/uploads/2022/02/DS-Guide-to-Gradient-Descent_Pic5.gif){#fig-backprop1 fig-align="center" width="400"}
