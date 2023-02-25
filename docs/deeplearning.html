@@ -263,6 +263,7 @@ div.csl-indent {
 <li><a href="#operacje-na-danych" id="toc-operacje-na-danych" class="nav-link" data-scroll-target="#operacje-na-danych"><span class="toc-section-number">10.4.1</span>  Operacje na danych</a></li>
   <li><a href="#optymalizacja-gradientowa" id="toc-optymalizacja-gradientowa" class="nav-link" data-scroll-target="#optymalizacja-gradientowa"><span class="toc-section-number">10.4.2</span>  Optymalizacja gradientowa</a></li>
   <li><a href="#wsteczna-propagacja-b%C5%82%C4%99du" id="toc-wsteczna-propagacja-błędu" class="nav-link" data-scroll-target="#wsteczna-propagacja-b%C5%82%C4%99du"><span class="toc-section-number">10.4.3</span>  Wsteczna propagacja błędu</a></li>
+  <li><a href="#funkcje-straty" id="toc-funkcje-straty" class="nav-link" data-scroll-target="#funkcje-straty"><span class="toc-section-number">10.4.4</span>  Funkcje straty</a></li>
   </ul>
 </li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
@@ -292,7 +293,11 @@ div.csl-indent {
 </div>
 <p>To pytanie otwiera drzwi do nowego paradygmatu programowania. W klasycznym programowaniu, paradygmacie symbolicznej AI, ludzie wprowadzają reguły (program) i dane, które mają być przetwarzane zgodnie z tymi regułami, a następnie otrzymują odpowiedzi (patrz <a href="#fig-ml1">Rysunek&nbsp;<span>10.1</span></a>). W przypadku uczenia maszynowego, człowiek wprowadza dane oraz odpowiedzi oczekiwane na podstawie tych danych, a następnie otrzymuje reguły. Reguły te mogą być następnie zastosowane do nowych danych, aby uzyskać oryginalne odpowiedzi.</p>
 <p>System uczenia maszynowego jest raczej uczony niż programowany. Przedstawia się mu wiele przykładów związanych z zadaniem, a on znajduje w nich strukturę statystyczną, która w końcu pozwala mu wymyślić reguły automatyzacji zadania. Na przykład, jeśli chciałbyś zautomatyzować zadanie oznaczania zdjęć z wakacji, mógłbyś przedstawić systemowi uczenia maszynowego wiele przykładów zdjęć już oznaczonych przez ludzi, a system nauczyłby się statystycznych reguł kojarzenia konkretnych zdjęć z konkretnymi tagami.</p>
-<p>Chociaż uczenie maszynowe zaczęło się rozwijać dopiero w latach 90-tych, szybko stało się najpopularniejszą i odnoszącą największe sukcesy dziedziną AI, a trend ten jest napędzany przez dostępność szybszego sprzętu i większych zbiorów danych. Uczenie maszynowe jest ściśle związane ze statystyką matematyczną, ale różni się od niej na kilka ważnych sposobów. W przeciwieństwie do statystyki, uczenie maszynowe ma tendencję do zajmowania się dużymi, złożonymi zbiorami danych (takimi jak zbiór milionów obrazów, z których każdy składa się z dziesiątek tysięcy pikseli), dla których klasyczna analiza statystyczna byłaby niepraktyczna. W rezultacie, uczenie maszynowe, a zwłaszcza głębokie uczenie, wykazuje stosunkowo mało teorii matematycznej - być może zbyt mało - i jest zorientowane na inżynierię. Jest to praktyczna dyscyplina, w której pomysły są sprawdzane empirycznie znacznie częściej niż teoretycznie.</p>
+
+<div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://pbs.twimg.com/media/E6378eBUUAMmLfK?format=jpg&amp;name=medium.png" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div></div><p>Chociaż uczenie maszynowe zaczęło się rozwijać dopiero w latach 90-tych, szybko stało się najpopularniejszą i odnoszącą największe sukcesy dziedziną AI, a trend ten jest napędzany przez dostępność szybszego sprzętu i większych zbiorów danych. Uczenie maszynowe jest ściśle związane ze statystyką matematyczną, ale różni się od niej na kilka ważnych sposobów. W przeciwieństwie do statystyki, uczenie maszynowe ma tendencję do zajmowania się dużymi, złożonymi zbiorami danych (takimi jak zbiór milionów obrazów, z których każdy składa się z dziesiątek tysięcy pikseli), dla których klasyczna analiza statystyczna byłaby niepraktyczna. W rezultacie, uczenie maszynowe, a zwłaszcza głębokie uczenie, wykazuje stosunkowo mało teorii matematycznej - być może zbyt mało - i jest zorientowane na inżynierię. Jest to praktyczna dyscyplina, w której pomysły są sprawdzane empirycznie znacznie częściej niż teoretycznie.</p>
 <section id="uczenie-się-reprezentacji-na-podstawie-danych" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="uczenie-się-reprezentacji-na-podstawie-danych">
 <span class="header-section-number">10.1</span> Uczenie się reprezentacji na podstawie danych</h2>
 <p>Na to aby zdefiniować głębokie uczenie i zrozumieć różnicę między głębokim uczeniem a innymi podejściami do uczenia maszynowego, najpierw musimy mieć pewne pojęcie o tym, co robią algorytmy uczenia maszynowego. Właśnie stwierdziliśmy, że uczenie maszynowe odkrywa reguły wykonywania zadania przetwarzania danych, biorąc pod uwagę przykłady tego, co jest oczekiwane na wyjściu. Zatem, aby przeprowadzić uczenie maszynowe, potrzebujemy trzech rzeczy:</p>
@@ -345,7 +350,11 @@ div.csl-indent {
 <span class="header-section-number">10.3</span> Krótki rys historyczny DL</h2>
 <p>Około 2010 roku, mimo że sieci neuronowe były niemal całkowicie odrzucane przez ogół społeczności naukowej, kilka osób wciąż pracujących nad sieciami neuronowymi zaczęło dokonywać ważnych przełomów: grupy Geoffreya Hintona z Uniwersytetu w Toronto, Yoshua Bengio z Uniwersytetu w Montrealu, Yann LeCun z Uniwersytetu Nowojorskiego oraz IDSIA w Szwajcarii.</p>
 <div class="page-columns page-full"><p>W 2011 roku Dan Ciresan z IDSIA zaczął wygrywać akademickie konkursy klasyfikacji obrazów za pomocą trenowanych na GPU głębokich sieci neuronowych - był to pierwszy praktyczny sukces nowoczesnego uczenia głębokiego. Jednak przełomowy moment nastąpił w 2012 roku, gdy grupa Hintona wzięła udział w corocznym wyzwaniu ImageNet dotyczącym klasyfikacji obrazów na dużą skalę. Wyzwanie ImageNet było w tamtym czasie wyjątkowo trudne, polegało na klasyfikacji kolorowych obrazów o wysokiej rozdzielczości do 1000 różnych kategorii po przeszkoleniu na 1,4 mln obrazów. W 2011 roku dokładność zwycięskiego modelu, opartego na klasycznym podejściu do widzenia komputerowego, wyniosła zaledwie 74,3%. Następnie, w 2012 roku, zespół kierowany przez Alexa Krizhevsky’ego i wspierany przez Geoffreya Hintona był w stanie osiągnąć dokładność w pierwszej piątce<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> na poziomie 83,6% - był to znaczący przełom. Od tego czasu co roku konkurs był zdominowany przez głębokie konwencjonalne sieci neuronowe. W 2015 roku zwycięzca osiągnął dokładność 96,4%, a zadanie klasyfikacji na ImageNet uznano za całkowicie rozwiązany problem.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;(ang. <em>top 5 accuracy</em>) <em>-</em> oznacza, że wśród 5 kategorii z najwyższym prawdopodobieństwem jest prawdziwa klasa</p></li></div></div>
-<p>Od 2012 r. głębokie konwolucyjne sieci neuronowe (CovNets - <em>Convolutional Networks</em>) stały się algorytmem pierwszego wyboru dla wszystkich zadań widzenia komputerowego. Na najważniejszych konferencjach poświęconych widzeniu komputerowemu w 2015 i 2016 r. niemal niemożliwe było znalezienie prezentacji, które w jakiejś formie nie wiązałyby się z CovNets. Jednocześnie głębokie uczenie znalazło zastosowanie w wielu innych typach problemów, takich jak np. przetwarzanie języka naturalnego. W szerokim zakresie zastosowań całkowicie zastąpiło klasyczne modele SVM i drzewa decyzyjne. Na przykład przez kilka lat Europejska Organizacja Badań Jądrowych (CERN), używała metod opartych na drzewach decyzyjnych do analizy danych cząstek z detektora ATLAS w Wielkim Zderzaczu Hadronów (LHC); ale CERN ostatecznie przeszedł na głębokie sieci neuronowe oparte na Keras ze względu na ich wyższą wydajność i łatwość szkolenia na dużych zbiorach danych.</p>
+
+<div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://pbs.twimg.com/media/FfZz5e8VUAAaWlE?format=jpg&amp;name=900x900.png" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div></div><p>Od 2012 r. głębokie konwolucyjne sieci neuronowe (CovNets - <em>Convolutional Networks</em>) stały się algorytmem pierwszego wyboru dla wszystkich zadań widzenia komputerowego. Na najważniejszych konferencjach poświęconych widzeniu komputerowemu w 2015 i 2016 r. niemal niemożliwe było znalezienie prezentacji, które w jakiejś formie nie wiązałyby się z CovNets. Jednocześnie głębokie uczenie znalazło zastosowanie w wielu innych typach problemów, takich jak np. przetwarzanie języka naturalnego. W szerokim zakresie zastosowań całkowicie zastąpiło klasyczne modele SVM i drzewa decyzyjne. Na przykład przez kilka lat Europejska Organizacja Badań Jądrowych (CERN), używała metod opartych na drzewach decyzyjnych do analizy danych cząstek z detektora ATLAS w Wielkim Zderzaczu Hadronów (LHC); ale CERN ostatecznie przeszedł na głębokie sieci neuronowe oparte na Keras ze względu na ich wyższą wydajność i łatwość szkolenia na dużych zbiorach danych.</p>
 <p>Podstawowym powodem, dla którego uczenie głębokie odniosło sukces tak szybko, jest to, że oferowało lepszą wydajność w wielu problemach. Ale to nie jest jedyny powód. Głębokie uczenie ułatwia również rozwiązywanie problemów, ponieważ całkowicie automatyzuje to, co kiedyś było najbardziej kluczowym krokiem w procesie uczenia maszynowego: inżynierię cech.</p>
 <p>Poprzednie techniki uczenia maszynowego - uczenie głębokie - polegały jedynie na przekształceniu danych wejściowych w jedną lub dwie kolejne przestrzenie reprezentacji, zwykle poprzez proste przekształcenia, takie jak wielowymiarowe projekcje nieliniowe (SVM) lub drzewa decyzyjne. Jednak wyrafinowane reprezentacje wymagane przez złożone problemy zazwyczaj nie mogą być realizowane przez wspomniane techniki. W związku z tym, ludzie musieli zadać sobie wiele trudu, aby uczynić początkowe dane wejściowe bardziej podatnymi na przetwarzanie przez te metody: to znaczy, musieli ręcznie oparcować dobre warstwy reprezentacji dla swoich danych. Nazywa się to inżynierią cech. Uczenie głębokie całkowicie automatyzuje ten krok: w przypadku uczenia głębokiego, uczysz się wszystkich cech w jednym przejściu i nie musisz ich samodzielnie opracowywać. To znacznie uprościło przepływy pracy związane z uczeniem maszynowym, często zastępując skomplikowane, wieloetapowe potoki jednym, prostym, kompleksowym modelem uczenia głębokiego.</p>
 <p>Można zapytać, skoro sednem sprawy jest posiadanie wielu kolejnych warstw reprezentacji, to czy płytkie metody mogą być stosowane wielokrotnie, aby emulować efekty głębokiego uczenia? W praktyce, korzyść z zastosowania kilku metod płytkiego uczenia szybko maleje, ponieważ optymalna pierwsza warstwa reprezentacji w modelu trójwarstwowym nie jest optymalną pierwszą warstwą w modelu jedno- lub dwuwarstwowym. To, co jest przełomowe w uczeniu głębokim, to fakt, że pozwala ono modelowi uczyć się wszystkich warstw reprezentacji wspólnie, w tym samym czasie, a nie po kolei (zachłannie). Dzięki wspólnemu uczeniu cech, gdy model dostosowuje jedną ze swoich wewnętrznych cech, wszystkie inne cechy, które od niej zależą, automatycznie dostosowują się do tej zmiany, bez konieczności interwencji człowieka. Wszystko jest nadzorowane przez pojedynczy sygnał zwrotny: każda zmiana w modelu służy celowi końcowemu. Jest to znacznie potężniejsze niż składanie płytkich modeli, ponieważ pozwala na uczenie się złożonych, abstrakcyjnych reprezentacji poprzez rozbicie ich na długie serie pośrednich warstw; każda warstwa jest tylko prostym przekształceniem w stosunku do poprzedniej.</p>
@@ -443,7 +452,11 @@ Zagrożenie
 </details>
 </div>
 <p>Podstawowym elementem konstrukcyjnym sieci neuronowych jest warstwa, moduł przetwarzania danych, o którym można myśleć jak o filtrze dla danych. Niektóre dane przychodzą i wychodzą w bardziej użytecznej formie. W szczególności, warstwy wyodrębniają reprezentacje z danych, które są do nich wprowadzane - miejmy nadzieję, że reprezentacje, które są bardziej znaczące dla danego problemu. Większość głębokiego uczenia polega na łączeniu prostych warstw, które implementują formę stopniowej destylacji danych. Model głębokiego uczenia jest jak sito do przetwarzania danych, złożone z szeregu coraz bardziej wyrafinowanych filtrów danych - warstw.</p>
-<p>Nasza sieć składa się z dwóch warstw, które są gęsto połączonymi (zwanymi też w pełni połączonymi - ang. <em>fully connected</em>) warstwami neuronowymi. Druga (i ostatnia) warstwa jest 10-kierunkową warstwą softmax, co oznacza, że zwróci tablicę 10 wyników prawdopodobieństwa (sumujących się do 1). Każdy wynik będzie oznaczał prawdopodobieństwo, że aktualny obraz cyfry należy do jednej z naszych 10 klas cyfr.</p>
+
+<div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://pbs.twimg.com/media/FVwT8YYXEAE7Gfw?format=jpg&amp;name=medium.png" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div></div><p>Nasza sieć składa się z dwóch warstw, które są gęsto połączonymi (zwanymi też w pełni połączonymi - ang. <em>fully connected</em>) warstwami neuronowymi. Druga (i ostatnia) warstwa jest 10-kierunkową warstwą softmax, co oznacza, że zwróci tablicę 10 wyników prawdopodobieństwa (sumujących się do 1). Każdy wynik będzie oznaczał prawdopodobieństwo, że aktualny obraz cyfry należy do jednej z naszych 10 klas cyfr.</p>
 <p>Aby sieć była gotowa do treningu, musimy wybrać jeszcze trzy rzeczy, w ramach kroku kompilacji:</p>
 <ul>
 <li>Funkcję straty - jak sieć będzie w stanie zmierzyć, jak dobrą pracę wykonuje na danych treningowych, a tym samym czy będzie w stanie kierować się we właściwym kierunku.</li>
@@ -751,7 +764,7 @@ Zagrożenie
 <li>Oblicz stratę sieci na partii, czyli miarę niedopasowania między <code>y_pred</code> a <code>y.</code>
 </li>
 <li>Oblicz gradient straty względem parametrów sieci (przejście wsteczne).</li>
-<li>Skoryguj (nieznacznie) parametry sieci w kierunku przeciwnym do gradientu - na przykład <code>W =W - (krok * gradient)</code> - tym samym zmniejszając nieco stratę na partii.</li>
+<li>Skoryguj (nieznacznie) parametry sieci w kierunku przeciwnym do gradientu - na przykład <code>W = W - (krok * gradient)</code> - tym samym zmniejszając nieco stratę na partii.</li>
 </ol>
 <p>To, co właśnie opisaliśmy, nazywa się metodą <em>minibatch stochastic gradient descent</em> (minibatch SGD). Termin stochastyczny odnosi się do faktu, że każda partia danych jest losowana.</p>
 <p>Jak widać, intuicyjnie ważne jest, aby wybrać rozsądną wartość współczynnika kroku. Jeśli jest on zbyt mały, zejście w dół krzywej zajmie wiele iteracji i może utknąć w lokalnym minimum. Jeśli krok jest zbyt duży, twoje aktualizacje mogą skończyć się zabraniem cię do całkowicie losowych miejsc na krzywej.</p>
@@ -774,7 +787,7 @@ Zagrożenie
 </div>
 </section><section id="wsteczna-propagacja-błędu" class="level3" data-number="10.4.3"><h3 data-number="10.4.3" class="anchored" data-anchor-id="wsteczna-propagacja-błędu">
 <span class="header-section-number">10.4.3</span> Wsteczna propagacja błędu</h3>
-<p>Wsteczna propagacja błędu (ang. <em>backpropagation</em>) jest metodą instruującą algorytm jak korygować wagi sieci. Korzysta ona z prawa znanego w matematyce jako <em>chain rule</em></p>
+<p>Wsteczna propagacja błędu (ang. <em>backpropagation</em>) jest metodą instruującą algorytm jak korygować wagi sieci. Korzysta ona z prawa znanego w matematyce jako pochodna funkcji złożonej (ang. <em>chain rule</em>)</p>
 <p><span id="eq-chain-rule"><span class="math display">\[
 [f(g(x))]'=f'(g(x))\cdot g'(x).
 \tag{10.1}\]</span></span></p>
@@ -783,6 +796,34 @@ Zagrożenie
 <figure class="figure"><p><img src="https://developer-blogs.nvidia.com/wp-content/uploads/2022/02/DS-Guide-to-Gradient-Descent_Pic5.gif" class="img-fluid figure-img" width="400"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;10.12: Zasada działania wstecznej propagacji błędu</figcaption><p></p>
 </figure>
+</div>
+<p>Obecnie korzysta się z metod zdolnych do symbolicznego różniczkowania, takich jak TensorFlow. Oznacza to, że biorąc pod uwagę łańcuch operacji ze znaną pochodną, mogą obliczyć funkcję gradientu dla łańcucha (stosując regułę łańcucha), która mapuje wartości parametrów sieci do wartości gradientu. Kiedy masz dostęp do takiej funkcji, przejście wsteczne jest zredukowane do wywołania tej funkcji gradientu. Dzięki symbolicznemu różniczkowaniu nigdy nie będziesz musiał ręcznie implementować algorytmu wstecznej propagacji.</p>
+</section><section id="funkcje-straty" class="level3 page-columns page-full" data-number="10.4.4"><h3 data-number="10.4.4" class="anchored" data-anchor-id="funkcje-straty">
+<span class="header-section-number">10.4.4</span> Funkcje straty</h3>
+<div class="page-columns page-full"><p>We wcześniej prezentowanym przykładzie w funkcji <code><a href="https://generics.r-lib.org/reference/compile.html">compile()</a></code> pojawiła się funkcja straty <code>loss = 'categorical_crossentropy'</code>, która jest jedną z możliwych do zastosowania funkcji straty<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. Funkcja straty jest używana jako sygnał zwrotny do uczenia tensorów wag i którą w fazie uczenia będzie monimalizowana. Odbywać się to będzie za pomocą mini-batch SGD. Dokładne zasady rządzące konkretną implementacją SGD są zdefiniowane przez optymalizator <code>rmsprop</code> przekazany jako pierwszy argument.</p><div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;o funkcjach straty będziemy jeszcze wspominać przy konkretnych przykładach</p></li></div></div>
+<p>Uruchamiając</p>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">network</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span><span class="va">train_samples</span>, <span class="va">train_labels</span>, epochs <span class="op">=</span> <span class="fl">5</span>, batch_size <span class="op">=</span> <span class="fl">128</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>rozpoczynamy iteracyjne uczenie przygotowanej sieci. Będzie ona realizowana w 5 epokach na partiach danych składających się ze 128 obserwacji.</p>
+
+<div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://pbs.twimg.com/media/EYUEx6GXQAYAqFS?format=jpg&amp;name=medium.png" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div></div><div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Adnotacja
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Bardzo pomocne w zrozumieniu zasady działania sieci neuronowych na przykładzie (bardzo podobnym do naszego) może być obejrzenie cyklu 4 filmów sieciach neuronowych kanału <a href="https://youtu.be/aircAruvnKk">3Blue1Brown</a></p>
+</div>
 </div>
 
 
