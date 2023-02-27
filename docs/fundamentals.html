@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.203">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
 <title>Automatyczna analiza obrazu - 11&nbsp; Fundamenty DNN</title>
 <style>
 code{white-space: pre-wrap;}
@@ -82,6 +85,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -102,7 +106,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -121,11 +126,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Zatwierdź"
   }
 }</script>
+
+
 </head>
+
 <body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -133,17 +143,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
       </a>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
+      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Automatyczna analiza obrazu</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://twitter.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
     <a href="https://github.com/dax44/ComputerVision/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="https://twitter.com/intent/tweet?url=%7Curl%7C" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://twitter.com/intent/tweet?url=|url|" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
@@ -160,7 +175,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">Wstęp</a>
   </div>
@@ -226,37 +241,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
 </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Spis treści</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
    
   <ul>
-<li>
-<a href="#podzia%C5%82-na-zbi%C3%B3r-ucz%C4%85cy-walidacyjny-i-testowy" id="toc-podział-na-zbiór-uczący-walidacyjny-i-testowy" class="nav-link active" data-scroll-target="#podzia%C5%82-na-zbi%C3%B3r-ucz%C4%85cy-walidacyjny-i-testowy"><span class="toc-section-number">11.1</span>  Podział na zbiór uczący, walidacyjny i testowy</a>
+  <li><a href="#podział-na-zbiór-uczący-walidacyjny-i-testowy" id="toc-podział-na-zbiór-uczący-walidacyjny-i-testowy" class="nav-link active" data-scroll-target="#podział-na-zbiór-uczący-walidacyjny-i-testowy"><span class="toc-section-number">11.1</span>  Podział na zbiór uczący, walidacyjny i testowy</a>
   <ul class="collapse">
-<li><a href="#hold-out" id="toc-hold-out" class="nav-link" data-scroll-target="#hold-out"><span class="toc-section-number">11.1.1</span>  Hold-out</a></li>
-  <li><a href="#walidacja-krzy%C5%BCowa-k-krotna" id="toc-walidacja-krzyżowa-k-krotna" class="nav-link" data-scroll-target="#walidacja-krzy%C5%BCowa-k-krotna"><span class="toc-section-number">11.1.2</span>  Walidacja krzyżowa K-krotna</a></li>
-  <li><a href="#iterowana-metoda-walidacji-krzy%C5%BCowej-z-losowaniem" id="toc-iterowana-metoda-walidacji-krzyżowej-z-losowaniem" class="nav-link" data-scroll-target="#iterowana-metoda-walidacji-krzy%C5%BCowej-z-losowaniem"><span class="toc-section-number">11.1.3</span>  Iterowana metoda walidacji krzyżowej z losowaniem</a></li>
+  <li><a href="#hold-out" id="toc-hold-out" class="nav-link" data-scroll-target="#hold-out"><span class="toc-section-number">11.1.1</span>  Hold-out</a></li>
+  <li><a href="#walidacja-krzyżowa-k-krotna" id="toc-walidacja-krzyżowa-k-krotna" class="nav-link" data-scroll-target="#walidacja-krzyżowa-k-krotna"><span class="toc-section-number">11.1.2</span>  Walidacja krzyżowa K-krotna</a></li>
+  <li><a href="#iterowana-metoda-walidacji-krzyżowej-z-losowaniem" id="toc-iterowana-metoda-walidacji-krzyżowej-z-losowaniem" class="nav-link" data-scroll-target="#iterowana-metoda-walidacji-krzyżowej-z-losowaniem"><span class="toc-section-number">11.1.3</span>  Iterowana metoda walidacji krzyżowej z losowaniem</a></li>
   <li><a href="#uwagi-do-resamplingu" id="toc-uwagi-do-resamplingu" class="nav-link" data-scroll-target="#uwagi-do-resamplingu"><span class="toc-section-number">11.1.4</span>  Uwagi do resamplingu</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#przygotowanie-danych" id="toc-przygotowanie-danych" class="nav-link" data-scroll-target="#przygotowanie-danych"><span class="toc-section-number">11.2</span>  Przygotowanie danych</a>
+  </ul></li>
+  <li><a href="#przygotowanie-danych" id="toc-przygotowanie-danych" class="nav-link" data-scroll-target="#przygotowanie-danych"><span class="toc-section-number">11.2</span>  Przygotowanie danych</a>
   <ul class="collapse">
-<li><a href="#wektoryzacja" id="toc-wektoryzacja" class="nav-link" data-scroll-target="#wektoryzacja"><span class="toc-section-number">11.2.1</span>  Wektoryzacja</a></li>
+  <li><a href="#wektoryzacja" id="toc-wektoryzacja" class="nav-link" data-scroll-target="#wektoryzacja"><span class="toc-section-number">11.2.1</span>  Wektoryzacja</a></li>
   <li><a href="#normalizacja" id="toc-normalizacja" class="nav-link" data-scroll-target="#normalizacja"><span class="toc-section-number">11.2.2</span>  Normalizacja</a></li>
-  <li><a href="#usu%C5%84-braki-danych" id="toc-usuń-braki-danych" class="nav-link" data-scroll-target="#usu%C5%84-braki-danych"><span class="toc-section-number">11.2.3</span>  Usuń braki danych</a></li>
+  <li><a href="#usuń-braki-danych" id="toc-usuń-braki-danych" class="nav-link" data-scroll-target="#usuń-braki-danych"><span class="toc-section-number">11.2.3</span>  Usuń braki danych</a></li>
+  </ul></li>
   </ul>
-</li>
-  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">
-<span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Fundamenty DNN</span>
-</h1>
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Fundamenty DNN</span></h1>
 </div>
 
 
@@ -269,7 +284,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
-</header><p>Zanim przystąpimy do uczenia jakiejkolwiek sieci głębokiego uczenia trzeba poznać najważniejsze elementy niemal każdej sieci neuronowej. Zaczniemy od kluczowego nazewnictwa, którego będziemy używać w dalszej części książki.</p>
+</header>
+
+<p>Zanim przystąpimy do uczenia jakiejkolwiek sieci głębokiego uczenia trzeba poznać najważniejsze elementy niemal każdej sieci neuronowej. Zaczniemy od kluczowego nazewnictwa, którego będziemy używać w dalszej części książki.</p>
 <ul>
 <li>próbka lub wejście (ang. <em>sample/input</em>) - jedna obserwacja wchodząca do sieci;</li>
 <li>predykcja lub wyjście (ang. <em>prediction/output</em>) - to co z sieci wychodzi;</li>
@@ -285,135 +302,141 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>partia lub wsad (ang. <em>batch/mini-batch</em>) - mały zestaw probek, zwykle składający się z od 8 do 128 próbek przetwarzanych jednocześnie przez model. Najczęściej wielkość partii jest potęga 2 (ma to ułatwić ładowanie próbek do pamięci procesora graficznego). Partia jest używana do jednej aktualizacji wag modelu.</li>
 </ul>
 <p>W uczeniu maszynowym, celem jest osiągnięcie modeli, które generalizują, czyli dobrze radzą sobie z nigdy wcześniej nie widzianymi danymi, a <em>overfitting</em> jest główną przeszkodą. Możesz kontrolować tylko to, co możesz zaobserwować, więc bardzo ważne jest, aby móc wiarygodnie zmierzyć zdolność generalizacji twojego modelu. W kolejnych rozdziałach omówione są strategie łagodzenia <em>overfitting</em> i maksymalizacji generalizacji. W tym rozdziale skupimy się na tym, jak mierzyć generalizację, czyli jak oceniać modele uczenia maszynowego.</p>
-<section id="podział-na-zbiór-uczący-walidacyjny-i-testowy" class="level2 page-columns page-full" data-number="11.1"><h2 data-number="11.1" class="anchored" data-anchor-id="podział-na-zbiór-uczący-walidacyjny-i-testowy">
-<span class="header-section-number">11.1</span> Podział na zbiór uczący, walidacyjny i testowy</h2>
+<section id="podział-na-zbiór-uczący-walidacyjny-i-testowy" class="level2 page-columns page-full" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="podział-na-zbiór-uczący-walidacyjny-i-testowy"><span class="header-section-number">11.1</span> Podział na zbiór uczący, walidacyjny i testowy</h2>
 <p>Ocena modelu zawsze sprowadza się do podzielenia dostępnych danych na trzy zestawy: treningowy, walidacyjny i testowy. Trenujesz na danych treningowych i oceniasz swój model na danych walidacyjnych. Kiedy model jest już gotowy do użycia, testujesz go po raz ostatni na danych testowych.</p>
 <p>Możesz zapytać, dlaczego nie mieć dwóch zestawów: treningowego i testowego? Trenowałbyś na danych treningowych i oceniałbyś na danych testowych. To przecież o wiele prostsze!</p>
 <div class="page-columns page-full"><p>Powodem jest to, że opracowanie modelu zawsze wiąże się z dostrojeniem jego konfiguracji: na przykład wyborem liczby warstw lub rozmiaru warstw (zwanych hiperparametrami modelu, aby odróżnić je od parametrów, które są wagami sieci). Tuningu tego dokonasz, wykorzystując jako sygnał zwrotny wydajność modelu na danych walidacyjnych<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. W istocie, to strojenie jest formą uczenia się: poszukiwaniem dobrej konfiguracji w pewnej przestrzeni parametrów. W rezultacie, dostrajanie hiperparametrów modelu na podstawie jego wydajności na zbiorze walidacyjnym może szybko doprowadzić do przeuczenia do zbioru walidacyjnego, nawet jeśli twój model nigdy nie jest bezpośrednio trenowany na nim.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;mierzoną najczęściej funkcją straty</p></li></div></div>
 <p>Centralnym punktem tego fenomenu jest pojęcie wycieku informacji. Za każdym razem, gdy dostrajasz hiperparametr swojego modelu w oparciu o jego wydajność na zbiorze walidacyjnym, niektóre informacje o danych walidacyjnych wyciekają do modelu. Jeśli zrobisz to tylko raz, dla jednego parametru, wtedy bardzo niewiele bitów informacji wycieknie, a twój zbiór walidacyjny pozostanie wiarygodny do oceny modelu. Ale jeśli powtórzysz to wiele razy - przeprowadzając jeden eksperyment, oceniając go na zbiorze walidacyjnym i modyfikując w rezultacie swój model - wtedy wycieknie coraz większa ilość informacji o zbiorze walidacyjnym do modelu.</p>
 <p>Ostatecznie, skończysz z modelem, który działa podejrzanie dobrze na danych walidacyjnych, ponieważ właśnie po to go zoptymalizowałeś. Zależy Ci na wydajności na zupełnie nowych danych, a nie na danych walidacyjnych, więc musisz użyć zupełnie innego, nigdy wcześniej niewidzianego zbioru danych do oceny modelu: testowego zbioru danych. Twój model nie powinien mieć dostępu do żadnych informacji o zbiorze testowym, nawet pośrednio. Jeśli cokolwiek w modelu zostało dostrojone w oparciu o wydajność zbioru testowego, to Twoja miara uogólnienia będzie błędna.</p>
 <p>Podział danych na zbiory treningowe, walidacyjne i testowe może wydawać się prosty, ale istnieje kilka zaawansowanych sposobów, które mogą się przydać, gdy dostępnych jest niewiele danych. Przyjrzyjmy się trzem klasycznym przepisom oceny: zwykłej walidacji <em>hold-out</em>, walidacji krzyżowej K-krotnej oraz iterowanej krzyżowej walidacji K-krotnej z losowaniem.</p>
-<section id="hold-out" class="level3" data-number="11.1.1"><h3 data-number="11.1.1" class="anchored" data-anchor-id="hold-out">
-<span class="header-section-number">11.1.1</span> Hold-out</h3>
+<section id="hold-out" class="level3" data-number="11.1.1">
+<h3 data-number="11.1.1" class="anchored" data-anchor-id="hold-out"><span class="header-section-number">11.1.1</span> Hold-out</h3>
 <p>Wyodrębnij pewną część danych jako zbiór testowy. Trenuj na pozostałych danych i oceń na zbiorze testowym. Jak widziałeś w poprzednich rozdziałach, aby zapobiec wyciekowi informacji, nie powinieneś dostrajać swojego modelu na podstawie zbioru testowego, dlatego powinieneś również zarezerwować zbiór walidacyjny.</p>
 <div id="fig-fund1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-27 o 09.14.23.png" class="img-fluid figure-img" width="600"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-27 o 09.14.23.png" class="img-fluid figure-img" width="600"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;11.1: Walidacja hold-out</figcaption><p></p>
 </figure>
 </div>
 <p>Schematycznie, walidacja hold-out wygląda jak na <a href="#fig-fund1">Rysunek&nbsp;<span>11.1</span></a>. Poniższy listing pokazuje prostą implementację.</p>
-<div class="sourceCode" id="annotated-cell-1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#| eval: false</span></span>
-<span><span class="va">indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">0.80</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">evaluation_data</span>  <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="op">-</span><span class="va">indices</span>, <span class="op">]</span></span>
-<span></span>
-<span><span class="va">training_data</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="va">indices</span>, <span class="op">]</span></span>
-<span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">get_model</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">train</span><span class="op">(</span><span class="va">training_data</span><span class="op">)</span> </span>
-<span><span class="va">validation_score</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">evaluate</span><span class="op">(</span><span class="va">validation_data</span><span class="op">)</span> </span>
-<span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">get_model</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">train</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> </span>
-<span><span class="va">test_score</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">evaluate</span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<dl>
+<div class="sourceCode" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a>indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data), <span class="at">size =</span> <span class="fl">0.80</span> <span class="sc">*</span> <span class="fu">nrow</span>(data))</span>
+<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-1-4" class="code-annotation-target"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>evaluation_data  <span class="ot">&lt;-</span> data[<span class="sc">-</span>indices, ]</span>
+<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-1-6" class="code-annotation-target"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>training_data <span class="ot">&lt;-</span> data[indices, ]</span>
+<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-1-8" class="code-annotation-target"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">get_model</span>()</span>
+<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a>model <span class="sc">%&gt;%</span> <span class="fu">train</span>(training_data) </span>
+<span id="annotated-cell-1-10"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a>validation_score <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span> <span class="fu">evaluate</span>(validation_data) </span>
+<span id="annotated-cell-1-11"><a href="#annotated-cell-1-11" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-1-12" class="code-annotation-target"><a href="#annotated-cell-1-12" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">get_model</span>()</span>
+<span id="annotated-cell-1-13"><a href="#annotated-cell-1-13" aria-hidden="true" tabindex="-1"></a>model <span class="sc">%&gt;%</span> <span class="fu">train</span>(data) </span>
+<span id="annotated-cell-1-14"><a href="#annotated-cell-1-14" aria-hidden="true" tabindex="-1"></a>test_score <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span> <span class="fu">evaluate</span>(test_data)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="2" data-code-cell="annotated-cell-1" data-code-annotation="1">wylosuj indeksy zbioru uczącego;</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="1" data-code-lines="2">wylosuj indeksy zbioru uczącego;</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="4" data-code-cell="annotated-cell-1" data-code-annotation="2">zdefiniuj zbiór walidacyjny;</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="2" data-code-lines="4">zdefiniuj zbiór walidacyjny;</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="6" data-code-cell="annotated-cell-1" data-code-annotation="3">zdefiniuj zbiór uczący;</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="3" data-code-lines="6">zdefiniuj zbiór uczący;</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="8" data-code-cell="annotated-cell-1" data-code-annotation="4">ucz model na zbiorze uczący i sprawdzaj dopasowanie na walidacyjnym;</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="4" data-code-lines="8">ucz model na zbiorze uczący i sprawdzaj dopasowanie na walidacyjnym;</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-lines="12" data-code-cell="annotated-cell-1" data-code-annotation="5">naucz model na pełnym zestawie danych uczących (na połączonym zbiorze uczącym i walidacyjnym).</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="5" data-code-lines="12">naucz model na pełnym zestawie danych uczących (na połączonym zbiorze uczącym i walidacyjnym).</span>
 </dd>
 </dl>
 <p>Jest to najprostszy protokół oceny, ale ma jedną wadę: jeśli dostępnych danych jest mało, wtedy twoje zestawy walidacyjne i testowe mogą zawierać zbyt mało próbek, aby być statystycznie reprezentatywne dla danych. Łatwo to rozpoznać: jeśli różne losowe rundy tasowania danych przed podziałem kończą się uzyskaniem bardzo różnych miar wydajności modelu, to masz ten problem.</p>
-</section><section id="walidacja-krzyżowa-k-krotna" class="level3" data-number="11.1.2"><h3 data-number="11.1.2" class="anchored" data-anchor-id="walidacja-krzyżowa-k-krotna">
-<span class="header-section-number">11.1.2</span> Walidacja krzyżowa K-krotna</h3>
+</section>
+<section id="walidacja-krzyżowa-k-krotna" class="level3" data-number="11.1.2">
+<h3 data-number="11.1.2" class="anchored" data-anchor-id="walidacja-krzyżowa-k-krotna"><span class="header-section-number">11.1.2</span> Walidacja krzyżowa K-krotna</h3>
 <p>W tym podejściu dzielimy dane na K podzbiorów (foldów) o (w miarę) równym rozmiarze.Trenuj swój model na K-1 foldach, a na jednym pozostałym foldzie oceń jego jakość. Twój ostateczny wynik jest średnią z K uzyskanych wyników. Podobnie jak w przypadku walidacji typu <em>hold-out,</em> metoda ta nie zwalnia z używania odrębnego zbioru walidacyjnego do kalibracji modelu.</p>
 <div id="fig-fund2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-27 o 09.14.34.png" class="img-fluid figure-img" width="600"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-27 o 09.14.34.png" class="img-fluid figure-img" width="600"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;11.2: Walidacja krzyżowa K-krotna</figcaption><p></p>
 </figure>
 </div>
 <p>Schematycznie, K-krotna walidacja krzyżowa wygląda jak na <a href="#fig-fund2">Rysunek&nbsp;<span>11.2</span></a>. Oto prosta implementacja pseudokodu w R.</p>
-<div class="cell">
-<details open=""><summary>Kod</summary><div class="sourceCode" id="annotated-cell-2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
-<span><span class="va">indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">folds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">indices</span>, breaks <span class="op">=</span> <span class="va">k</span>, labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">validation_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">k</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">validation_indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">folds</span> <span class="op">==</span> <span class="va">i</span>, arr.ind <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="va">validation_data</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="va">validation_indices</span>,<span class="op">]</span></span>
-<span>  <span class="va">training_data</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="op">-</span><span class="va">validation_indices</span>,<span class="op">]</span></span>
-<span>  </span>
-<span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">get_model</span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">train</span><span class="op">(</span><span class="va">training_data</span><span class="op">)</span></span>
-<span>  <span class="va">results</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">evaluate</span><span class="op">(</span><span class="va">validation_data</span><span class="op">)</span></span>
-<span>  <span class="va">validation_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">validation_scores</span>, <span class="va">results</span><span class="op">$</span><span class="va">accuracy</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">validation_score</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">validation_scores</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">get_model</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">train</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">evaluate</span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-annotation">
-<dl>
+<div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data))</span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">cut</span>(indices, <span class="at">breaks =</span> k, <span class="at">labels =</span> <span class="cn">FALSE</span>)</span>
+<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>validation_scores <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) {</span>
+<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a>  validation_indices <span class="ot">&lt;-</span> <span class="fu">which</span>(folds <span class="sc">==</span> i, <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-2-9" class="code-annotation-target"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a>  validation_data <span class="ot">&lt;-</span> data[validation_indices,]</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-2-10" class="code-annotation-target"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a>  training_data <span class="ot">&lt;-</span> data[<span class="sc">-</span>validation_indices,]</span>
+<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-2-12" class="code-annotation-target"><a href="#annotated-cell-2-12" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">get_model</span>()</span>
+<span id="annotated-cell-2-13"><a href="#annotated-cell-2-13" aria-hidden="true" tabindex="-1"></a>  model <span class="sc">%&gt;%</span> <span class="fu">train</span>(training_data)</span>
+<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14" aria-hidden="true" tabindex="-1"></a>  results <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span> <span class="fu">evaluate</span>(validation_data)</span>
+<span id="annotated-cell-2-15"><a href="#annotated-cell-2-15" aria-hidden="true" tabindex="-1"></a>  validation_scores <span class="ot">&lt;-</span> <span class="fu">c</span>(validation_scores, results<span class="sc">$</span>accuracy)</span>
+<span id="annotated-cell-2-16"><a href="#annotated-cell-2-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="annotated-cell-2-17"><a href="#annotated-cell-2-17" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-2-18" class="code-annotation-target"><a href="#annotated-cell-2-18" aria-hidden="true" tabindex="-1"></a>validation_score <span class="ot">&lt;-</span> <span class="fu">mean</span>(validation_scores)</span>
+<span id="annotated-cell-2-19"><a href="#annotated-cell-2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-2-20"><a href="#annotated-cell-2-20" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">get_model</span>()</span>
+<span id="annotated-cell-2-21"><a href="#annotated-cell-2-21" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-2-22" class="code-annotation-target"><a href="#annotated-cell-2-22" aria-hidden="true" tabindex="-1"></a>model <span class="sc">%&gt;%</span> <span class="fu">train</span>(data)</span>
+<span id="annotated-cell-2-23"><a href="#annotated-cell-2-23" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span> <span class="fu">evaluate</span>(test_data)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="8" data-code-cell="annotated-cell-2" data-code-annotation="1">wybierz obserwacje do zbioru walidacyjnego;</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="1" data-code-lines="9">wybierz obserwacje do zbioru walidacyjnego;</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="9" data-code-cell="annotated-cell-2" data-code-annotation="2">użyj pozostałych danych jako zbioru uczącego (fold);</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="2" data-code-lines="10">użyj pozostałych danych jako zbioru uczącego (fold);</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="11" data-code-cell="annotated-cell-2" data-code-annotation="3">stwórz model i ucz go na zbiorze uczącym (foldzie);</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="3" data-code-lines="12">stwórz model i ucz go na zbiorze uczącym (foldzie);</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="17" data-code-cell="annotated-cell-2" data-code-annotation="4">oceń dopasowanie na zbiorze walidacyjnym (uśrednione z foldów);</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="4" data-code-lines="18">oceń dopasowanie na zbiorze walidacyjnym (uśrednione z foldów);</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-lines="21" data-code-cell="annotated-cell-2" data-code-annotation="5">ucz model na pełnym zestawie uczącym.</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="5" data-code-lines="22">ucz model na pełnym zestawie uczącym.</span>
 </dd>
 </dl>
-</div>
-</div>
-</section><section id="iterowana-metoda-walidacji-krzyżowej-z-losowaniem" class="level3" data-number="11.1.3"><h3 data-number="11.1.3" class="anchored" data-anchor-id="iterowana-metoda-walidacji-krzyżowej-z-losowaniem">
-<span class="header-section-number">11.1.3</span> Iterowana metoda walidacji krzyżowej z losowaniem</h3>
+</section>
+<section id="iterowana-metoda-walidacji-krzyżowej-z-losowaniem" class="level3" data-number="11.1.3">
+<h3 data-number="11.1.3" class="anchored" data-anchor-id="iterowana-metoda-walidacji-krzyżowej-z-losowaniem"><span class="header-section-number">11.1.3</span> Iterowana metoda walidacji krzyżowej z losowaniem</h3>
 <p>Przeznaczona jest dla sytuacji, w których masz stosunkowo mało dostępnych danych i musisz jak najdokładniej ocenić swój model. Polega ona na wielokrotnym zastosowaniu K-krotnej walidacji, tasując dane za każdym razem przed podzieleniem ich na K sposobów. Końcowy wynik jest średnią z wyników uzyskanych w każdym przebiegu K-krotnej walidacji. Zauważ, że kończysz szkolenie i ocenę P * K modeli (gdzie P to liczba iteracji, których używasz), co może być bardzo kosztowne.</p>
 <p>W literaturze tematu metoda ta występuje również pod nazwą K-krotnego sprawdzianu krzyżowego z powtórzeniami.</p>
-</section><section id="uwagi-do-resamplingu" class="level3" data-number="11.1.4"><h3 data-number="11.1.4" class="anchored" data-anchor-id="uwagi-do-resamplingu">
-<span class="header-section-number">11.1.4</span> Uwagi do resamplingu</h3>
+</section>
+<section id="uwagi-do-resamplingu" class="level3" data-number="11.1.4">
+<h3 data-number="11.1.4" class="anchored" data-anchor-id="uwagi-do-resamplingu"><span class="header-section-number">11.1.4</span> Uwagi do resamplingu</h3>
 <ul>
 <li>Reprezentatywność danych - chcesz, aby zarówno zbiór treningowy, jak i testowy były reprezentatywne dla danych. Na przykład, jeśli próbujesz sklasyfikować obrazy cyfr i zaczynasz od tablicy próbek, gdzie próbki są uporządkowane według ich klasy, to biorąc pierwsze 80% tablicy jako zbiór treningowy, a pozostałe 20% jako testowy, twój zbiór treningowy będzie zawierał tylko klasy 0-7, podczas gdy twój zbiór testowy zawiera tylko klasy 8-9. Wydaje się to niedorzecznym błędem, ale jest zaskakująco powszechne. Z tego powodu, zazwyczaj powinieneś losowo przetasować swoje dane przed podzieleniem ich na zestawy treningowe i testowe.</li>
 <li>Oś czasu - jeśli próbujesz przewidzieć przyszłe wartości biorąc pod uwagę przeszłość (na przykład, pogoda jutro, zmiany cen akcji, i tak dalej), nie powinieneś losowo tasować swoich danych przed ich podziałem, ponieważ robiąc to, stworzysz czasowy wyciek danych: twój model będzie skutecznie trenowany na danych z przyszłości. W takich sytuacjach zawsze powinieneś upewnić się, że wszystkie dane w twoim zestawie testowym są potomne w stosunku do danych w zestawie treningowym.</li>
 <li>Redundancja w danych - Jeśli niektóre obserwacje pojawiają się dwukrotnie (co jest dość powszechne w przypadku danych ze świata rzeczywistego), to przetasowanie danych i podzielenie ich na zbiór treningowy i walidacyjny spowoduje redundancję pomiędzy zbiorem treningowym i walidacyjnym. W efekcie, będziesz testował na części danych treningowych, co jest najgorszą rzeczą jaką możesz zrobić! Upewnij się, że twój zestaw treningowy i zestaw walidacyjny są rozłączne.</li>
-</ul></section></section><section id="przygotowanie-danych" class="level2" data-number="11.2"><h2 data-number="11.2" class="anchored" data-anchor-id="przygotowanie-danych">
-<span class="header-section-number">11.2</span> Przygotowanie danych</h2>
+</ul>
+</section>
+</section>
+<section id="przygotowanie-danych" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="przygotowanie-danych"><span class="header-section-number">11.2</span> Przygotowanie danych</h2>
 <p>Wiele technik wstępnego przetwarzania danych i inżynierii cech jest specyficznych dla danej dziedziny (np. specyficznych dla danych tekstowych lub danych obrazowych); omówimy je w kolejnych rozdziałach, gdy napotkamy je w praktycznych przykładach. Na razie zajmiemy się podstawami, które są wspólne dla wszystkich domen danych. Skupimy się na najważniejszych.</p>
-<section id="wektoryzacja" class="level3" data-number="11.2.1"><h3 data-number="11.2.1" class="anchored" data-anchor-id="wektoryzacja">
-<span class="header-section-number">11.2.1</span> Wektoryzacja</h3>
+<section id="wektoryzacja" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="wektoryzacja"><span class="header-section-number">11.2.1</span> Wektoryzacja</h3>
 <p>Wszystkie wejścia i cele w sieci neuronowej muszą być tensorami danych zmiennoprzecinkowych (lub, w szczególnych przypadkach, tensorami liczb całkowitych). Jakiekolwiek dane, które chcesz przetworzyć - dźwięk, obraz, tekst - musisz najpierw zamienić na tensory, co nazywamy wektoryzacją danych. Na przykład, jeśli zajmujemy się automatyczna analizą tekstu, to konieczna jest transformacja wyrazów metodą <em>one-hot encoding</em>, która zamieni nam wyrazy na zestaw zmiennych zmiennoprzecinkowych. W przykładach klasyfikacji cyfr dane były już w postaci wektorowej, więc można było pominąć ten krok.</p>
-</section><section id="normalizacja" class="level3" data-number="11.2.2"><h3 data-number="11.2.2" class="anchored" data-anchor-id="normalizacja">
-<span class="header-section-number">11.2.2</span> Normalizacja</h3>
+</section>
+<section id="normalizacja" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="normalizacja"><span class="header-section-number">11.2.2</span> Normalizacja</h3>
 <p>W przykładzie klasyfikacji cyfr, zacząłeś od danych obrazu zakodowanych jako liczby całkowite z zakresu 0-255, kodujące wartości w skali szarości. Zanim wprowadziłeś te dane do sieci, musiałeś podzielić je przez 255, aby uzyskać wartości zmiennoprzecinkowe z zakresu 0-1. Podobnie, przy przewidywaniu cen domów, zacząłeś od cech, które miały różne zakresy - niektóre cechy miały małe wartości zmiennoprzecinkowe, inne miały dość duże wartości całkowite. Zanim wprowadziłeś te dane do swojej sieci, musiałeś znormalizować każdą cechę niezależnie, tak aby jej odchylenie standardowe wynosiło 1, a średnia 0.</p>
 <p>Ogólnie rzecz biorąc, nie jest bezpiecznie podawać do sieci neuronowej danych, które przyjmują stosunkowo duże wartości (na przykład wielocyfrowe liczby całkowite, które są znacznie większe niż wartości początkowe przyjmowane przez wagi sieci) lub dane, które są niejednorodne (na przykład dane, w których jedna cecha jest w zakresie 0-1, a inna w zakresie 100-200). Takie postępowanie może wywołać duże aktualizacje gradientu, które uniemożliwią sieci osiągnięcie zbieżności. Aby ułatwić uczenie się sieci, twoje dane powinny mieć następujące cechy:</p>
 <ul>
@@ -421,32 +444,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Zachowaj jednorodność - to znaczy, że wszystkie cechy powinny przyjmować wartości w mniej więcej tym samym zakresie.</li>
 </ul>
 <p>Zazwyczaj będziesz normalizował cechy zarówno w danych treningowych, jak i testowych. W tym przypadku będziesz chciał obliczyć średnią i odchylenie standardowe tylko na danych treningowych, a następnie zastosować je zarówno do danych treningowych, jak i testowych.</p>
-<div class="cell">
-<details open=""><summary>Kod</summary><div class="sourceCode" id="annotated-cell-3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">train_data</span>, <span class="fl">2</span>, <span class="va">mean</span><span class="op">)</span></span>
-<span><span class="va">std</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">train_data</span>, <span class="fl">2</span>, <span class="va">sd</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">train_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">train_data</span>, center <span class="op">=</span> <span class="va">mean</span>, scale <span class="op">=</span> <span class="va">std</span><span class="op">)</span></span>
-<span><span class="va">test_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">test_data</span>, center <span class="op">=</span> <span class="va">mean</span>, scale <span class="op">=</span> <span class="va">std</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-annotation">
-<dl>
+<div class="sourceCode" id="annotated-cell-3"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-3-3" class="code-annotation-target"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">apply</span>(train_data, <span class="dv">2</span>, mean)</span>
+<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>std <span class="ot">&lt;-</span> <span class="fu">apply</span>(train_data, <span class="dv">2</span>, sd)</span>
+<span id="annotated-cell-3-5"><a href="#annotated-cell-3-5" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-3-6" class="code-annotation-target"><a href="#annotated-cell-3-6" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> <span class="fu">scale</span>(train_data, <span class="at">center =</span> mean, <span class="at">scale =</span> std)</span>
+<span id="annotated-cell-3-7"><a href="#annotated-cell-3-7" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">scale</span>(test_data, <span class="at">center =</span> mean, <span class="at">scale =</span> std)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="1" data-code-cell="annotated-cell-3" data-code-annotation="1">oblicz średnią i odchylenie standardowe na zbiorze uczącym;</span>
+<span data-code-cell="annotated-cell-3" data-code-annotation="1" data-code-lines="3">oblicz średnią i odchylenie standardowe na zbiorze uczącym;</span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="4" data-code-cell="annotated-cell-3" data-code-annotation="2">zastosuj obliczone parametry do zbioru uczącego i testowego.</span>
+<span data-code-cell="annotated-cell-3" data-code-annotation="2" data-code-lines="6">zastosuj obliczone parametry do zbioru uczącego i testowego.</span>
 </dd>
 </dl>
-</div>
-</div>
-</section><section id="usuń-braki-danych" class="level3" data-number="11.2.3"><h3 data-number="11.2.3" class="anchored" data-anchor-id="usuń-braki-danych">
-<span class="header-section-number">11.2.3</span> Usuń braki danych</h3>
+</section>
+<section id="usuń-braki-danych" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="usuń-braki-danych"><span class="header-section-number">11.2.3</span> Usuń braki danych</h3>
 <p>Czasami w danych mogą pojawić się brakujące wartości. Genralnie, w sieciach neuronowych bezpiecznie jest wprowadzić brakujące wartości jako 0, pod warunkiem, że 0 nie jest już wartością znaczącą. Sieć nauczy się z ekspozycji na dane, że wartość 0 oznacza brakujące dane i zacznie ignorować tę wartość.</p>
 <p>Zauważ, że jeśli spodziewasz się brakujących wartości w danych testowych, ale sieć była trenowana na danych bez żadnych brakujących wartości, sieć nie nauczy się ignorować brakujących wartości! W tej sytuacji powinieneś sztucznie wygenerować próbki treningowe z brakującymi wpisami: skopiuj kilka próbek treningowych kilka razy i opuść niektóre cechy, które spodziewasz się, że prawdopodobnie będą brakować w danych testowych.</p>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section>
+</section>
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -779,7 +806,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
       <a href="./deeplearning.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Deep learning</span></span>
       </a>          
@@ -791,11 +820,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">Automatyczna analiza obrazu, Dariusz Majerek</div>   
     <div class="nav-footer-right">Książka została napisana w <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>
+
 
 
 </body></html>

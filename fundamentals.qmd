@@ -103,9 +103,10 @@ Podobnie jak w przypadku walidacji typu *hold-out,* metoda ta nie zwalnia z uży
 
 ![Walidacja krzyżowa K-krotna](images/Zrzut%20ekranu%202023-02-27%20o%2009.14.34.png){#fig-fund2 width="600"}
 
-Schematycznie, K-krotna walidacja krzyżowa wygląda jak na @fig-fund2. Oto prosta implementacja pseudokodu w R.
+Schematycznie, K-krotna walidacja krzyżowa wygląda jak na @fig-fund2.
+Oto prosta implementacja pseudokodu w R.
 
-```{r}
+``` r
 #| eval: false
 k <- 4
 indices <- sample(1:nrow(data))
@@ -182,7 +183,7 @@ Aby ułatwić uczenie się sieci, twoje dane powinny mieć następujące cechy:
 Zazwyczaj będziesz normalizował cechy zarówno w danych treningowych, jak i testowych.
 W tym przypadku będziesz chciał obliczyć średnią i odchylenie standardowe tylko na danych treningowych, a następnie zastosować je zarówno do danych treningowych, jak i testowych.
 
-```{r}
+``` r
 #| eval: false
 
 mean <- apply(train_data, 2, mean) # <1>
@@ -190,7 +191,6 @@ std <- apply(train_data, 2, sd)
 
 train_data <- scale(train_data, center = mean, scale = std) # <2>
 test_data <- scale(test_data, center = mean, scale = std)
-
 ```
 
 1.  oblicz średnią i odchylenie standardowe na zbiorze uczącym;
