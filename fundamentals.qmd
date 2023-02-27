@@ -209,12 +209,12 @@ W tej sytuacji powinieneś sztucznie wygenerować próbki treningowe z brakując
 
 Zacznijmy od nauczenia sieci neuronowej do rozpoznawania cyfr na podstawie obrazów prezentowany wcześniej.
 
-```{r}
+```r
 library(keras)
 ```
 
 
-```{r}
+```r
 #| cache: true
 mnist <- dataset_mnist()
 train_images <- mnist$train$x
@@ -291,7 +291,7 @@ Niestety, nie ma magicznej formuły, aby określić właściwą liczbę warstw l
 Musisz ocenić szereg różnych architektur (oczywiście na zbiorze walidacyjnym, nie na zbiorze testowym), aby znaleźć właściwy rozmiar modelu dla twoich danych.
 Ogólny tok postępowania w celu znalezienia odpowiedniego rozmiaru modelu polega na rozpoczęciu od stosunkowo niewielkiej liczby warstw i parametrów, a następnie zwiększaniu rozmiaru warstw lub dodawaniu nowych warstw, dopóki nie zobaczysz malejących zwrotów w odniesieniu do utraty walidacji.
 
-```{r}
+```r
 #| cache: true
 network <- keras_model_sequential() %>%
   layer_dense(units = 128, activation = "relu", input_shape = c(28 * 28)) %>%
@@ -333,7 +333,7 @@ Koszt ten występuje w dwóch postaciach:
 W `keras`, regularyzacja wagowa jest dodawana poprzez dodanie instancji regularyzatora wagowego do warstw.
 Należy pamiętać, że regularyzacja jest stosowana do sieci tylko na etapie uczenia, dlatego na zbiorze testowym strata będzie mniejsza niż na treningowym.
 
-```{r}
+```r
 #| cache: true
 network <- keras_model_sequential() %>%
   layer_dense(units = 256, 
@@ -382,7 +382,7 @@ Dlaczego miałoby to pomóc w redukcji *overfitting*?
 Hinton mówi, że zainspirował go między innymi mechanizm zapobiegania oszustwom stosowany przez banki.
 Mówiąc jego własnymi słowami: "Poszedłem do swojego banku. Kasjerzy ciągle się zmieniali i zapytałem jednego z nich, dlaczego. Powiedział, że nie wie, ale są często przenoszeni. Uznałem, że musi to być spowodowane tym, że skuteczne oszukanie banku wymagałoby współpracy między pracownikami. To uświadomiło mi, że losowe usuwanie różnych podzbiorów neuronów na każdym przykładzie zapobiegnie spiskom, a tym samym zmniejszy *overfitting*." Główna idea polega na tym, że wprowadzenie szumu do wartości wyjściowych warstwy może rozbić przypadkowe wzorce, które nie są istotne (co Hinton określa jako spiski), które sieć zacznie zapamiętywać, jeśli nie będzie w niej szumu.
 
-```{r}
+```r
 #| cache: true
 network <- keras_model_sequential() %>%
   layer_dense(units = 512, 
