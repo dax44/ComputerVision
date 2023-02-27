@@ -1,0 +1,206 @@
+---
+output: html_document
+code-fold: show
+editor_options: 
+  chunk_output_type: console
+---
+
+# Fundamenty DNN
+
+Zanim przystąpimy do uczenia jakiejkolwiek sieci głębokiego uczenia trzeba poznać najważniejsze elementy niemal każdej sieci neuronowej.
+Zaczniemy od kluczowego nazewnictwa, którego będziemy używać w dalszej części książki.
+
+-   próbka lub wejście (ang. *sample/input*) - jedna obserwacja wchodząca do sieci;
+-   predykcja lub wyjście (ang. *prediction/output*) - to co z sieci wychodzi;
+-   cel (ang. *target*) - cel, to co twój model powinien przewidzieć;
+-   błąd predykcji lub strata (ang. *prediction error/loss value*) - miara błędu kwantyfikująca różnicę pomiędzy celem i predykcją;
+-   klasy (ang. *classes*) - zbiór możliwych wartości (etykiet) zmiennej wynikowej;
+-   etykieta (ang. *label*) - etykieta pojedynczej instancji, przykładowo obserwacja nr 1498 ma etykietę "kot";
+-   klasyfikacja dwustanowa (ang. *binary classification*) - zadanie w którym zmienna wynikowa ma dokładnie dwie wykluczające się klasy;
+-   klasyfikacja wielostanowa (ang. *multiclass classification*) - zadanie w którym zmienna wynikowa ma więcej niż dwie wykluczające się klasy;
+-   klasyfikacja wieloetykietowa (ang. *multilabel classification*) - zadanie w którym jednej próbce można przypisać wiele klas wykluczających się, np. gdy na zdjęciu widać zarówno kot, jak i psa, to wyjście z sieci powinno dawać dwie etykiety: "kot", "pies";
+-   regresja skalarna (ang. *scalar regression*) - zadanie w którym wartość docelowa ma charakter ciągłej wartości skalarnej . Przykładowo jeśli przewidujemy cenę nieruchomości;
+-   regresja wektorowa (ang. *vector regression*) - zadanie, w którym celem jest zestaw ciągłych wartości (np. ciągły wektor). Przykład, gdy celem twojej predykcji są współrzędne wierzchołków prostokąta obejmującego obiekt na zdjęciu;
+-   partia lub wsad (ang. *batch/mini-batch*) - mały zestaw probek, zwykle składający się z od 8 do 128 próbek przetwarzanych jednocześnie przez model. Najczęściej wielkość partii jest potęga 2 (ma to ułatwić ładowanie próbek do pamięci procesora graficznego). Partia jest używana do jednej aktualizacji wag modelu.
+
+W uczeniu maszynowym, celem jest osiągnięcie modeli, które generalizują, czyli dobrze radzą sobie z nigdy wcześniej nie widzianymi danymi, a *overfitting* jest główną przeszkodą.
+Możesz kontrolować tylko to, co możesz zaobserwować, więc bardzo ważne jest, aby móc wiarygodnie zmierzyć zdolność generalizacji twojego modelu.
+W kolejnych rozdziałach omówione są strategie łagodzenia *overfitting* i maksymalizacji generalizacji.
+W tym rozdziale skupimy się na tym, jak mierzyć generalizację, czyli jak oceniać modele uczenia maszynowego.
+
+## Podział na zbiór uczący, walidacyjny i testowy
+
+Ocena modelu zawsze sprowadza się do podzielenia dostępnych danych na trzy zestawy: treningowy, walidacyjny i testowy.
+Trenujesz na danych treningowych i oceniasz swój model na danych walidacyjnych.
+Kiedy model jest już gotowy do użycia, testujesz go po raz ostatni na danych testowych.
+
+Możesz zapytać, dlaczego nie mieć dwóch zestawów: treningowego i testowego?
+Trenowałbyś na danych treningowych i oceniałbyś na danych testowych.
+To przecież o wiele prostsze!
+
+Powodem jest to, że opracowanie modelu zawsze wiąże się z dostrojeniem jego konfiguracji: na przykład wyborem liczby warstw lub rozmiaru warstw (zwanych hiperparametrami modelu, aby odróżnić je od parametrów, które są wagami sieci).
+Tuningu tego dokonasz, wykorzystując jako sygnał zwrotny wydajność modelu na danych walidacyjnych[^fundamentals-1].
+W istocie, to strojenie jest formą uczenia się: poszukiwaniem dobrej konfiguracji w pewnej przestrzeni parametrów.
+W rezultacie, dostrajanie hiperparametrów modelu na podstawie jego wydajności na zbiorze walidacyjnym może szybko doprowadzić do przeuczenia do zbioru walidacyjnego, nawet jeśli twój model nigdy nie jest bezpośrednio trenowany na nim.
+
+[^fundamentals-1]: mierzoną najczęściej funkcją straty
+
+Centralnym punktem tego fenomenu jest pojęcie wycieku informacji.
+Za każdym razem, gdy dostrajasz hiperparametr swojego modelu w oparciu o jego wydajność na zbiorze walidacyjnym, niektóre informacje o danych walidacyjnych wyciekają do modelu.
+Jeśli zrobisz to tylko raz, dla jednego parametru, wtedy bardzo niewiele bitów informacji wycieknie, a twój zbiór walidacyjny pozostanie wiarygodny do oceny modelu.
+Ale jeśli powtórzysz to wiele razy - przeprowadzając jeden eksperyment, oceniając go na zbiorze walidacyjnym i modyfikując w rezultacie swój model - wtedy wycieknie coraz większa ilość informacji o zbiorze walidacyjnym do modelu.
+
+Ostatecznie, skończysz z modelem, który działa podejrzanie dobrze na danych walidacyjnych, ponieważ właśnie po to go zoptymalizowałeś.
+Zależy Ci na wydajności na zupełnie nowych danych, a nie na danych walidacyjnych, więc musisz użyć zupełnie innego, nigdy wcześniej niewidzianego zbioru danych do oceny modelu: testowego zbioru danych.
+Twój model nie powinien mieć dostępu do żadnych informacji o zbiorze testowym, nawet pośrednio.
+Jeśli cokolwiek w modelu zostało dostrojone w oparciu o wydajność zbioru testowego, to Twoja miara uogólnienia będzie błędna.
+
+Podział danych na zbiory treningowe, walidacyjne i testowe może wydawać się prosty, ale istnieje kilka zaawansowanych sposobów, które mogą się przydać, gdy dostępnych jest niewiele danych.
+Przyjrzyjmy się trzem klasycznym przepisom oceny: zwykłej walidacji *hold-out*, walidacji krzyżowej K-krotnej oraz iterowanej krzyżowej walidacji K-krotnej z losowaniem.
+
+### Hold-out
+
+Wyodrębnij pewną część danych jako zbiór testowy.
+Trenuj na pozostałych danych i oceń na zbiorze testowym.
+Jak widziałeś w poprzednich rozdziałach, aby zapobiec wyciekowi informacji, nie powinieneś dostrajać swojego modelu na podstawie zbioru testowego, dlatego powinieneś również zarezerwować zbiór walidacyjny.
+
+![Walidacja hold-out](images/Zrzut%20ekranu%202023-02-27%20o%2009.14.23.png){#fig-fund1 fig-align="center" width="600"}
+
+Schematycznie, walidacja hold-out wygląda jak na @fig-fund1.
+Poniższy listing pokazuje prostą implementację.
+
+``` r
+#| eval: false
+indices <- sample(1:nrow(data), size = 0.80 * nrow(data)) # <1>
+
+evaluation_data  <- data[-indices, ]                      # <2>  
+
+training_data <- data[indices, ] # <3>
+
+model <- get_model() # <4>
+model %>% train(training_data) 
+validation_score <- model %>% evaluate(validation_data) 
+
+model <- get_model() # <5>
+model %>% train(data) 
+test_score <- model %>% evaluate(test_data)
+```
+
+1.  wylosuj indeksy zbioru uczącego;
+2.  zdefiniuj zbiór walidacyjny;
+3.  zdefiniuj zbiór uczący;
+4.  ucz model na zbiorze uczący i sprawdzaj dopasowanie na walidacyjnym;
+5.  naucz model na pełnym zestawie danych uczących (na połączonym zbiorze uczącym i walidacyjnym).
+
+Jest to najprostszy protokół oceny, ale ma jedną wadę: jeśli dostępnych danych jest mało, wtedy twoje zestawy walidacyjne i testowe mogą zawierać zbyt mało próbek, aby być statystycznie reprezentatywne dla danych.
+Łatwo to rozpoznać: jeśli różne losowe rundy tasowania danych przed podziałem kończą się uzyskaniem bardzo różnych miar wydajności modelu, to masz ten problem.
+
+### Walidacja krzyżowa K-krotna
+
+W tym podejściu dzielimy dane na K podzbiorów (foldów) o (w miarę) równym rozmiarze.Trenuj swój model na K-1 foldach, a na jednym pozostałym foldzie oceń jego jakość.
+Twój ostateczny wynik jest średnią z K uzyskanych wyników.
+Podobnie jak w przypadku walidacji typu *hold-out,* metoda ta nie zwalnia z używania odrębnego zbioru walidacyjnego do kalibracji modelu.
+
+![Walidacja krzyżowa K-krotna](images/Zrzut%20ekranu%202023-02-27%20o%2009.14.34.png){#fig-fund2 width="600"}
+
+Schematycznie, K-krotna walidacja krzyżowa wygląda jak na @fig-fund2. Oto prosta implementacja pseudokodu w R.
+
+```{r}
+#| eval: false
+k <- 4
+indices <- sample(1:nrow(data))
+folds <- cut(indices, breaks = k, labels = FALSE)
+validation_scores <- c()
+
+for (i in 1:k) {
+  validation_indices <- which(folds == i, arr.ind = TRUE)
+  validation_data <- data[validation_indices,] # <1>
+  training_data <- data[-validation_indices,] # <2>
+  
+  model <- get_model() # <3>
+  model %>% train(training_data)
+  results <- model %>% evaluate(validation_data)
+  validation_scores <- c(validation_scores, results$accuracy)
+}
+
+validation_score <- mean(validation_scores) # <4>
+
+model <- get_model()
+
+model %>% train(data) # <5>
+results <- model %>% evaluate(test_data)
+```
+
+1.  wybierz obserwacje do zbioru walidacyjnego;
+2.  użyj pozostałych danych jako zbioru uczącego (fold);
+3.  stwórz model i ucz go na zbiorze uczącym (foldzie);
+4.  oceń dopasowanie na zbiorze walidacyjnym (uśrednione z foldów);
+5.  ucz model na pełnym zestawie uczącym.
+
+### Iterowana metoda walidacji krzyżowej z losowaniem
+
+Przeznaczona jest dla sytuacji, w których masz stosunkowo mało dostępnych danych i musisz jak najdokładniej ocenić swój model.
+Polega ona na wielokrotnym zastosowaniu K-krotnej walidacji, tasując dane za każdym razem przed podzieleniem ich na K sposobów.
+Końcowy wynik jest średnią z wyników uzyskanych w każdym przebiegu K-krotnej walidacji.
+Zauważ, że kończysz szkolenie i ocenę P \* K modeli (gdzie P to liczba iteracji, których używasz), co może być bardzo kosztowne.
+
+W literaturze tematu metoda ta występuje również pod nazwą K-krotnego sprawdzianu krzyżowego z powtórzeniami.
+
+### Uwagi do resamplingu
+
+-   Reprezentatywność danych - chcesz, aby zarówno zbiór treningowy, jak i testowy były reprezentatywne dla danych. Na przykład, jeśli próbujesz sklasyfikować obrazy cyfr i zaczynasz od tablicy próbek, gdzie próbki są uporządkowane według ich klasy, to biorąc pierwsze 80% tablicy jako zbiór treningowy, a pozostałe 20% jako testowy, twój zbiór treningowy będzie zawierał tylko klasy 0-7, podczas gdy twój zbiór testowy zawiera tylko klasy 8-9. Wydaje się to niedorzecznym błędem, ale jest zaskakująco powszechne. Z tego powodu, zazwyczaj powinieneś losowo przetasować swoje dane przed podzieleniem ich na zestawy treningowe i testowe.
+-   Oś czasu - jeśli próbujesz przewidzieć przyszłe wartości biorąc pod uwagę przeszłość (na przykład, pogoda jutro, zmiany cen akcji, i tak dalej), nie powinieneś losowo tasować swoich danych przed ich podziałem, ponieważ robiąc to, stworzysz czasowy wyciek danych: twój model będzie skutecznie trenowany na danych z przyszłości. W takich sytuacjach zawsze powinieneś upewnić się, że wszystkie dane w twoim zestawie testowym są potomne w stosunku do danych w zestawie treningowym.
+-   Redundancja w danych - Jeśli niektóre obserwacje pojawiają się dwukrotnie (co jest dość powszechne w przypadku danych ze świata rzeczywistego), to przetasowanie danych i podzielenie ich na zbiór treningowy i walidacyjny spowoduje redundancję pomiędzy zbiorem treningowym i walidacyjnym. W efekcie, będziesz testował na części danych treningowych, co jest najgorszą rzeczą jaką możesz zrobić! Upewnij się, że twój zestaw treningowy i zestaw walidacyjny są rozłączne.
+
+## Przygotowanie danych
+
+Wiele technik wstępnego przetwarzania danych i inżynierii cech jest specyficznych dla danej dziedziny (np. specyficznych dla danych tekstowych lub danych obrazowych); omówimy je w kolejnych rozdziałach, gdy napotkamy je w praktycznych przykładach.
+Na razie zajmiemy się podstawami, które są wspólne dla wszystkich domen danych.
+Skupimy się na najważniejszych.
+
+### Wektoryzacja
+
+Wszystkie wejścia i cele w sieci neuronowej muszą być tensorami danych zmiennoprzecinkowych (lub, w szczególnych przypadkach, tensorami liczb całkowitych).
+Jakiekolwiek dane, które chcesz przetworzyć - dźwięk, obraz, tekst - musisz najpierw zamienić na tensory, co nazywamy wektoryzacją danych.
+Na przykład, jeśli zajmujemy się automatyczna analizą tekstu, to konieczna jest transformacja wyrazów metodą *one-hot encoding*, która zamieni nam wyrazy na zestaw zmiennych zmiennoprzecinkowych.
+W przykładach klasyfikacji cyfr dane były już w postaci wektorowej, więc można było pominąć ten krok.
+
+### Normalizacja
+
+W przykładzie klasyfikacji cyfr, zacząłeś od danych obrazu zakodowanych jako liczby całkowite z zakresu 0-255, kodujące wartości w skali szarości.
+Zanim wprowadziłeś te dane do sieci, musiałeś podzielić je przez 255, aby uzyskać wartości zmiennoprzecinkowe z zakresu 0-1.
+Podobnie, przy przewidywaniu cen domów, zacząłeś od cech, które miały różne zakresy - niektóre cechy miały małe wartości zmiennoprzecinkowe, inne miały dość duże wartości całkowite.
+Zanim wprowadziłeś te dane do swojej sieci, musiałeś znormalizować każdą cechę niezależnie, tak aby jej odchylenie standardowe wynosiło 1, a średnia 0.
+
+Ogólnie rzecz biorąc, nie jest bezpiecznie podawać do sieci neuronowej danych, które przyjmują stosunkowo duże wartości (na przykład wielocyfrowe liczby całkowite, które są znacznie większe niż wartości początkowe przyjmowane przez wagi sieci) lub dane, które są niejednorodne (na przykład dane, w których jedna cecha jest w zakresie 0-1, a inna w zakresie 100-200).
+Takie postępowanie może wywołać duże aktualizacje gradientu, które uniemożliwią sieci osiągnięcie zbieżności.
+Aby ułatwić uczenie się sieci, twoje dane powinny mieć następujące cechy:
+
+-   Przyjmuj małe wartości - większość wartości powinna być w zakresie 0-1.
+-   Zachowaj jednorodność - to znaczy, że wszystkie cechy powinny przyjmować wartości w mniej więcej tym samym zakresie.
+
+Zazwyczaj będziesz normalizował cechy zarówno w danych treningowych, jak i testowych.
+W tym przypadku będziesz chciał obliczyć średnią i odchylenie standardowe tylko na danych treningowych, a następnie zastosować je zarówno do danych treningowych, jak i testowych.
+
+```{r}
+#| eval: false
+
+mean <- apply(train_data, 2, mean) # <1>
+std <- apply(train_data, 2, sd)
+
+train_data <- scale(train_data, center = mean, scale = std) # <2>
+test_data <- scale(test_data, center = mean, scale = std)
+
+```
+
+1.  oblicz średnią i odchylenie standardowe na zbiorze uczącym;
+2.  zastosuj obliczone parametry do zbioru uczącego i testowego.
+
+### Usuń braki danych
+
+Czasami w danych mogą pojawić się brakujące wartości.
+Genralnie, w sieciach neuronowych bezpiecznie jest wprowadzić brakujące wartości jako 0, pod warunkiem, że 0 nie jest już wartością znaczącą.
+Sieć nauczy się z ekspozycji na dane, że wartość 0 oznacza brakujące dane i zacznie ignorować tę wartość.
+
+Zauważ, że jeśli spodziewasz się brakujących wartości w danych testowych, ale sieć była trenowana na danych bez żadnych brakujących wartości, sieć nie nauczy się ignorować brakujących wartości!
+W tej sytuacji powinieneś sztucznie wygenerować próbki treningowe z brakującymi wpisami: skopiuj kilka próbek treningowych kilka razy i opuść niektóre cechy, które spodziewasz się, że prawdopodobnie będą brakować w danych testowych.

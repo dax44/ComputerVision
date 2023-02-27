@@ -108,7 +108,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./fundamentals.html" rel="next">
 <link href="./fourier.html" rel="prev">
 <link href="./cover.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -236,6 +236,11 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./fundamentals.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Fundamenty DNN</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Bibliografia</a>
   </div>
 </li>
@@ -295,7 +300,7 @@ div.csl-indent {
 <p>System uczenia maszynowego jest raczej uczony niż programowany. Przedstawia się mu wiele przykładów związanych z zadaniem, a on znajduje w nich strukturę statystyczną, która w końcu pozwala mu wymyślić reguły automatyzacji zadania. Na przykład, jeśli chciałbyś zautomatyzować zadanie oznaczania zdjęć z wakacji, mógłbyś przedstawić systemowi uczenia maszynowego wiele przykładów zdjęć już oznaczonych przez ludzi, a system nauczyłby się statystycznych reguł kojarzenia konkretnych zdjęć z konkretnymi tagami.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://pbs.twimg.com/media/E6378eBUUAMmLfK?format=jpg&amp;name=medium.png" class="img-fluid figure-img" width="400"></p>
+<figure class="figure"><p><img src="images/tw1.jpeg" class="img-fluid figure-img" width="400"></p>
 </figure>
 </div></div><p>Chociaż uczenie maszynowe zaczęło się rozwijać dopiero w latach 90-tych, szybko stało się najpopularniejszą i odnoszącą największe sukcesy dziedziną AI, a trend ten jest napędzany przez dostępność szybszego sprzętu i większych zbiorów danych. Uczenie maszynowe jest ściśle związane ze statystyką matematyczną, ale różni się od niej na kilka ważnych sposobów. W przeciwieństwie do statystyki, uczenie maszynowe ma tendencję do zajmowania się dużymi, złożonymi zbiorami danych (takimi jak zbiór milionów obrazów, z których każdy składa się z dziesiątek tysięcy pikseli), dla których klasyczna analiza statystyczna byłaby niepraktyczna. W rezultacie, uczenie maszynowe, a zwłaszcza głębokie uczenie, wykazuje stosunkowo mało teorii matematycznej - być może zbyt mało - i jest zorientowane na inżynierię. Jest to praktyczna dyscyplina, w której pomysły są sprawdzane empirycznie znacznie częściej niż teoretycznie.</p>
 <section id="uczenie-się-reprezentacji-na-podstawie-danych" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="uczenie-się-reprezentacji-na-podstawie-danych">
@@ -352,7 +357,7 @@ div.csl-indent {
 <div class="page-columns page-full"><p>W 2011 roku Dan Ciresan z IDSIA zaczął wygrywać akademickie konkursy klasyfikacji obrazów za pomocą trenowanych na GPU głębokich sieci neuronowych - był to pierwszy praktyczny sukces nowoczesnego uczenia głębokiego. Jednak przełomowy moment nastąpił w 2012 roku, gdy grupa Hintona wzięła udział w corocznym wyzwaniu ImageNet dotyczącym klasyfikacji obrazów na dużą skalę. Wyzwanie ImageNet było w tamtym czasie wyjątkowo trudne, polegało na klasyfikacji kolorowych obrazów o wysokiej rozdzielczości do 1000 różnych kategorii po przeszkoleniu na 1,4 mln obrazów. W 2011 roku dokładność zwycięskiego modelu, opartego na klasycznym podejściu do widzenia komputerowego, wyniosła zaledwie 74,3%. Następnie, w 2012 roku, zespół kierowany przez Alexa Krizhevsky’ego i wspierany przez Geoffreya Hintona był w stanie osiągnąć dokładność w pierwszej piątce<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> na poziomie 83,6% - był to znaczący przełom. Od tego czasu co roku konkurs był zdominowany przez głębokie konwencjonalne sieci neuronowe. W 2015 roku zwycięzca osiągnął dokładność 96,4%, a zadanie klasyfikacji na ImageNet uznano za całkowicie rozwiązany problem.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;(ang. <em>top 5 accuracy</em>) <em>-</em> oznacza, że wśród 5 kategorii z najwyższym prawdopodobieństwem jest prawdziwa klasa</p></li></div></div>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://pbs.twimg.com/media/FfZz5e8VUAAaWlE?format=jpg&amp;name=900x900.png" class="img-fluid figure-img" width="400"></p>
+<figure class="figure"><p><img src="images/tw2.jpeg" class="img-fluid figure-img" width="400"></p>
 </figure>
 </div></div><p>Od 2012 r. głębokie konwolucyjne sieci neuronowe (CovNets - <em>Convolutional Networks</em>) stały się algorytmem pierwszego wyboru dla wszystkich zadań widzenia komputerowego. Na najważniejszych konferencjach poświęconych widzeniu komputerowemu w 2015 i 2016 r. niemal niemożliwe było znalezienie prezentacji, które w jakiejś formie nie wiązałyby się z CovNets. Jednocześnie głębokie uczenie znalazło zastosowanie w wielu innych typach problemów, takich jak np. przetwarzanie języka naturalnego. W szerokim zakresie zastosowań całkowicie zastąpiło klasyczne modele SVM i drzewa decyzyjne. Na przykład przez kilka lat Europejska Organizacja Badań Jądrowych (CERN), używała metod opartych na drzewach decyzyjnych do analizy danych cząstek z detektora ATLAS w Wielkim Zderzaczu Hadronów (LHC); ale CERN ostatecznie przeszedł na głębokie sieci neuronowe oparte na Keras ze względu na ich wyższą wydajność i łatwość szkolenia na dużych zbiorach danych.</p>
 <p>Podstawowym powodem, dla którego uczenie głębokie odniosło sukces tak szybko, jest to, że oferowało lepszą wydajność w wielu problemach. Ale to nie jest jedyny powód. Głębokie uczenie ułatwia również rozwiązywanie problemów, ponieważ całkowicie automatyzuje to, co kiedyś było najbardziej kluczowym krokiem w procesie uczenia maszynowego: inżynierię cech.</p>
@@ -454,7 +459,7 @@ Zagrożenie
 <p>Podstawowym elementem konstrukcyjnym sieci neuronowych jest warstwa, moduł przetwarzania danych, o którym można myśleć jak o filtrze dla danych. Niektóre dane przychodzą i wychodzą w bardziej użytecznej formie. W szczególności, warstwy wyodrębniają reprezentacje z danych, które są do nich wprowadzane - miejmy nadzieję, że reprezentacje, które są bardziej znaczące dla danego problemu. Większość głębokiego uczenia polega na łączeniu prostych warstw, które implementują formę stopniowej destylacji danych. Model głębokiego uczenia jest jak sito do przetwarzania danych, złożone z szeregu coraz bardziej wyrafinowanych filtrów danych - warstw.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://pbs.twimg.com/media/FVwT8YYXEAE7Gfw?format=jpg&amp;name=medium.png" class="img-fluid figure-img" width="400"></p>
+<figure class="figure"><p><img src="images/tw3.jpeg" class="img-fluid figure-img" width="400"></p>
 </figure>
 </div></div><p>Nasza sieć składa się z dwóch warstw, które są gęsto połączonymi (zwanymi też w pełni połączonymi - ang. <em>fully connected</em>) warstwami neuronowymi. Druga (i ostatnia) warstwa jest 10-kierunkową warstwą softmax, co oznacza, że zwróci tablicę 10 wyników prawdopodobieństwa (sumujących się do 1). Każdy wynik będzie oznaczał prawdopodobieństwo, że aktualny obraz cyfry należy do jednej z naszych 10 klas cyfr.</p>
 <p>Aby sieć była gotowa do treningu, musimy wybrać jeszcze trzy rzeczy, w ramach kroku kompilacji:</p>
@@ -810,7 +815,7 @@ Zagrożenie
 <p>rozpoczynamy iteracyjne uczenie przygotowanej sieci. Będzie ona realizowana w 5 epokach na partiach danych składających się ze 128 obserwacji.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://pbs.twimg.com/media/EYUEx6GXQAYAqFS?format=jpg&amp;name=medium.png" class="img-fluid figure-img" width="400"></p>
+<figure class="figure"><p><img src="images/tw4.jpeg" class="img-fluid figure-img" width="400"></p>
 </figure>
 </div></div><div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -823,6 +828,31 @@ Adnotacja
 </div>
 <div class="callout-body-container callout-body">
 <p>Bardzo pomocne w zrozumieniu zasady działania sieci neuronowych na przykładzie (bardzo podobnym do naszego) może być obejrzenie cyklu 4 filmów sieciach neuronowych kanału <a href="https://youtu.be/aircAruvnKk">3Blue1Brown</a></p>
+</div>
+</div>
+<div class="cell">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># lista funkcji straty pakietu keras</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="st">"package:keras"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">_</span>, pattern <span class="op">=</span> <span class="st">"^loss_"</span>, value <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code> [1] "loss_binary_crossentropy"            
+ [2] "loss_categorical_crossentropy"       
+ [3] "loss_categorical_hinge"              
+ [4] "loss_cosine_proximity"               
+ [5] "loss_cosine_similarity"              
+ [6] "loss_hinge"                          
+ [7] "loss_huber"                          
+ [8] "loss_kl_divergence"                  
+ [9] "loss_kullback_leibler_divergence"    
+[10] "loss_logcosh"                        
+[11] "loss_mean_absolute_error"            
+[12] "loss_mean_absolute_percentage_error" 
+[13] "loss_mean_squared_error"             
+[14] "loss_mean_squared_logarithmic_error" 
+[15] "loss_poisson"                        
+[16] "loss_sparse_categorical_crossentropy"
+[17] "loss_squared_hinge"                  </code></pre>
 </div>
 </div>
 
@@ -1174,8 +1204,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
-        <span class="nav-page-text">Bibliografia</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./fundamentals.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Fundamenty DNN</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

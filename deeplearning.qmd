@@ -23,7 +23,7 @@ System uczenia maszynowego jest raczej uczony niż programowany.
 Przedstawia się mu wiele przykładów związanych z zadaniem, a on znajduje w nich strukturę statystyczną, która w końcu pozwala mu wymyślić reguły automatyzacji zadania.
 Na przykład, jeśli chciałbyś zautomatyzować zadanie oznaczania zdjęć z wakacji, mógłbyś przedstawić systemowi uczenia maszynowego wiele przykładów zdjęć już oznaczonych przez ludzi, a system nauczyłby się statystycznych reguł kojarzenia konkretnych zdjęć z konkretnymi tagami.
 
-![](https://pbs.twimg.com/media/E6378eBUUAMmLfK?format=jpg&name=medium){.column-margin fig-align="center" width="400"}
+![](images/tw1.jpeg){.column-margin fig-align="center" width="400"}
 
 Chociaż uczenie maszynowe zaczęło się rozwijać dopiero w latach 90-tych, szybko stało się najpopularniejszą i odnoszącą największe sukcesy dziedziną AI, a trend ten jest napędzany przez dostępność szybszego sprzętu i większych zbiorów danych.
 Uczenie maszynowe jest ściśle związane ze statystyką matematyczną, ale różni się od niej na kilka ważnych sposobów.
@@ -131,7 +131,7 @@ W 2015 roku zwycięzca osiągnął dokładność 96,4%, a zadanie klasyfikacji n
 
 [^deeplearning-1]: (ang. *top 5 accuracy*) *-* oznacza, że wśród 5 kategorii z najwyższym prawdopodobieństwem jest prawdziwa klasa
 
-![](https://pbs.twimg.com/media/FfZz5e8VUAAaWlE?format=jpg&name=900x900){.column-margin fig-align="center" width="400"}
+![](images/tw2.jpeg){.column-margin fig-align="center" width="400"}
 
 Od 2012 r.
 głębokie konwolucyjne sieci neuronowe (CovNets - *Convolutional Networks*) stały się algorytmem pierwszego wyboru dla wszystkich zadań widzenia komputerowego.
@@ -314,7 +314,7 @@ W szczególności, warstwy wyodrębniają reprezentacje z danych, które są do 
 Większość głębokiego uczenia polega na łączeniu prostych warstw, które implementują formę stopniowej destylacji danych.
 Model głębokiego uczenia jest jak sito do przetwarzania danych, złożone z szeregu coraz bardziej wyrafinowanych filtrów danych - warstw.
 
-![](https://pbs.twimg.com/media/FVwT8YYXEAE7Gfw?format=jpg&name=medium){.column-margin fig-align="center" width="400"}
+![](images/tw3.jpeg){.column-margin fig-align="center" width="400"}
 
 Nasza sieć składa się z dwóch warstw, które są gęsto połączonymi (zwanymi też w pełni połączonymi - ang. *fully connected*) warstwami neuronowymi.
 Druga (i ostatnia) warstwa jest 10-kierunkową warstwą softmax, co oznacza, że zwróci tablicę 10 wyników prawdopodobieństwa (sumujących się do 1).
@@ -762,8 +762,15 @@ network |>
 rozpoczynamy iteracyjne uczenie przygotowanej sieci.
 Będzie ona realizowana w 5 epokach na partiach danych składających się ze 128 obserwacji.
 
-![](https://pbs.twimg.com/media/EYUEx6GXQAYAqFS?format=jpg&name=medium){.column-margin fig-align="center" width="400"}
+![](images/tw4.jpeg){.column-margin fig-align="center" width="400"}
 
 ::: callout-note
 Bardzo pomocne w zrozumieniu zasady działania sieci neuronowych na przykładzie (bardzo podobnym do naszego) może być obejrzenie cyklu 4 filmów sieciach neuronowych kanału [3Blue1Brown](https://youtu.be/aircAruvnKk)
 :::
+
+```{r}
+# lista funkcji straty pakietu keras
+
+ls("package:keras") |> 
+  grep(x = _, pattern = "^loss_", value = T)
+```

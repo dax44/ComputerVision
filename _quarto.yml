@@ -38,6 +38,7 @@ book:
     - morpho.qmd
     - fourier.qmd
     - deeplearning.qmd
+    - fundamentals.qmd
     - references.qmd
 
 bibliography: references.bib
