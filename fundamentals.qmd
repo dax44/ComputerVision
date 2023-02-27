@@ -69,7 +69,7 @@ Jak widziałeś w poprzednich rozdziałach, aby zapobiec wyciekowi informacji, n
 Schematycznie, walidacja hold-out wygląda jak na @fig-fund1.
 Poniższy listing pokazuje prostą implementację.
 
-``` r
+```r
 #| eval: false
 indices <- sample(1:nrow(data), size = 0.80 * nrow(data)) # <1>
 
@@ -106,7 +106,7 @@ Podobnie jak w przypadku walidacji typu *hold-out,* metoda ta nie zwalnia z uży
 Schematycznie, K-krotna walidacja krzyżowa wygląda jak na @fig-fund2.
 Oto prosta implementacja pseudokodu w R.
 
-``` r
+```r
 #| eval: false
 k <- 4
 indices <- sample(1:nrow(data))
@@ -183,7 +183,7 @@ Aby ułatwić uczenie się sieci, twoje dane powinny mieć następujące cechy:
 Zazwyczaj będziesz normalizował cechy zarówno w danych treningowych, jak i testowych.
 W tym przypadku będziesz chciał obliczyć średnią i odchylenie standardowe tylko na danych treningowych, a następnie zastosować je zarówno do danych treningowych, jak i testowych.
 
-``` r
+```r
 #| eval: false
 
 mean <- apply(train_data, 2, mean) # <1>
@@ -210,9 +210,12 @@ W tej sytuacji powinieneś sztucznie wygenerować próbki treningowe z brakując
 Zacznijmy od nauczenia sieci neuronowej do rozpoznawania cyfr na podstawie obrazów prezentowany wcześniej.
 
 ```{r}
-#| cache: true
 library(keras)
+```
 
+
+```{r}
+#| cache: true
 mnist <- dataset_mnist()
 train_images <- mnist$train$x
 train_labels <- mnist$train$y
@@ -377,7 +380,7 @@ Czyli przykładowo jeśli warstwa miała współczynnik dropout 0,25, to w czasi
 Ta technika może wydawać się dziwna i przypadkowa.
 Dlaczego miałoby to pomóc w redukcji *overfitting*?
 Hinton mówi, że zainspirował go między innymi mechanizm zapobiegania oszustwom stosowany przez banki.
-Mówiąc jego własnymi słowami: "Poszedłem do swojego banku. Kasjerzy ciągle się zmieniali i zapytałem jednego z nich, dlaczego. Powiedział, że nie wie, ale są często przenoszeni. Uznałem, że musi to być spowodowane tym, że skuteczne oszukanie banku wymagałoby współpracy między pracownikami. To uświadomiło mi, że losowe usuwanie różnych podzbiorów neuronów na każdym przykładzie zapobiegnie spiskom, a tym samym zmniejszy *overfitting*. " Główna idea polega na tym, że wprowadzenie szumu do wartości wyjściowych warstwy może rozbić przypadkowe wzorce, które nie są istotne (co Hinton określa jako spiski), które sieć zacznie zapamiętywać, jeśli nie będzie w niej szumu.
+Mówiąc jego własnymi słowami: "Poszedłem do swojego banku. Kasjerzy ciągle się zmieniali i zapytałem jednego z nich, dlaczego. Powiedział, że nie wie, ale są często przenoszeni. Uznałem, że musi to być spowodowane tym, że skuteczne oszukanie banku wymagałoby współpracy między pracownikami. To uświadomiło mi, że losowe usuwanie różnych podzbiorów neuronów na każdym przykładzie zapobiegnie spiskom, a tym samym zmniejszy *overfitting*." Główna idea polega na tym, że wprowadzenie szumu do wartości wyjściowych warstwy może rozbić przypadkowe wzorce, które nie są istotne (co Hinton określa jako spiski), które sieć zacznie zapamiętywać, jeśli nie będzie w niej szumu.
 
 ```{r}
 #| cache: true
@@ -474,7 +477,7 @@ Kiedy już wiesz, na czym trenujesz, co optymalizujesz i jak ocenić swoje rozwi
 Najpierw jednak należy sformatować dane w taki sposób, aby można je było wprowadzić do modelu uczenia maszynowego - tutaj założymy głęboką sieć neuronową:
 
 -   Jak widziałeś wcześniej, twoje dane powinny być sformatowane jako tensory.
--   Wartości przyjmowane przez te tensory powinny być zazwyczaj skalowane do małych wartości: na przykład w zakresie \[-1, 1\] lub \[0, 1\].
+-   Wartości przyjmowane przez te tensory powinny być zazwyczaj skalowane do małych wartości: na przykład w zakresie [-1, 1] lub [0, 1].
 -   Jeśli różne cechy przyjmują wartości w różnych zakresach (dane heterogeniczne), to dane powinny być znormalizowane.
 -   Możesz dokonać inżynierii cech, szczególnie dla problemów z małą liczbą danych.
 
