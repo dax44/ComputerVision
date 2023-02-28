@@ -39,6 +39,7 @@ book:
     - fourier.qmd
     - deeplearning.qmd
     - fundamentals.qmd
+    - convolution.qmd
     - references.qmd
 
 bibliography: references.bib
@@ -53,10 +54,10 @@ format:
       gutter-width: 1.5rem
     lang: pl
     theme:
-      light: [journal, mycss.scss]
-      dark: [slate, mycss.scss]
-    code-link: true
+      light: [flatly, mycss.scss]
+      dark: [darkly, mycss.scss]
     code-fold: true
+    fig-align: center
 
 execute: 
   warning: false

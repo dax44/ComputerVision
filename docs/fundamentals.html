@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.203">
+<meta name="generator" content="quarto-1.3.234">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
 <title>Automatyczna analiza obrazu - 11&nbsp; Fundamenty DNN</title>
 <style>
 code{white-space: pre-wrap;}
@@ -17,6 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -82,6 +86,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -89,7 +94,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./convolution.html" rel="next">
 <link href="./deeplearning.html" rel="prev">
 <link href="./cover.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -102,7 +107,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -121,31 +127,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Zatwierdź"
   }
 }</script>
+
+
 </head>
+
 <body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fundamentals.html">&lt;span class='chapter-number'&gt;11&lt;/span&gt;&nbsp; &lt;span class='chapter-title'&gt;Fundamenty DNN&lt;/span&gt;</a></li></ol></nav>
-      <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fundamentals.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Fundamenty DNN</span></a></li></ol></nav>
+      <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Szukaj" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
+      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Automatyczna analiza obrazu</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://twitter.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
     <a href="https://github.com/dax44/ComputerVision/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="https://twitter.com/intent/tweet?url=%7Curl%7C" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+    <a href="https://twitter.com/intent/tweet?url=|url|" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Przełącz tryb ciemny"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Przełącz tryb czytnika">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
   </div>
@@ -155,12 +174,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Szukaj"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">Wstęp</a>
   </div>
@@ -222,61 +241,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./convolution.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sieci splotowe</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Bibliografia</a>
   </div>
 </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Spis treści</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
    
   <ul>
-<li>
-<a href="#podzia%C5%82-na-zbi%C3%B3r-ucz%C4%85cy-walidacyjny-i-testowy" id="toc-podział-na-zbiór-uczący-walidacyjny-i-testowy" class="nav-link active" data-scroll-target="#podzia%C5%82-na-zbi%C3%B3r-ucz%C4%85cy-walidacyjny-i-testowy"><span class="toc-section-number">11.1</span>  Podział na zbiór uczący, walidacyjny i testowy</a>
+  <li><a href="#podział-na-zbiór-uczący-walidacyjny-i-testowy" id="toc-podział-na-zbiór-uczący-walidacyjny-i-testowy" class="nav-link active" data-scroll-target="#podział-na-zbiór-uczący-walidacyjny-i-testowy"><span class="header-section-number">11.1</span> Podział na zbiór uczący, walidacyjny i testowy</a>
   <ul class="collapse">
-<li><a href="#hold-out" id="toc-hold-out" class="nav-link" data-scroll-target="#hold-out"><span class="toc-section-number">11.1.1</span>  Hold-out</a></li>
-  <li><a href="#walidacja-krzy%C5%BCowa-k-krotna" id="toc-walidacja-krzyżowa-k-krotna" class="nav-link" data-scroll-target="#walidacja-krzy%C5%BCowa-k-krotna"><span class="toc-section-number">11.1.2</span>  Walidacja krzyżowa K-krotna</a></li>
-  <li><a href="#iterowana-metoda-walidacji-krzy%C5%BCowej-z-losowaniem" id="toc-iterowana-metoda-walidacji-krzyżowej-z-losowaniem" class="nav-link" data-scroll-target="#iterowana-metoda-walidacji-krzy%C5%BCowej-z-losowaniem"><span class="toc-section-number">11.1.3</span>  Iterowana metoda walidacji krzyżowej z losowaniem</a></li>
-  <li><a href="#uwagi-do-resamplingu" id="toc-uwagi-do-resamplingu" class="nav-link" data-scroll-target="#uwagi-do-resamplingu"><span class="toc-section-number">11.1.4</span>  Uwagi do resamplingu</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#przygotowanie-danych" id="toc-przygotowanie-danych" class="nav-link" data-scroll-target="#przygotowanie-danych"><span class="toc-section-number">11.2</span>  Przygotowanie danych</a>
+  <li><a href="#hold-out" id="toc-hold-out" class="nav-link" data-scroll-target="#hold-out"><span class="header-section-number">11.1.1</span> Hold-out</a></li>
+  <li><a href="#walidacja-krzyżowa-k-krotna" id="toc-walidacja-krzyżowa-k-krotna" class="nav-link" data-scroll-target="#walidacja-krzyżowa-k-krotna"><span class="header-section-number">11.1.2</span> Walidacja krzyżowa K-krotna</a></li>
+  <li><a href="#iterowana-metoda-walidacji-krzyżowej-z-losowaniem" id="toc-iterowana-metoda-walidacji-krzyżowej-z-losowaniem" class="nav-link" data-scroll-target="#iterowana-metoda-walidacji-krzyżowej-z-losowaniem"><span class="header-section-number">11.1.3</span> Iterowana metoda walidacji krzyżowej z losowaniem</a></li>
+  <li><a href="#uwagi-do-resamplingu" id="toc-uwagi-do-resamplingu" class="nav-link" data-scroll-target="#uwagi-do-resamplingu"><span class="header-section-number">11.1.4</span> Uwagi do resamplingu</a></li>
+  </ul></li>
+  <li><a href="#przygotowanie-danych" id="toc-przygotowanie-danych" class="nav-link" data-scroll-target="#przygotowanie-danych"><span class="header-section-number">11.2</span> Przygotowanie danych</a>
   <ul class="collapse">
-<li><a href="#wektoryzacja" id="toc-wektoryzacja" class="nav-link" data-scroll-target="#wektoryzacja"><span class="toc-section-number">11.2.1</span>  Wektoryzacja</a></li>
-  <li><a href="#normalizacja" id="toc-normalizacja" class="nav-link" data-scroll-target="#normalizacja"><span class="toc-section-number">11.2.2</span>  Normalizacja</a></li>
-  <li><a href="#usu%C5%84-braki-danych" id="toc-usuń-braki-danych" class="nav-link" data-scroll-target="#usu%C5%84-braki-danych"><span class="toc-section-number">11.2.3</span>  Usuń braki danych</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#nadmierne-dopasowanie-i-niedopasowanie" id="toc-nadmierne-dopasowanie-i-niedopasowanie" class="nav-link" data-scroll-target="#nadmierne-dopasowanie-i-niedopasowanie"><span class="toc-section-number">11.3</span>  Nadmierne dopasowanie i niedopasowanie</a>
+  <li><a href="#wektoryzacja" id="toc-wektoryzacja" class="nav-link" data-scroll-target="#wektoryzacja"><span class="header-section-number">11.2.1</span> Wektoryzacja</a></li>
+  <li><a href="#normalizacja" id="toc-normalizacja" class="nav-link" data-scroll-target="#normalizacja"><span class="header-section-number">11.2.2</span> Normalizacja</a></li>
+  <li><a href="#usuń-braki-danych" id="toc-usuń-braki-danych" class="nav-link" data-scroll-target="#usuń-braki-danych"><span class="header-section-number">11.2.3</span> Usuń braki danych</a></li>
+  </ul></li>
+  <li><a href="#nadmierne-dopasowanie-i-niedopasowanie" id="toc-nadmierne-dopasowanie-i-niedopasowanie" class="nav-link" data-scroll-target="#nadmierne-dopasowanie-i-niedopasowanie"><span class="header-section-number">11.3</span> Nadmierne dopasowanie i niedopasowanie</a>
   <ul class="collapse">
-<li><a href="#redukcja-wielko%C5%9Bci-sieci" id="toc-redukcja-wielkości-sieci" class="nav-link" data-scroll-target="#redukcja-wielko%C5%9Bci-sieci"><span class="toc-section-number">11.3.1</span>  Redukcja wielkości sieci</a></li>
-  <li><a href="#regularyzacja-za-pomoc%C4%85-kar" id="toc-regularyzacja-za-pomocą-kar" class="nav-link" data-scroll-target="#regularyzacja-za-pomoc%C4%85-kar"><span class="toc-section-number">11.3.2</span>  Regularyzacja za pomocą kar</a></li>
-  <li><a href="#dropout" id="toc-dropout" class="nav-link" data-scroll-target="#dropout"><span class="toc-section-number">11.3.3</span>  Dropout</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#regu%C5%82a-post%C4%99powania-w-czasie-budowy-modelu" id="toc-reguła-postępowania-w-czasie-budowy-modelu" class="nav-link" data-scroll-target="#regu%C5%82a-post%C4%99powania-w-czasie-budowy-modelu"><span class="toc-section-number">11.4</span>  Reguła postępowania w czasie budowy modelu</a>
+  <li><a href="#redukcja-wielkości-sieci" id="toc-redukcja-wielkości-sieci" class="nav-link" data-scroll-target="#redukcja-wielkości-sieci"><span class="header-section-number">11.3.1</span> Redukcja wielkości sieci</a></li>
+  <li><a href="#regularyzacja-za-pomocą-kar" id="toc-regularyzacja-za-pomocą-kar" class="nav-link" data-scroll-target="#regularyzacja-za-pomocą-kar"><span class="header-section-number">11.3.2</span> Regularyzacja za pomocą kar</a></li>
+  <li><a href="#dropout" id="toc-dropout" class="nav-link" data-scroll-target="#dropout"><span class="header-section-number">11.3.3</span> Dropout</a></li>
+  </ul></li>
+  <li><a href="#reguła-postępowania-w-czasie-budowy-modelu" id="toc-reguła-postępowania-w-czasie-budowy-modelu" class="nav-link" data-scroll-target="#reguła-postępowania-w-czasie-budowy-modelu"><span class="header-section-number">11.4</span> Reguła postępowania w czasie budowy modelu</a>
   <ul class="collapse">
-<li><a href="#definiowanie-problemu-i-przygotowanie-zbioru-danych" id="toc-definiowanie-problemu-i-przygotowanie-zbioru-danych" class="nav-link" data-scroll-target="#definiowanie-problemu-i-przygotowanie-zbioru-danych"><span class="toc-section-number">11.4.1</span>  Definiowanie problemu i przygotowanie zbioru danych</a></li>
-  <li><a href="#okre%C5%9Blenie-miary-do-oceny-jako%C5%9Bci-dopasowania-modelu" id="toc-określenie-miary-do-oceny-jakości-dopasowania-modelu" class="nav-link" data-scroll-target="#okre%C5%9Blenie-miary-do-oceny-jako%C5%9Bci-dopasowania-modelu"><span class="toc-section-number">11.4.2</span>  Określenie miary do oceny jakości dopasowania modelu</a></li>
-  <li><a href="#okre%C5%9Blenie-techniki-oceny-wydajno%C5%9Bci-modelu" id="toc-określenie-techniki-oceny-wydajności-modelu" class="nav-link" data-scroll-target="#okre%C5%9Blenie-techniki-oceny-wydajno%C5%9Bci-modelu"><span class="toc-section-number">11.4.3</span>  Określenie techniki oceny wydajności modelu</a></li>
-  <li><a href="#przygotuj-dane" id="toc-przygotuj-dane" class="nav-link" data-scroll-target="#przygotuj-dane"><span class="toc-section-number">11.4.4</span>  Przygotuj dane</a></li>
-  <li><a href="#rozwijaj-modele-aby-osi%C4%85gn%C4%85%C4%87-lepsze-ni%C5%BC-bazowe" id="toc-rozwijaj-modele-aby-osiągnąć-lepsze-niż-bazowe" class="nav-link" data-scroll-target="#rozwijaj-modele-aby-osi%C4%85gn%C4%85%C4%87-lepsze-ni%C5%BC-bazowe"><span class="toc-section-number">11.4.5</span>  Rozwijaj modele aby osiągnąć lepsze niż bazowe</a></li>
-  <li><a href="#skalowanie-w-g%C3%B3r%C4%99" id="toc-skalowanie-w-górę" class="nav-link" data-scroll-target="#skalowanie-w-g%C3%B3r%C4%99"><span class="toc-section-number">11.4.6</span>  Skalowanie w górę</a></li>
-  <li><a href="#regularyzacja-modelu" id="toc-regularyzacja-modelu" class="nav-link" data-scroll-target="#regularyzacja-modelu"><span class="toc-section-number">11.4.7</span>  Regularyzacja modelu</a></li>
+  <li><a href="#definiowanie-problemu-i-przygotowanie-zbioru-danych" id="toc-definiowanie-problemu-i-przygotowanie-zbioru-danych" class="nav-link" data-scroll-target="#definiowanie-problemu-i-przygotowanie-zbioru-danych"><span class="header-section-number">11.4.1</span> Definiowanie problemu i przygotowanie zbioru danych</a></li>
+  <li><a href="#określenie-miary-do-oceny-jakości-dopasowania-modelu" id="toc-określenie-miary-do-oceny-jakości-dopasowania-modelu" class="nav-link" data-scroll-target="#określenie-miary-do-oceny-jakości-dopasowania-modelu"><span class="header-section-number">11.4.2</span> Określenie miary do oceny jakości dopasowania modelu</a></li>
+  <li><a href="#określenie-techniki-oceny-wydajności-modelu" id="toc-określenie-techniki-oceny-wydajności-modelu" class="nav-link" data-scroll-target="#określenie-techniki-oceny-wydajności-modelu"><span class="header-section-number">11.4.3</span> Określenie techniki oceny wydajności modelu</a></li>
+  <li><a href="#przygotuj-dane" id="toc-przygotuj-dane" class="nav-link" data-scroll-target="#przygotuj-dane"><span class="header-section-number">11.4.4</span> Przygotuj dane</a></li>
+  <li><a href="#rozwijaj-modele-aby-osiągnąć-lepsze-niż-bazowe" id="toc-rozwijaj-modele-aby-osiągnąć-lepsze-niż-bazowe" class="nav-link" data-scroll-target="#rozwijaj-modele-aby-osiągnąć-lepsze-niż-bazowe"><span class="header-section-number">11.4.5</span> Rozwijaj modele aby osiągnąć lepsze niż bazowe</a></li>
+  <li><a href="#skalowanie-w-górę" id="toc-skalowanie-w-górę" class="nav-link" data-scroll-target="#skalowanie-w-górę"><span class="header-section-number">11.4.6</span> Skalowanie w górę</a></li>
+  <li><a href="#regularyzacja-modelu" id="toc-regularyzacja-modelu" class="nav-link" data-scroll-target="#regularyzacja-modelu"><span class="header-section-number">11.4.7</span> Regularyzacja modelu</a></li>
+  </ul></li>
   </ul>
-</li>
-  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">
-<span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Fundamenty DNN</span>
-</h1>
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Fundamenty DNN</span></h1>
 </div>
 
 
@@ -289,7 +309,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
-</header><p>Zanim przystąpimy do uczenia jakiejkolwiek sieci głębokiego uczenia trzeba poznać najważniejsze elementy niemal każdej sieci neuronowej. Zaczniemy od kluczowego nazewnictwa, którego będziemy używać w dalszej części książki.</p>
+</header>
+
+<p>Zanim przystąpimy do uczenia jakiejkolwiek sieci głębokiego uczenia trzeba poznać najważniejsze elementy niemal każdej sieci neuronowej. Zaczniemy od kluczowego nazewnictwa, którego będziemy używać w dalszej części książki.</p>
 <ul>
 <li>próbka lub wejście (ang. <em>sample/input</em>) - jedna obserwacja wchodząca do sieci;</li>
 <li>predykcja lub wyjście (ang. <em>prediction/output</em>) - to co z sieci wychodzi;</li>
@@ -305,131 +327,138 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>partia lub wsad (ang. <em>batch/mini-batch</em>) - mały zestaw probek, zwykle składający się z od 8 do 128 próbek przetwarzanych jednocześnie przez model. Najczęściej wielkość partii jest potęga 2 (ma to ułatwić ładowanie próbek do pamięci procesora graficznego). Partia jest używana do jednej aktualizacji wag modelu.</li>
 </ul>
 <p>W uczeniu maszynowym, celem jest osiągnięcie modeli, które generalizują, czyli dobrze radzą sobie z nigdy wcześniej nie widzianymi danymi, a <em>overfitting</em> jest główną przeszkodą. Możesz kontrolować tylko to, co możesz zaobserwować, więc bardzo ważne jest, aby móc wiarygodnie zmierzyć zdolność generalizacji twojego modelu. W kolejnych rozdziałach omówione są strategie łagodzenia <em>overfitting</em> i maksymalizacji generalizacji. W tym rozdziale skupimy się na tym, jak mierzyć generalizację, czyli jak oceniać modele uczenia maszynowego.</p>
-<section id="podział-na-zbiór-uczący-walidacyjny-i-testowy" class="level2 page-columns page-full" data-number="11.1"><h2 data-number="11.1" class="anchored" data-anchor-id="podział-na-zbiór-uczący-walidacyjny-i-testowy">
-<span class="header-section-number">11.1</span> Podział na zbiór uczący, walidacyjny i testowy</h2>
+<section id="podział-na-zbiór-uczący-walidacyjny-i-testowy" class="level2 page-columns page-full" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="podział-na-zbiór-uczący-walidacyjny-i-testowy"><span class="header-section-number">11.1</span> Podział na zbiór uczący, walidacyjny i testowy</h2>
 <p>Ocena modelu zawsze sprowadza się do podzielenia dostępnych danych na trzy zestawy: treningowy, walidacyjny i testowy. Trenujesz na danych treningowych i oceniasz swój model na danych walidacyjnych. Kiedy model jest już gotowy do użycia, testujesz go po raz ostatni na danych testowych.</p>
 <p>Możesz zapytać, dlaczego nie mieć dwóch zestawów: treningowego i testowego? Trenowałbyś na danych treningowych i oceniałbyś na danych testowych. To przecież o wiele prostsze!</p>
 <div class="page-columns page-full"><p>Powodem jest to, że opracowanie modelu zawsze wiąże się z dostrojeniem jego konfiguracji: na przykład wyborem liczby warstw lub rozmiaru warstw (zwanych hiperparametrami modelu, aby odróżnić je od parametrów, które są wagami sieci). Tuningu tego dokonasz, wykorzystując jako sygnał zwrotny wydajność modelu na danych walidacyjnych<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. W istocie, to strojenie jest formą uczenia się: poszukiwaniem dobrej konfiguracji w pewnej przestrzeni parametrów. W rezultacie, dostrajanie hiperparametrów modelu na podstawie jego wydajności na zbiorze walidacyjnym może szybko doprowadzić do przeuczenia do zbioru walidacyjnego, nawet jeśli twój model nigdy nie jest bezpośrednio trenowany na nim.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;mierzoną najczęściej funkcją straty</p></li></div></div>
 <p>Centralnym punktem tego fenomenu jest pojęcie wycieku informacji. Za każdym razem, gdy dostrajasz hiperparametr swojego modelu w oparciu o jego wydajność na zbiorze walidacyjnym, niektóre informacje o danych walidacyjnych wyciekają do modelu. Jeśli zrobisz to tylko raz, dla jednego parametru, wtedy bardzo niewiele bitów informacji wycieknie, a twój zbiór walidacyjny pozostanie wiarygodny do oceny modelu. Ale jeśli powtórzysz to wiele razy - przeprowadzając jeden eksperyment, oceniając go na zbiorze walidacyjnym i modyfikując w rezultacie swój model - wtedy wycieknie coraz większa ilość informacji o zbiorze walidacyjnym do modelu.</p>
 <p>Ostatecznie, skończysz z modelem, który działa podejrzanie dobrze na danych walidacyjnych, ponieważ właśnie po to go zoptymalizowałeś. Zależy Ci na wydajności na zupełnie nowych danych, a nie na danych walidacyjnych, więc musisz użyć zupełnie innego, nigdy wcześniej niewidzianego zbioru danych do oceny modelu: testowego zbioru danych. Twój model nie powinien mieć dostępu do żadnych informacji o zbiorze testowym, nawet pośrednio. Jeśli cokolwiek w modelu zostało dostrojone w oparciu o wydajność zbioru testowego, to Twoja miara uogólnienia będzie błędna.</p>
 <p>Podział danych na zbiory treningowe, walidacyjne i testowe może wydawać się prosty, ale istnieje kilka zaawansowanych sposobów, które mogą się przydać, gdy dostępnych jest niewiele danych. Przyjrzyjmy się trzem klasycznym przepisom oceny: zwykłej walidacji <em>hold-out</em>, walidacji krzyżowej K-krotnej oraz iterowanej krzyżowej walidacji K-krotnej z losowaniem.</p>
-<section id="hold-out" class="level3" data-number="11.1.1"><h3 data-number="11.1.1" class="anchored" data-anchor-id="hold-out">
-<span class="header-section-number">11.1.1</span> Hold-out</h3>
+<section id="hold-out" class="level3" data-number="11.1.1">
+<h3 data-number="11.1.1" class="anchored" data-anchor-id="hold-out"><span class="header-section-number">11.1.1</span> Hold-out</h3>
 <p>Wyodrębnij pewną część danych jako zbiór testowy. Trenuj na pozostałych danych i oceń na zbiorze testowym. Jak widziałeś w poprzednich rozdziałach, aby zapobiec wyciekowi informacji, nie powinieneś dostrajać swojego modelu na podstawie zbioru testowego, dlatego powinieneś również zarezerwować zbiór walidacyjny.</p>
 <div id="fig-fund1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-27 o 09.14.23.png" class="img-fluid figure-img" width="600"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-27 o 09.14.23.png" class="img-fluid figure-img" width="600"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;11.1: Walidacja hold-out</figcaption><p></p>
 </figure>
 </div>
 <p>Schematycznie, walidacja hold-out wygląda jak na <a href="#fig-fund1">Rysunek&nbsp;<span>11.1</span></a>. Poniższy listing pokazuje prostą implementację.</p>
-<div class="sourceCode" id="annotated-cell-1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#| eval: false</span></span>
-<span><span class="va">indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">0.80</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">evaluation_data</span>  <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="op">-</span><span class="va">indices</span>, <span class="op">]</span></span>
-<span></span>
-<span><span class="va">training_data</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="va">indices</span>, <span class="op">]</span></span>
-<span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">get_model</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">train</span><span class="op">(</span><span class="va">training_data</span><span class="op">)</span> </span>
-<span><span class="va">validation_score</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">evaluate</span><span class="op">(</span><span class="va">validation_data</span><span class="op">)</span> </span>
-<span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">get_model</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">train</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> </span>
-<span><span class="va">test_score</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">evaluate</span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<dl>
+<div class="sourceCode" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-1-3" class="code-annotation-target"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a>indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data), <span class="at">size =</span> <span class="fl">0.80</span> <span class="sc">*</span> <span class="fu">nrow</span>(data))</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-1-4" class="code-annotation-target"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>evaluation_data  <span class="ot">&lt;-</span> data[<span class="sc">-</span>indices, ]</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-1-5" class="code-annotation-target"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a>training_data <span class="ot">&lt;-</span> data[indices, ]</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-1-6" class="code-annotation-target"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">get_model</span>()</span>
+<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>model <span class="sc">%&gt;%</span> <span class="fu">train</span>(training_data)</span>
+<span id="annotated-cell-1-8"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>validation_score <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span> <span class="fu">evaluate</span>(validation_data)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-1-9" class="code-annotation-target"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">get_model</span>()</span>
+<span id="annotated-cell-1-10"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a>model <span class="sc">%&gt;%</span> <span class="fu">train</span>(data)</span>
+<span id="annotated-cell-1-11"><a href="#annotated-cell-1-11" aria-hidden="true" tabindex="-1"></a>test_score <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span> <span class="fu">evaluate</span>(test_data)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="2" data-code-cell="annotated-cell-1" data-code-annotation="1">wylosuj indeksy zbioru uczącego;</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="1" data-code-lines="3">wylosuj indeksy zbioru uczącego;</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="4" data-code-cell="annotated-cell-1" data-code-annotation="2">zdefiniuj zbiór walidacyjny;</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="2" data-code-lines="4">zdefiniuj zbiór walidacyjny;</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="6" data-code-cell="annotated-cell-1" data-code-annotation="3">zdefiniuj zbiór uczący;</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="3" data-code-lines="5">zdefiniuj zbiór uczący;</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="8" data-code-cell="annotated-cell-1" data-code-annotation="4">ucz model na zbiorze uczący i sprawdzaj dopasowanie na walidacyjnym;</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="4" data-code-lines="6,7,8">ucz model na zbiorze uczący i sprawdzaj dopasowanie na walidacyjnym;</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-lines="12" data-code-cell="annotated-cell-1" data-code-annotation="5">naucz model na pełnym zestawie danych uczących (na połączonym zbiorze uczącym i walidacyjnym).</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="5" data-code-lines="9,10,11">naucz model na pełnym zestawie danych uczących (na połączonym zbiorze uczącym i walidacyjnym).</span>
 </dd>
 </dl>
 <p>Jest to najprostszy protokół oceny, ale ma jedną wadę: jeśli dostępnych danych jest mało, wtedy twoje zestawy walidacyjne i testowe mogą zawierać zbyt mało próbek, aby być statystycznie reprezentatywne dla danych. Łatwo to rozpoznać: jeśli różne losowe rundy tasowania danych przed podziałem kończą się uzyskaniem bardzo różnych miar wydajności modelu, to masz ten problem.</p>
-</section><section id="walidacja-krzyżowa-k-krotna" class="level3" data-number="11.1.2"><h3 data-number="11.1.2" class="anchored" data-anchor-id="walidacja-krzyżowa-k-krotna">
-<span class="header-section-number">11.1.2</span> Walidacja krzyżowa K-krotna</h3>
+</section>
+<section id="walidacja-krzyżowa-k-krotna" class="level3" data-number="11.1.2">
+<h3 data-number="11.1.2" class="anchored" data-anchor-id="walidacja-krzyżowa-k-krotna"><span class="header-section-number">11.1.2</span> Walidacja krzyżowa K-krotna</h3>
 <p>W tym podejściu dzielimy dane na K podzbiorów (foldów) o (w miarę) równym rozmiarze.Trenuj swój model na K-1 foldach, a na jednym pozostałym foldzie oceń jego jakość. Twój ostateczny wynik jest średnią z K uzyskanych wyników. Podobnie jak w przypadku walidacji typu <em>hold-out,</em> metoda ta nie zwalnia z używania odrębnego zbioru walidacyjnego do kalibracji modelu.</p>
 <div id="fig-fund2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-27 o 09.14.34.png" class="img-fluid figure-img" width="600"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-27 o 09.14.34.png" class="img-fluid figure-img" width="600"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;11.2: Walidacja krzyżowa K-krotna</figcaption><p></p>
 </figure>
 </div>
 <p>Schematycznie, K-krotna walidacja krzyżowa wygląda jak na <a href="#fig-fund2">Rysunek&nbsp;<span>11.2</span></a>. Oto prosta implementacja pseudokodu w R.</p>
-<div class="sourceCode" id="annotated-cell-2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#| eval: false</span></span>
-<span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
-<span><span class="va">indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">folds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">indices</span>, breaks <span class="op">=</span> <span class="va">k</span>, labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">validation_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">k</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">validation_indices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">folds</span> <span class="op">==</span> <span class="va">i</span>, arr.ind <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="va">validation_data</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="va">validation_indices</span>,<span class="op">]</span></span>
-<span>  <span class="va">training_data</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="op">-</span><span class="va">validation_indices</span>,<span class="op">]</span></span>
-<span>  </span>
-<span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">get_model</span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">train</span><span class="op">(</span><span class="va">training_data</span><span class="op">)</span></span>
-<span>  <span class="va">results</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">evaluate</span><span class="op">(</span><span class="va">validation_data</span><span class="op">)</span></span>
-<span>  <span class="va">validation_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">validation_scores</span>, <span class="va">results</span><span class="op">$</span><span class="va">accuracy</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">validation_score</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">validation_scores</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">get_model</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">train</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op">%&gt;%</span> <span class="fu">evaluate</span><span class="op">(</span><span class="va">test_data</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<dl>
+<div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data))</span>
+<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">cut</span>(indices, <span class="at">breaks =</span> k, <span class="at">labels =</span> <span class="cn">FALSE</span>)</span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>validation_scores <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) {</span>
+<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a>  validation_indices <span class="ot">&lt;-</span> <span class="fu">which</span>(folds <span class="sc">==</span> i, <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-2-10" class="code-annotation-target"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a>  validation_data <span class="ot">&lt;-</span> data[validation_indices,]</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-2-11" class="code-annotation-target"><a href="#annotated-cell-2-11" aria-hidden="true" tabindex="-1"></a>  training_data <span class="ot">&lt;-</span> data[<span class="sc">-</span>validation_indices,]</span>
+<span id="annotated-cell-2-12"><a href="#annotated-cell-2-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-2-13" class="code-annotation-target"><a href="#annotated-cell-2-13" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">get_model</span>()</span>
+<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14" aria-hidden="true" tabindex="-1"></a>  model <span class="sc">%&gt;%</span> <span class="fu">train</span>(training_data)</span>
+<span id="annotated-cell-2-15"><a href="#annotated-cell-2-15" aria-hidden="true" tabindex="-1"></a>  results <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span> <span class="fu">evaluate</span>(validation_data)</span>
+<span id="annotated-cell-2-16"><a href="#annotated-cell-2-16" aria-hidden="true" tabindex="-1"></a>  validation_scores <span class="ot">&lt;-</span> <span class="fu">c</span>(validation_scores, results<span class="sc">$</span>accuracy)</span>
+<span id="annotated-cell-2-17"><a href="#annotated-cell-2-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="annotated-cell-2-18"><a href="#annotated-cell-2-18" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-2-19" class="code-annotation-target"><a href="#annotated-cell-2-19" aria-hidden="true" tabindex="-1"></a>validation_score <span class="ot">&lt;-</span> <span class="fu">mean</span>(validation_scores)</span>
+<span id="annotated-cell-2-20"><a href="#annotated-cell-2-20" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-2-21" class="code-annotation-target"><a href="#annotated-cell-2-21" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">get_model</span>()</span>
+<span id="annotated-cell-2-22"><a href="#annotated-cell-2-22" aria-hidden="true" tabindex="-1"></a>model <span class="sc">%&gt;%</span> <span class="fu">train</span>(data) </span>
+<span id="annotated-cell-2-23"><a href="#annotated-cell-2-23" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span> <span class="fu">evaluate</span>(test_data)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="9" data-code-cell="annotated-cell-2" data-code-annotation="1">wybierz obserwacje do zbioru walidacyjnego;</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="1" data-code-lines="10">wybierz obserwacje do zbioru walidacyjnego;</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="10" data-code-cell="annotated-cell-2" data-code-annotation="2">użyj pozostałych danych jako zbioru uczącego (fold);</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="2" data-code-lines="11">użyj pozostałych danych jako zbioru uczącego (fold);</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="12" data-code-cell="annotated-cell-2" data-code-annotation="3">stwórz model i ucz go na zbiorze uczącym (foldzie);</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="3" data-code-lines="13">stwórz model i ucz go na zbiorze uczącym (foldzie);</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="18" data-code-cell="annotated-cell-2" data-code-annotation="4">oceń dopasowanie na zbiorze walidacyjnym (uśrednione z foldów);</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="4" data-code-lines="19">oceń dopasowanie na zbiorze walidacyjnym (uśrednione z foldów);</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-lines="22" data-code-cell="annotated-cell-2" data-code-annotation="5">ucz model na pełnym zestawie uczącym.</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="5" data-code-lines="21">ucz model na pełnym zestawie uczącym.</span>
 </dd>
-</dl></section><section id="iterowana-metoda-walidacji-krzyżowej-z-losowaniem" class="level3" data-number="11.1.3"><h3 data-number="11.1.3" class="anchored" data-anchor-id="iterowana-metoda-walidacji-krzyżowej-z-losowaniem">
-<span class="header-section-number">11.1.3</span> Iterowana metoda walidacji krzyżowej z losowaniem</h3>
+</dl>
+</section>
+<section id="iterowana-metoda-walidacji-krzyżowej-z-losowaniem" class="level3" data-number="11.1.3">
+<h3 data-number="11.1.3" class="anchored" data-anchor-id="iterowana-metoda-walidacji-krzyżowej-z-losowaniem"><span class="header-section-number">11.1.3</span> Iterowana metoda walidacji krzyżowej z losowaniem</h3>
 <p>Przeznaczona jest dla sytuacji, w których masz stosunkowo mało dostępnych danych i musisz jak najdokładniej ocenić swój model. Polega ona na wielokrotnym zastosowaniu K-krotnej walidacji, tasując dane za każdym razem przed podzieleniem ich na K sposobów. Końcowy wynik jest średnią z wyników uzyskanych w każdym przebiegu K-krotnej walidacji. Zauważ, że kończysz szkolenie i ocenę P * K modeli (gdzie P to liczba iteracji, których używasz), co może być bardzo kosztowne.</p>
 <p>W literaturze tematu metoda ta występuje również pod nazwą K-krotnego sprawdzianu krzyżowego z powtórzeniami.</p>
-</section><section id="uwagi-do-resamplingu" class="level3" data-number="11.1.4"><h3 data-number="11.1.4" class="anchored" data-anchor-id="uwagi-do-resamplingu">
-<span class="header-section-number">11.1.4</span> Uwagi do resamplingu</h3>
+</section>
+<section id="uwagi-do-resamplingu" class="level3" data-number="11.1.4">
+<h3 data-number="11.1.4" class="anchored" data-anchor-id="uwagi-do-resamplingu"><span class="header-section-number">11.1.4</span> Uwagi do resamplingu</h3>
 <ul>
 <li>Reprezentatywność danych - chcesz, aby zarówno zbiór treningowy, jak i testowy były reprezentatywne dla danych. Na przykład, jeśli próbujesz sklasyfikować obrazy cyfr i zaczynasz od tablicy próbek, gdzie próbki są uporządkowane według ich klasy, to biorąc pierwsze 80% tablicy jako zbiór treningowy, a pozostałe 20% jako testowy, twój zbiór treningowy będzie zawierał tylko klasy 0-7, podczas gdy twój zbiór testowy zawiera tylko klasy 8-9. Wydaje się to niedorzecznym błędem, ale jest zaskakująco powszechne. Z tego powodu, zazwyczaj powinieneś losowo przetasować swoje dane przed podzieleniem ich na zestawy treningowe i testowe.</li>
 <li>Oś czasu - jeśli próbujesz przewidzieć przyszłe wartości biorąc pod uwagę przeszłość (na przykład, pogoda jutro, zmiany cen akcji, i tak dalej), nie powinieneś losowo tasować swoich danych przed ich podziałem, ponieważ robiąc to, stworzysz czasowy wyciek danych: twój model będzie skutecznie trenowany na danych z przyszłości. W takich sytuacjach zawsze powinieneś upewnić się, że wszystkie dane w twoim zestawie testowym są potomne w stosunku do danych w zestawie treningowym.</li>
 <li>Redundancja w danych - Jeśli niektóre obserwacje pojawiają się dwukrotnie (co jest dość powszechne w przypadku danych ze świata rzeczywistego), to przetasowanie danych i podzielenie ich na zbiór treningowy i walidacyjny spowoduje redundancję pomiędzy zbiorem treningowym i walidacyjnym. W efekcie, będziesz testował na części danych treningowych, co jest najgorszą rzeczą jaką możesz zrobić! Upewnij się, że twój zestaw treningowy i zestaw walidacyjny są rozłączne.</li>
-</ul></section></section><section id="przygotowanie-danych" class="level2" data-number="11.2"><h2 data-number="11.2" class="anchored" data-anchor-id="przygotowanie-danych">
-<span class="header-section-number">11.2</span> Przygotowanie danych</h2>
+</ul>
+</section>
+</section>
+<section id="przygotowanie-danych" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="przygotowanie-danych"><span class="header-section-number">11.2</span> Przygotowanie danych</h2>
 <p>Wiele technik wstępnego przetwarzania danych i inżynierii cech jest specyficznych dla danej dziedziny (np. specyficznych dla danych tekstowych lub danych obrazowych); omówimy je w kolejnych rozdziałach, gdy napotkamy je w praktycznych przykładach. Na razie zajmiemy się podstawami, które są wspólne dla wszystkich domen danych. Skupimy się na najważniejszych.</p>
-<section id="wektoryzacja" class="level3" data-number="11.2.1"><h3 data-number="11.2.1" class="anchored" data-anchor-id="wektoryzacja">
-<span class="header-section-number">11.2.1</span> Wektoryzacja</h3>
+<section id="wektoryzacja" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="wektoryzacja"><span class="header-section-number">11.2.1</span> Wektoryzacja</h3>
 <p>Wszystkie wejścia i cele w sieci neuronowej muszą być tensorami danych zmiennoprzecinkowych (lub, w szczególnych przypadkach, tensorami liczb całkowitych). Jakiekolwiek dane, które chcesz przetworzyć - dźwięk, obraz, tekst - musisz najpierw zamienić na tensory, co nazywamy wektoryzacją danych. Na przykład, jeśli zajmujemy się automatyczna analizą tekstu, to konieczna jest transformacja wyrazów metodą <em>one-hot encoding</em>, która zamieni nam wyrazy na zestaw zmiennych zmiennoprzecinkowych. W przykładach klasyfikacji cyfr dane były już w postaci wektorowej, więc można było pominąć ten krok.</p>
-</section><section id="normalizacja" class="level3" data-number="11.2.2"><h3 data-number="11.2.2" class="anchored" data-anchor-id="normalizacja">
-<span class="header-section-number">11.2.2</span> Normalizacja</h3>
+</section>
+<section id="normalizacja" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="normalizacja"><span class="header-section-number">11.2.2</span> Normalizacja</h3>
 <p>W przykładzie klasyfikacji cyfr, zacząłeś od danych obrazu zakodowanych jako liczby całkowite z zakresu 0-255, kodujące wartości w skali szarości. Zanim wprowadziłeś te dane do sieci, musiałeś podzielić je przez 255, aby uzyskać wartości zmiennoprzecinkowe z zakresu 0-1. Podobnie, przy przewidywaniu cen domów, zacząłeś od cech, które miały różne zakresy - niektóre cechy miały małe wartości zmiennoprzecinkowe, inne miały dość duże wartości całkowite. Zanim wprowadziłeś te dane do swojej sieci, musiałeś znormalizować każdą cechę niezależnie, tak aby jej odchylenie standardowe wynosiło 1, a średnia 0.</p>
 <p>Ogólnie rzecz biorąc, nie jest bezpiecznie podawać do sieci neuronowej danych, które przyjmują stosunkowo duże wartości (na przykład wielocyfrowe liczby całkowite, które są znacznie większe niż wartości początkowe przyjmowane przez wagi sieci) lub dane, które są niejednorodne (na przykład dane, w których jedna cecha jest w zakresie 0-1, a inna w zakresie 100-200). Takie postępowanie może wywołać duże aktualizacje gradientu, które uniemożliwią sieci osiągnięcie zbieżności. Aby ułatwić uczenie się sieci, twoje dane powinny mieć następujące cechy:</p>
 <ul>
@@ -437,101 +466,148 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Zachowaj jednorodność - to znaczy, że wszystkie cechy powinny przyjmować wartości w mniej więcej tym samym zakresie.</li>
 </ul>
 <p>Zazwyczaj będziesz normalizował cechy zarówno w danych treningowych, jak i testowych. W tym przypadku będziesz chciał obliczyć średnią i odchylenie standardowe tylko na danych treningowych, a następnie zastosować je zarówno do danych treningowych, jak i testowych.</p>
-<div class="sourceCode" id="annotated-cell-3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#| eval: false</span></span>
-<span></span>
-<span><span class="va">mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">train_data</span>, <span class="fl">2</span>, <span class="va">mean</span><span class="op">)</span></span>
-<span><span class="va">std</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">train_data</span>, <span class="fl">2</span>, <span class="va">sd</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">train_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">train_data</span>, center <span class="op">=</span> <span class="va">mean</span>, scale <span class="op">=</span> <span class="va">std</span><span class="op">)</span></span>
-<span><span class="va">test_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">test_data</span>, center <span class="op">=</span> <span class="va">mean</span>, scale <span class="op">=</span> <span class="va">std</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<dl>
+<div class="sourceCode" id="annotated-cell-3"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-3-3" class="code-annotation-target"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">apply</span>(train_data, <span class="dv">2</span>, mean)</span>
+<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>std <span class="ot">&lt;-</span> <span class="fu">apply</span>(train_data, <span class="dv">2</span>, sd)</span>
+<span id="annotated-cell-3-5"><a href="#annotated-cell-3-5" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-3-6" class="code-annotation-target"><a href="#annotated-cell-3-6" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> <span class="fu">scale</span>(train_data, <span class="at">center =</span> mean, <span class="at">scale =</span> std)</span>
+<span id="annotated-cell-3-7"><a href="#annotated-cell-3-7" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">scale</span>(test_data, <span class="at">center =</span> mean, <span class="at">scale =</span> std)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="3" data-code-cell="annotated-cell-3" data-code-annotation="1">oblicz średnią i odchylenie standardowe na zbiorze uczącym;</span>
+<span data-code-cell="annotated-cell-3" data-code-annotation="1" data-code-lines="3">oblicz średnią i odchylenie standardowe na zbiorze uczącym;</span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="6" data-code-cell="annotated-cell-3" data-code-annotation="2">zastosuj obliczone parametry do zbioru uczącego i testowego.</span>
+<span data-code-cell="annotated-cell-3" data-code-annotation="2" data-code-lines="6">zastosuj obliczone parametry do zbioru uczącego i testowego.</span>
 </dd>
-</dl></section><section id="usuń-braki-danych" class="level3" data-number="11.2.3"><h3 data-number="11.2.3" class="anchored" data-anchor-id="usuń-braki-danych">
-<span class="header-section-number">11.2.3</span> Usuń braki danych</h3>
+</dl>
+</section>
+<section id="usuń-braki-danych" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="usuń-braki-danych"><span class="header-section-number">11.2.3</span> Usuń braki danych</h3>
 <p>Czasami w danych mogą pojawić się brakujące wartości. Genralnie, w sieciach neuronowych bezpiecznie jest wprowadzić brakujące wartości jako 0, pod warunkiem, że 0 nie jest już wartością znaczącą. Sieć nauczy się z ekspozycji na dane, że wartość 0 oznacza brakujące dane i zacznie ignorować tę wartość.</p>
 <p>Zauważ, że jeśli spodziewasz się brakujących wartości w danych testowych, ale sieć była trenowana na danych bez żadnych brakujących wartości, sieć nie nauczy się ignorować brakujących wartości! W tej sytuacji powinieneś sztucznie wygenerować próbki treningowe z brakującymi wpisami: skopiuj kilka próbek treningowych kilka razy i opuść niektóre cechy, które spodziewasz się, że prawdopodobnie będą brakować w danych testowych.</p>
-</section></section><section id="nadmierne-dopasowanie-i-niedopasowanie" class="level2 page-columns page-full" data-number="11.3"><h2 data-number="11.3" class="anchored" data-anchor-id="nadmierne-dopasowanie-i-niedopasowanie">
-<span class="header-section-number">11.3</span> Nadmierne dopasowanie i niedopasowanie</h2>
+</section>
+</section>
+<section id="nadmierne-dopasowanie-i-niedopasowanie" class="level2 page-columns page-full" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="nadmierne-dopasowanie-i-niedopasowanie"><span class="header-section-number">11.3</span> Nadmierne dopasowanie i niedopasowanie</h2>
 <p>Zacznijmy od nauczenia sieci neuronowej do rozpoznawania cyfr na podstawie obrazów prezentowany wcześniej.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tensorflow.rstudio.com/">keras</a></span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#| cache: true</span></span>
-<span><span class="va">mnist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/dataset_mnist.html">dataset_mnist</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">train_images</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">train</span><span class="op">$</span><span class="va">x</span></span>
-<span><span class="va">train_labels</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">train</span><span class="op">$</span><span class="va">y</span></span>
-<span><span class="va">test_images</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">test</span><span class="op">$</span><span class="va">x</span></span>
-<span><span class="va">test_labels</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">test</span><span class="op">$</span><span class="va">y</span></span>
-<span></span>
-<span><span class="va">train_images</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/array_reshape.html">array_reshape</a></span><span class="op">(</span><span class="va">train_images</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">60000</span>, <span class="fl">28</span> <span class="op">*</span> <span class="fl">28</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">train_images</span> <span class="op">&lt;-</span> <span class="va">train_images</span> <span class="op">/</span> <span class="fl">255</span></span>
-<span><span class="va">test_images</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/array_reshape.html">array_reshape</a></span><span class="op">(</span><span class="va">test_images</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10000</span>, <span class="fl">28</span> <span class="op">*</span> <span class="fl">28</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">test_images</span> <span class="op">&lt;-</span> <span class="va">test_images</span> <span class="op">/</span> <span class="fl">255</span></span>
-<span></span>
-<span><span class="va">train_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/to_categorical.html">to_categorical</a></span><span class="op">(</span><span class="va">train_labels</span><span class="op">)</span></span>
-<span><span class="va">test_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/to_categorical.html">to_categorical</a></span><span class="op">(</span><span class="va">test_labels</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">network</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model_sequential.html">keras_model_sequential</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">512</span>, activation <span class="op">=</span> <span class="st">"relu"</span>, input_shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">28</span> <span class="op">*</span> <span class="fl">28</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">256</span>, activation <span class="op">=</span> <span class="st">"relu"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">64</span>, activation <span class="op">=</span> <span class="st">"relu"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">10</span>, activation <span class="op">=</span> <span class="st">"softmax"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span></span>
-<span>  optimizer <span class="op">=</span> <span class="st">"rmsprop"</span>,</span>
-<span>  loss <span class="op">=</span> <span class="st">"categorical_crossentropy"</span>,</span>
-<span>  metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"accuracy"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">network</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span><span class="va">train_images</span>, </span>
-<span>      <span class="va">train_labels</span>, </span>
-<span>      epochs <span class="op">=</span> <span class="fl">20</span>, </span>
-<span>      batch_size <span class="op">=</span> <span class="fl">128</span>,</span>
-<span>      validation_split <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">history</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(keras)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mnist <span class="ot">&lt;-</span> <span class="fu">dataset_mnist</span>()</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>train_images <span class="ot">&lt;-</span> mnist<span class="sc">$</span>train<span class="sc">$</span>x</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>train_labels <span class="ot">&lt;-</span> mnist<span class="sc">$</span>train<span class="sc">$</span>y</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>test_images <span class="ot">&lt;-</span> mnist<span class="sc">$</span>test<span class="sc">$</span>x</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>test_labels <span class="ot">&lt;-</span> mnist<span class="sc">$</span>test<span class="sc">$</span>y</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>train_images <span class="ot">&lt;-</span> <span class="fu">array_reshape</span>(train_images, <span class="fu">c</span>(<span class="dv">60000</span>, <span class="dv">28</span> <span class="sc">*</span> <span class="dv">28</span>))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>train_images <span class="ot">&lt;-</span> train_images <span class="sc">/</span> <span class="dv">255</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>test_images <span class="ot">&lt;-</span> <span class="fu">array_reshape</span>(test_images, <span class="fu">c</span>(<span class="dv">10000</span>, <span class="dv">28</span> <span class="sc">*</span> <span class="dv">28</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>test_images <span class="ot">&lt;-</span> test_images <span class="sc">/</span> <span class="dv">255</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>train_labels <span class="ot">&lt;-</span> <span class="fu">to_categorical</span>(train_labels)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>test_labels <span class="ot">&lt;-</span> <span class="fu">to_categorical</span>(test_labels)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>network <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">512</span>, <span class="at">activation =</span> <span class="st">"relu"</span>, <span class="at">input_shape =</span> <span class="fu">c</span>(<span class="dv">28</span> <span class="sc">*</span> <span class="dv">28</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">256</span>, <span class="at">activation =</span> <span class="st">"relu"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">64</span>, <span class="at">activation =</span> <span class="st">"relu"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">10</span>, <span class="at">activation =</span> <span class="st">"softmax"</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>network <span class="sc">%&gt;%</span> <span class="fu">compile</span>(</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">optimizer =</span> <span class="st">"rmsprop"</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">loss =</span> <span class="st">"categorical_crossentropy"</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"accuracy"</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>network</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>history <span class="ot">&lt;-</span> network <span class="sc">%&gt;%</span> </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train_images, </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>      train_labels, </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>      <span class="at">epochs =</span> <span class="dv">20</span>, </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>      <span class="at">batch_size =</span> <span class="dv">128</span>,</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">validation_split =</span> <span class="fl">0.2</span>)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(history)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Model: "sequential_3"
+________________________________________________________________________________
+ Layer (type)                       Output Shape                    Param #     
+================================================================================
+ dense_9 (Dense)                    (None, 512)                     401920      
+ dense_8 (Dense)                    (None, 256)                     131328      
+ dense_7 (Dense)                    (None, 64)                      16448       
+ dense_6 (Dense)                    (None, 10)                      650         
+================================================================================
+Total params: 550,346
+Trainable params: 550,346
+Non-trainable params: 0
+________________________________________________________________________________</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fundamentals_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p>Na podstawie powyższego modelu możemy stwierdzić, że wydajność modelu na odłożonych danych walidacyjnych zawsze osiągała szczyt po kilku epokach, a następnie zaczynała się pogarszać. <em>Overfitting</em> zdarza się w każdym problemie uczenia maszynowego. Nauka radzenia sobie z nadmiernym dopasowaniem jest niezbędna do opanowania uczenia maszynowego.</p>
 <p>Podstawowym problemem w uczeniu maszynowym jest konflikt pomiędzy optymalizacją a generalizacją. Optymalizacja odnosi się do procesu dostosowywania modelu w celu uzyskania jak najlepszej wydajności na danych treningowych, podczas gdy generalizacja odnosi się do tego, jak dobrze wyszkolony model radzi sobie na danych, których nigdy wcześniej nie widział.</p>
 <p>Na początku treningu optymalizacja i generalizacja są zbieżne: im mniejsza strata na danych treningowych, tym mniejsza strata na danych testowych. Gdy tak się dzieje, mówi się, że twój model jest niedopasowany: wciąż jest postęp do zrobienia; sieć nie jest nauczona jeszcze wszystkich istotnych wzorców w danych treningowych. Jednak po pewnej liczbie iteracji na danych treningowych, generalizacja przestaje się poprawiać, a metryki dla zbioru walidacyjnego nie poprawiają się, a nawet zaczynają się pogarszać: model zaczyna być nadmiernie dopasowany. Oznacza to, że model zaczyna się uczyć wzorców, które są specyficzne dla danych treningowych, ale które są mylące lub nieistotne, gdy chodzi o nowe dane.</p>
 <p>Aby zapobiec uczeniu się przez model błędnych lub nieistotnych wzorców występujących w danych treningowych, najlepszym rozwiązaniem jest uzyskanie większej ilości danych treningowych. Model wytrenowany na większej ilości danych będzie naturalnie lepiej generalizował. Jeśli nie jest to możliwe, innym rozwiązaniem jest modulowanie ilości informacji, które model może przechowywać, lub dodanie ograniczeń na informacje, które może przechowywać. Jeśli sieć może sobie pozwolić na zapamiętanie tylko niewielkiej liczby wzorców, proces optymalizacji zmusi ją do skupienia się na najbardziej widocznych wzorcach, które mają większą szansę na dobrą generalizację.</p>
 <p>Proces walki z overfittingiem w ten sposób nazywany jest regularyzacją. Zapoznajmy się z kilkoma najpopularniejszymi technikami regularyzacji i zastosujmy je w praktyce, aby poprawić model klasyfikacji.</p>
-<section id="redukcja-wielkości-sieci" class="level3" data-number="11.3.1"><h3 data-number="11.3.1" class="anchored" data-anchor-id="redukcja-wielkości-sieci">
-<span class="header-section-number">11.3.1</span> Redukcja wielkości sieci</h3>
+<section id="redukcja-wielkości-sieci" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="redukcja-wielkości-sieci"><span class="header-section-number">11.3.1</span> Redukcja wielkości sieci</h3>
 <p>Najprostszym sposobem zapobiegania overfittingowi jest zmniejszenie rozmiaru modelu: czyli liczby możliwych do nauczenia się parametrów w modelu (która jest określona przez liczbę warstw i liczbę neuronów na warstwę). W uczeniu głębokim liczba możliwych do nauczenia się parametrów w modelu jest często określana jako pojemność modelu. Intuicyjnie, model z większą liczbą parametrów ma większą zdolność zapamiętywania i dlatego może łatwo nauczyć się idealnego odwzorowania między próbkami treningowymi a ich celami - odwzorowania bez żadnej mocy generalizacji. Na przykład, model z 500 000 parametrów binarnych mógłby z łatwością nauczyć się każdej cyfry w zbiorze treningowym MNIST: potrzebowalibyśmy tylko 10 parametrów binarnych dla każdej z 50 000 cyfr. Ale taki model byłby bezużyteczny do klasyfikowania nowych próbek. Zawsze należy o tym pamiętać: modele głębokiego uczenia mają tendencję do dobrego dopasowania do danych treningowych, ale prawdziwym wyzwaniem jest generalizacja, a nie dopasowanie.</p>
 <p>Z drugiej strony, jeśli sieć ma ograniczone zasoby pamięci, nie będzie w stanie nauczyć się tego odwzorowania tak łatwo; dlatego, aby zminimalizować straty, będzie musiała uciec się do uczenia skompresowanych reprezentacji, które mają moc predykcyjną w odniesieniu do celów - dokładnie ten typ reprezentacji nas interesuje. Jednocześnie pamiętaj, że powinieneś używać modeli, które mają wystarczająco dużo parametrów, aby nie były niedostosowane: twój model nie powinien być ograniczany ze względu na zasoby pamięciowe. Trzeba znaleźć kompromis między zbyt dużą pojemnością a niewystarczającą.</p>
 <p>Niestety, nie ma magicznej formuły, aby określić właściwą liczbę warstw lub właściwy rozmiar dla każdej warstwy. Musisz ocenić szereg różnych architektur (oczywiście na zbiorze walidacyjnym, nie na zbiorze testowym), aby znaleźć właściwy rozmiar modelu dla twoich danych. Ogólny tok postępowania w celu znalezienia odpowiedniego rozmiaru modelu polega na rozpoczęciu od stosunkowo niewielkiej liczby warstw i parametrów, a następnie zwiększaniu rozmiaru warstw lub dodawaniu nowych warstw, dopóki nie zobaczysz malejących zwrotów w odniesieniu do utraty walidacji.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#| cache: true</span></span>
-<span><span class="va">network</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model_sequential.html">keras_model_sequential</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">128</span>, activation <span class="op">=</span> <span class="st">"relu"</span>, input_shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">28</span> <span class="op">*</span> <span class="fl">28</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">10</span>, activation <span class="op">=</span> <span class="st">"softmax"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span></span>
-<span>  optimizer <span class="op">=</span> <span class="st">"rmsprop"</span>,</span>
-<span>  loss <span class="op">=</span> <span class="st">"categorical_crossentropy"</span>,</span>
-<span>  metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"accuracy"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">network</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span><span class="va">train_images</span>, </span>
-<span>      <span class="va">train_labels</span>, </span>
-<span>      epochs <span class="op">=</span> <span class="fl">20</span>, </span>
-<span>      batch_size <span class="op">=</span> <span class="fl">128</span>,</span>
-<span>      validation_split <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">history</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>network <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">128</span>, <span class="at">activation =</span> <span class="st">"relu"</span>, <span class="at">input_shape =</span> <span class="fu">c</span>(<span class="dv">28</span> <span class="sc">*</span> <span class="dv">28</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">10</span>, <span class="at">activation =</span> <span class="st">"softmax"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>network <span class="sc">%&gt;%</span> <span class="fu">compile</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">optimizer =</span> <span class="st">"rmsprop"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">loss =</span> <span class="st">"categorical_crossentropy"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"accuracy"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>history <span class="ot">&lt;-</span> network <span class="sc">%&gt;%</span> </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train_images, </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      train_labels, </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">epochs =</span> <span class="dv">20</span>, </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">batch_size =</span> <span class="dv">128</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">validation_split =</span> <span class="fl">0.2</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Model: "sequential_4"
+________________________________________________________________________________
+ Layer (type)                       Output Shape                    Param #     
+================================================================================
+ dense_11 (Dense)                   (None, 128)                     100480      
+ dense_10 (Dense)                   (None, 10)                      1290        
+================================================================================
+Total params: 101,770
+Trainable params: 101,770
+Non-trainable params: 0
+________________________________________________________________________________</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fundamentals_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p>Jak widać z powyższej symulacji dla prostszej sieci zjawisko <em>overffitingu</em> pojawia się później i nie ma tak wyraźnego charakteru.</p>
-</section><section id="regularyzacja-za-pomocą-kar" class="level3" data-number="11.3.2"><h3 data-number="11.3.2" class="anchored" data-anchor-id="regularyzacja-za-pomocą-kar">
-<span class="header-section-number">11.3.2</span> Regularyzacja za pomocą kar</h3>
+</section>
+<section id="regularyzacja-za-pomocą-kar" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="regularyzacja-za-pomocą-kar"><span class="header-section-number">11.3.2</span> Regularyzacja za pomocą kar</h3>
 <p>Podobnie jak w modelach liniowych prostsze modele są mniej podatne na <em>overfitting</em>, również i sieci głębokiego uczenia również podlegają tej zasadzie - jak się mogliśmy przekonać na podstawie powyższego przykładu. Powyższy przykład ową prostotę modelu realizował poprzez prostą strukturę sieci (uboższy model) ale można go “upraszczać” również inaczej.</p>
 <p>Prosty model to model, w którym rozkład wartości parametrów ma mniejszą entropię (lub model z mniejszą liczbą parametrów, jak widzieliśmy w poprzedniej sekcji). Dlatego powszechnym sposobem łagodzenia overfittingu jest nałożenie ograniczeń na złożoność sieci poprzez zmuszenie jej wag do przyjmowania tylko małych wartości, co czyni rozkład wartości wag bardziej regularnym. Nazywa się to regularyzacją wag i odbywa się poprzez dodanie do funkcji straty sieci kosztu związanego z posiadaniem dużych wag. Koszt ten występuje w dwóch postaciach:</p>
 <ul>
@@ -539,74 +615,116 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>L2 - koszt dodany jest proporcjonalny do kwadratu wartości współczynników wagowych (norma L2 wag).</li>
 </ul>
 <p>W <code>keras</code>, regularyzacja wagowa jest dodawana poprzez dodanie instancji regularyzatora wagowego do warstw. Należy pamiętać, że regularyzacja jest stosowana do sieci tylko na etapie uczenia, dlatego na zbiorze testowym strata będzie mniejsza niż na treningowym.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#| cache: true</span></span>
-<span><span class="va">network</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model_sequential.html">keras_model_sequential</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">256</span>, </span>
-<span>              activation <span class="op">=</span> <span class="st">"relu"</span>,</span>
-<span>              kernel_regularizer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/regularizer_l1.html">regularizer_l2</a></span><span class="op">(</span><span class="fl">0.001</span><span class="op">)</span>,</span>
-<span>              input_shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">28</span> <span class="op">*</span> <span class="fl">28</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">10</span>, activation <span class="op">=</span> <span class="st">"softmax"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span></span>
-<span>  optimizer <span class="op">=</span> <span class="st">"rmsprop"</span>,</span>
-<span>  loss <span class="op">=</span> <span class="st">"categorical_crossentropy"</span>,</span>
-<span>  metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"accuracy"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">network</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span><span class="va">train_images</span>, </span>
-<span>      <span class="va">train_labels</span>, </span>
-<span>      epochs <span class="op">=</span> <span class="fl">20</span>, </span>
-<span>      batch_size <span class="op">=</span> <span class="fl">128</span>,</span>
-<span>      validation_split <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">history</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>network <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">256</span>, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">activation =</span> <span class="st">"relu"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">kernel_regularizer =</span> <span class="fu">regularizer_l2</span>(<span class="fl">0.001</span>),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">input_shape =</span> <span class="fu">c</span>(<span class="dv">28</span> <span class="sc">*</span> <span class="dv">28</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">10</span>, <span class="at">activation =</span> <span class="st">"softmax"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>network <span class="sc">%&gt;%</span> <span class="fu">compile</span>(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">optimizer =</span> <span class="st">"rmsprop"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">loss =</span> <span class="st">"categorical_crossentropy"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"accuracy"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>history <span class="ot">&lt;-</span> network <span class="sc">%&gt;%</span> </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train_images, </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>      train_labels, </span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">epochs =</span> <span class="dv">20</span>, </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">batch_size =</span> <span class="dv">128</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">validation_split =</span> <span class="fl">0.2</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Model: "sequential_6"
+________________________________________________________________________________
+ Layer (type)                       Output Shape                    Param #     
+================================================================================
+ dense_15 (Dense)                   (None, 256)                     200960      
+ dense_14 (Dense)                   (None, 10)                      2570        
+================================================================================
+Total params: 203,530
+Trainable params: 203,530
+Non-trainable params: 0
+________________________________________________________________________________</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fundamentals_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p>Jak widać z powyższego wykresu przez zastosowanie regularyzacji L2 otrzymaliśmy większą zbieżność na obu próbach.</p>
-</section><section id="dropout" class="level3 page-columns page-full" data-number="11.3.3"><h3 data-number="11.3.3" class="anchored" data-anchor-id="dropout">
-<span class="header-section-number">11.3.3</span> Dropout</h3>
+</section>
+<section id="dropout" class="level3 page-columns page-full" data-number="11.3.3">
+<h3 data-number="11.3.3" class="anchored" data-anchor-id="dropout"><span class="header-section-number">11.3.3</span> Dropout</h3>
 <p><em>Dropout</em> to jedna z najskuteczniejszych i najczęściej stosowanych technik regularizacji dla sieci neuronowych, opracowana przez Geoffa Hintona i jego studentów z Uniwersytetu w Toronto. <em>Dropout</em>, zastosowany do warstwy, polega na losowym wyrzuceniu (ustawieniu na zero) pewnej liczby cech wyjściowych warstwy podczas treningu. Powiedzmy, że dana warstwa normalnie zwróciłaby podczas treningu wektor [0.2, 0.5, 1.3, 0.8, 1.1] dla danej próbki wejściowej. Po zastosowaniu <em>dropoutu</em>, wektor ten będzie miał kilka zerowych wpisów rozmieszczonych losowo: na przykład [0, 0.5, 1.3, 0, 1.1].</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://images1.memedroid.com/images/UPLOADED16/4f9caf2dd681d.jpeg" class="img-fluid figure-img" width="400"></p>
+<figure class="figure">
+<p><img src="https://images1.memedroid.com/images/UPLOADED16/4f9caf2dd681d.jpeg" class="img-fluid figure-img" width="400"></p>
 </figure>
 </div></div><p>Współczynnik <em>dropoutu</em> to frakcja cech, które mają być wyzerowane; zwykle jest ustawiony między 0,2 a 0,5. W czasie ewaluacji modelu na zbiorze testowym żadne jednostki nie są usuwane; zamiast tego wartości wyjściowe warstwy są skalowane w dół o czynnik równy współczynnikowi usuwania, aby zrównoważyć fakt, że więcej jednostek jest aktywnych niż w czasie treningu. Czyli przykładowo jeśli warstwa miała współczynnik dropout 0,25, to w czasie ewaluacji na zbiorze testowym wartości wyjściowe tej warstwy są mnożone przez 0,75.</p>
 <div id="fig-dropout1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="http://s3-ap-south-1.amazonaws.com/av-blog-media/wp-content/uploads/2018/04/1IrdJ5PghD9YoOyVAQ73MJw.gif" class="img-fluid figure-img" width="400"></p>
+<figure class="figure">
+<p><img src="http://s3-ap-south-1.amazonaws.com/av-blog-media/wp-content/uploads/2018/04/1IrdJ5PghD9YoOyVAQ73MJw.gif" class="img-fluid figure-img" width="400"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;11.3: Zasada działania dropout</figcaption><p></p>
 </figure>
 </div>
 <p>Ta technika może wydawać się dziwna i przypadkowa. Dlaczego miałoby to pomóc w redukcji <em>overfitting</em>? Hinton mówi, że zainspirował go między innymi mechanizm zapobiegania oszustwom stosowany przez banki. Mówiąc jego własnymi słowami: “Poszedłem do swojego banku. Kasjerzy ciągle się zmieniali i zapytałem jednego z nich, dlaczego. Powiedział, że nie wie, ale są często przenoszeni. Uznałem, że musi to być spowodowane tym, że skuteczne oszukanie banku wymagałoby współpracy między pracownikami. To uświadomiło mi, że losowe usuwanie różnych podzbiorów neuronów na każdym przykładzie zapobiegnie spiskom, a tym samym zmniejszy <em>overfitting</em>.” Główna idea polega na tym, że wprowadzenie szumu do wartości wyjściowych warstwy może rozbić przypadkowe wzorce, które nie są istotne (co Hinton określa jako spiski), które sieć zacznie zapamiętywać, jeśli nie będzie w niej szumu.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#| cache: true</span></span>
-<span><span class="va">network</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model_sequential.html">keras_model_sequential</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">512</span>, </span>
-<span>              activation <span class="op">=</span> <span class="st">"relu"</span>,</span>
-<span>              input_shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">28</span> <span class="op">*</span> <span class="fl">28</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dropout.html">layer_dropout</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">10</span>, activation <span class="op">=</span> <span class="st">"softmax"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span></span>
-<span>  optimizer <span class="op">=</span> <span class="st">"rmsprop"</span>,</span>
-<span>  loss <span class="op">=</span> <span class="st">"categorical_crossentropy"</span>,</span>
-<span>  metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"accuracy"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">network</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">history</span> <span class="op">&lt;-</span> <span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span><span class="va">train_images</span>, </span>
-<span>      <span class="va">train_labels</span>, </span>
-<span>      epochs <span class="op">=</span> <span class="fl">20</span>, </span>
-<span>      batch_size <span class="op">=</span> <span class="fl">128</span>,</span>
-<span>      validation_split <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">history</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section></section><section id="reguła-postępowania-w-czasie-budowy-modelu" class="level2 page-columns page-full" data-number="11.4"><h2 data-number="11.4" class="anchored" data-anchor-id="reguła-postępowania-w-czasie-budowy-modelu">
-<span class="header-section-number">11.4</span> Reguła postępowania w czasie budowy modelu</h2>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>network <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">512</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">activation =</span> <span class="st">"relu"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">input_shape =</span> <span class="fu">c</span>(<span class="dv">28</span> <span class="sc">*</span> <span class="dv">28</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dropout</span>(<span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">10</span>, <span class="at">activation =</span> <span class="st">"softmax"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>network <span class="sc">%&gt;%</span> <span class="fu">compile</span>(</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">optimizer =</span> <span class="st">"rmsprop"</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">loss =</span> <span class="st">"categorical_crossentropy"</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"accuracy"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>history <span class="ot">&lt;-</span> network <span class="sc">%&gt;%</span> </span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train_images, </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>      train_labels, </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">epochs =</span> <span class="dv">20</span>, </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">batch_size =</span> <span class="dv">128</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">validation_split =</span> <span class="fl">0.2</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Model: "sequential_7"
+________________________________________________________________________________
+ Layer (type)                       Output Shape                    Param #     
+================================================================================
+ dense_17 (Dense)                   (None, 512)                     401920      
+ dropout (Dropout)                  (None, 512)                     0           
+ dense_16 (Dense)                   (None, 10)                      5130        
+================================================================================
+Total params: 407,050
+Trainable params: 407,050
+Non-trainable params: 0
+________________________________________________________________________________</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="fundamentals_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="reguła-postępowania-w-czasie-budowy-modelu" class="level2 page-columns page-full" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="reguła-postępowania-w-czasie-budowy-modelu"><span class="header-section-number">11.4</span> Reguła postępowania w czasie budowy modelu</h2>
 <p>W tym rozdziale przedstawimy uniwersalny schemat, który można wykorzystać do rozwiązania każdego problemu uczenia maszynowego. Dyskusja łączy koncepcje, które poznałeś w tym rozdziale: definicję problemu, ocenę, inżynierię cech i walkę z <em>overfittingiem</em>.</p>
-<section id="definiowanie-problemu-i-przygotowanie-zbioru-danych" class="level3 page-columns page-full" data-number="11.4.1"><h3 data-number="11.4.1" class="anchored" data-anchor-id="definiowanie-problemu-i-przygotowanie-zbioru-danych">
-<span class="header-section-number">11.4.1</span> Definiowanie problemu i przygotowanie zbioru danych</h3>
+<section id="definiowanie-problemu-i-przygotowanie-zbioru-danych" class="level3 page-columns page-full" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="definiowanie-problemu-i-przygotowanie-zbioru-danych"><span class="header-section-number">11.4.1</span> Definiowanie problemu i przygotowanie zbioru danych</h3>
 <p>Po pierwsze, musisz zdefiniować problem:</p>
 <ul>
 <li>Jakie będą twoje dane wejściowe? Co próbujesz przewidzieć? Możesz nauczyć się przewidywać coś tylko wtedy, gdy masz dostępne dane treningowe: na przykład, możesz nauczyć się klasyfikować sentyment<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> recenzji filmowych tylko wtedy, gdy masz dostępne zarówno recenzje filmów, jak i adnotacje sentymentu. W związku z tym, dostępność danych jest zwykle czynnikiem ograniczającym na tym etapie (chyba, że masz środki, aby zapłacić ludziom, aby zebrać dane dla Ciebie).</li>
@@ -615,12 +733,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;nastawienie</p></li><li id="fn3"><p><sup>3</sup>&nbsp;ang. <em>reinforcement learning</em></p></li></div><p>Nie możesz przejść do następnego etapu, dopóki nie wiesz, jakie są twoje wejścia i wyjścia oraz z jakich danych będziesz korzystać. Bądź świadomy hipotez, które stawiasz. Dopóki nie masz działającego modelu, są to jedynie hipotezy, czekające na potwierdzenie lub unieważnienie. Nie wszystkie problemy można rozwiązać; tylko dlatego, że zebrałeś przykłady wejść X i celów Y, nie oznacza to bowiem, że X zawiera wystarczająco dużo informacji, aby przewidzieć Y. Na przykład, jeśli próbujesz przewidzieć ruchy akcji na giełdzie, biorąc pod uwagę jej niedawną historię cenową, raczej ci się to nie uda, ponieważ historia cenowa nie zawiera zbyt wielu informacji prognostycznych.</p>
 <p>Jedną z klas nierozwiązywalnych problemów, o których powinieneś wiedzieć, są problemy niestacjonarne. Załóżmy, że próbujesz zbudować silnik rekomendacji do sprzedaży ubrań, trenujesz go na jednym miesiącu danych (sierpień) i chcesz zacząć generować rekomendacje w zimie. Jednym z poważnych problemów jest to, że rodzaje ubrań, które ludzie kupują, zmieniają się z sezonu na sezon: kupowanie ubrań jest zjawiskiem niestacjonarnym w skali kilku miesięcy. To, co próbujesz modelować, zmienia się w czasie. W tym przypadku, właściwym posunięciem jest ciągłe doszkalanie modelu na danych z niedawnej przeszłości lub zbieranie danych w skali czasowej, w której problem jest stacjonarny. Dla problemu cyklicznego, takiego jak kupowanie ubrań, wystarczy kilka lat danych, aby uchwycić sezonową zmienność - ale pamiętaj, aby czas roku był wejściem do modelu!</p>
 <p>Pamiętaj, że uczenie maszynowe może być użyte tylko do zapamiętania wzorców, które są obecne w danych treningowych. Możesz rozpoznać tylko to, co widziałeś wcześniej. Używając uczenia maszynowego wyszkolonego na danych z przeszłości do przewidywania przyszłości, przyjmujesz założenie, że przyszłość będzie zachowywać się jak przeszłość, co nie zawsze jest prawdą.</p>
-</section><section id="określenie-miary-do-oceny-jakości-dopasowania-modelu" class="level3 page-columns page-full" data-number="11.4.2"><h3 data-number="11.4.2" class="anchored" data-anchor-id="określenie-miary-do-oceny-jakości-dopasowania-modelu">
-<span class="header-section-number">11.4.2</span> Określenie miary do oceny jakości dopasowania modelu</h3>
+</section>
+<section id="określenie-miary-do-oceny-jakości-dopasowania-modelu" class="level3 page-columns page-full" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="określenie-miary-do-oceny-jakości-dopasowania-modelu"><span class="header-section-number">11.4.2</span> Określenie miary do oceny jakości dopasowania modelu</h3>
 <p>Aby coś kontrolować, musisz być w stanie to obserwować. Aby osiągnąć sukces, musisz zdefiniować, co rozumiesz przez sukces: dokładność? Twoja miara sukcesu będzie kierowała wyborem funkcji straty: czyli tego, co twój model będzie optymalizował.</p>
 <div class="page-columns page-full"><p>Dla problemów klasyfikacji zrównoważonej, gdzie każda klasa jest mniej więcej równie prawdopodobna, dokładność<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> i obszar pod krzywą ROC są powszechnymi metrykami. W przypadku problemów związanych z niezbalansowaną klasyfikacją, można użyć precision-recall. Dla problemów rankingowych lub klasyfikacji wieloznakowej można użyć średniej średniej precyzji<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> . Nierzadko trzeba też zdefiniować własną, niestandardową metrykę, za pomocą której mierzy się sukces . Aby uzyskać poczucie różnorodności metryk dopasowania uczenia maszynowego i jak odnoszą się one do różnych domen problemowych, warto przejrzeć konkursy na Kaggle (kaggle.com); pokazują one szeroki zakres problemów i metryk .</p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;<em>accuracy</em></p></li><li id="fn5"><p><sup>5</sup>&nbsp;<em>mean average precision</em></p></li></div></div>
-</section><section id="określenie-techniki-oceny-wydajności-modelu" class="level3" data-number="11.4.3"><h3 data-number="11.4.3" class="anchored" data-anchor-id="określenie-techniki-oceny-wydajności-modelu">
-<span class="header-section-number">11.4.3</span> Określenie techniki oceny wydajności modelu</h3>
+</section>
+<section id="określenie-techniki-oceny-wydajności-modelu" class="level3" data-number="11.4.3">
+<h3 data-number="11.4.3" class="anchored" data-anchor-id="określenie-techniki-oceny-wydajności-modelu"><span class="header-section-number">11.4.3</span> Określenie techniki oceny wydajności modelu</h3>
 <p>Kiedy już wiesz, do czego dążysz, musisz ustalić, jak będziesz mierzyć swoje bieżące postępy. Wcześniej omówiliśmy trzy popularne protokoły oceny:</p>
 <ul>
 <li>Utrzymywanie zbioru walidacyjnego typu <em>hold-out</em> - dobry sposób, gdy masz dużo danych;</li>
@@ -628,8 +748,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Przeprowadzanie iterowanej walidacji K-krotnej z losowaniem - bardzo dokładna oceny modelu, gdy dostępnych jest niewiele danych.</li>
 </ul>
 <p>W większości przypadków pierwsza będzie działać wystarczająco dobrze.</p>
-</section><section id="przygotuj-dane" class="level3" data-number="11.4.4"><h3 data-number="11.4.4" class="anchored" data-anchor-id="przygotuj-dane">
-<span class="header-section-number">11.4.4</span> Przygotuj dane</h3>
+</section>
+<section id="przygotuj-dane" class="level3" data-number="11.4.4">
+<h3 data-number="11.4.4" class="anchored" data-anchor-id="przygotuj-dane"><span class="header-section-number">11.4.4</span> Przygotuj dane</h3>
 <p>Kiedy już wiesz, na czym trenujesz, co optymalizujesz i jak ocenić swoje rozwiązanie, jesteś prawie gotowy do rozpoczęcia treningu modeli. Najpierw jednak należy sformatować dane w taki sposób, aby można je było wprowadzić do modelu uczenia maszynowego - tutaj założymy głęboką sieć neuronową:</p>
 <ul>
 <li>Jak widziałeś wcześniej, twoje dane powinny być sformatowane jako tensory.</li>
@@ -638,8 +759,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Możesz dokonać inżynierii cech, szczególnie dla problemów z małą liczbą danych.</li>
 </ul>
 <p>Gdy tensory danych wejściowych i danych docelowych są gotowe, możesz rozpocząć trenowanie modeli.</p>
-</section><section id="rozwijaj-modele-aby-osiągnąć-lepsze-niż-bazowe" class="level3 page-columns page-full" data-number="11.4.5"><h3 data-number="11.4.5" class="anchored" data-anchor-id="rozwijaj-modele-aby-osiągnąć-lepsze-niż-bazowe">
-<span class="header-section-number">11.4.5</span> Rozwijaj modele aby osiągnąć lepsze niż bazowe</h3>
+</section>
+<section id="rozwijaj-modele-aby-osiągnąć-lepsze-niż-bazowe" class="level3 page-columns page-full" data-number="11.4.5">
+<h3 data-number="11.4.5" class="anchored" data-anchor-id="rozwijaj-modele-aby-osiągnąć-lepsze-niż-bazowe"><span class="header-section-number">11.4.5</span> Rozwijaj modele aby osiągnąć lepsze niż bazowe</h3>
 <div class="page-columns page-full"><p>Twoim celem na tym etapie jest osiągnięcie mocy statystycznej: to znaczy opracowanie małego modelu, który jest w stanie pokonać model podstawowy. W przykładzie klasyfikacji cyfr MNIST, wszystko co osiąga dokładność większą niż 0,1<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> można powiedzieć, że ma moc statystyczną.</p><div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;zwykła heurystyka polegająca na wylosowaniu wynikowej cyfry ma prawdopodobieństwo powodzenia właśnie równe 0,1</p></li></div></div>
 <p>Zauważ, że nie zawsze jest możliwe osiągnięcie mocy statystycznej. Jeśli nie możesz pokonać przyjętej linii bazowej po wypróbowaniu wielu rozsądnych architektur, może się okazać, że odpowiedź na pytanie, które zadajesz, nie jest dostępna na podstawie danych wejściowych. Pamiętaj, że stawiasz dwie hipotezy:</p>
 <ul>
@@ -653,8 +775,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>konfiguracja procedury optymalizacji - jakiego optymalizatora użyjesz? Jaki będzie jego współczynnik szybkości uczenia? W większości przypadków bezpiecznie jest użyć <code>rmsprop</code> lub <code>adam</code> i jego domyślnego współczynnika uczenia.</li>
 </ul>
 <p>Jeżeli chodzi o wybór funkcji straty, zauważ, że nie zawsze jest możliwa bezpośrednia optymalizacja dla metryki, która mierzy dopasowanie w danym problemie. Czasami nie ma łatwego sposobu na przekształcenie metryki w funkcję straty; funkcje straty, w końcu, muszą być obliczalne biorąc pod uwagę tylko partię danych (idealnie, funkcja straty powinna być obliczalna dla zaledwie jednego punktu danych) i musi być różniczkowalna (w przeciwnym razie nie można użyć wstecznej propagacji do trenowania sieci). Na przykład, szeroko stosowana metryka klasyfikacyjna ROC AUC nie może być bezpośrednio optymalizowana. Dlatego w zadaniach klasyfikacyjnych w jej miejsce używa się entropii krzyżowej (ang. <em>cross-entropy</em>). Można mieć nadzieję, że im niższa będzie entropia krzyżowa, tym wyższy będzie ROC-AUC.</p>
-</section><section id="skalowanie-w-górę" class="level3" data-number="11.4.6"><h3 data-number="11.4.6" class="anchored" data-anchor-id="skalowanie-w-górę">
-<span class="header-section-number">11.4.6</span> Skalowanie w górę</h3>
+</section>
+<section id="skalowanie-w-górę" class="level3" data-number="11.4.6">
+<h3 data-number="11.4.6" class="anchored" data-anchor-id="skalowanie-w-górę"><span class="header-section-number">11.4.6</span> Skalowanie w górę</h3>
 <p>Kiedy już uzyskasz model, który ma moc statystyczną, pojawia się pytanie, czy twój model jest wystarczająco skuteczny? Czy ma on wystarczająco dużo warstw i parametrów, aby prawidłowo modelować dany problem? Na przykład, sieć z pojedynczą warstwą ukrytą z dwoma neuronami miałaby moc statystyczną dla zbioru MNIST, ale nie byłaby wystarczająca do dobrego rozwiązania problemu. Pamiętaj jednak, że w uczeniu maszynowym stale występuje “walka” między optymalizacją a generalizacją; idealny model to model pomiędzy niedostatecznym dopasowaniem a nadmiernym dopasowaniem. Aby dowiedzieć się, gdzie leży ta granica, najpierw trzeba ją przekroczyć 😎.</p>
 <p>Aby dowiedzieć się, jak duży model będzie potrzebny, musisz opracować model, który jest nadmiernie dopasowany. Można to łatwo osiągnąć, realizują następujące kroki:</p>
 <ol type="1">
@@ -663,8 +786,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Dłużej trenuj sieć (więcej epok).</li>
 </ol>
 <p>Zawsze monitoruj stratę na zbiorze treningowym i walidacyjnym, jak również wartości wszystkich metryk, na których Ci zależy. Kiedy widzisz, że wydajność modelu na danych walidacyjnych zaczyna się pogarszać, osiągnąłeś nadmierne dopasowanie. Następnym etapem jest rozpoczęcie regularyzacji i dostrajania modelu, aby zbliżyć się jak najbardziej do idealnego modelu, który nie jest ani niedopasowany, ani nadmiernie dopasowany.</p>
-</section><section id="regularyzacja-modelu" class="level3" data-number="11.4.7"><h3 data-number="11.4.7" class="anchored" data-anchor-id="regularyzacja-modelu">
-<span class="header-section-number">11.4.7</span> Regularyzacja modelu</h3>
+</section>
+<section id="regularyzacja-modelu" class="level3" data-number="11.4.7">
+<h3 data-number="11.4.7" class="anchored" data-anchor-id="regularyzacja-modelu"><span class="header-section-number">11.4.7</span> Regularyzacja modelu</h3>
 <p>Ten krok zajmie najwięcej czasu: będziesz wielokrotnie modyfikował swój model, trenował go, oceniał na danych walidacyjnych (w tym momencie nie na danych testowych), ponownie go modyfikował i powtarzał, aż model będzie tak dobry, jak to tylko możliwe. Oto kilka rzeczy, które powinieneś wypróbować:</p>
 <ul>
 <li>dodaj dropout;</li>
@@ -677,7 +801,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Po opracowaniu wystarczająco dobrej konfiguracji modelu, możesz wytrenować swój ostateczny model na wszystkich dostępnych danych (treningowych i walidacyjnych) i ocenić go po raz ostatni na zbiorze testowym. Jeśli okaże się, że wydajność na zestawie testowym jest znacznie gorsza niż wydajność zmierzona na danych walidacyjnych, może to oznaczać, że albo twoja procedura walidacji nie była wiarygodna, albo wcześniej pojawiło się zjawisko nadmiernego dopasowania do danych walidacyjnych podczas dostrajania parametrów modelu. W tym przypadku możesz zmienić procedurę oceny modelu na bardziej wiarygodną (jak np. iterowana walidacja K-krotna).</p>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section>
+</section>
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -819,9 +948,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1010,23 +1153,30 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
       <a href="./deeplearning.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Deep learning</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
-        <span class="nav-page-text">Bibliografia</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./convolution.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sieci splotowe</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">Automatyczna analiza obrazu, Dariusz Majerek</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">Książka została napisana w <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>
+
 
 
 </body></html>

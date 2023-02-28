@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.203">
+<meta name="generator" content="quarto-1.3.234">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
 <title>Automatyczna analiza obrazu - 7&nbsp; Wykrywanie krawędzi i konturów</title>
 <style>
 code{white-space: pre-wrap;}
@@ -17,6 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -80,11 +84,12 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -98,8 +103,8 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
+
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -121,7 +126,8 @@ div.csl-indent {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -139,32 +145,46 @@ div.csl-indent {
     "search-detached-cancel-button-title": "Anuluj",
     "search-submit-button-title": "Zatwierdź"
   }
-}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
 </head>
+
 <body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./edge.html">&lt;span class='chapter-number'&gt;7&lt;/span&gt;&nbsp; &lt;span class='chapter-title'&gt;Wykrywanie krawędzi i konturów&lt;/span&gt;</a></li></ol></nav>
-      <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./edge.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Wykrywanie krawędzi i konturów</span></a></li></ol></nav>
+      <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Szukaj" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
+      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Automatyczna analiza obrazu</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://twitter.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
     <a href="https://github.com/dax44/ComputerVision/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="https://twitter.com/intent/tweet?url=%7Curl%7C" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+    <a href="https://twitter.com/intent/tweet?url=|url|" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Przełącz tryb ciemny"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Przełącz tryb czytnika">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
   </div>
@@ -174,12 +194,12 @@ div.csl-indent {
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Szukaj"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">Wstęp</a>
   </div>
@@ -241,37 +261,42 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./convolution.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sieci splotowe</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Bibliografia</a>
   </div>
 </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Spis treści</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
    
   <ul>
-<li>
-<a href="#wykrywanie-kraw%C4%99dzi-na-podstawie-gradientu" id="toc-wykrywanie-krawędzi-na-podstawie-gradientu" class="nav-link active" data-scroll-target="#wykrywanie-kraw%C4%99dzi-na-podstawie-gradientu"><span class="toc-section-number">7.1</span>  Wykrywanie krawędzi na podstawie gradientu</a>
+  <li><a href="#wykrywanie-krawędzi-na-podstawie-gradientu" id="toc-wykrywanie-krawędzi-na-podstawie-gradientu" class="nav-link active" data-scroll-target="#wykrywanie-krawędzi-na-podstawie-gradientu"><span class="header-section-number">7.1</span> Wykrywanie krawędzi na podstawie gradientu</a>
   <ul class="collapse">
-<li><a href="#przegl%C4%85d-filtr%C3%B3w-do-detekcji-kraw%C4%99dzi" id="toc-przegląd-filtrów-do-detekcji-krawędzi" class="nav-link" data-scroll-target="#przegl%C4%85d-filtr%C3%B3w-do-detekcji-kraw%C4%99dzi"><span class="toc-section-number">7.1.1</span>  Przegląd filtrów do detekcji krawędzi</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#wyostrzanie-obrazu" id="toc-wyostrzanie-obrazu" class="nav-link" data-scroll-target="#wyostrzanie-obrazu"><span class="toc-section-number">7.2</span>  Wyostrzanie obrazu</a>
+  <li><a href="#przegląd-filtrów-do-detekcji-krawędzi" id="toc-przegląd-filtrów-do-detekcji-krawędzi" class="nav-link" data-scroll-target="#przegląd-filtrów-do-detekcji-krawędzi"><span class="header-section-number">7.1.1</span> Przegląd filtrów do detekcji krawędzi</a></li>
+  </ul></li>
+  <li><a href="#wyostrzanie-obrazu" id="toc-wyostrzanie-obrazu" class="nav-link" data-scroll-target="#wyostrzanie-obrazu"><span class="header-section-number">7.2</span> Wyostrzanie obrazu</a>
   <ul class="collapse">
-<li><a href="#filtr-laplacea" id="toc-filtr-laplacea" class="nav-link" data-scroll-target="#filtr-laplacea"><span class="toc-section-number">7.2.1</span>  Filtr Laplace’a</a></li>
-  <li><a href="#metoda-nieostrej-maski" id="toc-metoda-nieostrej-maski" class="nav-link" data-scroll-target="#metoda-nieostrej-maski"><span class="toc-section-number">7.2.2</span>  Metoda nieostrej maski</a></li>
+  <li><a href="#filtr-laplacea" id="toc-filtr-laplacea" class="nav-link" data-scroll-target="#filtr-laplacea"><span class="header-section-number">7.2.1</span> Filtr Laplace’a</a></li>
+  <li><a href="#metoda-nieostrej-maski" id="toc-metoda-nieostrej-maski" class="nav-link" data-scroll-target="#metoda-nieostrej-maski"><span class="header-section-number">7.2.2</span> Metoda nieostrej maski</a></li>
+  </ul></li>
   </ul>
-</li>
-  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">
-<span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Wykrywanie krawędzi i konturów</span>
-</h1>
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Wykrywanie krawędzi i konturów</span></h1>
 </div>
 
 
@@ -284,37 +309,44 @@ div.csl-indent {
   </div>
   
 
-</header><p>Wyróżniające się “wtrącenia” obrazu, pochodzące z lokalnych zmian intensywności lub koloru, takie jak krawędzie i kontury, mają duże znaczenie dla wizualnej percepcji i interpretacji obrazów. Postrzegana ilość informacji w obrazie wydaje się być bezpośrednio związana z wyrazistością zawartych w nim struktur i nieciągłości. W rzeczywistości, struktury i kontury przypominające krawędzie wydają się być tak ważne dla naszego ludzkiego systemu wizualnego, że kilka linii na karykaturze lub ilustracji często wystarcza, aby jednoznacznie opisać obiekt lub scenę. Nie jest więc zaskoczeniem, że wzmacnianie i wykrywanie krawędzi jest tradycyjnym i ważnym tematem również w przetwarzaniu obrazów. W tym rozdziale najpierw przyjrzymy się prostym metodom lokalizacji krawędzi, a następnie zajmiemy się powiązanym z nimi zagadnieniem wyostrzania obrazu.</p>
+</header>
+
+<p>Wyróżniające się “wtrącenia” obrazu, pochodzące z lokalnych zmian intensywności lub koloru, takie jak krawędzie i kontury, mają duże znaczenie dla wizualnej percepcji i interpretacji obrazów. Postrzegana ilość informacji w obrazie wydaje się być bezpośrednio związana z wyrazistością zawartych w nim struktur i nieciągłości. W rzeczywistości, struktury i kontury przypominające krawędzie wydają się być tak ważne dla naszego ludzkiego systemu wizualnego, że kilka linii na karykaturze lub ilustracji często wystarcza, aby jednoznacznie opisać obiekt lub scenę. Nie jest więc zaskoczeniem, że wzmacnianie i wykrywanie krawędzi jest tradycyjnym i ważnym tematem również w przetwarzaniu obrazów. W tym rozdziale najpierw przyjrzymy się prostym metodom lokalizacji krawędzi, a następnie zajmiemy się powiązanym z nimi zagadnieniem wyostrzania obrazu.</p>
 <p>Krawędzie i kontury odgrywają dominującą rolę w ludzkim widzeniu i prawdopodobnie także w wielu innych biologicznych systemach widzenia. Krawędzie nie tylko rzucają się w oczy, ale często można opisać lub zrekonstruować całą figurę na podstawie kilku kluczowych linii, jak pokazuje przykład na <a href="#fig-contour1">Rysunek&nbsp;<span>7.1</span></a>. Jak jednak powstają krawędzie i jak można je technicznie zlokalizować w obrazie?</p>
 <div class="cell">
-<details><summary>Kod</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://dahtah.github.io/imager/">imager</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">boats</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/imager/man/grayscale.html">grayscale</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">boats</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/imager/man/grayscale.html">grayscale</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/imager/man/cannyEdges.html">cannyEdges</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
+<details>
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(imager)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">t</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>boats <span class="sc">|&gt;</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grayscale</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>boats <span class="sc">|&gt;</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grayscale</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cannyEdges</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
 <div id="fig-contour1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="edge_files/figure-html/fig-contour1-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="edge_files/figure-html/fig-contour1-1.png" class="img-fluid figure-img" width="672"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;7.1: Przykład detekcji konturów</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Krawędzie można z grubsza opisać jako miejsca na obrazie, w których natężenie światła zmienia się wyraźnie wzdłuż określonej orientacji. Im silniejsza jest lokalna zmiana intensywności, tym większy jest dowód na istnienie krawędzi w tym miejscu. W matematyce wielkość zmiany w odniesieniu do odległości przestrzennej jest znana jako pierwsza pochodna funkcji, dlatego wychodzimy od tego pojęcia, aby stworzyć nasz pierwszy prosty detektor krawędzi.</p>
-<section id="wykrywanie-krawędzi-na-podstawie-gradientu" class="level2 page-columns page-full" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="wykrywanie-krawędzi-na-podstawie-gradientu">
-<span class="header-section-number">7.1</span> Wykrywanie krawędzi na podstawie gradientu</h2>
+<section id="wykrywanie-krawędzi-na-podstawie-gradientu" class="level2 page-columns page-full" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="wykrywanie-krawędzi-na-podstawie-gradientu"><span class="header-section-number">7.1</span> Wykrywanie krawędzi na podstawie gradientu</h2>
 <p>Dla uproszczenia, najpierw zbadamy sytuację tylko w jednym wymiarze, zakładając, że obraz zawiera pojedynczy jasny obszar w centrum otoczony ciemnym tłem (<a href="#fig-grad2">Rysunek&nbsp;<span>7.2</span></a> (a)). W tym przypadku profil natężenia wzdłuż jednej linii obrazu wyglądałby jak funkcja 1D <span class="math inline">\(f(x)\)</span>, jak pokazano na <a href="#fig-grad2">Rysunek&nbsp;<span>7.2</span></a> (b). Biorąc pierwszą pochodną funkcji <span class="math inline">\(f\)</span></p>
 <p><span id="eq-gradient"><span class="math display">\[
 f'(x)=\frac{df}{dx}(x),
 \tag{7.1}\]</span></span></p>
 <p>powoduje dodatnie wahnięcie w tych miejscach, gdzie intensywność wzrasta i ujemne wahnięcie tam, gdzie wartość funkcji spada (<a href="#fig-grad2">Rysunek&nbsp;<span>7.2</span></a> (c)).</p>
 <div id="fig-grad2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 21.13.51.png" class="img-fluid figure-img"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-9 o 21.13.51.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;7.2: Przykładowy obraz z wyraźną zmianą jasności</figcaption><p></p>
 </figure>
 </div>
@@ -324,7 +356,8 @@ f'(x)=\frac{df}{dx}(x),
 \tag{7.2}\]</span></span></p>
 <p>Oczywiście tę samą metodę można zastosować w kierunku pionowym, aby oszacować pierwszą pochodną wzdłuż osi y, czyli wzdłuż kolumn obrazu.</p>
 <div id="fig-grad3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 21.12.43.png" class="img-fluid figure-img"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-9 o 21.12.43.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;7.3: Oszacowanie gradientu dla funkcji dyskretnej</figcaption><p></p>
 </figure>
 </div>
@@ -354,15 +387,16 @@ H^D_v= \begin{bmatrix}
 \tag{7.6}\]</span></span></p>
 <p>Rysunek 6.4 przedstawia wynik zastosowania filtrów gradientowych zdefiniowanych w <a href="#eq-grad5">Równanie&nbsp;<span>7.5</span></a> i <a href="#eq-grad6">Równanie&nbsp;<span>7.6</span></a> do syntetycznego obrazu testowego. Widać wyraźnie zależność odpowiedzi filtrów od orientacji. Filtr gradientu poziomego <span class="math inline">\(H_u^D\)</span> reaguje najsilniej na szybkie zmiany wzdłuż kierunku poziomego, (czyli na krawędzie pionowe); analogicznie filtr gradientu pionowego <span class="math inline">\(H_v^D\)</span> reaguje najsilniej na krawędzie poziome. W płaskich obszarach obrazu (przedstawionych jako szare na <a href="#fig-grad4">Rysunek&nbsp;<span>7.4</span></a> (b, c)) reakcja filtra jest zerowa.</p>
 <div id="fig-grad4" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 21.38.12.png" class="img-fluid figure-img" width="500"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-9 o 21.38.12.png" class="img-fluid figure-img" width="500"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;7.4: Zastosowanie metody gradientowej do obrazu 2D</figcaption><p></p>
 </figure>
 </div>
 <p>Lokalne gradienty funkcji obrazu są podstawą wielu klasycznych operatorów detekcji krawędzi. Praktycznie różnią się one jedynie rodzajem filtra stosowanego do estymacji składowych gradientu oraz sposobem łączenia tych składowych. W wielu sytuacjach człowiek jest zainteresowany nie tylko natężeniem punktów krawędziowych, ale także lokalnym kierunkiem krawędzi. Oba rodzaje informacji zawarte są w funkcji gradientu i mogą być łatwo obliczone ze składowych kierunkowych. Poniższy niewielki zbiór opisuje kilka często używanych, prostych operatorów krawędziowych, które istnieją od wielu lat, a więc są interesujące również z historycznego punktu widzenia.</p>
-<section id="przegląd-filtrów-do-detekcji-krawędzi" class="level3 page-columns page-full" data-number="7.1.1"><h3 data-number="7.1.1" class="anchored" data-anchor-id="przegląd-filtrów-do-detekcji-krawędzi">
-<span class="header-section-number">7.1.1</span> Przegląd filtrów do detekcji krawędzi</h3>
-<section id="filtry-prewitta-i-sobela" class="level4" data-number="7.1.1.1"><h4 data-number="7.1.1.1" class="anchored" data-anchor-id="filtry-prewitta-i-sobela">
-<span class="header-section-number">7.1.1.1</span> Filtry Prewitta i Sobela</h4>
+<section id="przegląd-filtrów-do-detekcji-krawędzi" class="level3 page-columns page-full" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="przegląd-filtrów-do-detekcji-krawędzi"><span class="header-section-number">7.1.1</span> Przegląd filtrów do detekcji krawędzi</h3>
+<section id="filtry-prewitta-i-sobela" class="level4" data-number="7.1.1.1">
+<h4 data-number="7.1.1.1" class="anchored" data-anchor-id="filtry-prewitta-i-sobela"><span class="header-section-number">7.1.1.1</span> Filtry Prewitta i Sobela</h4>
 <p>Operatory krawędziowe autorstwa Prewitta <span class="citation" data-cites="PictureProcessingPsychopictorics">(<a href="references.html#ref-PictureProcessingPsychopictorics" role="doc-biblioref"><span>„Picture <span>Processing</span> and <span>Psychopictorics</span> - 1st <span>Edition</span>”</span>, b.d.</a>)</span> i Sobela <span class="citation" data-cites="davisSurveyEdgeDetection1975">(<a href="references.html#ref-davisSurveyEdgeDetection1975" role="doc-biblioref">Davis 1975</a>)</span> to dwie klasyczne metody, które różnią się tylko nieznacznie stosowanymi przez nie filtrami pochodnymi.</p>
 <p>Oba operatory wykorzystują filtry liniowe, które rozciągają się odpowiednio na trzy sąsiednie wiersze i kolumny, aby przeciwdziałać wrażliwości na szumy prostych (pojedynczy wiersz/kolumna) operatorów gradientowych. Operator Prewitta wykorzystuje jądra postaci</p>
 <p><span id="eq-prewitt"><span class="math display">\[
@@ -401,18 +435,21 @@ E(u,v)=\sqrt{I_u^2(u,v)+I_v^2(u,v)},
 \Phi(u,v)=\tan^{-1}\left(\frac{I_u(u,v)}{I_v(u,v)}\right)
 \tag{7.10}\]</span></span></p>
 <div id="fig-edge1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 22.16.59.png" class="img-fluid figure-img" width="400"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-9 o 22.16.59.png" class="img-fluid figure-img" width="400"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;7.5: Ilustracja dla długości wektora gradientu i orientacji krawędzi</figcaption><p></p>
 </figure>
 </div>
 <p>Cały proces ekstrakcji wielkości i orientacji krawędzi jest podsumowany na <a href="#fig-edge2">Rysunek&nbsp;<span>7.6</span></a>. Najpierw oryginalny obraz <span class="math inline">\(I\)</span> jest niezależnie splatany z dwoma filtrami gradientowymi <span class="math inline">\(H_u\)</span> i <span class="math inline">\(H_v\)</span>, a następnie z filtrów obliczana jest długość wektora gradientu krawędzi <span class="math inline">\(E\)</span> i orientacja <span class="math inline">\(\Phi\)</span>.</p>
 <div id="fig-edge2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 22.20.43.png" class="img-fluid figure-img"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-9 o 22.20.43.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;7.6: Przykładowy proces ekstrakcji krawędzi</figcaption><p></p>
 </figure>
 </div>
-</section><section id="filtry-robertsa" class="level4" data-number="7.1.1.2"><h4 data-number="7.1.1.2" class="anchored" data-anchor-id="filtry-robertsa">
-<span class="header-section-number">7.1.1.2</span> Filtry Roberts’a</h4>
+</section>
+<section id="filtry-robertsa" class="level4" data-number="7.1.1.2">
+<h4 data-number="7.1.1.2" class="anchored" data-anchor-id="filtry-robertsa"><span class="header-section-number">7.1.1.2</span> Filtry Roberts’a</h4>
 <p>Jako jeden z najprostszych i najstarszych detektorów krawędzi, operator Robertsa <span class="citation" data-cites="OpticalElectroOpticalInformation">(<a href="references.html#ref-OpticalElectroOpticalInformation" role="doc-biblioref"><span>„Optical and <span>Electro-Optical Information Processing</span>”</span>, b.d.</a>)</span> ma dziś głównie znaczenie historyczne. Wykorzystuje on dwa niezwykle małe filtry o rozmiarach 2 × 2 do estymacji gradientu kierunkowego wzdłuż przekątnych obrazu. Zdefiniowane są one za pomocą jądra</p>
 <p><span id="eq-roberts"><span class="math display">\[
 H^R_1= \begin{bmatrix}
@@ -425,23 +462,28 @@ H^R_2= \begin{bmatrix}
 \end{bmatrix}
 \tag{7.11}\]</span></span></p>
 <p>Projektowanie liniowych filtrów krawędziowych wiąże się z pewnym kompromisem: im silniej filtr reaguje na struktury podobne do krawędzi, tym bardziej wrażliwy jest na orientację. Innymi słowy, filtry niewrażliwe na orientację mają tendencję do reagowania na struktury nie będące krawędziami, podczas gdy najbardziej dyskryminujące filtry krawędziowe reagują tylko na krawędzie w wąskim zakresie orientacji. Jednym z rozwiązań jest zastosowanie nie tylko pojedynczej pary stosunkowo “szerokich” filtrów dla dwóch kierunków (takich jak Prewitta i Sobela), ale większego zestawu filtrów o ciasno rozłożonych orientacjach.</p>
-</section><section id="rozszerzony-filtr-sobela" class="level4" data-number="7.1.1.3"><h4 data-number="7.1.1.3" class="anchored" data-anchor-id="rozszerzony-filtr-sobela">
-<span class="header-section-number">7.1.1.3</span> Rozszerzony filtr Sobela</h4>
+</section>
+<section id="rozszerzony-filtr-sobela" class="level4" data-number="7.1.1.3">
+<h4 data-number="7.1.1.3" class="anchored" data-anchor-id="rozszerzony-filtr-sobela"><span class="header-section-number">7.1.1.3</span> Rozszerzony filtr Sobela</h4>
 <p>Tym razem zastosujemy 8 filtrów zmieniając orientację o <span class="math inline">\(45\degree\)</span>.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 22.50.58.png" class="img-fluid figure-img" width="400"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-9 o 22.50.58.png" class="img-fluid figure-img" width="400"></p>
 </figure>
 </div>
-</section><section id="filtr-kirscha" class="level4 page-columns page-full" data-number="7.1.1.4"><h4 data-number="7.1.1.4" class="anchored" data-anchor-id="filtr-kirscha">
-<span class="header-section-number">7.1.1.4</span> Filtr Kirscha</h4>
+</section>
+<section id="filtr-kirscha" class="level4 page-columns page-full" data-number="7.1.1.4">
+<h4 data-number="7.1.1.4" class="anchored" data-anchor-id="filtr-kirscha"><span class="header-section-number">7.1.1.4</span> Filtr Kirscha</h4>
 <p>Innym klasycznym operatorem kompasu jest operator zaproponowany przez Kirscha <span class="citation" data-cites="kirschComputerDeterminationConstituent1971">(<a href="references.html#ref-kirschComputerDeterminationConstituent1971" role="doc-biblioref">Kirsch 1971</a>)</span>, który również wykorzystuje osiem zorientowanych filtrów o następujących kernelach</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 22.51.18.png" class="img-fluid figure-img" width="400"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-9 o 22.51.18.png" class="img-fluid figure-img" width="400"></p>
 </figure>
 </div>
 <p>Jednym z problemów z operatorami do wykrywania krawędzi opartymi na pierwszych pochodnych jest to, że każda wynikowa krawędź jest tak szeroka jak przedział zmiany intensywności, a zatem krawędzie mogą być trudne do precyzyjnego zlokalizowania. Alternatywna klasa operatorów krawędzi wykorzystuje drugie pochodne funkcji obrazu.</p>
 <div id="fig-edge3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 23.04.02.png" class="img-fluid figure-img" width="500"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-9 o 23.04.02.png" class="img-fluid figure-img" width="500"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;7.7: Zastosowanie drugiej pochodnej w detekcji krawędzi</figcaption><p></p>
 </figure>
 </div>
@@ -462,8 +504,9 @@ H^R_2= \begin{bmatrix}
 <li>kontury mogą się rozgałęziać w kilku kierunkach.</li>
 </ul>
 <p>Ze względu na te problemy, śledzenie konturów zazwyczaj nie jest stosowane do obrazów oryginalnych lub obrazów o ciągłej wartości krawędzi, z wyjątkiem bardzo prostych sytuacji, takich jak wyraźne oddzielenie obiektów (pierwszego planu) od tła. Śledzenie konturów w segmentowanych obrazach binarnych jest oczywiście znacznie prostsze.</p>
-</section><section id="filtry-cannyego" class="level4 page-columns page-full" data-number="7.1.1.5"><h4 data-number="7.1.1.5" class="anchored" data-anchor-id="filtry-cannyego">
-<span class="header-section-number">7.1.1.5</span> Filtry Canny’ego</h4>
+</section>
+<section id="filtry-cannyego" class="level4 page-columns page-full" data-number="7.1.1.5">
+<h4 data-number="7.1.1.5" class="anchored" data-anchor-id="filtry-cannyego"><span class="header-section-number">7.1.1.5</span> Filtry Canny’ego</h4>
 <div class="page-columns page-full"><p>Operator zaproponowany przez Canny’ego jest szeroko stosowany i nadal uważany za “state of the art”<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> w detekcji krawędzi. Metoda ta stara się osiągnąć trzy główne cele:</p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;najwyższe osiągnięcie w danej dziedzinie</p></li></div></div>
 <ul>
 <li>zminimalizować liczbę fałszywych punktów krawędziowych,</li>
@@ -472,7 +515,8 @@ H^R_2= \begin{bmatrix}
 </ul>
 <p>Właściwości te nie są zwykle osiągane przez proste operatory krawędziowe (najczęściej oparte na pierwszych pochodnych i późniejszym progowaniu). W swej istocie filtr Canny’ego jest metodą gradientową (opartą na pierwszych pochodnych), ale do precyzyjnej lokalizacji krawędzi wykorzystuje miejsca zerowe drugich pochodnych. Pod tym względem metoda ta jest podobna do detektorów krawędzi, które bazują na drugich pochodnych funkcji obrazu <span class="citation" data-cites="cannyComputationalApproachEdge1986">(<a href="references.html#ref-cannyComputationalApproachEdge1986" role="doc-biblioref">Canny 1986</a>)</span>.</p>
 <div id="fig-edge4" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 23.05.19.png" class="img-fluid figure-img" width="500"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-9 o 23.05.19.png" class="img-fluid figure-img" width="500"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;7.8: Przykłady zastosowania różnych detektorów krawędzi</figcaption><p></p>
 </figure>
 </div>
@@ -483,17 +527,22 @@ H^R_2= \begin{bmatrix}
 <li>Śledzenie krawędzi i progowanie z histerezą - W ostatnim kroku zbiory połączonych punktów brzegowych są zbierane z wartości, które pozostały nietłumione w poprzedniej operacji. Dokonuje się tego za pomocą techniki zwanej “progowaniem z histerezą” z wykorzystaniem dwóch różnych wartości progowych , <span class="math inline">\(t_{lo}\)</span> (przy czym <span class="math inline">\(t_{hi} &gt; t_{lo}\)</span>). Obraz jest skanowany w poszukiwaniu pikseli o wielkości krawędzi <span class="math inline">\(E_{nms}(u, v) \geq t_{hi}\)</span>. W każdym przypadku znalezienia takiego (wcześniej nie odwiedzanego) miejsca, uruchamiany jest nowy ślad krawędziowy i dodawane są do niego wszystkie połączone piksele krawędziowe <span class="math inline">\((u′,v′)\)</span>, dopóki <span class="math inline">\(E_nms(u′,v′) \geq t_{lo}\)</span>. Pozostają tylko te ślady krawędzi, które zawierają co najmniej jeden piksel o wielkości krawędzi większej niż <span class="math inline">\(t_{hi}\)</span> i żadnych pikseli o wielkości krawędzi mniejszej niż <span class="math inline">\(t_{lo}\)</span>. Typowe wartości progów dla 8-bitowych obrazów w skali szarości to <span class="math inline">\(t_{hi} = 5.0\)</span> i <span class="math inline">\(t_{lo} = 2.5\)</span>.</li>
 </ol>
 <div id="fig-edge5" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 23.54.54.png" class="img-fluid figure-img" width="500"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-9 o 23.54.54.png" class="img-fluid figure-img" width="500"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;7.9: Zasada działania filtru Canny’ego</figcaption><p></p>
 </figure>
 </div>
-</section></section></section><section id="wyostrzanie-obrazu" class="level2 page-columns page-full" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="wyostrzanie-obrazu">
-<span class="header-section-number">7.2</span> Wyostrzanie obrazu</h2>
+</section>
+</section>
+</section>
+<section id="wyostrzanie-obrazu" class="level2 page-columns page-full" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="wyostrzanie-obrazu"><span class="header-section-number">7.2</span> Wyostrzanie obrazu</h2>
 <p>Wyostrzanie obrazów (ang. <em>sharpening</em>) jest częstym zadaniem, np. w celu poprawy ostrości po zeskanowaniu lub przeskalowaniu obrazu lub w celu wstępnej kompensacji późniejszej utraty ostrości w trakcie drukowania lub wyświetlania obrazu. Powszechnym podejściem do wyostrzania obrazu jest wzmacnianie wysokoczęstotliwościowych (ang. <em>hight-frequency amplifying</em>) składowych obrazu, które są głównie odpowiedzialne za postrzeganą ostrość obrazu i dla których najsilniejsze występują przy szybkich zmianach intensywności. W dalszej części opisujemy dwie metody sztucznego wyostrzania obrazu, które opierają się na technikach podobnych do detekcji krawędzi.</p>
-<section id="filtr-laplacea" class="level3" data-number="7.2.1"><h3 data-number="7.2.1" class="anchored" data-anchor-id="filtr-laplacea">
-<span class="header-section-number">7.2.1</span> Filtr Laplace’a</h3>
+<section id="filtr-laplacea" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="filtr-laplacea"><span class="header-section-number">7.2.1</span> Filtr Laplace’a</h3>
 <div id="fig-sharp1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-10 o 16.39.04.png" class="img-fluid figure-img" width="400"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-10 o 16.39.04.png" class="img-fluid figure-img" width="400"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;7.10: Wyostrzanie obrazu za pomocą drugich pochodnych</figcaption><p></p>
 </figure>
 </div>
@@ -531,17 +580,18 @@ I'\leftarrow I-w\cdot (H^L*I).
 \tag{7.16}\]</span></span></p>
 <p><a href="#fig-sharp2">Rysunek&nbsp;<span>7.11</span></a> przedstawia przykład zastosowania filtru Laplace’a <span class="math inline">\(H^L\)</span> do obrazu w skali szarości, gdzie wyraźnie widoczne są pary dodatnio i ujemnych szczytów po obu stronach każdej krawędzi. Filtr wydaje się niemal izotropowy pomimo grubego przybliżenia za pomocą małych filtrów.</p>
 <div id="fig-sharp2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-10 o 16.56.32.png" class="img-fluid figure-img" width="400"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-10 o 16.56.32.png" class="img-fluid figure-img" width="400"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;7.11: Porównanie filtru Laplace’a z filtrami drugich pochodnych</figcaption><p></p>
 </figure>
 </div>
-</section><section id="metoda-nieostrej-maski" class="level3 page-columns page-full" data-number="7.2.2"><h3 data-number="7.2.2" class="anchored" data-anchor-id="metoda-nieostrej-maski">
-<span class="header-section-number">7.2.2</span> Metoda nieostrej maski</h3>
+</section>
+<section id="metoda-nieostrej-maski" class="level3 page-columns page-full" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="metoda-nieostrej-maski"><span class="header-section-number">7.2.2</span> Metoda nieostrej maski</h3>
 <p>Metoda nieostrej maski (ang. <em>unsharp masking)</em> (USM) to technika wyostrzania krawędzi, która jest szczególnie popularna w astronomii, druku cyfrowym i wielu innych dziedzinach przetwarzania obrazów. Termin ten wywodzi się z klasycznej fotografii, gdzie ostrość obrazu była optycznie zwiększana poprzez połączenie go z wygładzoną (“nieostrą”) kopią. Proces ten jest w zasadzie taki sam dla obrazów cyfrowych.</p>
 <div class="page-columns page-full"><p>Pierwszym krokiem w filtrze USM jest odjęcie od oryginału wygładzonej wersji obrazu, która uwydatnia krawędzie. Wynik ten nazywany jest “maską”. W fotografii analogowej wymagane wygładzenie uzyskiwano przez zwykłe rozogniskowanie obiektywu<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Następnie maska jest ponownie dodawana do oryginału, w taki sposób, że krawędzie w obrazie są wyostrzone. Podsumowując, kroki zaangażowane w filtrowanie USM to:</p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;utratę ostrości</p></li></div></div>
 <ol type="1">
-<li>Obraz maski <span class="math inline">\(M\)</span> jest generowany przez odjęcie od obrazu oryginalnego <span class="math inline">\(I\)</span> jego wygładzonej wersji, uzyskanej przez filtrowanie za pomocą filtru <span class="math inline">\(\tilde{H}\)</span>
-</li>
+<li>Obraz maski <span class="math inline">\(M\)</span> jest generowany przez odjęcie od obrazu oryginalnego <span class="math inline">\(I\)</span> jego wygładzonej wersji, uzyskanej przez filtrowanie za pomocą filtru <span class="math inline">\(\tilde{H}\)</span></li>
 </ol>
 <p><span id="eq-sharp5"><span class="math display">\[
 M\leftarrow I-(I*\tilde{H})=I-\tilde{I}.
@@ -554,26 +604,30 @@ M\leftarrow I-(I*\tilde{H})=I-\tilde{I}.
 \check{I}\leftarrow I+a\cdot (I-\tilde{I})=(1+a)\cdot I-a\cdot \tilde{I}.
 \]</span> Jako filtr wygładzający <span class="math inline">\(\tilde{H}\)</span> można właściwie zastosować dowolny filtr wygładzający, choć najczęściej spotyka się w tym miejscu filtry gassowskie <span class="math inline">\(H^{G,\sigma}\)</span> o <span class="math inline">\(\sigma \in [1,20]\)</span>. Natomiast najczęściej przyjmowane wartości dla <span class="math inline">\(a\)</span> mieszczą się w przedziale [0.2,4].</p>
 <div class="cell">
-<details><summary>Kod</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lena</span> <span class="op">&lt;-</span> <span class="fu">Rvision</span><span class="fu">::</span><span class="fu"><a href="https://swarm-lab.github.io/Rvision/reference/image.html">image</a></span><span class="op">(</span><span class="st">"images/lena.png"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">2</span>, <span class="fl">3</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lena</span><span class="op">)</span></span>
-<span><span class="va">lena_blr</span> <span class="op">&lt;-</span> <span class="fu">Rvision</span><span class="fu">::</span><span class="fu"><a href="https://swarm-lab.github.io/Rvision/reference/gaussianBlur.html">gaussianBlur</a></span><span class="op">(</span><span class="va">lena</span>, <span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lena_blr</span><span class="op">)</span></span>
-<span><span class="va">maska</span> <span class="op">&lt;-</span> <span class="va">lena</span><span class="op">-</span><span class="va">lena_blr</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">maska</span><span class="op">)</span></span>
-<span><span class="va">lena_sharp</span> <span class="op">&lt;-</span> <span class="va">lena</span><span class="op">+</span><span class="va">maska</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lena_sharp</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">lena_flt</span> <span class="op">&lt;-</span> <span class="fu">Rvision</span><span class="fu">::</span><span class="fu"><a href="https://swarm-lab.github.io/Rvision/reference/filter2D.html">filter2D</a></span><span class="op">(</span><span class="va">lena</span>, <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0</span>,</span>
-<span>                                    <span class="fl">1</span>,<span class="op">-</span><span class="fl">4</span>,<span class="fl">1</span>,</span>
-<span>                                    <span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">T</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lena_flt</span><span class="op">)</span></span>
-<span><span class="op">(</span><span class="va">lena</span><span class="op">-</span><span class="va">lena_flt</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
+<details>
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lena <span class="ot">&lt;-</span> Rvision<span class="sc">::</span><span class="fu">image</span>(<span class="st">"images/lena.png"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lena)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>lena_blr <span class="ot">&lt;-</span> Rvision<span class="sc">::</span><span class="fu">gaussianBlur</span>(lena, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lena_blr)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>maska <span class="ot">&lt;-</span> lena<span class="sc">-</span>lena_blr</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(maska)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>lena_sharp <span class="ot">&lt;-</span> lena<span class="sc">+</span>maska</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lena_sharp)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>lena_flt <span class="ot">&lt;-</span> Rvision<span class="sc">::</span><span class="fu">filter2D</span>(lena, <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">1</span>,<span class="sc">-</span><span class="dv">4</span>,<span class="dv">1</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                                    <span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>), <span class="at">byrow =</span> T, <span class="at">ncol =</span> <span class="dv">3</span>))</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lena_flt)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>(lena<span class="sc">-</span>lena_flt) <span class="sc">|&gt;</span>  <span class="fu">plot</span>()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
 <div id="fig-sharp4" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="edge_files/figure-html/fig-sharp4-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="edge_files/figure-html/fig-sharp4-1.png" class="img-fluid figure-img" width="672"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;7.12: Wyostrzenie obrazu Leny. Pierwszy obraz w górnym rzędzie to oryginał, środkowy w górnym rzędzie to rozmyty obraz Leny filtrem gaussowskim, obraz po prawej w górnym rzędzie to maska. Obraz po lewej stronie w dolnym rzędzie to wyostrzony obraz Leny metodą USM. Środkowy obraz w dolnym rzędzie to filtr Laplace’a nałożony na Lenę, a obraz po prawej w dolnym rzędzie to wyostrzony obraz Leny metodą Laplace’a</figcaption><p></p>
 </figure>
 </div>
@@ -581,27 +635,32 @@ M\leftarrow I-(I*\tilde{H})=I-\tilde{I}.
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-cannyComputationalApproachEdge1986" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-cannyComputationalApproachEdge1986" class="csl-entry" role="listitem">
 Canny, John. 1986. <span>„A <span>Computational Approach</span> to <span>Edge Detection</span>”</span>. <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em> PAMI-8 (6): 679–98. <a href="https://doi.org/10.1109/TPAMI.1986.4767851">https://doi.org/10.1109/TPAMI.1986.4767851</a>.
 </div>
-<div id="ref-davisSurveyEdgeDetection1975" class="csl-entry" role="doc-biblioentry">
+<div id="ref-davisSurveyEdgeDetection1975" class="csl-entry" role="listitem">
 Davis, Larry S. 1975. <span>„A Survey of Edge Detection Techniques”</span>. <em>Computer Graphics and Image Processing</em> 4 (3): 248–70. <a href="https://doi.org/10.1016/0146-664X(75)90012-X">https://doi.org/10.1016/0146-664X(75)90012-X</a>.
 </div>
-<div id="ref-kirschComputerDeterminationConstituent1971" class="csl-entry" role="doc-biblioentry">
+<div id="ref-kirschComputerDeterminationConstituent1971" class="csl-entry" role="listitem">
 Kirsch, Russell A. 1971. <span>„Computer Determination of the Constituent Structure of Biological Images”</span>. <em>Computers and Biomedical Research</em> 4 (3): 315–28. <a href="https://doi.org/10.1016/0010-4809(71)90034-6">https://doi.org/10.1016/0010-4809(71)90034-6</a>.
 </div>
-<div id="ref-marrTheoryEdgeDetection1980" class="csl-entry" role="doc-biblioentry">
+<div id="ref-marrTheoryEdgeDetection1980" class="csl-entry" role="listitem">
 Marr, D., i E. Hildreth. 1980. <span>„Theory of Edge Detection”</span>. <em>Proceedings of the Royal Society of London. Series B, Biological Sciences</em> 207 (1167): 187–217. <a href="https://doi.org/10.1098/rspb.1980.0020">https://doi.org/10.1098/rspb.1980.0020</a>.
 </div>
-<div id="ref-OpticalElectroOpticalInformation" class="csl-entry" role="doc-biblioentry">
+<div id="ref-OpticalElectroOpticalInformation" class="csl-entry" role="listitem">
 <span>„Optical and <span>Electro-Optical Information Processing</span>”</span>. b.d. <em>MIT Press</em>.
 </div>
-<div id="ref-PictureProcessingPsychopictorics" class="csl-entry" role="doc-biblioentry">
+<div id="ref-PictureProcessingPsychopictorics" class="csl-entry" role="listitem">
 <span>„Picture <span>Processing</span> and <span>Psychopictorics</span> - 1st <span>Edition</span>”</span>. b.d. https://www.elsevier.com/books/picture-processing-and-psychopictorics/lipkin/978-0-12-451550-5.
 </div>
 </div>
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section>
+</section>
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -743,9 +802,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -934,7 +1007,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
       <a href="./filters.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Filtry</span></span>
       </a>          
@@ -946,11 +1021,16 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">Automatyczna analiza obrazu, Dariusz Majerek</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">Książka została napisana w <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>
+
 
 
 </body></html>

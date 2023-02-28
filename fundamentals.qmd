@@ -1,8 +1,5 @@
 ---
-output: html_document
 code-fold: show
-editor_options: 
-  chunk_output_type: console
 ---
 
 # Fundamenty DNN
@@ -71,21 +68,17 @@ Poniższy listing pokazuje prostą implementację.
 
 ```r
 #| eval: false
+
 indices <- sample(1:nrow(data), size = 0.80 * nrow(data)) # <1>
-
 evaluation_data  <- data[-indices, ]                      # <2>  
-
-training_data <- data[indices, ] # <3>
-
-model <- get_model() # <4>
-model %>% train(training_data) 
-validation_score <- model %>% evaluate(validation_data) 
-
-model <- get_model() # <5>
-model %>% train(data) 
-test_score <- model %>% evaluate(test_data)
+training_data <- data[indices, ]                          # <3>
+model <- get_model()                                      # <4>
+model %>% train(training_data)                            # <4>
+validation_score <- model %>% evaluate(validation_data)   # <4>
+model <- get_model()                                      # <5>
+model %>% train(data)                                     # <5>
+test_score <- model %>% evaluate(test_data)               # <5>
 ```
-
 1.  wylosuj indeksy zbioru uczącego;
 2.  zdefiniuj zbiór walidacyjny;
 3.  zdefiniuj zbiór uczący;
@@ -108,6 +101,7 @@ Oto prosta implementacja pseudokodu w R.
 
 ```r
 #| eval: false
+
 k <- 4
 indices <- sample(1:nrow(data))
 folds <- cut(indices, breaks = k, labels = FALSE)
@@ -126,12 +120,10 @@ for (i in 1:k) {
 
 validation_score <- mean(validation_scores) # <4>
 
-model <- get_model()
-
-model %>% train(data) # <5>
+model <- get_model() # <5>
+model %>% train(data) 
 results <- model %>% evaluate(test_data)
 ```
-
 1.  wybierz obserwacje do zbioru walidacyjnego;
 2.  użyj pozostałych danych jako zbioru uczącego (fold);
 3.  stwórz model i ucz go na zbiorze uczącym (foldzie);
@@ -192,7 +184,6 @@ std <- apply(train_data, 2, sd)
 train_data <- scale(train_data, center = mean, scale = std) # <2>
 test_data <- scale(test_data, center = mean, scale = std)
 ```
-
 1.  oblicz średnią i odchylenie standardowe na zbiorze uczącym;
 2.  zastosuj obliczone parametry do zbioru uczącego i testowego.
 
@@ -209,13 +200,10 @@ W tej sytuacji powinieneś sztucznie wygenerować próbki treningowe z brakując
 
 Zacznijmy od nauczenia sieci neuronowej do rozpoznawania cyfr na podstawie obrazów prezentowany wcześniej.
 
-```r
+
+```{r}
+#| eval: false
 library(keras)
-```
-
-
-```r
-#| cache: true
 mnist <- dataset_mnist()
 train_images <- mnist$train$x
 train_labels <- mnist$train$y
@@ -242,7 +230,7 @@ network %>% compile(
   metrics = c("accuracy")
 )
 
-summary(network)
+network
 
 history <- network %>% 
   fit(train_images, 
@@ -253,6 +241,18 @@ history <- network %>%
 
 plot(history)
 ```
+
+```{r}
+#| echo: false
+
+library(keras)
+load(file = "data/mnist.rda")
+network <- load_model_tf(filepath = "models/fund_mnist1/")
+load("models/fund_hist.rda")
+network
+plot(history)
+```
+
 
 Na podstawie powyższego modelu możemy stwierdzić, że wydajność modelu na odłożonych danych walidacyjnych zawsze osiągała szczyt po kilku epokach, a następnie zaczynała się pogarszać.
 *Overfitting* zdarza się w każdym problemie uczenia maszynowego.
@@ -291,8 +291,8 @@ Niestety, nie ma magicznej formuły, aby określić właściwą liczbę warstw l
 Musisz ocenić szereg różnych architektur (oczywiście na zbiorze walidacyjnym, nie na zbiorze testowym), aby znaleźć właściwy rozmiar modelu dla twoich danych.
 Ogólny tok postępowania w celu znalezienia odpowiedniego rozmiaru modelu polega na rozpoczęciu od stosunkowo niewielkiej liczby warstw i parametrów, a następnie zwiększaniu rozmiaru warstw lub dodawaniu nowych warstw, dopóki nie zobaczysz malejących zwrotów w odniesieniu do utraty walidacji.
 
-```r
-#| cache: true
+```{r}
+#| eval: false
 network <- keras_model_sequential() %>%
   layer_dense(units = 128, activation = "relu", input_shape = c(28 * 28)) %>%
   layer_dense(units = 10, activation = "softmax")
@@ -303,17 +303,22 @@ network %>% compile(
   metrics = c("accuracy")
 )
 
-summary(network)
-
 history <- network %>% 
   fit(train_images, 
       train_labels, 
       epochs = 20, 
       batch_size = 128,
       validation_split = 0.2)
+```
 
+```{r}
+#| echo: false
+network <- load_model_tf(filepath = "models/fund_mnist2/")
+load("models/fund_hist2.rda")
+network
 plot(history)
 ```
+
 
 Jak widać z powyższej symulacji dla prostszej sieci zjawisko *overffitingu* pojawia się później i nie ma tak wyraźnego charakteru.
 
@@ -333,8 +338,8 @@ Koszt ten występuje w dwóch postaciach:
 W `keras`, regularyzacja wagowa jest dodawana poprzez dodanie instancji regularyzatora wagowego do warstw.
 Należy pamiętać, że regularyzacja jest stosowana do sieci tylko na etapie uczenia, dlatego na zbiorze testowym strata będzie mniejsza niż na treningowym.
 
-```r
-#| cache: true
+```{r}
+#| eval: false
 network <- keras_model_sequential() %>%
   layer_dense(units = 256, 
               activation = "relu",
@@ -348,17 +353,22 @@ network %>% compile(
   metrics = c("accuracy")
 )
 
-summary(network)
-
 history <- network %>% 
   fit(train_images, 
       train_labels, 
       epochs = 20, 
       batch_size = 128,
       validation_split = 0.2)
+```
 
+```{r}
+#| echo: false
+network <- load_model_tf(filepath = "models/fund_mnist3/")
+load("models/fund_hist3.rda")
+network
 plot(history)
 ```
+
 
 Jak widać z powyższego wykresu przez zastosowanie regularyzacji L2 otrzymaliśmy większą zbieżność na obu próbach.
 
@@ -366,8 +376,8 @@ Jak widać z powyższego wykresu przez zastosowanie regularyzacji L2 otrzymaliś
 
 *Dropout* to jedna z najskuteczniejszych i najczęściej stosowanych technik regularizacji dla sieci neuronowych, opracowana przez Geoffa Hintona i jego studentów z Uniwersytetu w Toronto.
 *Dropout*, zastosowany do warstwy, polega na losowym wyrzuceniu (ustawieniu na zero) pewnej liczby cech wyjściowych warstwy podczas treningu.
-Powiedzmy, że dana warstwa normalnie zwróciłaby podczas treningu wektor \[0.2, 0.5, 1.3, 0.8, 1.1\] dla danej próbki wejściowej.
-Po zastosowaniu *dropoutu*, wektor ten będzie miał kilka zerowych wpisów rozmieszczonych losowo: na przykład \[0, 0.5, 1.3, 0, 1.1\].
+Powiedzmy, że dana warstwa normalnie zwróciłaby podczas treningu wektor [0.2, 0.5, 1.3, 0.8, 1.1] dla danej próbki wejściowej.
+Po zastosowaniu *dropoutu*, wektor ten będzie miał kilka zerowych wpisów rozmieszczonych losowo: na przykład [0, 0.5, 1.3, 0, 1.1].
 
 ![](https://images1.memedroid.com/images/UPLOADED16/4f9caf2dd681d.jpeg){.column-margin fig-align="center" width="400"}
 
@@ -382,8 +392,8 @@ Dlaczego miałoby to pomóc w redukcji *overfitting*?
 Hinton mówi, że zainspirował go między innymi mechanizm zapobiegania oszustwom stosowany przez banki.
 Mówiąc jego własnymi słowami: "Poszedłem do swojego banku. Kasjerzy ciągle się zmieniali i zapytałem jednego z nich, dlaczego. Powiedział, że nie wie, ale są często przenoszeni. Uznałem, że musi to być spowodowane tym, że skuteczne oszukanie banku wymagałoby współpracy między pracownikami. To uświadomiło mi, że losowe usuwanie różnych podzbiorów neuronów na każdym przykładzie zapobiegnie spiskom, a tym samym zmniejszy *overfitting*." Główna idea polega na tym, że wprowadzenie szumu do wartości wyjściowych warstwy może rozbić przypadkowe wzorce, które nie są istotne (co Hinton określa jako spiski), które sieć zacznie zapamiętywać, jeśli nie będzie w niej szumu.
 
-```r
-#| cache: true
+```{r}
+#| eval: false
 network <- keras_model_sequential() %>%
   layer_dense(units = 512, 
               activation = "relu",
@@ -397,15 +407,19 @@ network %>% compile(
   metrics = c("accuracy")
 )
 
-summary(network)
-
 history <- network %>% 
   fit(train_images, 
       train_labels, 
       epochs = 20, 
       batch_size = 128,
       validation_split = 0.2)
+```
 
+```{r}
+#| echo: false
+network <- load_model_tf(filepath = "models/fund_mnist4/")
+load("models/fund_hist4.rda")
+network
 plot(history)
 ```
 

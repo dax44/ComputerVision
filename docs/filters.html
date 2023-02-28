@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.203">
+<meta name="generator" content="quarto-1.3.234">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
 <title>Automatyczna analiza obrazu - 6&nbsp; Filtry</title>
 <style>
 code{white-space: pre-wrap;}
@@ -17,6 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -82,6 +86,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -102,7 +107,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -120,32 +126,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-detached-cancel-button-title": "Anuluj",
     "search-submit-button-title": "Zatwierdź"
   }
-}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
 </head>
+
 <body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./filters.html">&lt;span class='chapter-number'&gt;6&lt;/span&gt;&nbsp; &lt;span class='chapter-title'&gt;Filtry&lt;/span&gt;</a></li></ol></nav>
-      <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./filters.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Filtry</span></a></li></ol></nav>
+      <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Szukaj" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
+      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Automatyczna analiza obrazu</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://twitter.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
     <a href="https://github.com/dax44/ComputerVision/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="https://twitter.com/intent/tweet?url=%7Curl%7C" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+    <a href="https://twitter.com/intent/tweet?url=|url|" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Przełącz tryb ciemny"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Przełącz tryb czytnika">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
   </div>
@@ -155,12 +175,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Szukaj"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">Wstęp</a>
   </div>
@@ -222,41 +242,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./convolution.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sieci splotowe</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Bibliografia</a>
   </div>
 </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Spis treści</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
    
   <ul>
-<li>
-<a href="#filtry-liniowe" id="toc-filtry-liniowe" class="nav-link active" data-scroll-target="#filtry-liniowe"><span class="toc-section-number">6.1</span>  Filtry liniowe</a>
+  <li><a href="#filtry-liniowe" id="toc-filtry-liniowe" class="nav-link active" data-scroll-target="#filtry-liniowe"><span class="header-section-number">6.1</span> Filtry liniowe</a>
   <ul class="collapse">
-<li><a href="#przyk%C5%82adowe-filtry-wyg%C5%82adzaj%C4%85ce-ang.-smoothing" id="toc-przykładowe-filtry-wygładzające-ang.-smoothing" class="nav-link" data-scroll-target="#przyk%C5%82adowe-filtry-wyg%C5%82adzaj%C4%85ce-ang.-smoothing"><span class="toc-section-number">6.1.1</span>  Przykładowe filtry wygładzające (ang. <em>smoothing</em>)</a></li>
-  <li><a href="#przyk%C5%82ad-filtru-r%C3%B3%C5%BCnicuj%C4%85cego" id="toc-przykład-filtru-różnicującego" class="nav-link" data-scroll-target="#przyk%C5%82ad-filtru-r%C3%B3%C5%BCnicuj%C4%85cego"><span class="toc-section-number">6.1.2</span>  Przykład filtru różnicującego</a></li>
-  <li><a href="#formalny-zapis-operator%C3%B3w-filtracji" id="toc-formalny-zapis-operatorów-filtracji" class="nav-link" data-scroll-target="#formalny-zapis-operator%C3%B3w-filtracji"><span class="toc-section-number">6.1.3</span>  Formalny zapis operatorów filtracji</a></li>
-  <li><a href="#w%C5%82asno%C5%9Bci-filtr%C3%B3w-liniowych" id="toc-własności-filtrów-liniowych" class="nav-link" data-scroll-target="#w%C5%82asno%C5%9Bci-filtr%C3%B3w-liniowych"><span class="toc-section-number">6.1.4</span>  Własności filtrów liniowych</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#filtry-nieliniowe" id="toc-filtry-nieliniowe" class="nav-link" data-scroll-target="#filtry-nieliniowe"><span class="toc-section-number">6.2</span>  Filtry nieliniowe</a>
+  <li><a href="#przykładowe-filtry-wygładzające-ang.-smoothing" id="toc-przykładowe-filtry-wygładzające-ang.-smoothing" class="nav-link" data-scroll-target="#przykładowe-filtry-wygładzające-ang.-smoothing"><span class="header-section-number">6.1.1</span> Przykładowe filtry wygładzające (ang. <em>smoothing</em>)</a></li>
+  <li><a href="#przykład-filtru-różnicującego" id="toc-przykład-filtru-różnicującego" class="nav-link" data-scroll-target="#przykład-filtru-różnicującego"><span class="header-section-number">6.1.2</span> Przykład filtru różnicującego</a></li>
+  <li><a href="#formalny-zapis-operatorów-filtracji" id="toc-formalny-zapis-operatorów-filtracji" class="nav-link" data-scroll-target="#formalny-zapis-operatorów-filtracji"><span class="header-section-number">6.1.3</span> Formalny zapis operatorów filtracji</a></li>
+  <li><a href="#własności-filtrów-liniowych" id="toc-własności-filtrów-liniowych" class="nav-link" data-scroll-target="#własności-filtrów-liniowych"><span class="header-section-number">6.1.4</span> Własności filtrów liniowych</a></li>
+  </ul></li>
+  <li><a href="#filtry-nieliniowe" id="toc-filtry-nieliniowe" class="nav-link" data-scroll-target="#filtry-nieliniowe"><span class="header-section-number">6.2</span> Filtry nieliniowe</a>
   <ul class="collapse">
-<li><a href="#filtry-minimum-i-maksimum" id="toc-filtry-minimum-i-maksimum" class="nav-link" data-scroll-target="#filtry-minimum-i-maksimum"><span class="toc-section-number">6.2.1</span>  Filtry minimum i maksimum</a></li>
-  <li><a href="#filtr-medianowy" id="toc-filtr-medianowy" class="nav-link" data-scroll-target="#filtr-medianowy"><span class="toc-section-number">6.2.2</span>  Filtr medianowy</a></li>
+  <li><a href="#filtry-minimum-i-maksimum" id="toc-filtry-minimum-i-maksimum" class="nav-link" data-scroll-target="#filtry-minimum-i-maksimum"><span class="header-section-number">6.2.1</span> Filtry minimum i maksimum</a></li>
+  <li><a href="#filtr-medianowy" id="toc-filtr-medianowy" class="nav-link" data-scroll-target="#filtr-medianowy"><span class="header-section-number">6.2.2</span> Filtr medianowy</a></li>
+  </ul></li>
+  <li><a href="#obramowania-obrazów" id="toc-obramowania-obrazów" class="nav-link" data-scroll-target="#obramowania-obrazów"><span class="header-section-number">6.3</span> Obramowania obrazów</a></li>
   </ul>
-</li>
-  <li><a href="#obramowania-obraz%C3%B3w" id="toc-obramowania-obrazów" class="nav-link" data-scroll-target="#obramowania-obraz%C3%B3w"><span class="toc-section-number">6.3</span>  Obramowania obrazów</a></li>
-  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">
-<span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Filtry</span>
-</h1>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Filtry</span></h1>
 </div>
 
 
@@ -269,26 +294,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
-</header><p>Zasadniczą własnością operacji punktowych (omówionych w poprzednim rozdziale) jest to, że każda nowa wartość piksela zależy tylko od oryginalnego piksela w tej samej pozycji. Możliwości operacji punktowych są jednak ograniczone. Nie mogą one na przykład zrealizować zadania wyostrzenia lub wygładzenia obrazu (patrz <a href="#fig-flt1">Rysunek&nbsp;<span>6.1</span></a>). Taką funkcję mogą spełniać filtry. Są one podobne do operacji punktowych w tym sensie, że również tworzą odwzorowanie 1:1 współrzędnych obrazu, czyli geometria obrazu nie ulega zmianie.</p>
+</header>
+
+<p>Zasadniczą własnością operacji punktowych (omówionych w poprzednim rozdziale) jest to, że każda nowa wartość piksela zależy tylko od oryginalnego piksela w tej samej pozycji. Możliwości operacji punktowych są jednak ograniczone. Nie mogą one na przykład zrealizować zadania wyostrzenia lub wygładzenia obrazu (patrz <a href="#fig-flt1">Rysunek&nbsp;<span>6.1</span></a>). Taką funkcję mogą spełniać filtry. Są one podobne do operacji punktowych w tym sensie, że również tworzą odwzorowanie 1:1 współrzędnych obrazu, czyli geometria obrazu nie ulega zmianie.</p>
 <div class="cell">
-<details><summary>Kod</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://dahtah.github.io/imager/">imager</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/imager/man/map_il.html">map_il</a></span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/boxblur.html">boxblur</a></span><span class="op">(</span><span class="va">boats</span>, <span class="va">.x</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
+<details>
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(imager)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_il</span>(<span class="sc">~</span><span class="fu">boxblur</span>(boats, .x)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">imappend</span>(<span class="st">"x"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
 <div id="fig-flt1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="filters_files/figure-html/fig-flt1-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="filters_files/figure-html/fig-flt1-1.png" class="img-fluid figure-img" width="672"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.1: Zastosowanie filtrów rozmycia obrazu. Pierwszy obraz jest bez rozmycia, drugi z filtrem o wielkości 3x3, a ostatni z filtrem 5x5.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Zastosowany powyżej filtr rozmycia obrazu jest jednym z filtrów liniowych, który działa jak swego rodzaju uśrednienie pikseli w lokalnym otoczeniu. Otoczenie to oczywiście się przesuwa po całym obrazie tworząc obraz przefiltrowany. Chcąc nieco bardziej formalnie przedstawić operację filtracji musimy podzielić filtry na liniowe i nieliniowe.</p>
-<section id="filtry-liniowe" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="filtry-liniowe">
-<span class="header-section-number">6.1</span> Filtry liniowe</h2>
+<section id="filtry-liniowe" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="filtry-liniowe"><span class="header-section-number">6.1</span> Filtry liniowe</h2>
 <p>Filtry liniowe są nazywane w ten sposób, ponieważ łączą wartości pikseli w otoczeniu w sposób liniowy, czyli jako suma ważona. Szczególnym przykładem jest omówiony na początku proces uśredniania lokalnego (<a href="#eq-1">Równanie&nbsp;<span>6.1</span></a>), gdzie wszystkie dziewięć pikseli w lokalnym otoczeniu 3 × 3 jest dodawanych z identycznymi wagami (1/9). Dzięki temu samemu mechanizmowi można zdefiniować mnóstwo filtrów o różnych właściwościach, modyfikując po prostu rozkład poszczególnych wag.</p>
 <p><span id="eq-1"><span class="math display">\[
 I'(u,v) = \frac19\sum_{j = -1}^1\sum_{i = -1}^1I(u+i,v+j),
@@ -309,7 +340,8 @@ H = \begin{bmatrix}
 <p>ponieważ każda z wartości filtra wnosi 1/9 do piksela wynikowego.</p>
 <p>W istocie, jądro filtra <span class="math inline">\(H(i, j)\)</span> jest, podobnie jak sam obraz, dyskretną, dwuwymiarową funkcją o rzeczywistą, <span class="math inline">\(H : \mathbb{Z} \times \mathbb{Z} \to \mathbb{R}\)</span>. Filtr ma swój własny układ współrzędnych z początkiem - często określanym jako <em>hot spot</em> - przeważnie (ale niekoniecznie) znajdującym się w środku. Tak więc współrzędne filtra są na ogół dodatnie i ujemne (<a href="#fig-flt2">Rysunek&nbsp;<span>6.2</span></a>). Funkcja filtra ma nieskończony zakres i jest uważana za zerową poza obszarem zdefiniowanym przez macierz <span class="math inline">\(H\)</span>.</p>
 <div id="fig-flt2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-7 o 21.37.50.png" class="img-fluid figure-img"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-7 o 21.37.50.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.2: Schemat działania filtru</figcaption><p></p>
 </figure>
 </div>
@@ -325,7 +357,8 @@ I'(u,v) = \sum_{i,j\in R_H}I(u+i, v+j)\cdot H(i,j),
 \tag{6.2}\]</span></span></p>
 <p>gdzie <span class="math inline">\(R_H\)</span> oznacza zbiór współrzędnych pokrytych przez filtr <span class="math inline">\(H\)</span>. Nie całkiem dla wszystkich współrzędnych, aby być dokładnym. Istnieje oczywisty problem na granicach obrazu, gdzie filtr sięga poza obraz i nie znajduje odpowiadających mu wartości pikseli, które mógłby wykorzystać do obliczenia wyniku. Na razie ignorujemy ten problem granic, ale w dalszej części tego wykładu się tym zajmiemy.</p>
 <div id="fig-flt3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/2D_Convolution_Animation.gif" class="img-fluid figure-img"></p>
+<figure class="figure">
+<p><img src="images/2D_Convolution_Animation.gif" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.3: Ilustracja działania filtru</figcaption><p></p>
 </figure>
 </div>
@@ -336,7 +369,8 @@ I'(u,v) = \sum_{i,j\in R_H}I(u+i, v+j)\cdot H(i,j),
 <li>Oryginalny obraz jest najpierw kopiowany do obrazu pośredniego, który służy jako źródło dla właściwej operacji filtrowania. Wynik zastępuje piksele w oryginalnym obrazie.</li>
 </ol>
 <div id="fig-flt4" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-7 o 22.10.38.png" class="img-fluid figure-img"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-7 o 22.10.38.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.4: Dwa schematy implementacji filtrów do obrazów</figcaption><p></p>
 </figure>
 </div>
@@ -351,12 +385,12 @@ H(u,v)=\begin{bmatrix}
 \tag{6.3}\]</span></span></p>
 <p>również uśrednia wartości w regionie wsparcia filtru ale nadając największe wagi wartościom w środku.</p>
 <p>Zauważmy, że wagi filtra <span class="math inline">\(H\)</span> są tak dobrane aby się sumowały do 1. Oznacza to, że filtr ten jest znormalizowany. Normalizacji filtrów używa się po to aby uniknąć sytuacji, w której wartość wyjściowa z filtra byłaby większa niż 255.</p>
-<div class="callout callout-style-default callout-tip callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Wskazówka
 </div>
 </div>
@@ -365,45 +399,58 @@ Wskazówka
 </div>
 </div>
 <div class="cell">
-<details><summary>Kod</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span></span>
-<span><span class="va">filter1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,</span>
-<span>                   <span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,</span>
-<span>                   <span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, </span>
-<span>                  ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="va">filter1</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<details>
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>filter1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                   <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                   <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ncol =</span> <span class="dv">3</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>filter1</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3]
 [1,]    1    1    1
 [2,]    1    1    1
 [3,]    1    1    1</code></pre>
 </div>
-<details><summary>Kod</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">filter2</span> <span class="op">&lt;-</span> <span class="va">filter1</span><span class="op">/</span><span class="fl">9</span></span>
-<span><span class="va">filter2</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fractions.html">fractions</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># aby ładnie wyświetlić ułamki</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<details>
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>filter2 <span class="ot">&lt;-</span> filter1<span class="sc">/</span><span class="dv">9</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>filter2 <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fractions</span>() <span class="co"># aby ładnie wyświetlić ułamki</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3]
 [1,] 1/9  1/9  1/9 
 [2,] 1/9  1/9  1/9 
 [3,] 1/9  1/9  1/9 </code></pre>
 </div>
-<details><summary>Kod</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># filtry w funkcji convolve muszą być zapisane jako obraz (as.cimg)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/convolve.html">convolve</a></span><span class="op">(</span><span class="va">boats</span>, <span class="fu"><a href="https://rdrr.io/pkg/imager/man/as.cimg.html">as.cimg</a></span><span class="op">(</span><span class="va">filter1</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/convolve.html">convolve</a></span><span class="op">(</span><span class="va">boats</span>, <span class="fu"><a href="https://rdrr.io/pkg/imager/man/as.cimg.html">as.cimg</a></span><span class="op">(</span><span class="va">filter2</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
+<details>
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filtry w funkcji convolve muszą być zapisane jako obraz (as.cimg)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">t</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">convolve</span>(boats, <span class="fu">as.cimg</span>(filter1)) <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">convolve</span>(boats, <span class="fu">as.cimg</span>(filter2)) <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
 <div id="fig-rescale" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="filters_files/figure-html/fig-rescale-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="filters_files/figure-html/fig-rescale-1.png" class="img-fluid figure-img" width="672"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.5: Przykład użycia filtra przed i po normalizacji</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<details><summary>Kod</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/convolve.html">convolve</a></span><span class="op">(</span><span class="va">boats</span>, <span class="fu"><a href="https://rdrr.io/pkg/imager/man/as.cimg.html">as.cimg</a></span><span class="op">(</span><span class="va">filter1</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>rescale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<details>
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">try</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convolve</span>(boats, <span class="fu">as.cimg</span>(filter1)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">rescale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
 <pre><code>Error in colourscale(v[[1]], v[[2]], v[[3]]) : 
   color intensity 1.57913, not in [0,1]</code></pre>
 </div>
@@ -427,15 +474,17 @@ H(u,v)=\begin{bmatrix}
 I'(u,v) = Offset+\frac{1}{Scale}\cdot \sum_{i,j\in R_H}I(u+i, v+j)\cdot H(i,j),
 \]</span></p>
 <p>a <span class="math inline">\(H(i,j)\)</span> jest zdefiniowany na <span class="math inline">\(\mathbb{Z}\times\mathbb{Z}\)</span>. Chociaż najczęściej używa się filtrów kwadratowych, to nie ma przeszkód aby stosować również filtry prostokątne. Powyższa formuła ma zastosowanie do filtrów o dowolnym rozmiarze i kształcie.</p>
-<section id="przykładowe-filtry-wygładzające-ang.-smoothing" class="level3" data-number="6.1.1"><h3 data-number="6.1.1" class="anchored" data-anchor-id="przykładowe-filtry-wygładzające-ang.-smoothing">
-<span class="header-section-number">6.1.1</span> Przykładowe filtry wygładzające (ang. <em>smoothing</em>)</h3>
+<section id="przykładowe-filtry-wygładzające-ang.-smoothing" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="przykładowe-filtry-wygładzające-ang.-smoothing"><span class="header-section-number">6.1.1</span> Przykładowe filtry wygładzające (ang. <em>smoothing</em>)</h3>
 <ol type="1">
 <li><p>Filtr pudełkowy (ang <em>box</em>), którego zasada działania została już przedstawiona w <a href="#eq-1">Równanie&nbsp;<span>6.1</span></a> dla rozmiaru filtra 3x3 jest jednym z filtrów wygładzających. Im większy jest rozmiar filtra, tym większy stopień wygładzenia obrazu wyjściowego. Ten najprostszy ze wszystkich filtrów wygładzających, którego kształt 3D przypomina pudełko (<a href="#fig-flt5">Rysunek&nbsp;<span>6.6</span></a> (a)), jest dobrze znany. Niestety, filtr pudełkowy jest daleki od optymalnego filtra wygładzającego ze względu na swoje dziwne zachowanie w przestrzeni częstotliwości, które jest spowodowane ostrym odcięciem wokół jego boków. Opisane w kategoriach częstotliwościowych wygładzanie odpowiada tzw. filtracji dolnoprzepustowej, czyli efektywnemu tłumieniu wszystkich składowych sygnału powyżej danej częstotliwości odcięcia. Filtr pudełkowy wytwarza jednak silne “dzwonienie” w przestrzeni częstotliwości i dlatego nie jest uważany za wysokiej jakości filtr wygładzający. Przypisanie tej samej wagi wszystkim pikselom obrazu w regionie filtru może też wydawać się dość doraźne. Zamiast tego należałoby prawdopodobnie oczekiwać, że silniejszy nacisk zostanie położony na piksele znajdujące się w pobliżu centrum filtra niż na te bardziej odległe. Ponadto filtry wygładzające powinny ewentualnie działać “izotropowo” (tzn. jednolicie w każdym kierunku), co z pewnością nie ma miejsca w przypadku filtra prostokątnego.</p></li>
 <li><p>Filtr gaussowski - z pewnością lepszy w tym kontekście wygładzania z względu na brak ostrych krawędzi jądra. Definiuje się go następująco <span class="math display">\[
 H^{G,\sigma}(x,y) = e^{-\frac{x^2+y^2}{2\sigma^2}},
 \]</span> gdzie <span class="math inline">\(\sigma\)</span> oznacza odchylenie standardowe rozkładu.</p></li>
-</ol></section><section id="przykład-filtru-różnicującego" class="level3" data-number="6.1.2"><h3 data-number="6.1.2" class="anchored" data-anchor-id="przykład-filtru-różnicującego">
-<span class="header-section-number">6.1.2</span> Przykład filtru różnicującego</h3>
+</ol>
+</section>
+<section id="przykład-filtru-różnicującego" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="przykład-filtru-różnicującego"><span class="header-section-number">6.1.2</span> Przykład filtru różnicującego</h3>
 <p>Jeśli niektóre współczynniki filtra są ujemne, to obliczenie filtra można zinterpretować jako różnicę dwóch sum: suma ważona wszystkich pikseli z przypisanymi współczynnikami dodatnimi minus suma ważona pikseli z ujemnymi współczynnikami w regionie filtra RH , czyli</p>
 <p><span id="eq-gauss2"><span class="math display">\[
 \begin{align}
@@ -445,15 +494,18 @@ H^{G,\sigma}(x,y) = e^{-\frac{x^2+y^2}{2\sigma^2}},
 \tag{6.4}\]</span></span></p>
 <p>gdzie <span class="math inline">\(R^-, R^+\)</span> oznaczają podział filtra na współczynniki ujemne <span class="math inline">\(H(i,j)&lt;0\)</span> i dodatnie <span class="math inline">\(H(i,j)&gt;0\)</span> odpowiednio. Na przykład filtr Laplace’a 5x5 na <a href="#fig-flt5">Rysunek&nbsp;<span>6.6</span></a> (c) oblicza różnicę między pikselem środkowym (o wadze 16) a sumą ważoną 12 otaczających go pikseli (o wagach -1 lub -2). Pozostałe 12 pikseli ma przypisane zerowe współczynniki i dlatego są one ignorowane w obliczeniach. Podczas gdy lokalne zmiany intensywności są wygładzane przez uśrednianie, możemy oczekiwać, że w przypadku różnic stanie się dokładnie odwrotnie - lokalne zmiany intensywności zostaną wzmocnione.</p>
 <div id="fig-flt5" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-7 o 23.46.00.png" class="img-fluid figure-img"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-7 o 23.46.00.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.6: Przykłady różnych filtrów o rozmiarze 5x5. (a) filtr pudełkowy, (b) gaussowski, (c) Laplace’a (zwany także <em>Mexican Hut</em>)</figcaption><p></p>
 </figure>
 </div>
-</section><section id="formalny-zapis-operatorów-filtracji" class="level3" data-number="6.1.3"><h3 data-number="6.1.3" class="anchored" data-anchor-id="formalny-zapis-operatorów-filtracji">
-<span class="header-section-number">6.1.3</span> Formalny zapis operatorów filtracji</h3>
+</section>
+<section id="formalny-zapis-operatorów-filtracji" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="formalny-zapis-operatorów-filtracji"><span class="header-section-number">6.1.3</span> Formalny zapis operatorów filtracji</h3>
 <p>Wspomniany zapis w równaniu <a href="#eq-filtr">Równanie&nbsp;<span>6.2</span></a> nazywany jest w literaturze operatorem korelacyjnym (ang. <em>correlation operator)</em>. Ma on jedną poważną wadę, ponieważ filtr zastosowany do obrazu z pojedynczym wtrąceniem (jednym pikselem świecącym) w rezultacie daje w obrazie wynikowym wartości filtra zrotowane o <span class="math inline">\(180\degree\)</span> (patrz <a href="#fig-corr">Rysunek&nbsp;<span>6.7</span></a>).</p>
 <div id="fig-corr" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-8 o 18.44.52.png" class="img-fluid figure-img"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-8 o 18.44.52.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.7: Zastosowanie operatora korelacyjnego na obrazie z jednym wtrąceniem</figcaption><p></p>
 </figure>
 </div>
@@ -475,22 +527,25 @@ I'=I*H.
 \tag{6.7}\]</span></span></p>
 <p>gdzie <span class="math inline">\(H^*(i,j)=H(-i,-j)\)</span>. Zmiana parametryzacji powoduje obrócenie wyniku o <span class="math inline">\(180\degree\)</span>.</p>
 <div id="fig-conv3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-8 o 18.45.03.png" class="img-fluid figure-img"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-8 o 18.45.03.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.8: Zastosowanie operatora konwolucyjnego do obrazu z jednym wtrąceniem</figcaption><p></p>
 </figure>
 </div>
-</section><section id="własności-filtrów-liniowych" class="level3" data-number="6.1.4"><h3 data-number="6.1.4" class="anchored" data-anchor-id="własności-filtrów-liniowych">
-<span class="header-section-number">6.1.4</span> Własności filtrów liniowych</h3>
+</section>
+<section id="własności-filtrów-liniowych" class="level3" data-number="6.1.4">
+<h3 data-number="6.1.4" class="anchored" data-anchor-id="własności-filtrów-liniowych"><span class="header-section-number">6.1.4</span> Własności filtrów liniowych</h3>
 <p>Konwolucja liniowa jest odpowiednim modelem dla wielu rodzajów zjawisk naturalnych, w tym układów mechanicznych, akustycznych i optycznych. W szczególności istnieją silne formalne powiązania z reprezentacją Fouriera sygnałów w dziedzinie częstotliwości, które są niezwykle cenne dla zrozumienia złożonych zjawisk, takich jak próbkowanie i aliasing. Poniżej przedstawione zostaną własności konwolucji liniowej.</p>
-<section id="przemienność" class="level4" data-number="6.1.4.1"><h4 data-number="6.1.4.1" class="anchored" data-anchor-id="przemienność">
-<span class="header-section-number">6.1.4.1</span> Przemienność</h4>
+<section id="przemienność" class="level4" data-number="6.1.4.1">
+<h4 data-number="6.1.4.1" class="anchored" data-anchor-id="przemienność"><span class="header-section-number">6.1.4.1</span> Przemienność</h4>
 <p>Konwolucja liniowa jest przemienna, czyli dla dowolnego obrazu <span class="math inline">\(I\)</span> i jądra filtru <span class="math inline">\(H\)</span>, zachodzi</p>
 <p><span id="eq-przemiennosc"><span class="math display">\[
 I ∗ H = H ∗ I.
 \tag{6.8}\]</span></span></p>
 <p>Wynik jest więc taki sam, jeśli obraz i jądro filtra są wzajemnie zamienione, i nie ma różnicy, czy składamy obraz <span class="math inline">\(I\)</span> z jądrem <span class="math inline">\(H\)</span>, czy odwrotnie.</p>
-</section><section id="liniowość" class="level4" data-number="6.1.4.2"><h4 data-number="6.1.4.2" class="anchored" data-anchor-id="liniowość">
-<span class="header-section-number">6.1.4.2</span> Liniowość</h4>
+</section>
+<section id="liniowość" class="level4" data-number="6.1.4.2">
+<h4 data-number="6.1.4.2" class="anchored" data-anchor-id="liniowość"><span class="header-section-number">6.1.4.2</span> Liniowość</h4>
 <p>Filtry liniowe nazywane są tak ze względu na właściwości liniowości operacji konwolucji, która przejawia się w różnych aspektach. Na przykład, jeśli obraz jest mnożony przez skalar <span class="math inline">\(s\in\mathbb{R},\)</span> to wynik konwolucji mnoży się o ten sam czynnik, czyli</p>
 <p><span id="eq-liniowosc1"><span class="math display">\[
 (s\cdot I)∗H = I ∗(s\cdot H) = s\cdot(I ∗H).
@@ -504,8 +559,9 @@ I ∗ H = H ∗ I.
 (b+I)∗H\neq b+(I∗H),
 \]</span></p>
 <p>a więc nie jest częścią własności liniowości. Chociaż liniowość jest ważną własnością teoretyczną, należy zauważyć, że w praktyce filtry “liniowe” są często tylko częściowo liniowe z powodu błędów zaokrąglenia lub ograniczonego zakresu wartości wyjściowych.</p>
-</section><section id="łączność" class="level4" data-number="6.1.4.3"><h4 data-number="6.1.4.3" class="anchored" data-anchor-id="łączność">
-<span class="header-section-number">6.1.4.3</span> Łączność</h4>
+</section>
+<section id="łączność" class="level4" data-number="6.1.4.3">
+<h4 data-number="6.1.4.3" class="anchored" data-anchor-id="łączność"><span class="header-section-number">6.1.4.3</span> Łączność</h4>
 <p>Konwolucja liniowa jest łączna, co oznacza, że kolejność operacji na filtrze nie ma znaczenia, czyli,</p>
 <p><span id="eq-lacznosc"><span class="math display">\[
 (I∗H_1)∗H_2 =I∗(H_1 ∗H_2).
@@ -562,10 +618,13 @@ I = \delta*I,
 <p><span id="eq-dirac3"><span class="math display">\[
 H=\delta*H=H*\delta.
 \tag{6.18}\]</span></span></p>
-</section></section></section><section id="filtry-nieliniowe" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="filtry-nieliniowe">
-<span class="header-section-number">6.2</span> Filtry nieliniowe</h2>
-<section id="filtry-minimum-i-maksimum" class="level3" data-number="6.2.1"><h3 data-number="6.2.1" class="anchored" data-anchor-id="filtry-minimum-i-maksimum">
-<span class="header-section-number">6.2.1</span> Filtry minimum i maksimum</h3>
+</section>
+</section>
+</section>
+<section id="filtry-nieliniowe" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="filtry-nieliniowe"><span class="header-section-number">6.2</span> Filtry nieliniowe</h2>
+<section id="filtry-minimum-i-maksimum" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="filtry-minimum-i-maksimum"><span class="header-section-number">6.2.1</span> Filtry minimum i maksimum</h3>
 <p>Jak wszystkie inne filtry, filtry nieliniowe obliczają wynik w danej pozycji obrazu <span class="math inline">\((u,v)\)</span> z pikseli znajdujących się wewnątrz ruchomego regionu <span class="math inline">\(R_{u,v}\)</span> oryginalnego obrazu. Filtry te nazywane są “nieliniowymi”, ponieważ wartości pikseli źródłowych są łączone przez jakąś funkcję nieliniową. Najprostszymi ze wszystkich filtrów nieliniowych są filtry minimum i maksimum, zdefiniowane jako</p>
 <p><span id="eq-minmax"><span class="math display">\[
 \begin{align}
@@ -575,40 +634,45 @@ H=\delta*H=H*\delta.
 \tag{6.19}\]</span></span></p>
 <p>gdzie <span class="math inline">\(R\)</span> oznacza region filtra (zbiór współrzędnych filtra, zwykle kwadrat o rozmiarach 3x3 pikseli). <a href="#fig-min">Rysunek&nbsp;<span>6.10</span></a> ilustruje wpływ minimalnego filtra 1D na różne lokalne struktury sygnału.</p>
 <div id="fig-min" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-8 o 19.52.39.png" class="img-fluid figure-img"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-8 o 19.52.39.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.9: Zastosowanie filtru minimum 1D do różnych sygnałów wejściowych. Górny rząd przedstawia oryginalny sygnał, a dolny spleciony z filtrem minimum</figcaption><p></p>
 </figure>
 </div>
 <div class="cell" data-hash="filters_cache/html/fig-min_d7bb2711bfe570e432e18daef18beeab">
-<details><summary>Kod</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">kwiat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/load.image.html">load.image</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/kwiat.jpg"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/grayscale.html">grayscale</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">min_filter</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">im</span>, <span class="va">radius</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">stencil</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span>dx <span class="op">=</span> <span class="op">-</span><span class="va">radius</span><span class="op">:</span><span class="va">radius</span>, dy <span class="op">=</span> <span class="op">-</span><span class="va">radius</span><span class="op">:</span><span class="va">radius</span><span class="op">)</span></span>
-<span>  <span class="va">filtered</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">0</span>, nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/cimg.dimensions.html">height</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/cimg.dimensions.html">width</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">range_x</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">radius</span><span class="op">)</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/cimg.dimensions.html">width</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span> <span class="op">-</span> <span class="va">radius</span><span class="op">)</span></span>
-<span>  <span class="va">range_y</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">radius</span><span class="op">)</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/cimg.dimensions.html">height</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span> <span class="op">-</span> <span class="va">radius</span><span class="op">)</span></span>
-<span>  <span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span><span class="va">range_x</span>, <span class="va">range_y</span><span class="op">)</span></span>
-<span>  <span class="va">dt</span><span class="op">$</span><span class="va">min</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">dt</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">row</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/get.stencil.html">get.stencil</a></span><span class="op">(</span><span class="va">im</span>, </span>
-<span>                                                       <span class="va">stencil</span>, </span>
-<span>                                                       x <span class="op">=</span> <span class="va">row</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
-<span>                                                       y <span class="op">=</span> <span class="va">row</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span>  <span class="va">filtered</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">$</span><span class="va">min</span> <span class="op">|&gt;</span> </span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/cimg.dimensions.html">height</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span><span class="op">-</span><span class="fl">2</span><span class="op">*</span><span class="va">radius</span>,</span>
-<span>           nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/cimg.dimensions.html">width</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span><span class="op">-</span><span class="fl">2</span><span class="op">*</span><span class="va">radius</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/imager/man/as.cimg.html">as.cimg</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>    </span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">filtered</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">kwiat_filtered</span> <span class="op">&lt;-</span> <span class="fu">min_filter</span><span class="op">(</span><span class="va">kwiat</span>, radius <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">kwiat</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>main <span class="op">=</span> <span class="st">'oryginał'</span><span class="op">)</span></span>
-<span><span class="va">kwiat_filtered</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>main <span class="op">=</span> <span class="st">"filtr minimum"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
+<details>
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>kwiat <span class="ot">&lt;-</span> <span class="fu">load.image</span>(<span class="at">file =</span> <span class="st">"~/kwiat.jpg"</span>) <span class="sc">|&gt;</span> <span class="fu">grayscale</span>()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>min_filter <span class="ot">&lt;-</span> <span class="cf">function</span>(im, radius) {</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  stencil <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">dx =</span> <span class="sc">-</span>radius<span class="sc">:</span>radius, <span class="at">dy =</span> <span class="sc">-</span>radius<span class="sc">:</span>radius)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  filtered <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">height</span>(im), <span class="at">ncol =</span> <span class="fu">width</span>(im))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  range_x <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">+</span> radius)<span class="sc">:</span>(<span class="fu">width</span>(im) <span class="sc">-</span> radius)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  range_y <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">+</span> radius)<span class="sc">:</span>(<span class="fu">height</span>(im) <span class="sc">-</span> radius)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  dt <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(range_x, range_y)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>min <span class="ot">&lt;-</span> <span class="fu">apply</span>(dt, <span class="dv">1</span>, <span class="cf">function</span>(row) <span class="fu">min</span>(<span class="fu">get.stencil</span>(im, </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                                                       stencil, </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">x =</span> row[<span class="dv">1</span>],</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">y =</span> row[<span class="dv">2</span>])))</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  filtered <span class="ot">&lt;-</span> dt<span class="sc">$</span>min <span class="sc">|&gt;</span> </span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="fu">height</span>(im)<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>radius,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">nrow =</span> <span class="fu">width</span>(im)<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>radius) <span class="sc">|&gt;</span> </span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.cimg</span>()</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(filtered)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>kwiat_filtered <span class="ot">&lt;-</span> <span class="fu">min_filter</span>(kwiat, <span class="at">radius =</span> <span class="dv">2</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">t</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>))</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>kwiat <span class="sc">|&gt;</span> <span class="fu">plot</span>(<span class="at">main =</span> <span class="st">'oryginał'</span>)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>kwiat_filtered <span class="sc">|&gt;</span> <span class="fu">plot</span>(<span class="at">main =</span> <span class="st">"filtr minimum"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
 <div id="fig-min" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="filters_files/figure-html/fig-min-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="filters_files/figure-html/fig-min-1.png" class="img-fluid figure-img" width="672"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.10: Zastosowanie filtru minimum</figcaption><p></p>
 </figure>
 </div>
@@ -616,34 +680,41 @@ H=\delta*H=H*\delta.
 </div>
 <p>W przypadku obrazów z wtrąceniami w kolorze białym lub czarnym efekt występowania tych wtrąceń jest potęgowany (patrz <a href="#fig-minmax2">Rysunek&nbsp;<span>6.11</span></a>). Filtr minimum wyciąga kolor czarny, natomiast filtr maksimum kolor biały.</p>
 <div>
-<details><summary>Kod</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">kwiat_noisy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/load.image.html">load.image</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/kwiat_salt_pepper.jpg"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/grayscale.html">grayscale</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">kwiat_noisy</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">kwiat_noisy</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/imager/man/erode.html">erode_square</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">kwiat_noisy</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/imager/man/erode.html">dilate_square</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="fig-minmax2" class="cell quarto-layout-panel">
-<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<details>
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>kwiat_noisy <span class="ot">&lt;-</span> <span class="fu">load.image</span>(<span class="at">file =</span> <span class="st">"~/kwiat_salt_pepper.jpg"</span>) <span class="sc">|&gt;</span> <span class="fu">grayscale</span>()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>kwiat_noisy <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>kwiat_noisy <span class="sc">|&gt;</span> </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">erode_square</span>(<span class="at">size =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>()</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>kwiat_noisy <span class="sc">|&gt;</span> </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dilate_square</span>(<span class="at">size =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-minmax2" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
 <div id="fig-minmax2-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="filters_files/figure-html/fig-minmax2-1.png" class="img-fluid figure-img" data-ref-parent="fig-minmax2" width="672"></p>
+<figure class="figure">
+<p><img src="filters_files/figure-html/fig-minmax2-1.png" class="img-fluid figure-img" data-ref-parent="fig-minmax2" width="672"></p>
 <p></p><figcaption class="figure-caption">(a) Oryginał</figcaption><p></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
 <div id="fig-minmax2-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="filters_files/figure-html/fig-minmax2-2.png" class="img-fluid figure-img" data-ref-parent="fig-minmax2" width="672"></p>
+<figure class="figure">
+<p><img src="filters_files/figure-html/fig-minmax2-2.png" class="img-fluid figure-img" data-ref-parent="fig-minmax2" width="672"></p>
 <p></p><figcaption class="figure-caption">(b) Filtr minimum</figcaption><p></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
 <div id="fig-minmax2-3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="filters_files/figure-html/fig-minmax2-3.png" class="img-fluid figure-img" data-ref-parent="fig-minmax2" width="672"></p>
+<figure class="figure">
+<p><img src="filters_files/figure-html/fig-minmax2-3.png" class="img-fluid figure-img" data-ref-parent="fig-minmax2" width="672"></p>
 <p></p><figcaption class="figure-caption">(c) Filtr maximum</figcaption><p></p>
 </figure>
 </div>
@@ -653,51 +724,63 @@ H=\delta*H=H*\delta.
 </figure>
 </div>
 </div>
-</section><section id="filtr-medianowy" class="level3" data-number="6.2.2"><h3 data-number="6.2.2" class="anchored" data-anchor-id="filtr-medianowy">
-<span class="header-section-number">6.2.2</span> Filtr medianowy</h3>
+</section>
+<section id="filtr-medianowy" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="filtr-medianowy"><span class="header-section-number">6.2.2</span> Filtr medianowy</h3>
 <p>Nie da się oczywiście zaprojektować filtra, który usunie każdy szum i zachowa wszystkie ważne struktury obrazu, ponieważ żaden filtr nie jest w stanie rozróżnić, która zawartość obrazu jest ważna dla widza, a która nie. Popularny filtr medianowy jest z pewnością dobrym krokiem w tym kierunku.</p>
 <p>Filtr medianowy zastępuje każdy piksel obrazu medianą pikseli w bieżącym regionie filtra <span class="math inline">\(R\)</span>, czyli</p>
 <p><span id="eq-median"><span class="math display">\[
 I'(u,v)=\operatorname{Median}_{(i,j)\in R}\{I(u+i, v+j)\}.
 \tag{6.20}\]</span></span></p>
 <div id="fig-median" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 18.29.37.png" class="img-fluid figure-img"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-9 o 18.29.37.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.12: Zasada działania filtra medianowego</figcaption><p></p>
 </figure>
 </div>
 <p>Równanie (<a href="#eq-median">Równanie&nbsp;<span>6.20</span></a>) definiuje medianę zbioru wartości o nieparzystej liczebności. Jeśli długość boku filtrów prostokątnych jest nieparzysta (co zwykle ma miejsce), to liczba elementów w regionie filtrów również jest nieparzysta. W takim przypadku filtr medianowy nie tworzy żadnych nowych wartości pikseli. Jeśli jednak liczba elementów jest parzysta, to mediana posortowanego ciągu <span class="math inline">\(A = (a_0,\ldots,a_{2n-1})\)</span> jest definiowana jako średnia arytmetyczna dwóch sąsiednich wartości środkowych <span class="math inline">\(a_{n-1}\)</span> i <span class="math inline">\(a_n\)</span>. W ten sposób mogą być wprowadzone nowe wartości do obrazu.</p>
 <div class="cell">
-<details><summary>Kod</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">box_flt</span> <span class="op">&lt;-</span> <span class="va">kwiat_noisy</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/imager/man/boxblur.html">boxblur</a></span><span class="op">(</span>boxsize <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="va">median_flt</span> <span class="op">&lt;-</span> <span class="va">kwiat_noisy</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/imager/man/medianblur.html">medianblur</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">kwiat_noisy</span>, <span class="va">box_flt</span>, <span class="va">median_flt</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
+<details>
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>box_flt <span class="ot">&lt;-</span> kwiat_noisy <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">boxblur</span>(<span class="at">boxsize =</span> <span class="dv">3</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>median_flt <span class="ot">&lt;-</span> kwiat_noisy <span class="sc">|&gt;</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">medianblur</span>(<span class="at">n =</span> <span class="dv">3</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(kwiat_noisy, box_flt, median_flt) <span class="sc">|&gt;</span> </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">imappend</span>(<span class="st">"x"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
 <div id="fig-median2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="filters_files/figure-html/fig-median2-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="filters_files/figure-html/fig-median2-1.png" class="img-fluid figure-img" width="672"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.13: Porównanie metod usuwania szumu. Na obrazie po lewej stronie naniesiony jest szum (znany jako <em>salt and papper</em>). Na środkowym szum jest usuwany filtrem pudełkowym (ang. <em>box filter</em>). Na obrazie po prawej szum jest usuwany filtrem medianowym.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<details><summary>Kod</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">box_flt_big</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imsub.html">imsub</a></span><span class="op">(</span><span class="va">box_flt</span>, <span class="va">x</span> <span class="op"><a href="https://rdrr.io/pkg/imager/man/grapes-inr-grapes.html">%inr%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">450</span><span class="op">)</span>, <span class="va">y</span> <span class="op"><a href="https://rdrr.io/pkg/imager/man/grapes-inr-grapes.html">%inr%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">550</span><span class="op">)</span><span class="op">)</span> </span>
-<span><span class="va">median_flt_big</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imsub.html">imsub</a></span><span class="op">(</span><span class="va">median_flt</span>, <span class="va">x</span> <span class="op"><a href="https://rdrr.io/pkg/imager/man/grapes-inr-grapes.html">%inr%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">450</span><span class="op">)</span>, <span class="va">y</span> <span class="op"><a href="https://rdrr.io/pkg/imager/man/grapes-inr-grapes.html">%inr%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">550</span><span class="op">)</span><span class="op">)</span> </span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">box_flt_big</span>, <span class="va">median_flt_big</span><span class="op">)</span>, <span class="st">"x"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
+<details>
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>box_flt_big <span class="ot">&lt;-</span> <span class="fu">imsub</span>(box_flt, x <span class="sc">%inr%</span> <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">450</span>), y <span class="sc">%inr%</span> <span class="fu">c</span>(<span class="dv">300</span>, <span class="dv">550</span>)) </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>median_flt_big <span class="ot">&lt;-</span> <span class="fu">imsub</span>(median_flt, x <span class="sc">%inr%</span> <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">450</span>), y <span class="sc">%inr%</span> <span class="fu">c</span>(<span class="dv">300</span>, <span class="dv">550</span>)) </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">imappend</span>(<span class="fu">list</span>(box_flt_big, median_flt_big), <span class="st">"x"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
 <div id="fig-median3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="filters_files/figure-html/fig-median3-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure">
+<p><img src="filters_files/figure-html/fig-median3-1.png" class="img-fluid figure-img" width="672"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.14: W powiększeniu ten efekt jest jeszcze lepiej widoczny</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Mediana jest statystyką porządkową i w pewnym sensie “większość” uwzględnianych wartości pikseli określa wynik. Pojedyncza wyjątkowo wysoka lub niska wartość (“odstająca”) nie może wpłynąć na wynik, a jedynie przesunąć go w górę lub w dół do następnej wartości. Dlatego mediana (w przeciwieństwie do średniej) jest uważana za miarę “odporną”. W zwykłym filtrze medianowym każdy piksel w regionie filtra ma taki sam wpływ, niezależnie od jego odległości od środka.</p>
-</section></section><section id="obramowania-obrazów" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="obramowania-obrazów">
-<span class="header-section-number">6.3</span> Obramowania obrazów</h2>
+</section>
+</section>
+<section id="obramowania-obrazów" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="obramowania-obrazów"><span class="header-section-number">6.3</span> Obramowania obrazów</h2>
 <p>Jak to zostało zaznaczone wcześniej zastosowanie jakiegokolwiek filtru (liniowego lub nieliniowego) wiąże się z pewna niedogodnością. Mianowicie wszystkie filtry kwadratowe czy prostokątne są kłopotliwe w zastosowaniu jeśli centrum (<em>hot spot</em>) filtra leży blisko brzegu obrazu. Teoretycznie filtry nie mogą być stosowane w miejscach, gdzie macierz filtrów nie jest w pełni zawarta w macierzy obrazu. Zatem każda operacja filtrująca zmniejszyłaby rozmiar obrazu wynikowego, co w większości zastosowań jest nie do przyjęcia. Choć nie istnieje formalnie poprawne remedium, istnieje kilka mniej lub bardziej praktycznych metod obsługi regionów granicznych:</p>
 <ol type="1">
 <li>Ustaw nieprzetworzone piksele na granicach na jakąś stałą wartość (np. “czarny”). Jest to z pewnością najprostsza metoda, ale w wielu sytuacjach nie do przyjęcia, ponieważ rozmiar obrazu jest stopniowo zmniejszany przez każdą operację filtra.</li>
@@ -708,18 +791,21 @@ I'(u,v)=\operatorname{Median}_{(i,j)\in R}\{I(u+i, v+j)\}.
 <li><p>Piksele graniczne wykraczają poza granice obrazu (<a href="#fig-border">Rysunek&nbsp;<span>6.15</span></a> (c)). W miejscach występowania granic można spodziewać się jedynie niewielkich artefaktów. Metoda ta jest również prosta obliczeniowo i dlatego często jest uważana za najlepszy wybór.</p></li>
 <li><p>Obraz jest odbijany na każdej ze swoich czterech granic (<a href="#fig-border">Rysunek&nbsp;<span>6.15</span></a> (d)). Wyniki będą podobne jak w przypadku poprzedniej metody, o ile nie zostaną użyte bardzo duże filtry.</p></li>
 <li><p>Obraz powtarza się cyklicznie w kierunku poziomym i pionowym (<a href="#fig-border">Rysunek&nbsp;<span>6.15</span></a> (e)). Może się to początkowo wydawać dziwne, a wyniki na ogół nie są zadowalające. Jednak w dyskretnej analizie spektralnej obraz jest pośrednio traktowany również jako funkcja okresowa. Jeśli więc obraz jest filtrowany w dziedzinie częstotliwości, to wyniki będą równe filtracji w dziedzinie przestrzeni w ramach tego powtarzalnego modelu.</p></li>
-</ol>
-</li>
+</ol></li>
 </ol>
 <div id="fig-border" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-9 o 19.28.41.png" class="img-fluid figure-img" width="600"></p>
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-02-9 o 19.28.41.png" class="img-fluid figure-img" width="600"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.15: Różne sposoby obsługi obramowania</figcaption><p></p>
 </figure>
 </div>
 <p>Żadna z tych metod nie jest doskonała i zwykle, właściwy wybór zależy od rodzaju obrazu i zastosowanego filtra.</p>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -861,9 +947,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1052,7 +1152,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
       <a href="./point_trans.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Transformacje punktowe</span></span>
       </a>          
@@ -1064,11 +1166,16 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">Automatyczna analiza obrazu, Dariusz Majerek</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">Książka została napisana w <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>
+
 
 
 </body></html>

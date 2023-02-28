@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.203">
+<meta name="generator" content="quarto-1.3.234">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -74,12 +74,15 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fourier.html">&lt;span class='chapter-number'&gt;9&lt;/span&gt;&nbsp; &lt;span class='chapter-title'&gt;Transformata Fouriera&lt;/span&gt;</a></li></ol></nav>
-      <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fourier.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Transformata Fouriera</span></a></li></ol></nav>
+      <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Szukaj" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
     </div>
   </nav>
 </header>
@@ -97,8 +100,8 @@ ul.task-list li input[type="checkbox"] {
     <a href="https://twitter.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
     <a href="https://github.com/dax44/ComputerVision/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <a href="https://twitter.com/intent/tweet?url=|url|" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Przełącz tryb ciemny"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Przełącz tryb czytnika">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
   </div>
@@ -108,7 +111,7 @@ ul.task-list li input[type="checkbox"] {
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Szukaj"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
@@ -175,6 +178,11 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./convolution.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sieci splotowe</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Bibliografia</a>
   </div>
 </li>
@@ -188,16 +196,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Spis treści</h2>
    
   <ul>
-  <li><a href="#przykłady-zastosowań-dft" id="toc-przykłady-zastosowań-dft" class="nav-link active" data-scroll-target="#przykłady-zastosowań-dft"><span class="toc-section-number">9.1</span>  Przykłady zastosowań DFT</a>
+  <li><a href="#przykłady-zastosowań-dft" id="toc-przykłady-zastosowań-dft" class="nav-link active" data-scroll-target="#przykłady-zastosowań-dft"><span class="header-section-number">9.1</span> Przykłady zastosowań DFT</a>
   <ul class="collapse">
-  <li><a href="#skalowanie" id="toc-skalowanie" class="nav-link" data-scroll-target="#skalowanie"><span class="toc-section-number">9.1.1</span>  Skalowanie</a></li>
-  <li><a href="#powtarzane-wzorce" id="toc-powtarzane-wzorce" class="nav-link" data-scroll-target="#powtarzane-wzorce"><span class="toc-section-number">9.1.2</span>  Powtarzane wzorce</a></li>
-  <li><a href="#rotacje" id="toc-rotacje" class="nav-link" data-scroll-target="#rotacje"><span class="toc-section-number">9.1.3</span>  Rotacje</a></li>
-  <li><a href="#struktury-zorientowane-wydłużone" id="toc-struktury-zorientowane-wydłużone" class="nav-link" data-scroll-target="#struktury-zorientowane-wydłużone"><span class="toc-section-number">9.1.4</span>  Struktury zorientowane, wydłużone</a></li>
-  <li><a href="#obrazy-naturalne" id="toc-obrazy-naturalne" class="nav-link" data-scroll-target="#obrazy-naturalne"><span class="toc-section-number">9.1.5</span>  Obrazy naturalne</a></li>
-  <li><a href="#wzorce-druku" id="toc-wzorce-druku" class="nav-link" data-scroll-target="#wzorce-druku"><span class="toc-section-number">9.1.6</span>  Wzorce druku</a></li>
+  <li><a href="#skalowanie" id="toc-skalowanie" class="nav-link" data-scroll-target="#skalowanie"><span class="header-section-number">9.1.1</span> Skalowanie</a></li>
+  <li><a href="#powtarzane-wzorce" id="toc-powtarzane-wzorce" class="nav-link" data-scroll-target="#powtarzane-wzorce"><span class="header-section-number">9.1.2</span> Powtarzane wzorce</a></li>
+  <li><a href="#rotacje" id="toc-rotacje" class="nav-link" data-scroll-target="#rotacje"><span class="header-section-number">9.1.3</span> Rotacje</a></li>
+  <li><a href="#struktury-zorientowane-wydłużone" id="toc-struktury-zorientowane-wydłużone" class="nav-link" data-scroll-target="#struktury-zorientowane-wydłużone"><span class="header-section-number">9.1.4</span> Struktury zorientowane, wydłużone</a></li>
+  <li><a href="#obrazy-naturalne" id="toc-obrazy-naturalne" class="nav-link" data-scroll-target="#obrazy-naturalne"><span class="header-section-number">9.1.5</span> Obrazy naturalne</a></li>
+  <li><a href="#wzorce-druku" id="toc-wzorce-druku" class="nav-link" data-scroll-target="#wzorce-druku"><span class="header-section-number">9.1.6</span> Wzorce druku</a></li>
   </ul></li>
-  <li><a href="#zastosowania-dft" id="toc-zastosowania-dft" class="nav-link" data-scroll-target="#zastosowania-dft"><span class="toc-section-number">9.2</span>  Zastosowania DFT</a></li>
+  <li><a href="#zastosowania-dft" id="toc-zastosowania-dft" class="nav-link" data-scroll-target="#zastosowania-dft"><span class="header-section-number">9.2</span> Zastosowania DFT</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
     </div>
@@ -525,9 +533,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -733,6 +755,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">Automatyczna analiza obrazu, Dariusz Majerek</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">Książka została napisana w <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>
