@@ -141,7 +141,8 @@ I\circ H=(I\ominus H)\oplus H.
 $$ {#eq-opening}
 
 Głównym efektem otwarcia jest to, że wszystkie struktury pierwszego planu, które są mniejsze niż element strukturyzujący, są eliminowane w pierwszym kroku (erozja).
-Pozostałe struktury są wygładzane przez dylatację i powiększane w przybliżeniu do ich pierwotnego rozmiaru, jak pokazano na przykładach na @fig-open-close. Ten proces kurczenia się, a następnie wzrostu odpowiada idei eliminacji małych struktur, którą wstępnie naszkicowaliśmy wcześniej.
+Pozostałe struktury są wygładzane przez dylatację i powiększane w przybliżeniu do ich pierwotnego rozmiaru, jak pokazano na przykładach na @fig-open-close.
+Ten proces kurczenia się, a następnie wzrostu odpowiada idei eliminacji małych struktur, którą wstępnie naszkicowaliśmy wcześniej.
 
 ![Przykładowe zastosowania opening i closing](images/Zrzut%20ekranu%202023-02-22%20o%2016.35.22.png){#fig-open-close fig-align="center" width="400"}
 

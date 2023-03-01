@@ -405,6 +405,186 @@ ________________________________________________________________________________
 </div>
 </div>
 <p>W rezultacie otrzymaliśmy sieć o dokładności 0.9908. Choć może to w stosunku do 0.9779, czyli dokładności dla sieci gęstej z pierwszego przykładu MNIST, to jednak względny błąd predykcji dla sieci splotowej zmalał o ponad 58% 🤩.</p>
+<p>Wynik imponujący, zatem pojawia się pytanie skąd taka dokładność? na czym polega magia sieci splotowych? W poniższych listingach postaramy się to wyjaśnić.</p>
+<div class="sourceCode" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-conv1</span></span>
+<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: Wyniki filtracji pierwszą warstwą splotową (wybrano filtry 4 i 10)</span></span>
+<span id="annotated-cell-8-3"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 2</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-4" class="code-annotation-target"><a href="#annotated-cell-8-4" aria-hidden="true" tabindex="-1"></a>img <span class="ot">&lt;-</span> train_images[<span class="dv">44</span>,,,] <span class="sc">|&gt;</span> <span class="fu">as.raster</span>()</span>
+<span id="annotated-cell-8-5"><a href="#annotated-cell-8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(img, <span class="at">interp=</span>F)</span>
+<span id="annotated-cell-8-6"><a href="#annotated-cell-8-6" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2">2</button><span id="annotated-cell-8-7" class="code-annotation-target"><a href="#annotated-cell-8-7" aria-hidden="true" tabindex="-1"></a>img_tensor <span class="ot">&lt;-</span> train_images[<span class="dv">44</span>,,,]</span>
+<span id="annotated-cell-8-8"><a href="#annotated-cell-8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(img_tensor)</span>
+<span id="annotated-cell-8-9"><a href="#annotated-cell-8-9" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="3">3</button><span id="annotated-cell-8-10" class="code-annotation-target"><a href="#annotated-cell-8-10" aria-hidden="true" tabindex="-1"></a>img_tensor <span class="ot">&lt;-</span> <span class="fu">array_reshape</span>(img_tensor, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">28</span>, <span class="dv">28</span>, <span class="dv">1</span>))</span>
+<span id="annotated-cell-8-11"><a href="#annotated-cell-8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(img_tensor)</span>
+<span id="annotated-cell-8-12"><a href="#annotated-cell-8-12" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="4">4</button><span id="annotated-cell-8-13" class="code-annotation-target"><a href="#annotated-cell-8-13" aria-hidden="true" tabindex="-1"></a>layer_outputs <span class="ot">&lt;-</span> <span class="fu">lapply</span>(model<span class="sc">$</span>layers[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="cf">function</span>(layer) layer<span class="sc">$</span>output)</span>
+<span id="annotated-cell-8-14"><a href="#annotated-cell-8-14" aria-hidden="true" tabindex="-1"></a>layer_outputs</span>
+<span id="annotated-cell-8-15"><a href="#annotated-cell-8-15" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="5">5</button><span id="annotated-cell-8-16" class="code-annotation-target"><a href="#annotated-cell-8-16" aria-hidden="true" tabindex="-1"></a>activation_model <span class="ot">&lt;-</span> <span class="fu">keras_model</span>(<span class="at">inputs =</span> model<span class="sc">$</span>input, <span class="at">outputs =</span> layer_outputs)</span>
+<span id="annotated-cell-8-17"><a href="#annotated-cell-8-17" aria-hidden="true" tabindex="-1"></a>activations <span class="ot">&lt;-</span> activation_model <span class="sc">%&gt;%</span> <span class="fu">predict</span>(img_tensor)</span>
+<span id="annotated-cell-8-18"><a href="#annotated-cell-8-18" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="6">6</button><span id="annotated-cell-8-19" class="code-annotation-target"><a href="#annotated-cell-8-19" aria-hidden="true" tabindex="-1"></a>first_layer_activation <span class="ot">&lt;-</span> activations[[<span class="dv">1</span>]]</span>
+<span id="annotated-cell-8-20"><a href="#annotated-cell-8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(first_layer_activation)</span>
+<span id="annotated-cell-8-21"><a href="#annotated-cell-8-21" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="7">7</button><span id="annotated-cell-8-22" class="code-annotation-target"><a href="#annotated-cell-8-22" aria-hidden="true" tabindex="-1"></a>plot_channel <span class="ot">&lt;-</span> <span class="cf">function</span>(channel) {</span>
+<span id="annotated-cell-8-23"><a href="#annotated-cell-8-23" aria-hidden="true" tabindex="-1"></a>  rotate <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">t</span>(<span class="fu">apply</span>(x, <span class="dv">2</span>, rev))</span>
+<span id="annotated-cell-8-24"><a href="#annotated-cell-8-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">image</span>(<span class="fu">rotate</span>(channel), <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">asp =</span> <span class="dv">1</span>, </span>
+<span id="annotated-cell-8-25"><a href="#annotated-cell-8-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">gray.colors</span>(<span class="dv">20</span>))</span>
+<span id="annotated-cell-8-26"><a href="#annotated-cell-8-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="annotated-cell-8-27"><a href="#annotated-cell-8-27" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="8">8</button><span id="annotated-cell-8-28" class="code-annotation-target"><a href="#annotated-cell-8-28" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_channel</span>(first_layer_activation[<span class="dv">1</span>,,,<span class="dv">4</span>])</span>
+<span id="annotated-cell-8-29"><a href="#annotated-cell-8-29" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_channel</span>(first_layer_activation[<span class="dv">1</span>,,,<span class="dv">10</span>])</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-annotation="1" data-code-lines="4" data-code-cell="annotated-cell-8">wybierz obraz</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-annotation="2" data-code-lines="7" data-code-cell="annotated-cell-8">zamień go na tensor</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-annotation="3" data-code-lines="10" data-code-cell="annotated-cell-8">dostosuj rozmiar tensora do wejścia do sieci</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-annotation="4" data-code-lines="13" data-code-cell="annotated-cell-8">wylistuj wszystkie wyjścia z sieci splotowych</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-annotation="5" data-code-lines="16" data-code-cell="annotated-cell-8">stwórz model pomocniczy składający się z wejścia i warstw splotowych</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-annotation="6" data-code-lines="19" data-code-cell="annotated-cell-8">wybierz warstwę do wizualizacji</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="7">7</dt>
+<dd>
+<span data-code-annotation="7" data-code-lines="22" data-code-cell="annotated-cell-8">napisz funkcję do wyświetlania obrazów</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="8">8</dt>
+<dd>
+<span data-code-annotation="8" data-code-lines="28" data-code-cell="annotated-cell-8">rysuj obrazy</span>
+</dd>
+</dl>
+<p>Tak wygląda wynik pierwszej warstwy splotowej dla wybranych dwóch filtrów (kanałów), a jakby to wyglądało gdyby wyświetlić wyniki wszystkich warstw i kanałów.</p>
+<div class="sourceCode" id="annotated-cell-9"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-2" class="code-annotation-target"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"nine_activations"</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="2">2</button><span id="annotated-cell-9-3" class="code-annotation-target"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>image_size <span class="ot">&lt;-</span> <span class="dv">58</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="3">3</button><span id="annotated-cell-9-4" class="code-annotation-target"><a href="#annotated-cell-9-4" aria-hidden="true" tabindex="-1"></a>images_per_row <span class="ot">&lt;-</span> <span class="dv">16</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="4">4</button><span id="annotated-cell-9-5" class="code-annotation-target"><a href="#annotated-cell-9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="annotated-cell-9-6"><a href="#annotated-cell-9-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="5">5</button><span id="annotated-cell-9-7" class="code-annotation-target"><a href="#annotated-cell-9-7" aria-hidden="true" tabindex="-1"></a>  layer_activation <span class="ot">&lt;-</span> activations[[i]]</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="6">6</button><span id="annotated-cell-9-8" class="code-annotation-target"><a href="#annotated-cell-9-8" aria-hidden="true" tabindex="-1"></a>  layer_name <span class="ot">&lt;-</span> model<span class="sc">$</span>layers[[i]]<span class="sc">$</span>name <span class="sc">$</span></span>
+<span id="annotated-cell-9-9"><a href="#annotated-cell-9-9" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="7">7</button><span id="annotated-cell-9-10" class="code-annotation-target"><a href="#annotated-cell-9-10" aria-hidden="true" tabindex="-1"></a>  n_features <span class="ot">&lt;-</span> <span class="fu">dim</span>(layer_activation)[[<span class="dv">4</span>]]</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="8">8</button><span id="annotated-cell-9-11" class="code-annotation-target"><a href="#annotated-cell-9-11" aria-hidden="true" tabindex="-1"></a>  n_cols <span class="ot">&lt;-</span> n_features <span class="sc">%/%</span> images_per_row</span>
+<span id="annotated-cell-9-12"><a href="#annotated-cell-9-12" aria-hidden="true" tabindex="-1"></a> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="9">9</button><span id="annotated-cell-9-13" class="code-annotation-target"><a href="#annotated-cell-9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">png</span>(<span class="fu">paste0</span>(<span class="st">"nine_activations/"</span>, i, <span class="st">"_"</span>, layer_name, <span class="st">".png"</span>),</span>
+<span id="annotated-cell-9-14"><a href="#annotated-cell-9-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">width =</span> image_size <span class="sc">*</span> images_per_row, </span>
+<span id="annotated-cell-9-15"><a href="#annotated-cell-9-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">height =</span> image_size <span class="sc">*</span> n_cols)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="10">10</button><span id="annotated-cell-9-16" class="code-annotation-target"><a href="#annotated-cell-9-16" aria-hidden="true" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(n_cols, images_per_row), <span class="at">mai =</span> <span class="fu">rep_len</span>(<span class="fl">0.02</span>, <span class="dv">4</span>))</span>
+<span id="annotated-cell-9-17"><a href="#annotated-cell-9-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="11">11</button><span id="annotated-cell-9-18" class="code-annotation-target"><a href="#annotated-cell-9-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (col <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>(n_cols<span class="dv">-1</span>)) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="12">12</button><span id="annotated-cell-9-19" class="code-annotation-target"><a href="#annotated-cell-9-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (row <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>(images_per_row<span class="dv">-1</span>)) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="13">13</button><span id="annotated-cell-9-20" class="code-annotation-target"><a href="#annotated-cell-9-20" aria-hidden="true" tabindex="-1"></a>      channel_image <span class="ot">&lt;-</span> layer_activation[<span class="dv">1</span>,,,(col<span class="sc">*</span>images_per_row) <span class="sc">+</span> row <span class="sc">+</span> <span class="dv">1</span>]</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="14">14</button><span id="annotated-cell-9-21" class="code-annotation-target"><a href="#annotated-cell-9-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot_channel</span>(channel_image)</span>
+<span id="annotated-cell-9-22"><a href="#annotated-cell-9-22" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="annotated-cell-9-23"><a href="#annotated-cell-9-23" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="annotated-cell-9-24"><a href="#annotated-cell-9-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="annotated-cell-9-25"><a href="#annotated-cell-9-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(op)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="15">15</button><span id="annotated-cell-9-26" class="code-annotation-target"><a href="#annotated-cell-9-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dev.off</span>()</span>
+<span id="annotated-cell-9-27"><a href="#annotated-cell-9-27" aria-hidden="true" tabindex="-1"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-annotation="1" data-code-lines="2" data-code-cell="annotated-cell-9">stwórz katalog na obrazy</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-annotation="2" data-code-lines="3" data-code-cell="annotated-cell-9">wybierz wielkość obrazu w px</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-annotation="3" data-code-lines="4" data-code-cell="annotated-cell-9">wybierz ile obrazów ma się mieścić w wierszu</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-annotation="4" data-code-lines="5" data-code-cell="annotated-cell-9">rozpocznij pętlę po wszystkich nr warstw splowych</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-annotation="5" data-code-lines="7" data-code-cell="annotated-cell-9">przypisz i-tą warstwę</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-annotation="6" data-code-lines="8" data-code-cell="annotated-cell-9">zapisz nazwę warstwy</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="7">7</dt>
+<dd>
+<span data-code-annotation="7" data-code-lines="10" data-code-cell="annotated-cell-9">wyciągnij liczbę filtrów</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="8">8</dt>
+<dd>
+<span data-code-annotation="8" data-code-lines="11" data-code-cell="annotated-cell-9">oblicz liczbę obrazów na wiersz</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="9">9</dt>
+<dd>
+<span data-code-annotation="9" data-code-lines="13" data-code-cell="annotated-cell-9">stwórz plik png o wymiarach zgodnych z liczbą obrazów w wierszu i liczbą wierszy</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="10">10</dt>
+<dd>
+<span data-code-annotation="10" data-code-lines="16" data-code-cell="annotated-cell-9">określ parametry obrazu (zmiana layout i marginesów)</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="11">11</dt>
+<dd>
+<span data-code-annotation="11" data-code-lines="18" data-code-cell="annotated-cell-9">rozpocznij pętlę po kolumnach</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="12">12</dt>
+<dd>
+<span data-code-annotation="12" data-code-lines="19" data-code-cell="annotated-cell-9">rozpocznij pętlę po wierszach</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="13">13</dt>
+<dd>
+<span data-code-annotation="13" data-code-lines="20" data-code-cell="annotated-cell-9">wybierz filtr do obrazowania</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="14">14</dt>
+<dd>
+<span data-code-annotation="14" data-code-lines="21" data-code-cell="annotated-cell-9">narysuj obraz filtra</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="15">15</dt>
+<dd>
+<span data-code-annotation="15" data-code-lines="26" data-code-cell="annotated-cell-9">zapisz plik</span>
+</dd>
+</dl>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="nine_activations/1_conv2d_14.png" class="img-fluid figure-img" width="1000"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="nine_activations/2_max_pooling2d_9.png" class="img-fluid figure-img" width="1000"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="nine_activations/3_conv2d_13.png" class="img-fluid figure-img" width="1000"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="nine_activations/4_max_pooling2d_8.png" class="img-fluid figure-img" width="1000"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="nine_activations/5_conv2d_12.png" class="img-fluid figure-img" width="1000"></p>
+</figure>
+</div>
+<p>Wyniki wszystkich warstw splotowych i wszystkich filtrów</p>
 
 
 
@@ -699,25 +879,90 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
+      // Handle positioning of the toggle
+      window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
           }
-        });
+        };
+      }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
       }
   const findCites = (el) => {
     const parentEl = el.parentElement;
