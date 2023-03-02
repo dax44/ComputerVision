@@ -255,7 +255,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+  <li><a href="#działanie-sieci-splotowej" id="toc-działanie-sieci-splotowej" class="nav-link active" data-scroll-target="#działanie-sieci-splotowej"><span class="header-section-number">12.1</span> Działanie sieci splotowej</a>
+  <ul class="collapse">
+  <li><a href="#efekty-brzegowe---padding" id="toc-efekty-brzegowe---padding" class="nav-link" data-scroll-target="#efekty-brzegowe---padding"><span class="header-section-number">12.1.1</span> Efekty brzegowe - <em>padding</em></a></li>
+  <li><a href="#efekty-brzegowe---stirdes" id="toc-efekty-brzegowe---stirdes" class="nav-link" data-scroll-target="#efekty-brzegowe---stirdes"><span class="header-section-number">12.1.2</span> Efekty brzegowe - <em>stirdes</em></a></li>
+  </ul></li>
+  <li><a href="#max-pooling" id="toc-max-pooling" class="nav-link" data-scroll-target="#max-pooling"><span class="header-section-number">12.2</span> Max pooling</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
@@ -404,159 +415,254 @@ ________________________________________________________________________________
 0.02966781 0.99080002 </code></pre>
 </div>
 </div>
-<p>W rezultacie otrzymaliśmy sieć o dokładności 0.9908. Choć może to w stosunku do 0.9779, czyli dokładności dla sieci gęstej z pierwszego przykładu MNIST, to jednak względny błąd predykcji dla sieci splotowej zmalał o ponad 58% 🤩.</p>
-<p>Wynik imponujący, zatem pojawia się pytanie skąd taka dokładność? na czym polega magia sieci splotowych? W poniższych listingach postaramy się to wyjaśnić.</p>
-<div class="sourceCode" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-conv1</span></span>
-<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: Wyniki filtracji pierwszą warstwą splotową (wybrano filtry 4 i 10)</span></span>
-<span id="annotated-cell-8-3"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 2</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-4" class="code-annotation-target"><a href="#annotated-cell-8-4" aria-hidden="true" tabindex="-1"></a>img <span class="ot">&lt;-</span> train_images[<span class="dv">44</span>,,,] <span class="sc">|&gt;</span> <span class="fu">as.raster</span>()</span>
-<span id="annotated-cell-8-5"><a href="#annotated-cell-8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(img, <span class="at">interp=</span>F)</span>
-<span id="annotated-cell-8-6"><a href="#annotated-cell-8-6" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2">2</button><span id="annotated-cell-8-7" class="code-annotation-target"><a href="#annotated-cell-8-7" aria-hidden="true" tabindex="-1"></a>img_tensor <span class="ot">&lt;-</span> train_images[<span class="dv">44</span>,,,]</span>
-<span id="annotated-cell-8-8"><a href="#annotated-cell-8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(img_tensor)</span>
-<span id="annotated-cell-8-9"><a href="#annotated-cell-8-9" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="3">3</button><span id="annotated-cell-8-10" class="code-annotation-target"><a href="#annotated-cell-8-10" aria-hidden="true" tabindex="-1"></a>img_tensor <span class="ot">&lt;-</span> <span class="fu">array_reshape</span>(img_tensor, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">28</span>, <span class="dv">28</span>, <span class="dv">1</span>))</span>
-<span id="annotated-cell-8-11"><a href="#annotated-cell-8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(img_tensor)</span>
-<span id="annotated-cell-8-12"><a href="#annotated-cell-8-12" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="4">4</button><span id="annotated-cell-8-13" class="code-annotation-target"><a href="#annotated-cell-8-13" aria-hidden="true" tabindex="-1"></a>layer_outputs <span class="ot">&lt;-</span> <span class="fu">lapply</span>(model<span class="sc">$</span>layers[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="cf">function</span>(layer) layer<span class="sc">$</span>output)</span>
-<span id="annotated-cell-8-14"><a href="#annotated-cell-8-14" aria-hidden="true" tabindex="-1"></a>layer_outputs</span>
-<span id="annotated-cell-8-15"><a href="#annotated-cell-8-15" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="5">5</button><span id="annotated-cell-8-16" class="code-annotation-target"><a href="#annotated-cell-8-16" aria-hidden="true" tabindex="-1"></a>activation_model <span class="ot">&lt;-</span> <span class="fu">keras_model</span>(<span class="at">inputs =</span> model<span class="sc">$</span>input, <span class="at">outputs =</span> layer_outputs)</span>
-<span id="annotated-cell-8-17"><a href="#annotated-cell-8-17" aria-hidden="true" tabindex="-1"></a>activations <span class="ot">&lt;-</span> activation_model <span class="sc">%&gt;%</span> <span class="fu">predict</span>(img_tensor)</span>
-<span id="annotated-cell-8-18"><a href="#annotated-cell-8-18" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="6">6</button><span id="annotated-cell-8-19" class="code-annotation-target"><a href="#annotated-cell-8-19" aria-hidden="true" tabindex="-1"></a>first_layer_activation <span class="ot">&lt;-</span> activations[[<span class="dv">1</span>]]</span>
-<span id="annotated-cell-8-20"><a href="#annotated-cell-8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(first_layer_activation)</span>
-<span id="annotated-cell-8-21"><a href="#annotated-cell-8-21" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="7">7</button><span id="annotated-cell-8-22" class="code-annotation-target"><a href="#annotated-cell-8-22" aria-hidden="true" tabindex="-1"></a>plot_channel <span class="ot">&lt;-</span> <span class="cf">function</span>(channel) {</span>
-<span id="annotated-cell-8-23"><a href="#annotated-cell-8-23" aria-hidden="true" tabindex="-1"></a>  rotate <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">t</span>(<span class="fu">apply</span>(x, <span class="dv">2</span>, rev))</span>
-<span id="annotated-cell-8-24"><a href="#annotated-cell-8-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">image</span>(<span class="fu">rotate</span>(channel), <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">asp =</span> <span class="dv">1</span>, </span>
-<span id="annotated-cell-8-25"><a href="#annotated-cell-8-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">gray.colors</span>(<span class="dv">20</span>))</span>
-<span id="annotated-cell-8-26"><a href="#annotated-cell-8-26" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="annotated-cell-8-27"><a href="#annotated-cell-8-27" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="8">8</button><span id="annotated-cell-8-28" class="code-annotation-target"><a href="#annotated-cell-8-28" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_channel</span>(first_layer_activation[<span class="dv">1</span>,,,<span class="dv">4</span>])</span>
-<span id="annotated-cell-8-29"><a href="#annotated-cell-8-29" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_channel</span>(first_layer_activation[<span class="dv">1</span>,,,<span class="dv">10</span>])</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-annotation="1" data-code-lines="4" data-code-cell="annotated-cell-8">wybierz obraz</span>
-</dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-annotation="2" data-code-lines="7" data-code-cell="annotated-cell-8">zamień go na tensor</span>
-</dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-annotation="3" data-code-lines="10" data-code-cell="annotated-cell-8">dostosuj rozmiar tensora do wejścia do sieci</span>
-</dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="4">4</dt>
-<dd>
-<span data-code-annotation="4" data-code-lines="13" data-code-cell="annotated-cell-8">wylistuj wszystkie wyjścia z sieci splotowych</span>
-</dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="5">5</dt>
-<dd>
-<span data-code-annotation="5" data-code-lines="16" data-code-cell="annotated-cell-8">stwórz model pomocniczy składający się z wejścia i warstw splotowych</span>
-</dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="6">6</dt>
-<dd>
-<span data-code-annotation="6" data-code-lines="19" data-code-cell="annotated-cell-8">wybierz warstwę do wizualizacji</span>
-</dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="7">7</dt>
-<dd>
-<span data-code-annotation="7" data-code-lines="22" data-code-cell="annotated-cell-8">napisz funkcję do wyświetlania obrazów</span>
-</dd>
-<dt data-target-cell="annotated-cell-8" data-target-annotation="8">8</dt>
-<dd>
-<span data-code-annotation="8" data-code-lines="28" data-code-cell="annotated-cell-8">rysuj obrazy</span>
-</dd>
-</dl>
-<p>Tak wygląda wynik pierwszej warstwy splotowej dla wybranych dwóch filtrów (kanałów), a jakby to wyglądało gdyby wyświetlić wyniki wszystkich warstw i kanałów.</p>
-<div class="sourceCode" id="annotated-cell-9"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-2" class="code-annotation-target"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"nine_activations"</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="2">2</button><span id="annotated-cell-9-3" class="code-annotation-target"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>image_size <span class="ot">&lt;-</span> <span class="dv">58</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="3">3</button><span id="annotated-cell-9-4" class="code-annotation-target"><a href="#annotated-cell-9-4" aria-hidden="true" tabindex="-1"></a>images_per_row <span class="ot">&lt;-</span> <span class="dv">16</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="4">4</button><span id="annotated-cell-9-5" class="code-annotation-target"><a href="#annotated-cell-9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
-<span id="annotated-cell-9-6"><a href="#annotated-cell-9-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="5">5</button><span id="annotated-cell-9-7" class="code-annotation-target"><a href="#annotated-cell-9-7" aria-hidden="true" tabindex="-1"></a>  layer_activation <span class="ot">&lt;-</span> activations[[i]]</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="6">6</button><span id="annotated-cell-9-8" class="code-annotation-target"><a href="#annotated-cell-9-8" aria-hidden="true" tabindex="-1"></a>  layer_name <span class="ot">&lt;-</span> model<span class="sc">$</span>layers[[i]]<span class="sc">$</span>name <span class="sc">$</span></span>
+<p>W rezultacie otrzymaliśmy sieć o dokładności 0.9908. Choć może to w stosunku do 0.9779, czyli dokładności dla sieci gęstej z pierwszego przykładu MNIST, to jednak względny błąd predykcji dla sieci splotowej zmalał o ponad 58% 🤩. Wynik imponujący, zatem pojawia się pytanie skąd taka dokładność? na czym polega magia sieci splotowych? W poniższych listingach postaramy się to wyjaśnić.</p>
+<section id="działanie-sieci-splotowej" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="działanie-sieci-splotowej"><span class="header-section-number">12.1</span> Działanie sieci splotowej</h2>
+<p>Podstawową różnicą pomiędzy warstwą gęstych połączeń a siecią splotową jest to, że warstwy <code>dense</code> uczą się cech parametrów globalnych w swoich wejściowych przestrzeniach (w przypadku cyfr MNIST są to wzorce związane ze wszystkimi pikselami), a warstwy konwolucyjne uczą się lokalnych wzorców (patrz rys) - w przypadku obrazów wzorce są znajdowane w małych dwuwymiarowych oknach danych wejściowych. W zaprezentowanym przykładzie wszystkie te okna charakteryzowały się wymiarami 3x3.</p>
+<div id="fig-wz1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-03-2 o 18.34.26.png" class="img-fluid figure-img" width="400"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;12.1: Rozbicie obrazu na lokalne wzorce</figcaption><p></p>
+</figure>
+</div>
+<p>Dzięki tej kluczowej charakterystyce sieci konwolucyjne mają dwie ciekawe własności:</p>
+<ul>
+<li>wzorce rozpoznawane przez sieć są niezależne od przesunięcia. Sieć konwolucyjna po rozpoznaniu określonego wzoru w prawym dolnym rogu obrazu może rozpoznać go np. w lewym górnym rogu obrazu. Sieć gęsta w celu rozpoznania wzorca znajdującego się w innym miejscu musi nauczyć się go na nowo. W związku z tym sieci konwolucyjne charakteryzują się dużą wydajnością podczas przetwarzania obrazów. Sieci splotowe mogą skutecznie tworzyć uogólnienia po przetworzeniu mniejszego zbioru testowego.</li>
+<li>sieci splotowe mogą uczyć się przestrzennej hierarchii wzorców (patrz <a href="#fig-conv2">Rysunek&nbsp;<span>12.5</span></a>). Pierwsza warstwa uczy się rozpoznania położenia kluczowych obiektów przez zmianę konturów i kontrastu. Druga warstwa (<em>pooling</em>) redukuje najważniejsze informacje do prostszej postaci (zmniejszenie rozdzielczości). Kolejna warstwa stara się wyciągnąć kluczowe elementy (wzorce) występujące w obiekcie, jak linie proste, ukośne, okręgi, łuki, itp. Kolejne dwie warstwy ponownie redukują rozdzielczość wyciągając kluczowe elementy obrazu. Ostatecznie wartości wyjściowe z ostatniej warstwy konwolucyjnej przekazują kluczowe informacje do sieci gęstej, a ta ostatecznie zamienia je za pomocą funkcji softmax na przewidywane cyfry.</li>
+</ul>
+<p>Sieci konwolucyjne działają na trójwymiarowych tensorach określanych mianem map cech, zawierających dwie przestrzenne osie definiujące wysokość i szerokość. Trzecią osią jest oś głębi, nazywana również osią kanałów. W przypadku obrazu RGB oś głębi ma trzy wymiary (po jednym dla każdego koloru). Obrazy monochromatyczne (takie jak MNIST), mają jeden wymiar głębi (kolor opisuje tylko skalę nasycenia szarości). Operacja konwolucji wyodrębnia fragmenty z wejściowej mapy cech i stosuje to samo przekształcenie do wszystkich tych fragmentów, dając wyjściową mapę cech. Ta wyjściowa mapa cech jest nadal tensorem 3D: ma szerokość i wysokość. Jej głębokość może być dowolna, ponieważ głębokość wyjściowa jest parametrem warstwy, a różne kanały w tej osi głębokości nie oznaczają już konkretnych kolorów, jak w przypadku wejścia RGB; oznaczają one raczej filtry. Filtry kodują specyficzne aspekty danych wejściowych: na wysokim poziomie pojedynczy filtr może kodować na przykład pojęcie “obecności twarzy na wejściu”.</p>
+<div id="fig-conv" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-03-2 o 18.58.12.png" class="img-fluid figure-img" width="600"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;12.2: Procedura filtrowania obrazu</figcaption><p></p>
+</figure>
+</div>
+<p>W przykładzie MNIST, pierwsza warstwa konwolucji pobiera mapę cech o rozmiarze <code>(28, 28, 1)</code> i wyprowadza mapę cech o rozmiarze <code>(26, 26, 32)</code>: oblicza 32 filtry na danych wejściowych. Każdy z tych 32 filtrów wyjściowych zawiera siatkę wartości 26 × 26, która jest mapą odpowiedzi filtra, wskazującą odpowiedź tego filtra w różnych miejscach wejścia (patrz <a href="#fig-conv">Rysunek&nbsp;<span>12.2</span></a>). To właśnie oznacza termin mapa cech: każdy wymiar na osi głębokości jest cechą (lub filtrem), a tensor 2D <code>output[:, :, n]</code> jest przestrzenną mapą 2D odpowiedzi tego filtra na wejście.</p>
+<p>Konwolucje są definiowane przez dwa kluczowe parametry:</p>
+<ul>
+<li>Rozmiar filtrów wyodrębnionych z wejść - są to zwykle 3 × 3 lub 5 × 5. W przykładzie były to 3 × 3, co jest częstym wyborem.</li>
+<li>Głębokość wyjściowej mapy cech - czyli liczba filtrów obliczonych przez konwolucję. Przykład rozpoczął się z głębokością 32, a zakończył z głębokością 64.</li>
+</ul>
+<p>W <code>keras</code> parametry te są pierwszymi argumentami przekazywanymi do warstwy: <code>layer_conv_2d(output_depth, c(window_height, window_width))</code>.</p>
+<p>Konwolucja działa poprzez przesuwanie tych okien o rozmiarze 3 × 3 lub 5 × 5 po wejściowej mapie cech 3D, zatrzymując się w każdym możliwym miejscu, i wyodrębniając trójwymiarową łatę otaczających cech (kształt <code>(window_height, window_width, input_depth)</code>). Każda taka paczka 3D jest następnie przekształcana (poprzez iloczyn tensorowy z tą samą uczoną macierzą wag, zwaną jądrem konwolucji) w 1D wektor kształtu (<code>output_depth</code>). Wszystkie te wektory są następnie przestrzennie składane w trójwymiarową wyjściową mapę kształtu <code>(wysokość, szerokość, głębokość wyjściowa)</code>. Każde miejsce w wyjściowej mapie cech odpowiada temu samemu miejscu w wejściowej mapie cech (na przykład prawy dolny róg wyjścia zawiera informacje o prawym dolnym rogu wejścia). Na przykład, przy oknach 3 × 3, wektor <code>output[i, j, ]</code> pochodzi z wejściowej mapy 3D <code>input[i-1:i+1, j-1:j+1, ]</code>. Pełny proces został szczegółowo przedstawiony na <a href="#fig-conv0">Rysunek&nbsp;<span>12.3</span></a>.</p>
+<div id="fig-conv0" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://mukulrathi.com/aad8a78e265cb76c3b0ebe17a058b19c/conv-slide.gif" class="img-fluid figure-img" width="600"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;12.3: Zasada działania filtrów w sieci splotowej</figcaption><p></p>
+</figure>
+</div>
+<p>Zauważ, że szerokość i wysokość wyjściowa może się różnić od szerokości i wysokości wejściowej. Mogą się one różnić z dwóch powodów:</p>
+<ul>
+<li>Efekty brzegowe, którym można przeciwdziałać poprzez padding wejściowej mapy funkcji</li>
+<li>Użycie pasków (ang. <em>strides</em>), które zdefiniujemy za chwilę.</li>
+</ul>
+<section id="efekty-brzegowe---padding" class="level3" data-number="12.1.1">
+<h3 data-number="12.1.1" class="anchored" data-anchor-id="efekty-brzegowe---padding"><span class="header-section-number">12.1.1</span> Efekty brzegowe - <em>padding</em></h3>
+<p>Rozważmy mapę cech 5 × 5 (łącznie 25 kwadratów). Jest tylko 9 kwadratów, wokół których można wyśrodkować okno 3 × 3, tworząc siatkę 3 × 3. Dlatego też wyjściowa mapa cech zmniejsza się nieco: w tym przypadku dokładnie o dwa kwadraty wzdłuż każdego wymiaru. Ten efekt brzegowy można zobaczyć w działaniu we wcześniejszym przykładzie: zaczynasz z 28 × 28 na danych wejściowych, które po pierwszej warstwie konwolucji stają się 26 × 26.</p>
+<p>Jeśli chcesz uzyskać wyjściową mapę cech o takich samych wymiarach przestrzennych jak wejściowa, możesz użyć <em>paddingu</em>. <em>Padding</em> polega na dodaniu odpowiedniej liczby wierszy i kolumn po każdej stronie wejściowej mapy cech, tak aby umożliwić dopasowanie środkowych okien konwolucji wokół każdego kafelka wejściowego. Dla okna 3 × 3 dodasz jedną kolumnę po prawej, jedną kolumnę po lewej, jeden rząd na górze i jeden rząd na dole. Dla okna 5 × 5 dodałbyś dwa rzędy (patrz <a href="#fig-conv0">Rysunek&nbsp;<span>12.3</span></a>).</p>
+<p>W warstwach <code>layer_conv_2d</code> <em>padding</em> jest konfigurowalny poprzez argument <code>padding</code>, który przyjmuje dwie wartości: “<code>valid</code>”, co oznacza brak <em>paddingu</em> (zostaną użyte tylko poprawne lokalizacje okien); oraz “<code>same</code>”, co oznacza “rozszerz wejście w taki sposób, aby mieć wyjście o takiej samej szerokości i wysokości jak wejście”. Argument <em>padding</em> domyślnie przyjmuje wartość “<code>valid</code>”.</p>
+<div id="fig-padd" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:1400/1*s-Hm4M6au-bqW8VLL5qo3g.gif" class="img-fluid figure-img" width="600"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;12.4: Przykłady <em>paddingu</em> i konwolucji kroczącej</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="efekty-brzegowe---stirdes" class="level3" data-number="12.1.2">
+<h3 data-number="12.1.2" class="anchored" data-anchor-id="efekty-brzegowe---stirdes"><span class="header-section-number">12.1.2</span> Efekty brzegowe - <em>stirdes</em></h3>
+<p>Innym czynnikiem, który może wpływać na wielkość wyjścia jest pojęcie kroku (ang. <em>strides</em>). Dotychczasowy opis konwolucji zakładał, że wszystkie środkowe kwadraty okien konwolucji są przylegające. Jednak odległość między dwoma kolejnymi oknami jest parametrem konwolucji, zwanym jej krokiem, który domyślnie wynosi 1. Możliwe jest istnienie konwolucji kroczących: konwolucji o kroku większym niż jeden. Na <a href="#fig-padd">Rysunek&nbsp;<span>12.4</span></a> widać części wyekstrahowane przez konwolucję 3 x 3 z rozstępem 2 na wejściu 5 × 5 (bez wypełnienia). Użycie kroku 2 oznacza, że szerokość i wysokość mapy cech są pomniejszane o współczynnik 2 (oprócz zmian wywołanych przez efekty brzegowe). Konwersje z przesunięciem są rzadko używane w praktyce, choć mogą być przydatne w niektórych typach modeli; dobrze jest zapoznać się z tą koncepcją. Do <em>downsamplingu</em> map cech, zamiast kroków, używamy zwykle operacji <em>max</em> <em>pooling</em>, którą zastosowaliśmy w sieci do przykładu MNIST. Przyjrzyjmy się jej bardziej szczegółowo.</p>
+</section>
+</section>
+<section id="max-pooling" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="max-pooling"><span class="header-section-number">12.2</span> Max pooling</h2>
+<p>W przykładzie MNIST mogłeś zauważyć, że rozmiar map cech jest zmniejszany o połowę po każdej operacji <code>layer_max_pooling_2d</code>. Na przykład przed pierwszą <code>layer_max_pooling_2d</code> mapa cech ma rozmiar 26 × 26, ale operacja <em>max</em> <em>poolingu</em> zmniejsza ją o połowę do 13 × 13. Taka jest właśnie rola <em>max poolingu</em>: agresywne zmniejszanie próbkowania map cech, podobnie jak w przypadku konwolucji krokowych.</p>
+<p>Operacja <em>max pooling</em> polega na wyodrębnieniu okien z wejściowych map cech i wyprowadzeniu maksymalnej wartości każdego filtra. Koncepcyjnie jest to podobne do konwolucji, z tą różnicą, że zamiast przekształcać lokalne plamy poprzez wyuczone przekształcenie liniowe (jądro konwolucji), są one przekształcane poprzez zakodowaną operację <code>max</code> tensora. Dużą różnicą w stosunku do konwolucji jest to, że <em>max pooling</em> jest zwykle wykonywany z oknami 2 × 2 i krokiem 2, w celu zmniejszenia próbkowania map cech o współczynnik 2. Z drugiej strony, konwolucja jest zwykle wykonywana z oknami 3 × 3 i bez kroku (<em>stride</em> 1).</p>
+<p>Dlaczego obniżamy rozmiar mapy cech w ten sposób? Dlaczego nie usunąć warstw <em>max pooling</em> i zachować dość duże mapy funkcji przez całą sieć? Przyjrzyjmy się tej opcji. Konwolucyjna baza modelu wyglądałaby wtedy tak:</p>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model_no_max_pool <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">32</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="at">activation =</span> <span class="st">"relu"</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">input_shape =</span> <span class="fu">c</span>(<span class="dv">28</span>, <span class="dv">28</span>, <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">64</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="at">activation =</span> <span class="st">"relu"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">64</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="at">activation =</span> <span class="st">"relu"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>model_no_max_pool</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model: "sequential_1"
+________________________________________________________________________________
+ Layer (type)                       Output Shape                    Param #     
+================================================================================
+ conv2d_5 (Conv2D)                  (None, 26, 26, 32)              320         
+ conv2d_4 (Conv2D)                  (None, 24, 24, 64)              18496       
+ conv2d_3 (Conv2D)                  (None, 22, 22, 64)              36928       
+================================================================================
+Total params: 55,744
+Trainable params: 55,744
+Non-trainable params: 0
+________________________________________________________________________________</code></pre>
+</div>
+</div>
+<p>Co jest nie tak z tą architekturą? Dwie rzeczy:</p>
+<ul>
+<li>Nie sprzyja uczeniu się przestrzennej hierarchii cech. Okna 3 × 3 w trzecich warstwach będą zawierały jedynie informacje pochodzące z okien 7 × 7 wejścia początkowego. Wzorce wysokopoziomowe wyuczone przez sieć splotową będą nadal bardzo małe w stosunku do początkowego wejścia, co może nie wystarczyć do nauki klasyfikacji cyfr (spróbuj rozpoznać cyfrę, patrząc na nią tylko przez okna o wymiarach 7 × 7 pikseli!). Potrzebujemy, aby cechy z ostatniej warstwy konwolucji zawierały informacje o całości danych wejściowych.</li>
+<li>Ostateczna mapa cech ma 22 * 22 * 64 = 30 976 wszystkich współczynników na próbkę. Jest to ogromna ilość. Jeśli miałbyś ją spłaszczyć, aby dołaczyć gęstą warstwę o rozmiarze 512, ta warstwa miałaby 15,8 miliona parametrów. Jest to zdecydowanie zbyt dużo dla tak małego modelu i spowodowałoby przeuczenie.</li>
+</ul>
+<p>W skrócie, powodem użycia redukcji wymiaru jest zmniejszenie liczby współczynników mapy cech do przetworzenia, jak również wywołanie hierarchii filtrów przestrzennych poprzez sprawienie, że kolejne warstwy konwolucji będą patrzyły na coraz większe okna (w sensie ułamka oryginalnego wejścia, które obejmują).</p>
+<p>Zauważ, że <em>max pooling</em> nie jest jedynym sposobem, w jaki możesz osiągnąć taki redukcję wymiaru. Jak już wiesz, możesz również użyć kroków w poprzedniej warstwie konwolucji. I możesz użyć <em>average pooling</em> zamiast <em>max pooling</em>, gdzie każdy lokalny fragment wejściowy jest przekształcany przez użycie średniej wartości każdego filtra w tym fragmencie, a nie maksimum. Mimo to, <em>max pooling</em> jest preferowanym rozwiązaniem ponieważ często daje lepsze rezultaty. W skrócie, powodem jest to, że cechy mają tendencję do kodowania przestrzennej obecności jakiegoś wzoru lub koncepcji w różnych kaflach mapy cech (stąd termin mapa cech), a bardziej informatywne jest spojrzenie na maksymalną obecność różnych cech niż na ich średnią obecność. Tak więc najrozsądniejszą strategią redukcji wymiaru jest najpierw wytworzenie map cech, a następnie spojrzenie na maksymalną aktywację cech w małych fragmentach, a nie patrzenie na rzadsze okna wejść lub uśrednianie fragmentów wejściowych, co może spowodować przegapienie lub rozmycie informacji o obecności cech.</p>
+<p>Poniżej zaprezentowane są wyniki działania poszczególnych warstw sieci konwolucyjnej.</p>
+<div class="sourceCode" id="annotated-cell-9"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-conv1</span></span>
+<span id="annotated-cell-9-2"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: Wyniki filtracji pierwszą warstwą splotową (wybrano filtry 4 i 10)</span></span>
+<span id="annotated-cell-9-3"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 2</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-4" class="code-annotation-target"><a href="#annotated-cell-9-4" aria-hidden="true" tabindex="-1"></a>img <span class="ot">&lt;-</span> train_images[<span class="dv">44</span>,,,] <span class="sc">|&gt;</span> <span class="fu">as.raster</span>()</span>
+<span id="annotated-cell-9-5"><a href="#annotated-cell-9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(img, <span class="at">interp=</span>F)</span>
+<span id="annotated-cell-9-6"><a href="#annotated-cell-9-6" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="2">2</button><span id="annotated-cell-9-7" class="code-annotation-target"><a href="#annotated-cell-9-7" aria-hidden="true" tabindex="-1"></a>img_tensor <span class="ot">&lt;-</span> train_images[<span class="dv">44</span>,,,]</span>
+<span id="annotated-cell-9-8"><a href="#annotated-cell-9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(img_tensor)</span>
 <span id="annotated-cell-9-9"><a href="#annotated-cell-9-9" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="7">7</button><span id="annotated-cell-9-10" class="code-annotation-target"><a href="#annotated-cell-9-10" aria-hidden="true" tabindex="-1"></a>  n_features <span class="ot">&lt;-</span> <span class="fu">dim</span>(layer_activation)[[<span class="dv">4</span>]]</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="8">8</button><span id="annotated-cell-9-11" class="code-annotation-target"><a href="#annotated-cell-9-11" aria-hidden="true" tabindex="-1"></a>  n_cols <span class="ot">&lt;-</span> n_features <span class="sc">%/%</span> images_per_row</span>
-<span id="annotated-cell-9-12"><a href="#annotated-cell-9-12" aria-hidden="true" tabindex="-1"></a> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="9">9</button><span id="annotated-cell-9-13" class="code-annotation-target"><a href="#annotated-cell-9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">png</span>(<span class="fu">paste0</span>(<span class="st">"nine_activations/"</span>, i, <span class="st">"_"</span>, layer_name, <span class="st">".png"</span>),</span>
-<span id="annotated-cell-9-14"><a href="#annotated-cell-9-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">width =</span> image_size <span class="sc">*</span> images_per_row, </span>
-<span id="annotated-cell-9-15"><a href="#annotated-cell-9-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">height =</span> image_size <span class="sc">*</span> n_cols)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="10">10</button><span id="annotated-cell-9-16" class="code-annotation-target"><a href="#annotated-cell-9-16" aria-hidden="true" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(n_cols, images_per_row), <span class="at">mai =</span> <span class="fu">rep_len</span>(<span class="fl">0.02</span>, <span class="dv">4</span>))</span>
-<span id="annotated-cell-9-17"><a href="#annotated-cell-9-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="11">11</button><span id="annotated-cell-9-18" class="code-annotation-target"><a href="#annotated-cell-9-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (col <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>(n_cols<span class="dv">-1</span>)) {</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="12">12</button><span id="annotated-cell-9-19" class="code-annotation-target"><a href="#annotated-cell-9-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (row <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>(images_per_row<span class="dv">-1</span>)) {</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="13">13</button><span id="annotated-cell-9-20" class="code-annotation-target"><a href="#annotated-cell-9-20" aria-hidden="true" tabindex="-1"></a>      channel_image <span class="ot">&lt;-</span> layer_activation[<span class="dv">1</span>,,,(col<span class="sc">*</span>images_per_row) <span class="sc">+</span> row <span class="sc">+</span> <span class="dv">1</span>]</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="14">14</button><span id="annotated-cell-9-21" class="code-annotation-target"><a href="#annotated-cell-9-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot_channel</span>(channel_image)</span>
-<span id="annotated-cell-9-22"><a href="#annotated-cell-9-22" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="annotated-cell-9-23"><a href="#annotated-cell-9-23" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="annotated-cell-9-24"><a href="#annotated-cell-9-24" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="annotated-cell-9-25"><a href="#annotated-cell-9-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(op)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="15">15</button><span id="annotated-cell-9-26" class="code-annotation-target"><a href="#annotated-cell-9-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dev.off</span>()</span>
-<span id="annotated-cell-9-27"><a href="#annotated-cell-9-27" aria-hidden="true" tabindex="-1"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="3">3</button><span id="annotated-cell-9-10" class="code-annotation-target"><a href="#annotated-cell-9-10" aria-hidden="true" tabindex="-1"></a>img_tensor <span class="ot">&lt;-</span> <span class="fu">array_reshape</span>(img_tensor, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">28</span>, <span class="dv">28</span>, <span class="dv">1</span>))</span>
+<span id="annotated-cell-9-11"><a href="#annotated-cell-9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(img_tensor)</span>
+<span id="annotated-cell-9-12"><a href="#annotated-cell-9-12" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="4">4</button><span id="annotated-cell-9-13" class="code-annotation-target"><a href="#annotated-cell-9-13" aria-hidden="true" tabindex="-1"></a>layer_outputs <span class="ot">&lt;-</span> <span class="fu">lapply</span>(model<span class="sc">$</span>layers[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="cf">function</span>(layer) layer<span class="sc">$</span>output)</span>
+<span id="annotated-cell-9-14"><a href="#annotated-cell-9-14" aria-hidden="true" tabindex="-1"></a>layer_outputs</span>
+<span id="annotated-cell-9-15"><a href="#annotated-cell-9-15" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="5">5</button><span id="annotated-cell-9-16" class="code-annotation-target"><a href="#annotated-cell-9-16" aria-hidden="true" tabindex="-1"></a>activation_model <span class="ot">&lt;-</span> <span class="fu">keras_model</span>(<span class="at">inputs =</span> model<span class="sc">$</span>input, <span class="at">outputs =</span> layer_outputs)</span>
+<span id="annotated-cell-9-17"><a href="#annotated-cell-9-17" aria-hidden="true" tabindex="-1"></a>activations <span class="ot">&lt;-</span> activation_model <span class="sc">%&gt;%</span> <span class="fu">predict</span>(img_tensor)</span>
+<span id="annotated-cell-9-18"><a href="#annotated-cell-9-18" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="6">6</button><span id="annotated-cell-9-19" class="code-annotation-target"><a href="#annotated-cell-9-19" aria-hidden="true" tabindex="-1"></a>first_layer_activation <span class="ot">&lt;-</span> activations[[<span class="dv">1</span>]]</span>
+<span id="annotated-cell-9-20"><a href="#annotated-cell-9-20" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(first_layer_activation)</span>
+<span id="annotated-cell-9-21"><a href="#annotated-cell-9-21" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="7">7</button><span id="annotated-cell-9-22" class="code-annotation-target"><a href="#annotated-cell-9-22" aria-hidden="true" tabindex="-1"></a>plot_channel <span class="ot">&lt;-</span> <span class="cf">function</span>(channel) {</span>
+<span id="annotated-cell-9-23"><a href="#annotated-cell-9-23" aria-hidden="true" tabindex="-1"></a>  rotate <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">t</span>(<span class="fu">apply</span>(x, <span class="dv">2</span>, rev))</span>
+<span id="annotated-cell-9-24"><a href="#annotated-cell-9-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">image</span>(<span class="fu">rotate</span>(channel), <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">asp =</span> <span class="dv">1</span>, </span>
+<span id="annotated-cell-9-25"><a href="#annotated-cell-9-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">gray.colors</span>(<span class="dv">20</span>))</span>
+<span id="annotated-cell-9-26"><a href="#annotated-cell-9-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="annotated-cell-9-27"><a href="#annotated-cell-9-27" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="8">8</button><span id="annotated-cell-9-28" class="code-annotation-target"><a href="#annotated-cell-9-28" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_channel</span>(first_layer_activation[<span class="dv">1</span>,,,<span class="dv">4</span>])</span>
+<span id="annotated-cell-9-29"><a href="#annotated-cell-9-29" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_channel</span>(first_layer_activation[<span class="dv">1</span>,,,<span class="dv">10</span>])</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="2" data-code-cell="annotated-cell-9">stwórz katalog na obrazy</span>
+<span data-code-annotation="1" data-code-lines="4" data-code-cell="annotated-cell-9">wybierz obraz</span>
 </dd>
 <dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-lines="3" data-code-cell="annotated-cell-9">wybierz wielkość obrazu w px</span>
+<span data-code-annotation="2" data-code-lines="7" data-code-cell="annotated-cell-9">zamień go na tensor</span>
 </dd>
 <dt data-target-cell="annotated-cell-9" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-lines="4" data-code-cell="annotated-cell-9">wybierz ile obrazów ma się mieścić w wierszu</span>
+<span data-code-annotation="3" data-code-lines="10" data-code-cell="annotated-cell-9">dostosuj rozmiar tensora do wejścia do sieci</span>
 </dd>
 <dt data-target-cell="annotated-cell-9" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-lines="5" data-code-cell="annotated-cell-9">rozpocznij pętlę po wszystkich nr warstw splowych</span>
+<span data-code-annotation="4" data-code-lines="13" data-code-cell="annotated-cell-9">wylistuj wszystkie wyjścia z sieci splotowych</span>
 </dd>
 <dt data-target-cell="annotated-cell-9" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-annotation="5" data-code-lines="7" data-code-cell="annotated-cell-9">przypisz i-tą warstwę</span>
+<span data-code-annotation="5" data-code-lines="16" data-code-cell="annotated-cell-9">stwórz model pomocniczy składający się z wejścia i warstw splotowych</span>
 </dd>
 <dt data-target-cell="annotated-cell-9" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-annotation="6" data-code-lines="8" data-code-cell="annotated-cell-9">zapisz nazwę warstwy</span>
+<span data-code-annotation="6" data-code-lines="19" data-code-cell="annotated-cell-9">wybierz warstwę do wizualizacji</span>
 </dd>
 <dt data-target-cell="annotated-cell-9" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-annotation="7" data-code-lines="10" data-code-cell="annotated-cell-9">wyciągnij liczbę filtrów</span>
+<span data-code-annotation="7" data-code-lines="22" data-code-cell="annotated-cell-9">napisz funkcję do wyświetlania obrazów</span>
 </dd>
 <dt data-target-cell="annotated-cell-9" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-annotation="8" data-code-lines="11" data-code-cell="annotated-cell-9">oblicz liczbę obrazów na wiersz</span>
+<span data-code-annotation="8" data-code-lines="28" data-code-cell="annotated-cell-9">rysuj obrazy</span>
 </dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="9">9</dt>
+</dl>
+<p>Tak wygląda wynik pierwszej warstwy splotowej dla wybranych dwóch filtrów (kanałów), a jakby to wyglądało gdyby wyświetlić wyniki wszystkich warstw i kanałów.</p>
+<div class="sourceCode" id="annotated-cell-10"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-2" class="code-annotation-target"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"nine_activations"</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="2">2</button><span id="annotated-cell-10-3" class="code-annotation-target"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a>image_size <span class="ot">&lt;-</span> <span class="dv">58</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="3">3</button><span id="annotated-cell-10-4" class="code-annotation-target"><a href="#annotated-cell-10-4" aria-hidden="true" tabindex="-1"></a>images_per_row <span class="ot">&lt;-</span> <span class="dv">16</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="4">4</button><span id="annotated-cell-10-5" class="code-annotation-target"><a href="#annotated-cell-10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="annotated-cell-10-6"><a href="#annotated-cell-10-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="5">5</button><span id="annotated-cell-10-7" class="code-annotation-target"><a href="#annotated-cell-10-7" aria-hidden="true" tabindex="-1"></a>  layer_activation <span class="ot">&lt;-</span> activations[[i]]</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="6">6</button><span id="annotated-cell-10-8" class="code-annotation-target"><a href="#annotated-cell-10-8" aria-hidden="true" tabindex="-1"></a>  layer_name <span class="ot">&lt;-</span> model<span class="sc">$</span>layers[[i]]<span class="sc">$</span>name <span class="sc">$</span></span>
+<span id="annotated-cell-10-9"><a href="#annotated-cell-10-9" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="7">7</button><span id="annotated-cell-10-10" class="code-annotation-target"><a href="#annotated-cell-10-10" aria-hidden="true" tabindex="-1"></a>  n_features <span class="ot">&lt;-</span> <span class="fu">dim</span>(layer_activation)[[<span class="dv">4</span>]]</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="8">8</button><span id="annotated-cell-10-11" class="code-annotation-target"><a href="#annotated-cell-10-11" aria-hidden="true" tabindex="-1"></a>  n_cols <span class="ot">&lt;-</span> n_features <span class="sc">%/%</span> images_per_row</span>
+<span id="annotated-cell-10-12"><a href="#annotated-cell-10-12" aria-hidden="true" tabindex="-1"></a> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="9">9</button><span id="annotated-cell-10-13" class="code-annotation-target"><a href="#annotated-cell-10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">png</span>(<span class="fu">paste0</span>(<span class="st">"nine_activations/"</span>, i, <span class="st">"_"</span>, layer_name, <span class="st">".png"</span>),</span>
+<span id="annotated-cell-10-14"><a href="#annotated-cell-10-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">width =</span> image_size <span class="sc">*</span> images_per_row, </span>
+<span id="annotated-cell-10-15"><a href="#annotated-cell-10-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">height =</span> image_size <span class="sc">*</span> n_cols)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="10">10</button><span id="annotated-cell-10-16" class="code-annotation-target"><a href="#annotated-cell-10-16" aria-hidden="true" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(n_cols, images_per_row), <span class="at">mai =</span> <span class="fu">rep_len</span>(<span class="fl">0.02</span>, <span class="dv">4</span>))</span>
+<span id="annotated-cell-10-17"><a href="#annotated-cell-10-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="11">11</button><span id="annotated-cell-10-18" class="code-annotation-target"><a href="#annotated-cell-10-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (col <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>(n_cols<span class="dv">-1</span>)) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="12">12</button><span id="annotated-cell-10-19" class="code-annotation-target"><a href="#annotated-cell-10-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (row <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>(images_per_row<span class="dv">-1</span>)) {</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="13">13</button><span id="annotated-cell-10-20" class="code-annotation-target"><a href="#annotated-cell-10-20" aria-hidden="true" tabindex="-1"></a>      channel_image <span class="ot">&lt;-</span> layer_activation[<span class="dv">1</span>,,,(col<span class="sc">*</span>images_per_row) <span class="sc">+</span> row <span class="sc">+</span> <span class="dv">1</span>]</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="14">14</button><span id="annotated-cell-10-21" class="code-annotation-target"><a href="#annotated-cell-10-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot_channel</span>(channel_image)</span>
+<span id="annotated-cell-10-22"><a href="#annotated-cell-10-22" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="annotated-cell-10-23"><a href="#annotated-cell-10-23" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="annotated-cell-10-24"><a href="#annotated-cell-10-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="annotated-cell-10-25"><a href="#annotated-cell-10-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(op)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="15">15</button><span id="annotated-cell-10-26" class="code-annotation-target"><a href="#annotated-cell-10-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dev.off</span>()</span>
+<span id="annotated-cell-10-27"><a href="#annotated-cell-10-27" aria-hidden="true" tabindex="-1"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="9" data-code-lines="13" data-code-cell="annotated-cell-9">stwórz plik png o wymiarach zgodnych z liczbą obrazów w wierszu i liczbą wierszy</span>
+<span data-code-annotation="1" data-code-lines="2" data-code-cell="annotated-cell-10">stwórz katalog na obrazy</span>
 </dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="10">10</dt>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="10" data-code-lines="16" data-code-cell="annotated-cell-9">określ parametry obrazu (zmiana layout i marginesów)</span>
+<span data-code-annotation="2" data-code-lines="3" data-code-cell="annotated-cell-10">wybierz wielkość obrazu w px</span>
 </dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="11">11</dt>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="11" data-code-lines="18" data-code-cell="annotated-cell-9">rozpocznij pętlę po kolumnach</span>
+<span data-code-annotation="3" data-code-lines="4" data-code-cell="annotated-cell-10">wybierz ile obrazów ma się mieścić w wierszu</span>
 </dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="12">12</dt>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="12" data-code-lines="19" data-code-cell="annotated-cell-9">rozpocznij pętlę po wierszach</span>
+<span data-code-annotation="4" data-code-lines="5" data-code-cell="annotated-cell-10">rozpocznij pętlę po wszystkich nr warstw splowych</span>
 </dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="13">13</dt>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-annotation="13" data-code-lines="20" data-code-cell="annotated-cell-9">wybierz filtr do obrazowania</span>
+<span data-code-annotation="5" data-code-lines="7" data-code-cell="annotated-cell-10">przypisz i-tą warstwę</span>
 </dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="14">14</dt>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-annotation="14" data-code-lines="21" data-code-cell="annotated-cell-9">narysuj obraz filtra</span>
+<span data-code-annotation="6" data-code-lines="8" data-code-cell="annotated-cell-10">zapisz nazwę warstwy</span>
 </dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="15">15</dt>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="7">7</dt>
 <dd>
-<span data-code-annotation="15" data-code-lines="26" data-code-cell="annotated-cell-9">zapisz plik</span>
+<span data-code-annotation="7" data-code-lines="10" data-code-cell="annotated-cell-10">wyciągnij liczbę filtrów</span>
+</dd>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="8">8</dt>
+<dd>
+<span data-code-annotation="8" data-code-lines="11" data-code-cell="annotated-cell-10">oblicz liczbę obrazów na wiersz</span>
+</dd>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="9">9</dt>
+<dd>
+<span data-code-annotation="9" data-code-lines="13" data-code-cell="annotated-cell-10">stwórz plik png o wymiarach zgodnych z liczbą obrazów w wierszu i liczbą wierszy</span>
+</dd>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="10">10</dt>
+<dd>
+<span data-code-annotation="10" data-code-lines="16" data-code-cell="annotated-cell-10">określ parametry obrazu (zmiana layout i marginesów)</span>
+</dd>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="11">11</dt>
+<dd>
+<span data-code-annotation="11" data-code-lines="18" data-code-cell="annotated-cell-10">rozpocznij pętlę po kolumnach</span>
+</dd>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="12">12</dt>
+<dd>
+<span data-code-annotation="12" data-code-lines="19" data-code-cell="annotated-cell-10">rozpocznij pętlę po wierszach</span>
+</dd>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="13">13</dt>
+<dd>
+<span data-code-annotation="13" data-code-lines="20" data-code-cell="annotated-cell-10">wybierz filtr do obrazowania</span>
+</dd>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="14">14</dt>
+<dd>
+<span data-code-annotation="14" data-code-lines="21" data-code-cell="annotated-cell-10">narysuj obraz filtra</span>
+</dd>
+<dt data-target-cell="annotated-cell-10" data-target-annotation="15">15</dt>
+<dd>
+<span data-code-annotation="15" data-code-lines="26" data-code-cell="annotated-cell-10">zapisz plik</span>
 </dd>
 </dl>
 <div class="quarto-figure quarto-figure-center">
@@ -579,14 +685,15 @@ ________________________________________________________________________________
 <p><img src="nine_activations/4_max_pooling2d_8.png" class="img-fluid figure-img" width="1000"></p>
 </figure>
 </div>
-<div class="quarto-figure quarto-figure-center">
+<div id="fig-conv2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="nine_activations/5_conv2d_12.png" class="img-fluid figure-img" width="1000"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;12.5: Wyniki wszystkich warstw splotowych i wszystkich filtrów</figcaption><p></p>
 </figure>
 </div>
-<p>Wyniki wszystkich warstw splotowych i wszystkich filtrów</p>
 
 
+</section>
 
 
 </main> <!-- /main -->
@@ -1021,7 +1128,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-left">Automatyczna analiza obrazu, Dariusz Majerek</div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></div>
+    </div>
     <div class="nav-footer-right">Książka została napisana w <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>
