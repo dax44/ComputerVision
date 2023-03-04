@@ -84,7 +84,26 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -267,6 +286,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#pobieranie-danych" id="toc-pobieranie-danych" class="nav-link active" data-scroll-target="#pobieranie-danych"><span class="header-section-number">13.1</span> Pobieranie danych</a></li>
   <li><a href="#budowa-sieci" id="toc-budowa-sieci" class="nav-link" data-scroll-target="#budowa-sieci"><span class="header-section-number">13.2</span> Budowa sieci</a></li>
   <li><a href="#przygotowanie-danych" id="toc-przygotowanie-danych" class="nav-link" data-scroll-target="#przygotowanie-danych"><span class="header-section-number">13.3</span> Przygotowanie danych</a></li>
+  <li><a href="#augmentacja-obrazów" id="toc-augmentacja-obrazów" class="nav-link" data-scroll-target="#augmentacja-obrazów"><span class="header-section-number">13.4</span> Augmentacja obrazów</a></li>
+  <li><a href="#wykorzystanie-sieci-wstępnie-wytrenowanej" id="toc-wykorzystanie-sieci-wstępnie-wytrenowanej" class="nav-link" data-scroll-target="#wykorzystanie-sieci-wstępnie-wytrenowanej"><span class="header-section-number">13.5</span> Wykorzystanie sieci wstępnie wytrenowanej</a>
+  <ul class="collapse">
+  <li><a href="#ekstrakcja-cech" id="toc-ekstrakcja-cech" class="nav-link" data-scroll-target="#ekstrakcja-cech"><span class="header-section-number">13.5.1</span> Ekstrakcja cech</a></li>
+  <li><a href="#dostrajanie-sieci" id="toc-dostrajanie-sieci" class="nav-link" data-scroll-target="#dostrajanie-sieci"><span class="header-section-number">13.5.2</span> Dostrajanie sieci</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
     </div>
@@ -350,11 +375,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-annotation="1" data-code-lines="2">tu ustaw swoją ścieżkę do katalogu z rozpakowanym katalogiem <code>train</code></span>
+<span data-code-annotation="1" data-code-lines="2" data-code-cell="annotated-cell-1">tu ustaw swoją ścieżkę do katalogu z rozpakowanym katalogiem <code>train</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-annotation="2" data-code-lines="3">ustaw ścieżkę gdzie chcesz zapisywać obrazy do uczenia sieci</span>
+<span data-code-annotation="2" data-code-lines="3" data-code-cell="annotated-cell-1">ustaw ścieżkę gdzie chcesz zapisywać obrazy do uczenia sieci</span>
 </dd>
 </dl>
 <p>Jako sprawdzenie poprawności, policzmy, ile zdjęć jest w każdym podziale treningowym (train/validation/test):</p>
@@ -466,7 +491,7 @@ Non-trainable params: 0
 ________________________________________________________________________________</code></pre>
 </div>
 </div>
-<p>W kroku kompilacji, użyjemy optymalizatora <code>RMSprop</code>. Ponieważ sieć kończy się pojedynczą jednostką sigmoidalną, użyjemy binarnej crossentropii jako funkcji straty.</p>
+<p>W kroku kompilacji, użyjemy optymalizatora <code>RMSprop</code>. Ponieważ sieć kończy się pojedynczą jednostką sigmoidalną, użyjemy binarnej entropii krzyżowej jako funkcji straty.</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -478,7 +503,7 @@ ________________________________________________________________________________
 </details>
 </div>
 </section>
-<section id="przygotowanie-danych" class="level2" data-number="13.3">
+<section id="przygotowanie-danych" class="level2 page-columns page-full" data-number="13.3">
 <h2 data-number="13.3" class="anchored" data-anchor-id="przygotowanie-danych"><span class="header-section-number">13.3</span> Przygotowanie danych</h2>
 <p>Jak już wiemy, dane przed wprowadzeniem do sieci powinny być sformatowane w odpowiednio wstępnie przetworzone tensory zmiennoprzecinkowe. Obecnie dane są zapisane na dysku w postaci plików JPEG, więc kroki w celu wprowadzenia ich do sieci wyglądają mniej więcej tak:</p>
 <ol type="1">
@@ -520,12 +545,12 @@ ________________________________________________________________________________
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 2
- $ : num [1:20, 1:150, 1:150, 1:3] 0.302 0.145 0.541 0.482 0.514 ...
- $ : num [1:20(1d)] 0 0 0 0 0 1 0 1 0 1 ...</code></pre>
+ $ : num [1:20, 1:150, 1:150, 1:3] 0.263 0.333 0.275 0.475 0.349 ...
+ $ : num [1:20(1d)] 0 0 0 0 1 0 1 1 0 1 ...</code></pre>
 </div>
 </div>
 <p>Dopasujmy model do danych uzyskanych za pomocą generatora. Robimy to za pomocą funkcji <code>fit</code>. Jako pierwszy argument oczekuje ona generatora, który będzie generował partie danych wejściowych i docelowych. Ponieważ dane są generowane w nieskończoność, generator musi wiedzieć, ile próbek pobrać z generatora, zanim zadeklaruje koniec epoki. Taką rolę pełni argument <code>steps_per_epoch</code>: po pobraniu z generatora partii próbek - czyli po wykonaniu kroków spadku gradientu - proces dopasowania przejdzie do następnej epoki. W tym przypadku, partie są 20-próbkowe, więc zajmie to 100 partii, aż do osiągnięcia celu 2000 próbek.</p>
-<p>Kiedy używasz <code>fit</code>, możesz przekazać też argument <code>validation_data</code>. Ważne jest, aby zauważyć, że ten argument może być zbiorem danych, ale może to być również lista tablic. Jeśli przekażesz generator jako <code>validation_data</code>, to oczekuje się, że ten generator będzie dawał partie danych walidacyjnych w nieskończoność; dlatego powinieneś również określić argument <code>validation_steps</code>, który mówi procesowi ile partii ma pobrać z generatora walidacji do oceny.</p>
+<div class="page-columns page-full"><p>Kiedy używasz <code>fit</code>, możesz przekazać też argument <code>validation_data</code>. Ważne jest, aby zauważyć, że ten argument może być zbiorem danych, ale może to być również lista tablic. Jeśli przekażesz generator jako <code>validation_data</code>, to oczekuje się, że ten generator będzie dawał partie danych walidacyjnych w nieskończoność; dlatego powinieneś również określić argument <code>validation_steps</code>, który mówi procesowi ile partii ma pobrać z generatora walidacji do oceny<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;ponieważ liczebnośc tej próby wynosi 1000 obserwacji, to z prostego rachunku <code># validation_data / batch_size = 1000/20 = 50</code></p></li></div></div>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -551,9 +576,503 @@ ________________________________________________________________________________
 </div>
 </div>
 <p>Te wykresy są charakterystyczne dla nadmiernego dopasowania. Dokładność szkolenia rośnie liniowo w czasie, aż osiąga prawie 100%, natomiast dokładność walidacji zatrzymuje się na poziomie 70-74%. Strata związana z walidacją osiąga swoje minimum już po pięciu epokach, a następnie zatrzymuje się, podczas gdy strata związana z treningiem zmniejsza się liniowo, aż osiągnie prawie 0.</p>
-<p>Ponieważ mamy stosunkowo mało próbek treningowych (2,000), <em>overfitting</em> będzie naszym najczęstszym problemem. Wiemy już o kilku technikach, które mogą pomóc złagodzić <em>overfitting</em>, takich jak <em>dropout</em> i regularyzacje L1 i L2. Teraz wprowadzimy nową, specyficzną dla wizji komputerowej i używaną niemal powszechnie podczas przetwarzania obrazów za pomocą modeli głębokiego uczenia: augmentację danych.</p>
+<p>Ponieważ mamy stosunkowo mało próbek treningowych (2000), <em>overfitting</em> będzie naszym najczęstszym problemem. Wiemy już o kilku technikach, które mogą pomóc złagodzić <em>overfitting</em>, takich jak <em>dropout</em> i regularyzacje L1 i L2. Teraz wprowadzimy nową, specyficzną dla wizji komputerowej i używaną niemal powszechnie podczas przetwarzania obrazów za pomocą modeli głębokiego uczenia: augmentację danych.</p>
+</section>
+<section id="augmentacja-obrazów" class="level2 page-columns page-full" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="augmentacja-obrazów"><span class="header-section-number">13.4</span> Augmentacja obrazów</h2>
+<p>Nadmierne dopasowanie jest spowodowany przez posiadanie zbyt małej ilości próbek do nauki, co powoduje, że nie można wytrenować modelu, który może uogólniać się na nowe dane. Przy nieskończonej ilości danych, twój model byłby wystawiony na każdy możliwy rozkład danych: <em>overfitting</em> nigdy nie byłby możliwy. Augmentacja danych polega na generowaniu większej ilości danych treningowych z istniejących próbek treningowych, poprzez szereg losowych przekształceń, które dają wiarygodnie wyglądające obrazy. Celem jest, aby w czasie treningu model nigdy nie widział dokładnie tego samego obrazu dwa razy. To pomaga wystawić model na więcej aspektów danych i lepiej generalizować.</p>
+<p>W <code>keras</code> można to zrobić poprzez skonfigurowanie szeregu losowych przekształceń, które mają być wykonywane na obrazach odczytywanych przez <code>image_data_generator</code>.</p>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>datagen <span class="ot">&lt;-</span> <span class="fu">image_data_generator</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">rescale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">255</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">rotation_range =</span> <span class="dv">40</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">width_shift_range =</span> <span class="fl">0.2</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">height_shift_range =</span> <span class="fl">0.2</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">shear_range =</span> <span class="fl">0.2</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">zoom_range =</span> <span class="fl">0.2</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">horizontal_flip =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill_mode =</span> <span class="st">"nearest"</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>To tylko kilka z dostępnych opcji. Prześledźmy szybko ten kod:</p>
+<ul>
+<li><code>rotation_range</code> to wartość podana w stopniach (0-180), czyli zakres, w którym można losowo obracać zdjęcia.</li>
+<li><code>width_shift</code> i <code>height_shift</code> to zakresy (jako ułamek całkowitej szerokości lub wysokości), w których można losowo przesuwać obrazy w pionie lub poziomie.</li>
+<li><code>shear_range</code> służy do losowego stosowania transformacji ścinających.</li>
+<li><code>zoom_range</code> służy do losowego powiększania obrazów.</li>
+<li><code>horizontal_flip</code> służy do losowego obracania obrazów w poziomie<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> - ma to znaczenie, gdy nie ma założeń asymetrii poziomej (np. obrazy z prawdziwego świata).</li>
+<li><code>fill_mode</code> to strategia używana do wypełniania nowo utworzonych pikseli, które mogą pojawić się po obrocie lub zmianie szerokości/wysokości.</li>
+</ul>
+<div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;obrócona zostanie połowa obrazów</p></li></div><div class="sourceCode" id="annotated-cell-15"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a>fnames <span class="ot">&lt;-</span> <span class="fu">list.files</span>(train_cats_dir, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-15-2" class="code-annotation-target"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>img_path <span class="ot">&lt;-</span> fnames[[<span class="dv">3</span>]]</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-15-3" class="code-annotation-target"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>img <span class="ot">&lt;-</span> <span class="fu">image_load</span>(img_path, <span class="at">target_size =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">150</span>))</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-15-4" class="code-annotation-target"><a href="#annotated-cell-15-4" aria-hidden="true" tabindex="-1"></a>img_array <span class="ot">&lt;-</span> <span class="fu">image_to_array</span>(img)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-15-5" class="code-annotation-target"><a href="#annotated-cell-15-5" aria-hidden="true" tabindex="-1"></a>img_array <span class="ot">&lt;-</span> <span class="fu">array_reshape</span>(img_array, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">150</span>, <span class="dv">150</span>, <span class="dv">3</span>))</span>
+<span id="annotated-cell-15-6"><a href="#annotated-cell-15-6" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-15-7" class="code-annotation-target"><a href="#annotated-cell-15-7" aria-hidden="true" tabindex="-1"></a>augmentation_generator <span class="ot">&lt;-</span> <span class="fu">flow_images_from_data</span>(</span>
+<span id="annotated-cell-15-8"><a href="#annotated-cell-15-8" aria-hidden="true" tabindex="-1"></a>  img_array,</span>
+<span id="annotated-cell-15-9"><a href="#annotated-cell-15-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">generator =</span> datagen,</span>
+<span id="annotated-cell-15-10"><a href="#annotated-cell-15-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">batch_size =</span> <span class="dv">1</span></span>
+<span id="annotated-cell-15-11"><a href="#annotated-cell-15-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="annotated-cell-15-12"><a href="#annotated-cell-15-12" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="6" onclick="event.preventDefault();">6</a><span id="annotated-cell-15-13" class="code-annotation-target"><a href="#annotated-cell-15-13" aria-hidden="true" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">pty =</span> <span class="st">"s"</span>, <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="annotated-cell-15-14"><a href="#annotated-cell-15-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) { </span>
+<span id="annotated-cell-15-15"><a href="#annotated-cell-15-15" aria-hidden="true" tabindex="-1"></a>  batch <span class="ot">&lt;-</span> <span class="fu">generator_next</span>(augmentation_generator)</span>
+<span id="annotated-cell-15-16"><a href="#annotated-cell-15-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="fu">as.raster</span>(batch[<span class="dv">1</span>,,,]))</span>
+<span id="annotated-cell-15-17"><a href="#annotated-cell-15-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="annotated-cell-15-18"><a href="#annotated-cell-15-18" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(op)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-annotation="1" data-code-lines="2" data-code-cell="annotated-cell-15">wybierz obraz do augmentacji</span>
+</dd>
+<dt data-target-cell="annotated-cell-15" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-annotation="2" data-code-lines="3" data-code-cell="annotated-cell-15">wczytaj obraz i zmień rozmiar na 150 x 150</span>
+</dd>
+<dt data-target-cell="annotated-cell-15" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-annotation="3" data-code-lines="4" data-code-cell="annotated-cell-15">zamień obraz do formatu (150, 150, 3)</span>
+</dd>
+<dt data-target-cell="annotated-cell-15" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-annotation="4" data-code-lines="5" data-code-cell="annotated-cell-15">przekształć na tensor (1, 150, 150, 3)</span>
+</dd>
+<dt data-target-cell="annotated-cell-15" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-annotation="5" data-code-lines="7" data-code-cell="annotated-cell-15">generuj partie losowo przekształconych obrazów</span>
+</dd>
+<dt data-target-cell="annotated-cell-15" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-annotation="6" data-code-lines="13" data-code-cell="annotated-cell-15">wyświetl obrazy</span>
+</dd>
+</dl>
+<p>Jeśli wytrenujesz nową sieć używając tej konfiguracji augmentacji danych, sieć nigdy nie zobaczy tego samego wejścia dwa razy. Dane wejściowe, które widzi, są nadal silnie powiązane, ponieważ pochodzą z niewielkiej liczby oryginalnych obrazów - nie możesz wytworzyć nowych informacji, możesz jedynie zmiksować istniejące. Jako takie, może to nie wystarczyć, aby całkowicie pozbyć się nadmiernego dopasowania. Aby dalej walczyć z nadmiernym dopasowanie, dodajemy do modelu warstwę <em>dropout</em>, tuż przed klasyfikatorem gęsto połączonym.</p>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">32</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="at">activation =</span> <span class="st">"relu"</span>,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">input_shape =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">150</span>, <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_max_pooling_2d</span>(<span class="at">pool_size =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">64</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="at">activation =</span> <span class="st">"relu"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_max_pooling_2d</span>(<span class="at">pool_size =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">128</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="at">activation =</span> <span class="st">"relu"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_max_pooling_2d</span>(<span class="at">pool_size =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">128</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="at">activation =</span> <span class="st">"relu"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_max_pooling_2d</span>(<span class="at">pool_size =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_flatten</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dropout</span>(<span class="at">rate =</span> <span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">512</span>, <span class="at">activation =</span> <span class="st">"relu"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">1</span>, <span class="at">activation =</span> <span class="st">"sigmoid"</span>)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>model <span class="sc">%&gt;%</span> <span class="fu">compile</span>(</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">loss =</span> <span class="st">"binary_crossentropy"</span>,</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">optimizer =</span> <span class="fu">optimizer_rmsprop</span>(<span class="at">learning_rate =</span> <span class="fl">1e-4</span>),</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"acc"</span>)</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>datagen <span class="ot">&lt;-</span> <span class="fu">image_data_generator</span>(</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">rescale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">255</span>,</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">rotation_range =</span> <span class="dv">40</span>,</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">width_shift_range =</span> <span class="fl">0.2</span>,</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">height_shift_range =</span> <span class="fl">0.2</span>,</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">shear_range =</span> <span class="fl">0.2</span>,</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">zoom_range =</span> <span class="fl">0.2</span>,</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">horizontal_flip =</span> <span class="cn">TRUE</span></span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>test_datagen <span class="ot">&lt;-</span> <span class="fu">image_data_generator</span>(<span class="at">rescale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">255</span>)</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>train_generator <span class="ot">&lt;-</span> <span class="fu">flow_images_from_directory</span>(</span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>  train_dir,</span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>  datagen,</span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">target_size =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">150</span>),</span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">batch_size =</span> <span class="dv">20</span>,</span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">class_mode =</span> <span class="st">"binary"</span></span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a>validation_generator <span class="ot">&lt;-</span> <span class="fu">flow_images_from_directory</span>(</span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a>  validation_dir,</span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a>  test_datagen,</span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a>  <span class="at">target_size =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">150</span>),</span>
+<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>  <span class="at">batch_size =</span> <span class="dv">20</span>,</span>
+<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">class_mode =</span> <span class="st">"binary"</span></span>
+<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>history <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span> <span class="fu">fit</span>(</span>
+<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a>  train_generator,</span>
+<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">steps_per_epoch =</span> <span class="dv">100</span>,</span>
+<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">100</span>,</span>
+<span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">validation_data =</span> validation_generator,</span>
+<span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">validation_steps =</span> <span class="dv">50</span></span>
+<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="example_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Zanim przejdziemy do oceny dopasowania modelu wspomnijmy najważniejsze parametry w ustawieniu uczenia:</p>
+<ul>
+<li><code>batch_size</code> - określa liczbę próbek w każdej partii. Jego maksimum to liczba wszystkich próbek, co sprawia, że spadek gradientu jest dokładny, strata zmniejszy się w kierunku minimum, jeśli współczynnik uczenia jest wystarczająco mały, ale iteracje są wolniejsze. Z drugiej strony jego minimum to 1, co powoduje stochastyczny spadek gradientu - szybki, ale kierunek kroku gradientu jest oparty tylko na jednym przykładzie, dlatego może błądzić. <code>batch_size</code> pozwala na kompromis między dwoma skrajnościami: dokładnym kierunkiem gradientu i szybką iteracją. Maksymalna wartość dla <code>batch_size</code> może być ograniczona, jeśli twój model + zestaw danych nie mieści się w dostępnej (GPU) pamięci.</li>
+<li><code>steps_per_epoch</code> - liczba iteracji partii, zanim epoka treningowa zostanie zakończona. Jeśli masz zestaw treningowy o stałym rozmiarze, możesz go zignorować, ale może być przydatny, jeśli masz ogromny zestaw danych lub jeśli generujesz losowe augmentacje danych w locie, tj. jeśli twój zestaw treningowy ma (wygenerowany) nieskończony rozmiar.</li>
+<li><code>validation_steps</code> - podobne do <code>steps_per_epoch</code> ale na zestawie danych walidacyjnych.</li>
+</ul>
+<p>Wracając do podsumowania dopasowania sieci, widzimy, że augmentacja oraz dodanie jednej warstwy regularyzacyjnej znacznie poprawiło wynik dopasowania (83%). Stosując więcej warstw regularyzacyjnych można osiągnąć jeszcze lepszy wynik 86-87%.</p>
+</section>
+<section id="wykorzystanie-sieci-wstępnie-wytrenowanej" class="level2 page-columns page-full" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="wykorzystanie-sieci-wstępnie-wytrenowanej"><span class="header-section-number">13.5</span> Wykorzystanie sieci wstępnie wytrenowanej</h2>
+<p>Powszechnym i wysoce efektywnym podejściem do głębokiego uczenia na małych zbiorach danych obrazów jest użycie wstępnie wytrenowanej sieci. Sieć wstępnie wytrenowana to sieć zapisana, która została wcześniej wytrenowana na dużym zbiorze danych, zazwyczaj na zadaniu klasyfikacji obrazów na dużą skalę. Jeśli ten oryginalny zbiór danych jest wystarczająco duży i ogólny, to hierarchia cech przestrzennych wyuczona przez wstępnie wytrenowaną sieć może efektywnie działać jako ogólny model świata wizualnego, a zatem jej cechy mogą okazać się użyteczne dla wielu różnych problemów związanych z widzeniem komputerowym, nawet jeśli te nowe problemy mogą dotyczyć zupełnie innych klas niż te z oryginalnego zadania. Na przykład, można wytrenować sieć na ImageNet (gdzie klasy to głównie zwierzęta i przedmioty codziennego użytku), a następnie wykorzystać ją do czegoś tak odległego jak identyfikacja mebli na obrazach. Taka możliwość przenoszenia wyuczonych cech na różne problemy jest kluczową zaletą głębokiego uczenia w porównaniu do wielu starszych podejść płytkiego uczenia i sprawia, że głębokie uczenie jest bardzo efektywne w przypadku problemów z małymi danymi. W tym przypadku, rozważmy dużą sieć splotową wytrenowaną na zbiorze danych ImageNet (1,4 miliona oznaczonych obrazów i 1000 różnych klas). ImageNet zawiera wiele klas zwierząt, w tym różne gatunki kotów i psów, można więc oczekiwać dobrych wyników w problemie klasyfikacji koty kontra psy. Będziemy używać architektury VGG16, opracowanej przez <span class="citation" data-cites="Simonyan2014">Simonyan i Zisserman (<a href="references.html#ref-Simonyan2014" role="doc-biblioref">2014</a>)</span>; jest to prosta i szeroko stosowana architektura sieci konwolucyjnej dla ImageNet. Chociaż jest to starszy model, daleki od obecnego stanu wiedzy i nieco cięższy niż wiele innych najnowszych modeli, wybraliśmy go, ponieważ jego architektura jest podobna do tego, co już znamy i jest łatwa do zrozumienia bez wprowadzania nowych koncepcji. To może być pierwsze spotkanie z jedną z tych uroczych nazw modeli-VGG, ResNet, Inception, Inception-ResNet, Xception i tak dalej.</p>
+<p>Istnieją dwa sposoby wykorzystania wstępnie wytrenowanej sieci: ekstrakcja cech i dostrajanie. Omówimy oba z nich. Zacznijmy od ekstrakcji cech.</p>
+<section id="ekstrakcja-cech" class="level3 page-columns page-full" data-number="13.5.1">
+<h3 data-number="13.5.1" class="anchored" data-anchor-id="ekstrakcja-cech"><span class="header-section-number">13.5.1</span> Ekstrakcja cech</h3>
+<p>Ekstrakcja cech polega na wykorzystaniu reprezentacji wyuczonych przez poprzednią sieć do wyodrębnienia interesujących cech z nowych próbek. Cechy te są następnie przepuszczane przez nowy klasyfikator, który jest trenowany od podstaw.</p>
+<p>Jak widzieliśmy wcześniej, sieci konwolucyjne używane do klasyfikacji obrazów składają się z dwóch części: zaczynają się od serii warstw <em>pooling</em> i konwolucji, a kończą na gęsto połączonym klasyfikatorze. Pierwsza część nazywana jest bazą konwolucyjną modelu. W przypadku sieci konwolucyjnych ekstrakcja cech polega na wzięciu bazy konwolucyjnej wcześniej wytrenowanej sieci, przepuszczeniu przez nią nowych danych i wytrenowaniu na jej wyjściu nowego klasyfikatora (patrz <a href="#fig-fe1">Rysunek&nbsp;<span>13.2</span></a>).</p>
+<div id="fig-fe1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-03-4 o 11.04.02.png" class="img-fluid figure-img" width="600"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;13.2: Sposób zastosowania wyuczonej sieci</figcaption><p></p>
+</figure>
+</div>
+<p>Dlaczego warto ponownie wykorzystać tylko bazę konwolucyjną? Czy mógłbyś ponownie użyć również gęsto połączonego klasyfikatora? Ogólnie rzecz biorąc, należy tego unikać. Powodem jest to, że reprezentacje nauczone przez bazę konwolucyjną będą prawdopodobnie bardziej ogólne, a zatem bardziej użyteczne: mapy cech sieci konwolucyjnej są mapami obecności ogólnych wzorców na obrazie, co prawdopodobnie będzie przydatne niezależnie od problemu widzenia komputerowego. Natomiast reprezentacje wyuczone przez klasyfikator będą z konieczności specyficzne dla zbioru klas, na których model został wytrenowany - będą zawierać jedynie informacje o prawdopodobieństwie obecności tej czy innej klasy na całym obrazie. Dodatkowo, reprezentacje znajdujące się w gęsto połączonych warstwach nie zawierają już żadnej informacji o tym, gdzie w obrazie wejściowym znajdują się obiekty: warstwy te pozbywają się pojęcia przestrzeni, lokalizacja obiektów jest opisywana tylko przez konwencjonalne mapy cech. Dla problemów, w których lokalizacja obiektów ma znaczenie, gęsto połączone cechy są w dużej mierze bezużyteczne.</p>
+<p>Zauważmy, że poziom ogólności (a więc i możliwości ponownego wykorzystania) reprezentacji wyodrębnionych przez konkretne warstwy konwolucyjne zależy od głębokości warstwy w modelu. Warstwy znajdujące się wcześniej w modelu ekstrahują lokalne, bardzo ogólne mapy cech (takie jak krawędzie, kolory i tekstury), podczas gdy warstwy znajdujące się wyżej ekstrahują bardziej abstrakcyjne pojęcia (takie jak “kocie ucho” lub “psie oko”). Jeśli więc nowy zestaw danych różni się znacznie od zestawu danych, na którym był trenowany oryginalny model, lepiej będzie użyć tylko kilku pierwszych warstw modelu do ekstrakcji cech, niż używać całej bazy konwolucyjnej.</p>
+<p>W tym przypadku, ponieważ zbiór klas ImageNet zawiera wiele klas psów i kotów, prawdopodobnie korzystne byłoby ponowne wykorzystanie informacji zawartych w gęsto połączonych warstwach oryginalnego modelu. Nie zdecydujemy się jednak na to, aby uwzględnić bardziej ogólny przypadek, gdy zbiór klas nowego problemu nie pokrywa się ze zbiorem klas oryginalnego modelu. Przedstawmy to w praktyce, wykorzystując bazę konwolucyjną sieci VGG16, wytrenowaną na ImageNet, do wyodrębnienia interesujących cech z obrazów kotów i psów, a następnie wytrenowania klasyfikatora koty vs psy na tych cechach.</p>
+<p>Model VGG16, między innymi, jest dostarczany w pakiecie z <code>keras</code>. Oto lista modeli klasyfikacji obrazów (wszystkie wytrenowane na zbiorze danych ImageNet), które są dostępne jako część <code>keras</code>:</p>
+<ul>
+<li><code>Xception</code></li>
+<li><code>InceptionV3</code></li>
+<li><code>ResNet50</code></li>
+<li><code>VGG16</code></li>
+<li><code>VGG19</code></li>
+<li><code>MobileNet</code>.</li>
+</ul>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>conv_base <span class="ot">&lt;-</span> <span class="fu">application_vgg16</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">weights =</span> <span class="st">"imagenet"</span>,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">include_top =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">input_shape =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">150</span>, <span class="dv">3</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Do funkcji przekazywane są trzy argumenty:</p>
+<ul>
+<li><code>weights</code> - określa punkt startowy wag, z którego należy zainicjalizować model.</li>
+<li><code>include_top</code> - odnosi się do włączenia (lub nie) gęsto połączonego klasyfikatora na szczycie sieci. Domyślnie, ten gęsto połączony klasyfikator odpowiada 1000 klas z ImageNet. Ponieważ zamierzasz użyć własnego gęsto połączonego klasyfikatora (z tylko dwoma klasami: kot i pies), nie musisz go włączać.</li>
+<li><code>input_shape</code> - to kształt tensorów obrazów, które podasz sieci. Ten argument jest czysto opcjonalny: jeśli go nie podasz, sieć będzie w stanie przetwarzać dane wejściowe o dowolnym rozmiarze.</li>
+</ul>
+<div class="sourceCode" id="annotated-cell-18"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-18" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-18-1" class="code-annotation-target"><a href="#annotated-cell-18-1" aria-hidden="true" tabindex="-1"></a>conv_base</span>
+<span id="annotated-cell-18-2"><a href="#annotated-cell-18-2" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-18" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-18-3" class="code-annotation-target"><a href="#annotated-cell-18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(conv_base)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-18" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-annotation="1" data-code-lines="1" data-code-cell="annotated-cell-18">sieć można przestawić jako podsumowanie tekstowe</span>
+</dd>
+<dt data-target-cell="annotated-cell-18" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-annotation="2" data-code-lines="3" data-code-cell="annotated-cell-18">ale również jako wykres</span>
+</dd>
+</dl>
+<p>Ostateczna mapa cech ma kształt <code>(4, 4, 512)</code>. To jest ta warstwa, do której będziemy dołączać sieć gęstą. W tym momencie możemy postąpić na dwa sposoby:</p>
+<ul>
+<li>Uruchomienie bazy konwolucyjnej na zbiorze danych, następnie zapisanie jej wyjść do pliku na dysku, a następnie użycie tych danych jako danych wejściowych do własnego, gęsto połączonego klasyfikatora. To rozwiązanie jest szybkie i tanie<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> w wykonaniu, ponieważ wymaga uruchomienia bazy konwolucyjnej tylko raz dla każdego obrazu wejściowego, a baza konwolucyjna jest zdecydowanie najdroższą częścią potoku. Ale z tego samego powodu ta technika nie pozwoli ci użyć augmentacji danych.</li>
+<li>Rozszerzenie modelu, który mamy (<code>conv_base</code>), dodając gęste warstwy na górze i uruchamiając całą sieć na danych wejściowych. To pozwoli ci użyć augmentacji danych, ponieważ każdy obraz wejściowy przechodzi przez bazę konwolucyjną za każdym razem, gdy jest widziany przez model. Ale z tego samego powodu ta technika jest znacznie droższa od pierwszej. Zajmiemy się obiema technikami.</li>
+</ul>
+<div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;obliczeniowo</p></li></div><section id="ekstrakcja-cech-bez-augmentacji" class="level4" data-number="13.5.1.1">
+<h4 data-number="13.5.1.1" class="anchored" data-anchor-id="ekstrakcja-cech-bez-augmentacji"><span class="header-section-number">13.5.1.1</span> Ekstrakcja cech bez augmentacji</h4>
+<p>Zacznijmy od uruchomienia instancji wcześniej wprowadzonego <code>image_data_generator</code>, aby wyodrębnić obrazy jako tablice, jak również ich etykiety. Wyodrębnimy cechy z tych obrazów poprzez wywołanie metody <code>predict</code> na modelu.</p>
+<div class="sourceCode" id="annotated-cell-19"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-19-1"><a href="#annotated-cell-19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="annotated-cell-19-2"><a href="#annotated-cell-19-2" aria-hidden="true" tabindex="-1"></a>datagen <span class="ot">&lt;-</span> <span class="fu">image_data_generator</span>(<span class="at">rescale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">255</span>)</span>
+<span id="annotated-cell-19-3"><a href="#annotated-cell-19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-19-4"><a href="#annotated-cell-19-4" aria-hidden="true" tabindex="-1"></a>batch_size <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="annotated-cell-19-5"><a href="#annotated-cell-19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-19-6"><a href="#annotated-cell-19-6" aria-hidden="true" tabindex="-1"></a>extract_features <span class="ot">&lt;-</span> <span class="cf">function</span>(directory, sample_count) {</span>
+<span id="annotated-cell-19-7"><a href="#annotated-cell-19-7" aria-hidden="true" tabindex="-1"></a>  features <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">0</span>, <span class="at">dim =</span> <span class="fu">c</span>(sample_count, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">512</span>))</span>
+<span id="annotated-cell-19-8"><a href="#annotated-cell-19-8" aria-hidden="true" tabindex="-1"></a>  labels <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">0</span>, <span class="at">dim =</span> <span class="fu">c</span>(sample_count))</span>
+<span id="annotated-cell-19-9"><a href="#annotated-cell-19-9" aria-hidden="true" tabindex="-1"></a>  generator <span class="ot">&lt;-</span> <span class="fu">flow_images_from_directory</span>(</span>
+<span id="annotated-cell-19-10"><a href="#annotated-cell-19-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">directory =</span> directory,</span>
+<span id="annotated-cell-19-11"><a href="#annotated-cell-19-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">generator =</span> datagen,</span>
+<span id="annotated-cell-19-12"><a href="#annotated-cell-19-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">target_size =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">150</span>),</span>
+<span id="annotated-cell-19-13"><a href="#annotated-cell-19-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">batch_size =</span> batch_size,</span>
+<span id="annotated-cell-19-14"><a href="#annotated-cell-19-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">class_mode =</span> <span class="st">"binary"</span></span>
+<span id="annotated-cell-19-15"><a href="#annotated-cell-19-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="annotated-cell-19-16"><a href="#annotated-cell-19-16" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="annotated-cell-19-17"><a href="#annotated-cell-19-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span>(<span class="cn">TRUE</span>) {</span>
+<span id="annotated-cell-19-18"><a href="#annotated-cell-19-18" aria-hidden="true" tabindex="-1"></a>    batch <span class="ot">&lt;-</span> <span class="fu">generator_next</span>(generator)</span>
+<span id="annotated-cell-19-19"><a href="#annotated-cell-19-19" aria-hidden="true" tabindex="-1"></a>    inputs_batch <span class="ot">&lt;-</span> batch[[<span class="dv">1</span>]]</span>
+<span id="annotated-cell-19-20"><a href="#annotated-cell-19-20" aria-hidden="true" tabindex="-1"></a>    labels_batch <span class="ot">&lt;-</span> batch[[<span class="dv">2</span>]]</span>
+<span id="annotated-cell-19-21"><a href="#annotated-cell-19-21" aria-hidden="true" tabindex="-1"></a>    features_batch <span class="ot">&lt;-</span> conv_base <span class="sc">%&gt;%</span> <span class="fu">predict</span>(inputs_batch)</span>
+<span id="annotated-cell-19-22"><a href="#annotated-cell-19-22" aria-hidden="true" tabindex="-1"></a>    index_range <span class="ot">&lt;-</span> ((i <span class="sc">*</span> batch_size)<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>((i <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">*</span> batch_size)</span>
+<span id="annotated-cell-19-23"><a href="#annotated-cell-19-23" aria-hidden="true" tabindex="-1"></a>    features[index_range,,,] <span class="ot">&lt;-</span> features_batch</span>
+<span id="annotated-cell-19-24"><a href="#annotated-cell-19-24" aria-hidden="true" tabindex="-1"></a>    labels[index_range] <span class="ot">&lt;-</span> labels_batch</span>
+<span id="annotated-cell-19-25"><a href="#annotated-cell-19-25" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="annotated-cell-19-26"><a href="#annotated-cell-19-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (i <span class="sc">*</span> batch_size <span class="sc">&gt;=</span> sample_count)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-19-27" class="code-annotation-target"><a href="#annotated-cell-19-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span> }</span>
+<span id="annotated-cell-19-28"><a href="#annotated-cell-19-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="annotated-cell-19-29"><a href="#annotated-cell-19-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">features =</span> features,</span>
+<span id="annotated-cell-19-30"><a href="#annotated-cell-19-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> labels</span>
+<span id="annotated-cell-19-31"><a href="#annotated-cell-19-31" aria-hidden="true" tabindex="-1"></a>) }</span>
+<span id="annotated-cell-19-32"><a href="#annotated-cell-19-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-19-33"><a href="#annotated-cell-19-33" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> <span class="fu">extract_features</span>(train_dir, <span class="dv">2000</span>)</span>
+<span id="annotated-cell-19-34"><a href="#annotated-cell-19-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-19-35"><a href="#annotated-cell-19-35" aria-hidden="true" tabindex="-1"></a>validation <span class="ot">&lt;-</span> <span class="fu">extract_features</span>(validation_dir, <span class="dv">1000</span>)</span>
+<span id="annotated-cell-19-36"><a href="#annotated-cell-19-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-19-37"><a href="#annotated-cell-19-37" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">extract_features</span>(test_dir, <span class="dv">1000</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-19" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-annotation="1" data-code-lines="27" data-code-cell="annotated-cell-19">ponieważ generator obrazów tworzy je w nieskończoność, to musimy go zatrzymać po tym jak każdy obraz zostanie obejrzany raz</span>
+</dd>
+</dl>
+<p>Wyodrębnione cechy mają obecnie kształt <code>(samples, 4, 4, 512)</code>. Będziemy je przekazywali do gęsto połączonego klasyfikatora, więc najpierw musisz je spłaszczyć do postaci <code>(samples, 8192)</code>:</p>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>reshape_features <span class="ot">&lt;-</span> <span class="cf">function</span>(features) {</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">array_reshape</span>(features, <span class="at">dim =</span> <span class="fu">c</span>(<span class="fu">nrow</span>(features), <span class="dv">4</span> <span class="sc">*</span> <span class="dv">4</span> <span class="sc">*</span> <span class="dv">512</span>))</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>train<span class="sc">$</span>features <span class="ot">&lt;-</span> <span class="fu">reshape_features</span>(train<span class="sc">$</span>features)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>validation<span class="sc">$</span>features <span class="ot">&lt;-</span> <span class="fu">reshape_features</span>(validation<span class="sc">$</span>features)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>test<span class="sc">$</span>features <span class="ot">&lt;-</span> <span class="fu">reshape_features</span>(test<span class="sc">$</span>features)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Teraz możemy przejść do uczenia sieci gęstej na wstępnie przetworzonych danych przez sieć konwolucyjną.</p>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">256</span>, <span class="at">activation =</span> <span class="st">"relu"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">input_shape =</span> <span class="dv">4</span> <span class="sc">*</span> <span class="dv">4</span> <span class="sc">*</span> <span class="dv">512</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dropout</span>(<span class="at">rate =</span> <span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">1</span>, <span class="at">activation =</span> <span class="st">"sigmoid"</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>model <span class="sc">%&gt;%</span> <span class="fu">compile</span>(</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">optimizer =</span> <span class="fu">optimizer_rmsprop</span>(<span class="at">learning_rate =</span> <span class="fl">2e-5</span>),</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">loss =</span> <span class="st">"binary_crossentropy"</span>,</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"accuracy"</span>)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>history <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span> <span class="fu">fit</span>(</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  train<span class="sc">$</span>features, train<span class="sc">$</span>labels,</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">30</span>,</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">batch_size =</span> <span class="dv">20</span>,</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">validation_data =</span> <span class="fu">list</span>(validation<span class="sc">$</span>features, validation<span class="sc">$</span>labels)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">load_model_tf</span>(<span class="st">"models/exm_conv3/"</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"models/exm_hist3.rda"</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(history)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="example_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Osiągnięty poziom dopasowania na zbiorze walidacyjnym bliski 90% jest imponujący. Jednak wykres uczenia pokazuje, że wystąpiło zjawisko nadmiernego dopasowania. Jest to spowodowane brakiem augmentacji danych w tym podejściu.</p>
+</section>
+<section id="ekstrakcja-cech-z-augmentacją" class="level4" data-number="13.5.1.2">
+<h4 data-number="13.5.1.2" class="anchored" data-anchor-id="ekstrakcja-cech-z-augmentacją"><span class="header-section-number">13.5.1.2</span> Ekstrakcja cech z augmentacją</h4>
+<p>Ponieważ modele zachowują się tak samo jak warstwy, możemy dodać model (taki jak <code>conv_base</code>) do modelu sekwencyjnego tak samo jak dodalibyśmy warstwę.</p>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  conv_base <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_flatten</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">256</span>, <span class="at">activation =</span> <span class="st">"relu"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">1</span>, <span class="at">activation =</span> <span class="st">"sigmoid"</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model: "sequential_1"
+________________________________________________________________________________
+ Layer (type)                       Output Shape                    Param #     
+================================================================================
+ vgg16 (Functional)                 (None, 4, 4, 512)               14714688    
+ flatten_1 (Flatten)                (None, 8192)                    0           
+ dense_3 (Dense)                    (None, 256)                     2097408     
+ dense_2 (Dense)                    (None, 1)                       257         
+================================================================================
+Total params: 16,812,353
+Trainable params: 16,812,353
+Non-trainable params: 0
+________________________________________________________________________________</code></pre>
+</div>
+</div>
+<p>Jak widać, baza konwolucyjna VGG16 ma 14714688 parametrów. Klasyfikator, który dodajesz na końcu, ma 2 miliony parametrów. Zanim skompilujemy i wytrenujemy model, bardzo ważne jest zamrożenie bazy konwolucyjnej. Zamrożenie warstwy lub zestawu warstw oznacza uniemożliwienie aktualizacji ich wag podczas treningu. Jeśli tego nie zrobisz, to reprezentacje, które zostały wcześniej wyuczone przez bazę konwolucyjną, zostaną zmodyfikowane podczas treningu. Ponieważ gęste warstwy na górze są losowo inicjalizowane, bardzo duże aktualizacje wag byłyby propagowane przez sieć, skutecznie niszcząc reprezentacje wcześniej nauczone. W <code>keras</code> zamrażamy sieć za pomocą funkcji <code>freeze_weights()</code>.</p>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Liczba tensorów poddawanych uczeniu przez zamrożeniem:"</span>, <span class="fu">length</span>(model<span class="sc">$</span>trainable_weights), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Liczba tensorów poddawanych uczeniu przez zamrożeniem: 30 </code></pre>
+</div>
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">freeze_weights</span>(conv_base)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Liczba tensorów poddawanych ucznieu po zamrożeniu wag:"</span>, <span class="fu">length</span>(model<span class="sc">$</span>trainable_weights), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Liczba tensorów poddawanych ucznieu po zamrożeniu wag: 4 </code></pre>
+</div>
+</div>
+<p>Przy takiej konfiguracji trenowane będą tylko wagi z dwóch gęstych warstw, które dodaliśmy. W sumie są to cztery tensory wag: dwa na warstwę (główna macierz wag i wektor <em>bias</em>). Zauważmy, że aby te zmiany zaczęły obowiązywać, musimy najpierw skompilować model. Jeśli kiedykolwiek zmodyfikujemy możliwość trenowania wag po kompilacji, powinniśmy ponownie skompilować model, w przeciwnym razie zmiany te zostaną zignorowane.</p>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>train_datagen <span class="ot">=</span> <span class="fu">image_data_generator</span>(</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">rescale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">255</span>,</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">rotation_range =</span> <span class="dv">40</span>,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">width_shift_range =</span> <span class="fl">0.2</span>,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">height_shift_range =</span> <span class="fl">0.2</span>,</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">shear_range =</span> <span class="fl">0.2</span>,</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">zoom_range =</span> <span class="fl">0.2</span>,</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">horizontal_flip =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill_mode =</span> <span class="st">"nearest"</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>test_datagen <span class="ot">&lt;-</span> <span class="fu">image_data_generator</span>(<span class="at">rescale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">255</span>)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>train_generator <span class="ot">&lt;-</span> <span class="fu">flow_images_from_directory</span>(</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  train_dir,</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>  train_datagen,</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">target_size =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">150</span>),</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">batch_size =</span> <span class="dv">20</span>,</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">class_mode =</span> <span class="st">"binary"</span></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>validation_generator <span class="ot">&lt;-</span> <span class="fu">flow_images_from_directory</span>(</span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>  validation_dir,</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>  test_datagen,</span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">target_size =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">150</span>),</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">batch_size =</span> <span class="dv">20</span>,</span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">class_mode =</span> <span class="st">"binary"</span></span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>model <span class="sc">%&gt;%</span> <span class="fu">compile</span>(</span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">loss =</span> <span class="st">"binary_crossentropy"</span>,</span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">optimizer =</span> <span class="fu">optimizer_rmsprop</span>(<span class="at">learning_rate =</span> <span class="fl">2e-05</span>),</span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"accuracy"</span>)</span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a>history <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span> <span class="fu">fit</span>(</span>
+<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a>  train_generator,</span>
+<span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">steps_per_epoch =</span> <span class="dv">100</span>,</span>
+<span id="cb33-39"><a href="#cb33-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">30</span>,</span>
+<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">validation_data =</span> validation_generator,</span>
+<span id="cb33-41"><a href="#cb33-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">validation_steps =</span> <span class="dv">50</span></span>
+<span id="cb33-42"><a href="#cb33-42" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">load_model_tf</span>(<span class="st">"models/exm_conv4/"</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"models/exm_hist4.rda"</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(history)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="example_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Jak widać, osiągnęliśmy dokładność walidacji na poziomie ponad 90%. Jest to znacznie lepszy wynik niż ten, który osiągnęliśmy z małą siecią konwolucyjną wytrenowaną od zera.</p>
+</section>
+</section>
+<section id="dostrajanie-sieci" class="level3 page-columns page-full" data-number="13.5.2">
+<h3 data-number="13.5.2" class="anchored" data-anchor-id="dostrajanie-sieci"><span class="header-section-number">13.5.2</span> Dostrajanie sieci</h3>
+<p>Inną szeroko stosowaną techniką ponownego wykorzystania modelu, uzupełniającą ekstrakcję cech, jest dostrajanie. Dostrajanie polega na odmrożeniu kilku górnych warstw zamrożonej bazy modelu użytej do ekstrakcji cech i wspólnym treningu zarówno nowo dodanej części modelu (w tym przypadku w pełni połączonego klasyfikatora), jak i tych górnych warstw. Nazywa się to dostrajaniem, ponieważ nieznacznie dostosowuje bardziej abstrakcyjne reprezentacje modelu, który jest ponownie wykorzystywany, aby uczynić je bardziej odpowiednimi dla danego problemu.</p>
+<p>Stwierdziliśmy wcześniej, że konieczne jest zamrożenie bazy konwolucyjnej VGG16, aby móc trenować losowo zainicjowany klasyfikator. Z tego samego powodu możliwe jest dostrojenie górnych warstw bazy konwolucyjnej tylko wtedy, gdy klasyfikator na górze został już wytrenowany. Jeśli klasyfikator nie był już wytrenowany, to sygnał błędu propagujący się przez sieć podczas treningu byłby zbyt duży, a reprezentacje wyuczone wcześniej przez dostrajane warstwy zostałyby zniszczone. Zatem kroki dostrajania sieci są następujące:</p>
+<ol type="1">
+<li>Dodaj swoją własną sieć na wierzchu już wytrenowanej sieci bazowej.</li>
+<li>Zamroź sieć bazową.</li>
+<li>Wytrenuj dodaną część.</li>
+<li>Odmroź niektóre warstwy w sieci bazowej.</li>
+<li>Wspólnie wytrenuj obie te warstwy i część, którą dodałeś.</li>
+</ol>
+<p>Wykonaliśmy już pierwsze trzy kroki podczas wykonywania ekstrakcji cech. Przejdźmy do kroku 4: odmrozimy sieć <code>conv_base</code>, a następnie zamrozimy poszczególne warstwy wewnątrz niej. Dostroimy trzy ostatnie warstwy konwolucyjne, co oznacza, że wszystkie warstwy aż do <code>block4_pool</code> powinny być zamrożone, a warstwy <code>block5_conv1</code>, <code>block5_conv2</code> i <code>block5_conv3</code> powinny być trenowane. Dlaczego nie dostroić więcej warstw? Dlaczego nie dostroić całej bazy konwolucyjnej? Można. Ale musisz wziąć pod uwagę następujące kwestie:</p>
+<ul>
+<li><p>Wcześniejsze warstwy w bazie konwolucyjnej kodują bardziej ogólne, możliwe do ponownego wykorzystania cechy, podczas gdy warstwy wyżej kodują bardziej wyspecjalizowane cechy. Bardziej przydatne jest dostrojenie bardziej wyspecjalizowanych cech, ponieważ są to te, które muszą być ponownie wykorzystane w naszym nowym problemie.</p></li>
+<li><p>Im więcej parametrów trenujesz, tym bardziej ryzykujesz nadmierne dopasowanie. Baza konwencjonalna ma ~15 milionów parametrów, więc ryzykowna byłaby próba wytrenowania jej na twoim małym zbiorze danych.</p></li>
+</ul>
+<p>Dlatego w tej sytuacji dobrą strategią jest dostrojenie tylko dwóch lub trzech górnych warstw w bazie konwolucyjnej. Ustawmy to, zaczynając od miejsca, w którym zakończyliśmy pracę w poprzednim przykładzie.</p>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unfreeze_weights</span>(conv_base, <span class="at">from =</span> <span class="st">"block5_conv1"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Teraz możemy zacząć dostrajać sieć. Zrobimy to za pomocą optymalizatora <code>RMSProp</code>, używając bardzo niskiego współczynnika uczenia. Powodem użycia niskiego współczynnika uczenia jest to, że chcemy ograniczyć wielkość modyfikacji, które wprowadzasz do reprezentacji trzech warstw, które dostrajasz. Zbyt duże aktualizacje mogą zaszkodzić tym reprezentacjom. Dokonamy jeszcze jednej zmiany. Ponieważ odmrożenie ostatnich warstw bazy konwolucyjnej może spowodować przeuczenie sieci, to dodamy warstwę <em>dropout.</em></p>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  conv_base <span class="sc">%&gt;%</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_flatten</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dropout</span>(<span class="at">rate =</span> <span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">256</span>, <span class="at">activation =</span> <span class="st">"relu"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">1</span>, <span class="at">activation =</span> <span class="st">"sigmoid"</span>)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>model <span class="sc">%&gt;%</span> <span class="fu">compile</span>(</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">loss =</span> <span class="st">"binary_crossentropy"</span>,</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">optimizer =</span> <span class="fu">optimizer_rmsprop</span>(<span class="at">learning_rate =</span> <span class="fl">1e-5</span>),</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"accuracy"</span>)</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>history <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span> <span class="fu">fit</span>(</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>  train_generator,</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">steps_per_epoch =</span> <span class="dv">100</span>,</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">100</span>,</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">validation_data =</span> validation_generator,</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">validation_steps =</span> <span class="dv">50</span></span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="example_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="page-columns page-full"><p>Dopasowanie tej sieci okazało się najlepsze<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> pomimo, jak widać z rysunku, nadmiernego dopasowania. Być może dołożenie jeszcze jednej warstwy regularyzacji zaradziłoby temu problemowi. Możemy też sprawdzić jak ta sieć radzi sobie z zupełnie nowymi danymi, zbioru testowego.</p><div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;blisko 95% na zbiorze walidacyjnym</p></li></div></div>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>test_generator <span class="ot">&lt;-</span> <span class="fu">flow_images_from_directory</span>(</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  test_dir,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  test_datagen,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">target_size =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">150</span>),</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">batch_size =</span> <span class="dv">20</span>,</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">class_mode =</span> <span class="st">"binary"</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>model <span class="sc">%&gt;%</span> <span class="fu">evaluate</span>(test_generator, <span class="at">steps =</span> <span class="dv">50</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     loss  accuracy 
+0.3945951 0.9400001 </code></pre>
+</div>
+</div>
+<p>Jak widać również na zbiorze testowym sieć jest dobrze dopasowana.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Simonyan2014" class="csl-entry" role="listitem">
+Simonyan, Karen, i Andrew Zisserman. 2014. <span>„Very Deep Convolutional Networks for Large-Scale Image Recognition”</span>. <a href="https://doi.org/10.48550/ARXIV.1409.1556">https://doi.org/10.48550/ARXIV.1409.1556</a>.
+</div>
+</div>
+</section>
 </section>
 
 

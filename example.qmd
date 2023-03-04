@@ -161,7 +161,7 @@ model
 ```
 
 W kroku kompilacji, użyjemy optymalizatora `RMSprop`.
-Ponieważ sieć kończy się pojedynczą jednostką sigmoidalną, użyjemy binarnej crossentropii jako funkcji straty.
+Ponieważ sieć kończy się pojedynczą jednostką sigmoidalną, użyjemy binarnej entropii krzyżowej jako funkcji straty.
 
 ```{r}
 model %>% compile(
@@ -225,7 +225,9 @@ W tym przypadku, partie są 20-próbkowe, więc zajmie to 100 partii, aż do osi
 
 Kiedy używasz `fit`, możesz przekazać też argument `validation_data`.
 Ważne jest, aby zauważyć, że ten argument może być zbiorem danych, ale może to być również lista tablic.
-Jeśli przekażesz generator jako `validation_data`, to oczekuje się, że ten generator będzie dawał partie danych walidacyjnych w nieskończoność; dlatego powinieneś również określić argument `validation_steps`, który mówi procesowi ile partii ma pobrać z generatora walidacji do oceny.
+Jeśli przekażesz generator jako `validation_data`, to oczekuje się, że ten generator będzie dawał partie danych walidacyjnych w nieskończoność; dlatego powinieneś również określić argument `validation_steps`, który mówi procesowi ile partii ma pobrać z generatora walidacji do oceny[^example-3].
+
+[^example-3]: ponieważ liczebnośc tej próby wynosi 1000 obserwacji, to z prostego rachunku `# validation_data / batch_size = 1000/20 = 50`
 
 ```{r}
 #| eval: false
@@ -256,6 +258,520 @@ Te wykresy są charakterystyczne dla nadmiernego dopasowania.
 Dokładność szkolenia rośnie liniowo w czasie, aż osiąga prawie 100%, natomiast dokładność walidacji zatrzymuje się na poziomie 70-74%.
 Strata związana z walidacją osiąga swoje minimum już po pięciu epokach, a następnie zatrzymuje się, podczas gdy strata związana z treningiem zmniejsza się liniowo, aż osiągnie prawie 0.
 
-Ponieważ mamy stosunkowo mało próbek treningowych (2,000), *overfitting* będzie naszym najczęstszym problemem.
+Ponieważ mamy stosunkowo mało próbek treningowych (2000), *overfitting* będzie naszym najczęstszym problemem.
 Wiemy już o kilku technikach, które mogą pomóc złagodzić *overfitting*, takich jak *dropout* i regularyzacje L1 i L2.
 Teraz wprowadzimy nową, specyficzną dla wizji komputerowej i używaną niemal powszechnie podczas przetwarzania obrazów za pomocą modeli głębokiego uczenia: augmentację danych.
+
+## Augmentacja obrazów
+
+Nadmierne dopasowanie jest spowodowany przez posiadanie zbyt małej ilości próbek do nauki, co powoduje, że nie można wytrenować modelu, który może uogólniać się na nowe dane.
+Przy nieskończonej ilości danych, twój model byłby wystawiony na każdy możliwy rozkład danych: *overfitting* nigdy nie byłby możliwy.
+Augmentacja danych polega na generowaniu większej ilości danych treningowych z istniejących próbek treningowych, poprzez szereg losowych przekształceń, które dają wiarygodnie wyglądające obrazy.
+Celem jest, aby w czasie treningu model nigdy nie widział dokładnie tego samego obrazu dwa razy.
+To pomaga wystawić model na więcej aspektów danych i lepiej generalizować.
+
+W `keras` można to zrobić poprzez skonfigurowanie szeregu losowych przekształceń, które mają być wykonywane na obrazach odczytywanych przez `image_data_generator`.
+
+```{r}
+datagen <- image_data_generator(
+  rescale = 1/255,
+  rotation_range = 40,
+  width_shift_range = 0.2,
+  height_shift_range = 0.2,
+  shear_range = 0.2,
+  zoom_range = 0.2,
+  horizontal_flip = TRUE,
+  fill_mode = "nearest"
+)
+```
+
+To tylko kilka z dostępnych opcji.
+Prześledźmy szybko ten kod:
+
+-   `rotation_range` to wartość podana w stopniach (0-180), czyli zakres, w którym można losowo obracać zdjęcia.
+-   `width_shift` i `height_shift` to zakresy (jako ułamek całkowitej szerokości lub wysokości), w których można losowo przesuwać obrazy w pionie lub poziomie.
+-   `shear_range` służy do losowego stosowania transformacji ścinających.
+-   `zoom_range` służy do losowego powiększania obrazów.
+-   `horizontal_flip` służy do losowego obracania obrazów w poziomie[^example-4] - ma to znaczenie, gdy nie ma założeń asymetrii poziomej (np. obrazy z prawdziwego świata).
+-   `fill_mode` to strategia używana do wypełniania nowo utworzonych pikseli, które mogą pojawić się po obrocie lub zmianie szerokości/wysokości.
+
+[^example-4]: obrócona zostanie połowa obrazów
+
+``` r
+fnames <- list.files(train_cats_dir, full.names = TRUE)
+img_path <- fnames[[3]] # <1>
+img <- image_load(img_path, target_size = c(150, 150)) # <2>
+img_array <- image_to_array(img) # <3>
+img_array <- array_reshape(img_array, c(1, 150, 150, 3)) # <4>
+
+augmentation_generator <- flow_images_from_data( # <5>
+  img_array,
+  generator = datagen,
+  batch_size = 1
+)
+
+op <- par(mfrow = c(2, 2), pty = "s", mar = c(1, 0, 1, 0)) # <6>
+for (i in 1:4) { 
+  batch <- generator_next(augmentation_generator)
+  plot(as.raster(batch[1,,,]))
+}
+par(op)
+```
+
+1.  wybierz obraz do augmentacji
+2.  wczytaj obraz i zmień rozmiar na 150 x 150
+3.  zamień obraz do formatu (150, 150, 3)
+4.  przekształć na tensor (1, 150, 150, 3)
+5.  generuj partie losowo przekształconych obrazów
+6.  wyświetl obrazy
+
+Jeśli wytrenujesz nową sieć używając tej konfiguracji augmentacji danych, sieć nigdy nie zobaczy tego samego wejścia dwa razy.
+Dane wejściowe, które widzi, są nadal silnie powiązane, ponieważ pochodzą z niewielkiej liczby oryginalnych obrazów - nie możesz wytworzyć nowych informacji, możesz jedynie zmiksować istniejące.
+Jako takie, może to nie wystarczyć, aby całkowicie pozbyć się nadmiernego dopasowania.
+Aby dalej walczyć z nadmiernym dopasowanie, dodajemy do modelu warstwę *dropout*, tuż przed klasyfikatorem gęsto połączonym.
+
+```{r}
+#| eval: false
+model <- keras_model_sequential() %>%
+  layer_conv_2d(filters = 32, kernel_size = c(3, 3), activation = "relu",
+                input_shape = c(150, 150, 3)) %>%
+  layer_max_pooling_2d(pool_size = c(2, 2)) %>%
+  layer_conv_2d(filters = 64, kernel_size = c(3, 3), activation = "relu") %>%
+  layer_max_pooling_2d(pool_size = c(2, 2)) %>%
+  layer_conv_2d(filters = 128, kernel_size = c(3, 3), activation = "relu") %>%
+  layer_max_pooling_2d(pool_size = c(2, 2)) %>%
+  layer_conv_2d(filters = 128, kernel_size = c(3, 3), activation = "relu") %>%
+  layer_max_pooling_2d(pool_size = c(2, 2)) %>%
+  layer_flatten() %>%
+  layer_dropout(rate = 0.5) %>%
+  layer_dense(units = 512, activation = "relu") %>%
+  layer_dense(units = 1, activation = "sigmoid")
+
+model %>% compile(
+  loss = "binary_crossentropy",
+  optimizer = optimizer_rmsprop(learning_rate = 1e-4),
+  metrics = c("acc")
+)
+
+datagen <- image_data_generator(
+  rescale = 1/255,
+  rotation_range = 40,
+  width_shift_range = 0.2,
+  height_shift_range = 0.2,
+  shear_range = 0.2,
+  zoom_range = 0.2,
+  horizontal_flip = TRUE
+)
+
+test_datagen <- image_data_generator(rescale = 1/255)
+
+train_generator <- flow_images_from_directory(
+  train_dir,
+  datagen,
+  target_size = c(150, 150),
+  batch_size = 20,
+  class_mode = "binary"
+)
+
+validation_generator <- flow_images_from_directory(
+  validation_dir,
+  test_datagen,
+  target_size = c(150, 150),
+  batch_size = 20,
+  class_mode = "binary"
+)
+
+history <- model %>% fit(
+  train_generator,
+  steps_per_epoch = 100,
+  epochs = 100,
+  validation_data = validation_generator,
+  validation_steps = 50
+)
+```
+
+```{r}
+#| echo: false
+
+model <- load_model_tf("models/exm_conv2/")
+load("models/exm_hist2.rda")
+plot(history)
+```
+
+Zanim przejdziemy do oceny dopasowania modelu wspomnijmy najważniejsze parametry w ustawieniu uczenia:
+
+-   `batch_size` - określa liczbę próbek w każdej partii. Jego maksimum to liczba wszystkich próbek, co sprawia, że spadek gradientu jest dokładny, strata zmniejszy się w kierunku minimum, jeśli współczynnik uczenia jest wystarczająco mały, ale iteracje są wolniejsze. Z drugiej strony jego minimum to 1, co powoduje stochastyczny spadek gradientu - szybki, ale kierunek kroku gradientu jest oparty tylko na jednym przykładzie, dlatego może błądzić. `batch_size` pozwala na kompromis między dwoma skrajnościami: dokładnym kierunkiem gradientu i szybką iteracją. Maksymalna wartość dla `batch_size` może być ograniczona, jeśli twój model + zestaw danych nie mieści się w dostępnej (GPU) pamięci.
+-   `steps_per_epoch` - liczba iteracji partii, zanim epoka treningowa zostanie zakończona. Jeśli masz zestaw treningowy o stałym rozmiarze, możesz go zignorować, ale może być przydatny, jeśli masz ogromny zestaw danych lub jeśli generujesz losowe augmentacje danych w locie, tj. jeśli twój zestaw treningowy ma (wygenerowany) nieskończony rozmiar.
+-   `validation_steps` - podobne do `steps_per_epoch` ale na zestawie danych walidacyjnych.
+
+Wracając do podsumowania dopasowania sieci, widzimy, że augmentacja oraz dodanie jednej warstwy regularyzacyjnej znacznie poprawiło wynik dopasowania (83%).
+Stosując więcej warstw regularyzacyjnych można osiągnąć jeszcze lepszy wynik 86-87%.
+
+## Wykorzystanie sieci wstępnie wytrenowanej
+
+Powszechnym i wysoce efektywnym podejściem do głębokiego uczenia na małych zbiorach danych obrazów jest użycie wstępnie wytrenowanej sieci.
+Sieć wstępnie wytrenowana to sieć zapisana, która została wcześniej wytrenowana na dużym zbiorze danych, zazwyczaj na zadaniu klasyfikacji obrazów na dużą skalę.
+Jeśli ten oryginalny zbiór danych jest wystarczająco duży i ogólny, to hierarchia cech przestrzennych wyuczona przez wstępnie wytrenowaną sieć może efektywnie działać jako ogólny model świata wizualnego, a zatem jej cechy mogą okazać się użyteczne dla wielu różnych problemów związanych z widzeniem komputerowym, nawet jeśli te nowe problemy mogą dotyczyć zupełnie innych klas niż te z oryginalnego zadania.
+Na przykład, można wytrenować sieć na ImageNet (gdzie klasy to głównie zwierzęta i przedmioty codziennego użytku), a następnie wykorzystać ją do czegoś tak odległego jak identyfikacja mebli na obrazach.
+Taka możliwość przenoszenia wyuczonych cech na różne problemy jest kluczową zaletą głębokiego uczenia w porównaniu do wielu starszych podejść płytkiego uczenia i sprawia, że głębokie uczenie jest bardzo efektywne w przypadku problemów z małymi danymi.
+W tym przypadku, rozważmy dużą sieć splotową wytrenowaną na zbiorze danych ImageNet (1,4 miliona oznaczonych obrazów i 1000 różnych klas).
+ImageNet zawiera wiele klas zwierząt, w tym różne gatunki kotów i psów, można więc oczekiwać dobrych wyników w problemie klasyfikacji koty kontra psy.
+Będziemy używać architektury VGG16, opracowanej przez @Simonyan2014; jest to prosta i szeroko stosowana architektura sieci konwolucyjnej dla ImageNet.
+Chociaż jest to starszy model, daleki od obecnego stanu wiedzy i nieco cięższy niż wiele innych najnowszych modeli, wybraliśmy go, ponieważ jego architektura jest podobna do tego, co już znamy i jest łatwa do zrozumienia bez wprowadzania nowych koncepcji.
+To może być pierwsze spotkanie z jedną z tych uroczych nazw modeli-VGG, ResNet, Inception, Inception-ResNet, Xception i tak dalej.
+
+Istnieją dwa sposoby wykorzystania wstępnie wytrenowanej sieci: ekstrakcja cech i dostrajanie.
+Omówimy oba z nich.
+Zacznijmy od ekstrakcji cech.
+
+### Ekstrakcja cech
+
+Ekstrakcja cech polega na wykorzystaniu reprezentacji wyuczonych przez poprzednią sieć do wyodrębnienia interesujących cech z nowych próbek.
+Cechy te są następnie przepuszczane przez nowy klasyfikator, który jest trenowany od podstaw.
+
+Jak widzieliśmy wcześniej, sieci konwolucyjne używane do klasyfikacji obrazów składają się z dwóch części: zaczynają się od serii warstw *pooling* i konwolucji, a kończą na gęsto połączonym klasyfikatorze.
+Pierwsza część nazywana jest bazą konwolucyjną modelu.
+W przypadku sieci konwolucyjnych ekstrakcja cech polega na wzięciu bazy konwolucyjnej wcześniej wytrenowanej sieci, przepuszczeniu przez nią nowych danych i wytrenowaniu na jej wyjściu nowego klasyfikatora (patrz @fig-fe1).
+
+![Sposób zastosowania wyuczonej sieci](images/Zrzut%20ekranu%202023-03-4%20o%2011.04.02.png){#fig-fe1 fig-align="center" width="600"}
+
+Dlaczego warto ponownie wykorzystać tylko bazę konwolucyjną?
+Czy mógłbyś ponownie użyć również gęsto połączonego klasyfikatora?
+Ogólnie rzecz biorąc, należy tego unikać.
+Powodem jest to, że reprezentacje nauczone przez bazę konwolucyjną będą prawdopodobnie bardziej ogólne, a zatem bardziej użyteczne: mapy cech sieci konwolucyjnej są mapami obecności ogólnych wzorców na obrazie, co prawdopodobnie będzie przydatne niezależnie od problemu widzenia komputerowego.
+Natomiast reprezentacje wyuczone przez klasyfikator będą z konieczności specyficzne dla zbioru klas, na których model został wytrenowany - będą zawierać jedynie informacje o prawdopodobieństwie obecności tej czy innej klasy na całym obrazie.
+Dodatkowo, reprezentacje znajdujące się w gęsto połączonych warstwach nie zawierają już żadnej informacji o tym, gdzie w obrazie wejściowym znajdują się obiekty: warstwy te pozbywają się pojęcia przestrzeni, lokalizacja obiektów jest opisywana tylko przez konwencjonalne mapy cech.
+Dla problemów, w których lokalizacja obiektów ma znaczenie, gęsto połączone cechy są w dużej mierze bezużyteczne.
+
+Zauważmy, że poziom ogólności (a więc i możliwości ponownego wykorzystania) reprezentacji wyodrębnionych przez konkretne warstwy konwolucyjne zależy od głębokości warstwy w modelu.
+Warstwy znajdujące się wcześniej w modelu ekstrahują lokalne, bardzo ogólne mapy cech (takie jak krawędzie, kolory i tekstury), podczas gdy warstwy znajdujące się wyżej ekstrahują bardziej abstrakcyjne pojęcia (takie jak "kocie ucho" lub "psie oko").
+Jeśli więc nowy zestaw danych różni się znacznie od zestawu danych, na którym był trenowany oryginalny model, lepiej będzie użyć tylko kilku pierwszych warstw modelu do ekstrakcji cech, niż używać całej bazy konwolucyjnej.
+
+W tym przypadku, ponieważ zbiór klas ImageNet zawiera wiele klas psów i kotów, prawdopodobnie korzystne byłoby ponowne wykorzystanie informacji zawartych w gęsto połączonych warstwach oryginalnego modelu.
+Nie zdecydujemy się jednak na to, aby uwzględnić bardziej ogólny przypadek, gdy zbiór klas nowego problemu nie pokrywa się ze zbiorem klas oryginalnego modelu.
+Przedstawmy to w praktyce, wykorzystując bazę konwolucyjną sieci VGG16, wytrenowaną na ImageNet, do wyodrębnienia interesujących cech z obrazów kotów i psów, a następnie wytrenowania klasyfikatora koty vs psy na tych cechach.
+
+Model VGG16, między innymi, jest dostarczany w pakiecie z `keras`.
+Oto lista modeli klasyfikacji obrazów (wszystkie wytrenowane na zbiorze danych ImageNet), które są dostępne jako część `keras`:
+
+-   `Xception`
+-   `InceptionV3`
+-   `ResNet50`
+-   `VGG16`
+-   `VGG19`
+-   `MobileNet`.
+
+```{r}
+conv_base <- application_vgg16(
+  weights = "imagenet",
+  include_top = FALSE,
+  input_shape = c(150, 150, 3)
+)
+```
+
+Do funkcji przekazywane są trzy argumenty:
+
+-   `weights` - określa punkt startowy wag, z którego należy zainicjalizować model.
+-   `include_top` - odnosi się do włączenia (lub nie) gęsto połączonego klasyfikatora na szczycie sieci. Domyślnie, ten gęsto połączony klasyfikator odpowiada 1000 klas z ImageNet. Ponieważ zamierzasz użyć własnego gęsto połączonego klasyfikatora (z tylko dwoma klasami: kot i pies), nie musisz go włączać.
+-   `input_shape` - to kształt tensorów obrazów, które podasz sieci. Ten argument jest czysto opcjonalny: jeśli go nie podasz, sieć będzie w stanie przetwarzać dane wejściowe o dowolnym rozmiarze.
+
+```r
+conv_base # <1>
+
+plot(conv_base) # <2>
+```
+
+1.  sieć można przestawić jako podsumowanie tekstowe
+2.  ale również jako wykres
+
+Ostateczna mapa cech ma kształt `(4, 4, 512)`.
+To jest ta warstwa, do której będziemy dołączać sieć gęstą.
+W tym momencie możemy postąpić na dwa sposoby:
+
+-   Uruchomienie bazy konwolucyjnej na zbiorze danych, następnie zapisanie jej wyjść do pliku na dysku, a następnie użycie tych danych jako danych wejściowych do własnego, gęsto połączonego klasyfikatora. To rozwiązanie jest szybkie i tanie[^example-5] w wykonaniu, ponieważ wymaga uruchomienia bazy konwolucyjnej tylko raz dla każdego obrazu wejściowego, a baza konwolucyjna jest zdecydowanie najdroższą częścią potoku. Ale z tego samego powodu ta technika nie pozwoli ci użyć augmentacji danych.
+-   Rozszerzenie modelu, który mamy (`conv_base`), dodając gęste warstwy na górze i uruchamiając całą sieć na danych wejściowych. To pozwoli ci użyć augmentacji danych, ponieważ każdy obraz wejściowy przechodzi przez bazę konwolucyjną za każdym razem, gdy jest widziany przez model. Ale z tego samego powodu ta technika jest znacznie droższa od pierwszej. Zajmiemy się obiema technikami.
+
+[^example-5]: obliczeniowo
+
+#### Ekstrakcja cech bez augmentacji
+
+Zacznijmy od uruchomienia instancji wcześniej wprowadzonego `image_data_generator`, aby wyodrębnić obrazy jako tablice, jak również ich etykiety.
+Wyodrębnimy cechy z tych obrazów poprzez wywołanie metody `predict` na modelu.
+
+``` r
+#| eval: false
+datagen <- image_data_generator(rescale = 1/255)
+
+batch_size <- 20
+
+extract_features <- function(directory, sample_count) {
+  features <- array(0, dim = c(sample_count, 4, 4, 512))
+  labels <- array(0, dim = c(sample_count))
+  generator <- flow_images_from_directory(
+    directory = directory,
+    generator = datagen,
+    target_size = c(150, 150),
+    batch_size = batch_size,
+    class_mode = "binary"
+  )
+  i <- 0
+  while(TRUE) {
+    batch <- generator_next(generator)
+    inputs_batch <- batch[[1]]
+    labels_batch <- batch[[2]]
+    features_batch <- conv_base %>% predict(inputs_batch)
+    index_range <- ((i * batch_size)+1):((i + 1) * batch_size)
+    features[index_range,,,] <- features_batch
+    labels[index_range] <- labels_batch
+    i <- i + 1
+    if (i * batch_size >= sample_count)
+    break } # <1>
+  list(
+    features = features,
+    labels = labels
+) }
+
+train <- extract_features(train_dir, 2000)
+
+validation <- extract_features(validation_dir, 1000)
+
+test <- extract_features(test_dir, 1000)
+```
+
+1.  ponieważ generator obrazów tworzy je w nieskończoność, to musimy go zatrzymać po tym jak każdy obraz zostanie obejrzany raz
+
+Wyodrębnione cechy mają obecnie kształt `(samples, 4, 4, 512)`.
+Będziemy je przekazywali do gęsto połączonego klasyfikatora, więc najpierw musisz je spłaszczyć do postaci `(samples, 8192)`:
+
+```{r}
+#| eval: false
+reshape_features <- function(features) {
+  array_reshape(features, dim = c(nrow(features), 4 * 4 * 512))
+}
+train$features <- reshape_features(train$features)
+validation$features <- reshape_features(validation$features)
+test$features <- reshape_features(test$features)
+```
+
+Teraz możemy przejść do uczenia sieci gęstej na wstępnie przetworzonych danych przez sieć konwolucyjną.
+
+```{r}
+#| eval: false
+model <- keras_model_sequential() %>%
+  layer_dense(units = 256, activation = "relu",
+              input_shape = 4 * 4 * 512) %>%
+  layer_dropout(rate = 0.5) %>%
+  layer_dense(units = 1, activation = "sigmoid")
+
+model %>% compile(
+  optimizer = optimizer_rmsprop(learning_rate = 2e-5),
+  loss = "binary_crossentropy",
+  metrics = c("accuracy")
+)
+
+history <- model %>% fit(
+  train$features, train$labels,
+  epochs = 30,
+  batch_size = 20,
+  validation_data = list(validation$features, validation$labels)
+)
+```
+
+```{r}
+model <- load_model_tf("models/exm_conv3/")
+load("models/exm_hist3.rda")
+plot(history)
+```
+
+Osiągnięty poziom dopasowania na zbiorze walidacyjnym bliski 90% jest imponujący.
+Jednak wykres uczenia pokazuje, że wystąpiło zjawisko nadmiernego dopasowania.
+Jest to spowodowane brakiem augmentacji danych w tym podejściu.
+
+#### Ekstrakcja cech z augmentacją
+
+Ponieważ modele zachowują się tak samo jak warstwy, możemy dodać model (taki jak `conv_base`) do modelu sekwencyjnego tak samo jak dodalibyśmy warstwę.
+
+```{r}
+model <- keras_model_sequential() %>%
+  conv_base %>%
+  layer_flatten() %>%
+  layer_dense(units = 256, activation = "relu") %>%
+  layer_dense(units = 1, activation = "sigmoid")
+
+model
+```
+
+Jak widać, baza konwolucyjna VGG16 ma 14714688 parametrów.
+Klasyfikator, który dodajesz na końcu, ma 2 miliony parametrów.
+Zanim skompilujemy i wytrenujemy model, bardzo ważne jest zamrożenie bazy konwolucyjnej.
+Zamrożenie warstwy lub zestawu warstw oznacza uniemożliwienie aktualizacji ich wag podczas treningu.
+Jeśli tego nie zrobisz, to reprezentacje, które zostały wcześniej wyuczone przez bazę konwolucyjną, zostaną zmodyfikowane podczas treningu.
+Ponieważ gęste warstwy na górze są losowo inicjalizowane, bardzo duże aktualizacje wag byłyby propagowane przez sieć, skutecznie niszcząc reprezentacje wcześniej nauczone.
+W `keras` zamrażamy sieć za pomocą funkcji `freeze_weights()`.
+
+```{r}
+cat("Liczba tensorów poddawanych uczeniu przez zamrożeniem:", length(model$trainable_weights), "\n")
+
+freeze_weights(conv_base)
+
+cat("Liczba tensorów poddawanych ucznieu po zamrożeniu wag:", length(model$trainable_weights), "\n")
+```
+
+Przy takiej konfiguracji trenowane będą tylko wagi z dwóch gęstych warstw, które dodaliśmy.
+W sumie są to cztery tensory wag: dwa na warstwę (główna macierz wag i wektor *bias*).
+Zauważmy, że aby te zmiany zaczęły obowiązywać, musimy najpierw skompilować model.
+Jeśli kiedykolwiek zmodyfikujemy możliwość trenowania wag po kompilacji, powinniśmy ponownie skompilować model, w przeciwnym razie zmiany te zostaną zignorowane.
+
+```{r}
+#| eval: false
+train_datagen = image_data_generator(
+  rescale = 1/255,
+  rotation_range = 40,
+  width_shift_range = 0.2,
+  height_shift_range = 0.2,
+  shear_range = 0.2,
+  zoom_range = 0.2,
+  horizontal_flip = TRUE,
+  fill_mode = "nearest"
+)
+
+test_datagen <- image_data_generator(rescale = 1/255)
+
+train_generator <- flow_images_from_directory(
+  train_dir,
+  train_datagen,
+  target_size = c(150, 150),
+  batch_size = 20,
+  class_mode = "binary"
+)
+
+validation_generator <- flow_images_from_directory(
+  validation_dir,
+  test_datagen,
+  target_size = c(150, 150),
+  batch_size = 20,
+  class_mode = "binary"
+)
+
+model %>% compile(
+  loss = "binary_crossentropy",
+  optimizer = optimizer_rmsprop(learning_rate = 2e-05),
+  metrics = c("accuracy")
+)
+
+history <- model %>% fit(
+  train_generator,
+  steps_per_epoch = 100,
+  epochs = 30,
+  validation_data = validation_generator,
+  validation_steps = 50
+)
+```
+
+```{r}
+model <- load_model_tf("models/exm_conv4/")
+load("models/exm_hist4.rda")
+plot(history)
+```
+
+Jak widać, osiągnęliśmy dokładność walidacji na poziomie ponad 90%.
+Jest to znacznie lepszy wynik niż ten, który osiągnęliśmy z małą siecią konwolucyjną wytrenowaną od zera.
+
+### Dostrajanie sieci
+
+Inną szeroko stosowaną techniką ponownego wykorzystania modelu, uzupełniającą ekstrakcję cech, jest dostrajanie.
+Dostrajanie polega na odmrożeniu kilku górnych warstw zamrożonej bazy modelu użytej do ekstrakcji cech i wspólnym treningu zarówno nowo dodanej części modelu (w tym przypadku w pełni połączonego klasyfikatora), jak i tych górnych warstw.
+Nazywa się to dostrajaniem, ponieważ nieznacznie dostosowuje bardziej abstrakcyjne reprezentacje modelu, który jest ponownie wykorzystywany, aby uczynić je bardziej odpowiednimi dla danego problemu.
+
+Stwierdziliśmy wcześniej, że konieczne jest zamrożenie bazy konwolucyjnej VGG16, aby móc trenować losowo zainicjowany klasyfikator.
+Z tego samego powodu możliwe jest dostrojenie górnych warstw bazy konwolucyjnej tylko wtedy, gdy klasyfikator na górze został już wytrenowany.
+Jeśli klasyfikator nie był już wytrenowany, to sygnał błędu propagujący się przez sieć podczas treningu byłby zbyt duży, a reprezentacje wyuczone wcześniej przez dostrajane warstwy zostałyby zniszczone.
+Zatem kroki dostrajania sieci są następujące:
+
+1.  Dodaj swoją własną sieć na wierzchu już wytrenowanej sieci bazowej.
+2.  Zamroź sieć bazową.
+3.  Wytrenuj dodaną część.
+4.  Odmroź niektóre warstwy w sieci bazowej.
+5.  Wspólnie wytrenuj obie te warstwy i część, którą dodałeś.
+
+Wykonaliśmy już pierwsze trzy kroki podczas wykonywania ekstrakcji cech.
+Przejdźmy do kroku 4: odmrozimy sieć `conv_base`, a następnie zamrozimy poszczególne warstwy wewnątrz niej.
+Dostroimy trzy ostatnie warstwy konwolucyjne, co oznacza, że wszystkie warstwy aż do `block4_pool` powinny być zamrożone, a warstwy `block5_conv1`, `block5_conv2` i `block5_conv3` powinny być trenowane.
+Dlaczego nie dostroić więcej warstw?
+Dlaczego nie dostroić całej bazy konwolucyjnej?
+Można.
+Ale musisz wziąć pod uwagę następujące kwestie:
+
+-   Wcześniejsze warstwy w bazie konwolucyjnej kodują bardziej ogólne, możliwe do ponownego wykorzystania cechy, podczas gdy warstwy wyżej kodują bardziej wyspecjalizowane cechy.
+    Bardziej przydatne jest dostrojenie bardziej wyspecjalizowanych cech, ponieważ są to te, które muszą być ponownie wykorzystane w naszym nowym problemie.
+
+-   Im więcej parametrów trenujesz, tym bardziej ryzykujesz nadmierne dopasowanie.
+    Baza konwencjonalna ma \~15 milionów parametrów, więc ryzykowna byłaby próba wytrenowania jej na twoim małym zbiorze danych.
+
+Dlatego w tej sytuacji dobrą strategią jest dostrojenie tylko dwóch lub trzech górnych warstw w bazie konwolucyjnej.
+Ustawmy to, zaczynając od miejsca, w którym zakończyliśmy pracę w poprzednim przykładzie.
+
+```{r}
+unfreeze_weights(conv_base, from = "block5_conv1")
+```
+
+Teraz możemy zacząć dostrajać sieć.
+Zrobimy to za pomocą optymalizatora `RMSProp`, używając bardzo niskiego współczynnika uczenia.
+Powodem użycia niskiego współczynnika uczenia jest to, że chcemy ograniczyć wielkość modyfikacji, które wprowadzasz do reprezentacji trzech warstw, które dostrajasz.
+Zbyt duże aktualizacje mogą zaszkodzić tym reprezentacjom.
+Dokonamy jeszcze jednej zmiany.
+Ponieważ odmrożenie ostatnich warstw bazy konwolucyjnej może spowodować przeuczenie sieci, to dodamy warstwę *dropout.*
+
+```{r}
+#| eval: false
+model <- keras_model_sequential() %>%
+  conv_base %>%
+  layer_flatten() %>%
+  layer_dropout(rate = 0.5) %>%
+  layer_dense(units = 256, activation = "relu") %>%
+  layer_dense(units = 1, activation = "sigmoid")
+
+model %>% compile(
+  loss = "binary_crossentropy",
+  optimizer = optimizer_rmsprop(learning_rate = 1e-5),
+  metrics = c("accuracy")
+)
+
+history <- model %>% fit(
+  train_generator,
+  steps_per_epoch = 100,
+  epochs = 100,
+  validation_data = validation_generator,
+  validation_steps = 50
+)
+```
+
+```{r}
+#| echo: false
+test_datagen <- image_data_generator(rescale = 1/255)
+model <- load_model_tf("models/exm_conv4/")
+load("models/exm_hist4.rda")
+plot(history)
+```
+
+Dopasowanie tej sieci okazało się najlepsze[^example-6] pomimo, jak widać z rysunku, nadmiernego dopasowania.
+Być może dołożenie jeszcze jednej warstwy regularyzacji zaradziłoby temu problemowi.
+Możemy też sprawdzić jak ta sieć radzi sobie z zupełnie nowymi danymi, zbioru testowego.
+
+[^example-6]: blisko 95% na zbiorze walidacyjnym
+
+
+
+```{r}
+test_generator <- flow_images_from_directory(
+  test_dir,
+  test_datagen,
+  target_size = c(150, 150),
+  batch_size = 20,
+  class_mode = "binary"
+)
+
+model %>% evaluate(test_generator, steps = 50)
+```
+
+Jak widać również na zbiorze testowym sieć jest dobrze dopasowana.
