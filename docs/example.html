@@ -317,7 +317,12 @@ div.csl-indent {
 
 <p>Konieczność trenowania modelu klasyfikacji obrazów przy użyciu bardzo małej ilości danych jest częstą sytuacją, z którą prawdopodobnie spotkasz się w praktyce. “Kilka” próbek może oznaczać różnie od kilku setek do kilkudziesięciu tysięcy obrazów. Jako praktyczny przykład, skupimy się na klasyfikacji obrazów jako psów albo kotów, w zbiorze danych zawierającym 4000 zdjęć kotów i psów (2000 kotów, 2000 psów). Użyjemy 2000 zdjęć do treningu, 1000 do walidacji i 1000 do testów.</p>
 <p>W tym rozdziale omówimy jedną z podstawowych strategii radzenia sobie z tym problemem: trenowanie nowego modelu od podstaw przy użyciu niewielkiej ilości danych. Rozpoczniemy od naiwnego wytrenowania małej sieci splotowej na 2000 próbkach treningowych, bez żadnej regularyzacji, aby ustalić bazę tego, co można osiągnąć. Pozwoli to osiągnąć dokładność klasyfikacji na poziomie 71%. W tym momencie głównym problemem będzie <em>overfitting</em>. Następnie przedstawimy augmentację danych, technikę łagodzenia <em>overfitting</em> w wizji komputerowej. Używając augmentacji danych, poprawisz sieć do poziomu klasyfikacji 82%.</p>
-<p>W dalszej części omówimy dwie kolejne techniki niezbędne do zastosowania głębokiego uczenia na małych zbiorach danych: ekstrakcję cech za pomocą wstępnie wytrenowanej sieci (co pozwoli osiągnąć dokładność od 90% do 96%) oraz dostrajanie wstępnie wytrenowanej sieci (co pozwoli osiągnąć ostateczną dokładność 97%). Razem, te trzy strategie - trenowanie małego modelu od zera, ekstrakcja cech przy użyciu wstępnie wytrenowanego modelu i dostrajanie wstępnie wytrenowanego modelu - będą stanowić twój przyszły zestaw narzędzi do radzenia sobie z problemem wizji komputerowej z małymi zbiorami danych.</p>
+
+<div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://thumbs.dreamstime.com/z/cable-news-network-american-news-based-pay-television-channel-owned-turner-broadcasting-system-division-t-s-138494730.jpg" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div></div><p>W dalszej części omówimy dwie kolejne techniki niezbędne do zastosowania głębokiego uczenia na małych zbiorach danych: ekstrakcję cech za pomocą wstępnie wytrenowanej sieci (co pozwoli osiągnąć dokładność od 90% do 96%) oraz dostrajanie wstępnie wytrenowanej sieci (co pozwoli osiągnąć ostateczną dokładność 97%). Razem, te trzy strategie - trenowanie małego modelu od zera, ekstrakcja cech przy użyciu wstępnie wytrenowanego modelu i dostrajanie wstępnie wytrenowanego modelu - będą stanowić twój przyszły zestaw narzędzi do radzenia sobie z problemem wizji komputerowej z małymi zbiorami danych.</p>
 <p>Czasami można usłyszeć, że głębokie uczenie działa tylko wtedy, gdy dostępna jest duża ilość danych. Jest to tylko częściowo prawdziwe: jedną z fundamentalnych cech głębokiego uczenia jest to, że może ono znaleźć interesujące cechy w danych treningowych samodzielnie, bez potrzeby ręcznej inżynierii cech, a to można osiągnąć tylko wtedy, gdy dostępna jest duża ilość przykładów treningowych. Jest to szczególnie prawdziwe dla problemów, w których próbki wejściowe są wielowymiarowe, jak obrazy.</p>
 <p>To, co stanowi dużą ilość próbek, jest względne - na przykład w odniesieniu do rozmiaru i głębokości sieci, którą próbujesz wytrenować. Nie jest możliwe wytrenowanie sieci splotowej do rozwiązania złożonego problemu przy użyciu zaledwie kilkudziesięciu próbek, ale kilkaset może potencjalnie wystarczyć, jeśli model jest mały i dobrze wyregulowany, a zadanie proste. Ponieważ sieci splotowe uczą się lokalnych, niezmiennych w czasie cech, są bardzo wydajne w przetwarzaniu danych dla problemów percepcyjnych. Trening sieci konwolucyjne od podstaw na bardzo małym zbiorze obrazów pozwoli na uzyskanie rozsądnych wyników pomimo względnego braku danych, bez potrzeby tworzenia własnych cech.</p>
 <p>Co więcej, modele uczenia głębokiego są z natury bardzo uniwersalne: możesz wziąć, powiedzmy, model klasyfikacji obrazów lub mowy/tekstu wytrenowany na dużym zbiorze danych i użyć go ponownie do znacznie innego problemu z niewielkimi zmianami. W przypadku wizji komputerowej, wiele wstępnie wytrenowanych modeli (zazwyczaj wytrenowanych na zbiorze danych ImageNet) jest publicznie dostępnych do pobrania i może być wykorzystanych do stworzenia potężnych modeli wizji z bardzo małej ilości danych.</p>
@@ -375,11 +380,11 @@ div.csl-indent {
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="2" data-code-cell="annotated-cell-1">tu ustaw swoją ścieżkę do katalogu z rozpakowanym katalogiem <code>train</code></span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-1" data-code-lines="2">tu ustaw swoją ścieżkę do katalogu z rozpakowanym katalogiem <code>train</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-lines="3" data-code-cell="annotated-cell-1">ustaw ścieżkę gdzie chcesz zapisywać obrazy do uczenia sieci</span>
+<span data-code-annotation="2" data-code-cell="annotated-cell-1" data-code-lines="3">ustaw ścieżkę gdzie chcesz zapisywać obrazy do uczenia sieci</span>
 </dd>
 </dl>
 <p>Jako sprawdzenie poprawności, policzmy, ile zdjęć jest w każdym podziale treningowym (train/validation/test):</p>
@@ -545,8 +550,8 @@ ________________________________________________________________________________
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 2
- $ : num [1:20, 1:150, 1:150, 1:3] 0.263 0.333 0.275 0.475 0.349 ...
- $ : num [1:20(1d)] 0 0 0 0 1 0 1 1 0 1 ...</code></pre>
+ $ : num [1:20, 1:150, 1:150, 1:3] 0.31 0.659 0.718 0.141 0.282 ...
+ $ : num [1:20(1d)] 0 1 0 1 1 1 1 0 1 1 ...</code></pre>
 </div>
 </div>
 <p>Dopasujmy model do danych uzyskanych za pomocą generatora. Robimy to za pomocą funkcji <code>fit</code>. Jako pierwszy argument oczekuje ona generatora, który będzie generował partie danych wejściowych i docelowych. Ponieważ dane są generowane w nieskończoność, generator musi wiedzieć, ile próbek pobrać z generatora, zanim zadeklaruje koniec epoki. Taką rolę pełni argument <code>steps_per_epoch</code>: po pobraniu z generatora partii próbek - czyli po wykonaniu kroków spadku gradientu - proces dopasowania przejdzie do następnej epoki. W tym przypadku, partie są 20-próbkowe, więc zajmie to 100 partii, aż do osiągnięcia celu 2000 próbek.</p>
@@ -581,7 +586,12 @@ ________________________________________________________________________________
 <section id="augmentacja-obrazów" class="level2 page-columns page-full" data-number="13.4">
 <h2 data-number="13.4" class="anchored" data-anchor-id="augmentacja-obrazów"><span class="header-section-number">13.4</span> Augmentacja obrazów</h2>
 <p>Nadmierne dopasowanie jest spowodowany przez posiadanie zbyt małej ilości próbek do nauki, co powoduje, że nie można wytrenować modelu, który może uogólniać się na nowe dane. Przy nieskończonej ilości danych, twój model byłby wystawiony na każdy możliwy rozkład danych: <em>overfitting</em> nigdy nie byłby możliwy. Augmentacja danych polega na generowaniu większej ilości danych treningowych z istniejących próbek treningowych, poprzez szereg losowych przekształceń, które dają wiarygodnie wyglądające obrazy. Celem jest, aby w czasie treningu model nigdy nie widział dokładnie tego samego obrazu dwa razy. To pomaga wystawić model na więcej aspektów danych i lepiej generalizować.</p>
-<p>W <code>keras</code> można to zrobić poprzez skonfigurowanie szeregu losowych przekształceń, które mają być wykonywane na obrazach odczytywanych przez <code>image_data_generator</code>.</p>
+
+<div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/artificial-intelligence-memes-neural-network.jpeg.webp" class="img-fluid figure-img"></p>
+</figure>
+</div></div><p>W <code>keras</code> można to zrobić poprzez skonfigurowanie szeregu losowych przekształceń, które mają być wykonywane na obrazach odczytywanych przez <code>image_data_generator</code>.</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -627,27 +637,27 @@ ________________________________________________________________________________
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="2" data-code-cell="annotated-cell-15">wybierz obraz do augmentacji</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-15" data-code-lines="2">wybierz obraz do augmentacji</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-lines="3" data-code-cell="annotated-cell-15">wczytaj obraz i zmień rozmiar na 150 x 150</span>
+<span data-code-annotation="2" data-code-cell="annotated-cell-15" data-code-lines="3">wczytaj obraz i zmień rozmiar na 150 x 150</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-lines="4" data-code-cell="annotated-cell-15">zamień obraz do formatu (150, 150, 3)</span>
+<span data-code-annotation="3" data-code-cell="annotated-cell-15" data-code-lines="4">zamień obraz do formatu (150, 150, 3)</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-annotation="4" data-code-lines="5" data-code-cell="annotated-cell-15">przekształć na tensor (1, 150, 150, 3)</span>
+<span data-code-annotation="4" data-code-cell="annotated-cell-15" data-code-lines="5">przekształć na tensor (1, 150, 150, 3)</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-annotation="5" data-code-lines="7" data-code-cell="annotated-cell-15">generuj partie losowo przekształconych obrazów</span>
+<span data-code-annotation="5" data-code-cell="annotated-cell-15" data-code-lines="7">generuj partie losowo przekształconych obrazów</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-annotation="6" data-code-lines="13" data-code-cell="annotated-cell-15">wyświetl obrazy</span>
+<span data-code-annotation="6" data-code-cell="annotated-cell-15" data-code-lines="13">wyświetl obrazy</span>
 </dd>
 </dl>
 <p>Jeśli wytrenujesz nową sieć używając tej konfiguracji augmentacji danych, sieć nigdy nie zobaczy tego samego wejścia dwa razy. Dane wejściowe, które widzi, są nadal silnie powiązane, ponieważ pochodzą z niewielkiej liczby oryginalnych obrazów - nie możesz wytworzyć nowych informacji, możesz jedynie zmiksować istniejące. Jako takie, może to nie wystarczyć, aby całkowicie pozbyć się nadmiernego dopasowania. Aby dalej walczyć z nadmiernym dopasowanie, dodajemy do modelu warstwę <em>dropout</em>, tuż przed klasyfikatorem gęsto połączonym.</p>
@@ -773,11 +783,11 @@ ________________________________________________________________________________
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-18" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="1" data-code-cell="annotated-cell-18">sieć można przestawić jako podsumowanie tekstowe</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-18" data-code-lines="1">sieć można przestawić jako podsumowanie tekstowe</span>
 </dd>
 <dt data-target-cell="annotated-cell-18" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-lines="3" data-code-cell="annotated-cell-18">ale również jako wykres</span>
+<span data-code-annotation="2" data-code-cell="annotated-cell-18" data-code-lines="3">ale również jako wykres</span>
 </dd>
 </dl>
 <p>Ostateczna mapa cech ma kształt <code>(4, 4, 512)</code>. To jest ta warstwa, do której będziemy dołączać sieć gęstą. W tym momencie możemy postąpić na dwa sposoby:</p>
@@ -828,7 +838,7 @@ ________________________________________________________________________________
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-19" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-lines="27" data-code-cell="annotated-cell-19">ponieważ generator obrazów tworzy je w nieskończoność, to musimy go zatrzymać po tym jak każdy obraz zostanie obejrzany raz</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-19" data-code-lines="27">ponieważ generator obrazów tworzy je w nieskończoność, to musimy go zatrzymać po tym jak każdy obraz zostanie obejrzany raz</span>
 </dd>
 </dl>
 <p>Wyodrębnione cechy mają obecnie kształt <code>(samples, 4, 4, 512)</code>. Będziemy je przekazywali do gęsto połączonego klasyfikatora, więc najpierw musisz je spłaszczyć do postaci <code>(samples, 8192)</code>:</p>

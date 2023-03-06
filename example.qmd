@@ -16,6 +16,8 @@ W tym momencie głównym problemem będzie *overfitting*.
 Następnie przedstawimy augmentację danych, technikę łagodzenia *overfitting* w wizji komputerowej.
 Używając augmentacji danych, poprawisz sieć do poziomu klasyfikacji 82%.
 
+![](https://thumbs.dreamstime.com/z/cable-news-network-american-news-based-pay-television-channel-owned-turner-broadcasting-system-division-t-s-138494730.jpg){.column-margin fig-align="center" width="400"}
+
 W dalszej części omówimy dwie kolejne techniki niezbędne do zastosowania głębokiego uczenia na małych zbiorach danych: ekstrakcję cech za pomocą wstępnie wytrenowanej sieci (co pozwoli osiągnąć dokładność od 90% do 96%) oraz dostrajanie wstępnie wytrenowanej sieci (co pozwoli osiągnąć ostateczną dokładność 97%).
 Razem, te trzy strategie - trenowanie małego modelu od zera, ekstrakcja cech przy użyciu wstępnie wytrenowanego modelu i dostrajanie wstępnie wytrenowanego modelu - będą stanowić twój przyszły zestaw narzędzi do radzenia sobie z problemem wizji komputerowej z małymi zbiorami danych.
 
@@ -270,6 +272,8 @@ Augmentacja danych polega na generowaniu większej ilości danych treningowych z
 Celem jest, aby w czasie treningu model nigdy nie widział dokładnie tego samego obrazu dwa razy.
 To pomaga wystawić model na więcej aspektów danych i lepiej generalizować.
 
+![](images/artificial-intelligence-memes-neural-network.jpeg.webp){.column-margin fig-align="center"}
+
 W `keras` można to zrobić poprzez skonfigurowanie szeregu losowych przekształceń, które mają być wykonywane na obrazach odczytywanych przez `image_data_generator`.
 
 ```{r}
@@ -475,7 +479,7 @@ Do funkcji przekazywane są trzy argumenty:
 -   `include_top` - odnosi się do włączenia (lub nie) gęsto połączonego klasyfikatora na szczycie sieci. Domyślnie, ten gęsto połączony klasyfikator odpowiada 1000 klas z ImageNet. Ponieważ zamierzasz użyć własnego gęsto połączonego klasyfikatora (z tylko dwoma klasami: kot i pies), nie musisz go włączać.
 -   `input_shape` - to kształt tensorów obrazów, które podasz sieci. Ten argument jest czysto opcjonalny: jeśli go nie podasz, sieć będzie w stanie przetwarzać dane wejściowe o dowolnym rozmiarze.
 
-```r
+``` r
 conv_base # <1>
 
 plot(conv_base) # <2>
@@ -759,8 +763,6 @@ Być może dołożenie jeszcze jednej warstwy regularyzacji zaradziłoby temu pr
 Możemy też sprawdzić jak ta sieć radzi sobie z zupełnie nowymi danymi, zbioru testowego.
 
 [^example-6]: blisko 95% na zbiorze walidacyjnym
-
-
 
 ```{r}
 test_generator <- flow_images_from_directory(
