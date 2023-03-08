@@ -14,7 +14,7 @@ Jednak mimo tych wszystkich postępów marzenie o tym, by komputer objaśniał o
 Dlaczego widzenie jest tak trudne?
 Po części dlatego, że jest to problem odwrotny, w którym staramy się odzyskać pewne niewiadome, mając za mało informacji, by w pełni określić rozwiązanie.
 Musimy więc uciekać się do modeli opartych na fizyce i probabilistyce lub do uczenia maszynowego na dużych zbiorach przykładów, aby wyróżnić potencjalne rozwiązania.
-Jednak modelowanie świata wizualnego w całej jego bogatej złożoności jest o wiele trudniejsze niż, powiedzmy, modelowanie dzwięku, który wytwarzamy podczas mówienia.
+Jednak modelowanie świata wizualnego w całej jego bogatej złożoności jest o wiele trudniejsze niż, powiedzmy, modelowanie dźwięku, który wytwarzamy podczas mówienia.
 
 Modele naprzód (ang. *forward*), których używamy w wizji komputerowej, są zwykle opracowywane w fizyce (radiometria, optyka i projektowanie czujników) oraz w grafice komputerowej.
 Obie te dziedziny modelują poruszanie się obiektów, jak światło odbija się od ich powierzchni, jak jest rozpraszane przez atmosferę, załamywane przez soczewki kamery (lub ludzkie oczy) i wreszcie rzutowane na płaską (lub zakrzywioną) płaszczyznę obrazu.
@@ -35,8 +35,8 @@ Dobrą wiadomością jest to, że widzenie komputerowe jest dziś wykorzystywane
 -   Obrazowanie medyczne: rejestrowanie obrazów przedoperacyjnych i śródoperacyjnych lub wykonywanie długoterminowych badań morfologii mózgu ludzi w miarę ich starzenia się;
 -   Pojazdy samojezdne: zdolne do jazdy od punktu do punktu, jak również do autonomicznego lotu;
 -   Budowa modeli 3D (fotogrametria): w pełni zautomatyzowana budowa modeli 3D ze zdjęć lotniczych i z drona;
--   Łączenie ruchu: łączenie obrazów generowanych komputerowo (CGI) z materiałem filmowym z życia wziętym poprzez śledzenie punktów charakterystycznych w źródłowym materiale wideo w celu oszacowania ruchu kamery 3D i kształtu otoczenia. Takie techniki są szeroko stosowane w Hollywood, np. w filmach takich jak Jurassic Park; wymagają one również zastosowania precyzyjnego matowania w celu wstawienia nowych elementów pomiędzy elementy pierwszego planu i tła;
--   Śledzenie ruchu: wykorzystywanie znaczników retrorefleksyjnych oglądanych z wielu kamer lub innych technik opartych na wizji w celu uchwycenia aktorów na potrzeby animacji komputerowej;
+-   Łączenie ruchu: łączenie obrazów generowanych komputerowo (CGI) z materiałem filmowym z życia wziętym poprzez śledzenie punktów charakterystycznych w źródłowym materiale wideo w celu oszacowania ruchu kamery 3D i kształtu otoczenia. Takie techniki są szeroko stosowane w Hollywood, np. w filmach takich jak *Jurassic Park*; wymagają one również zastosowania precyzyjnego matowania w celu wstawienia nowych elementów pomiędzy elementy pierwszego planu i tła;
+-   Śledzenie ruchu: wykorzystywanie znaczników retro-refleksyjnych oglądanych z wielu kamer lub innych technik opartych na wizji w celu uchwycenia aktorów na potrzeby animacji komputerowej;
 -   Nadzór: monitorowanie intruzów, analizowanie ruchu na drogach i monitorowanie basenów pod kątem ofiar utonięć;
 -   Rozpoznawanie odcisków palców i biometria: do automatycznego uwierzytelniania dostępu oraz do zastosowań kryminalistycznych.
 
@@ -45,12 +45,10 @@ Należą do nich:
 
 -   Zszywanie (ang. *stitching*): przekształcanie nakładających się na siebie zdjęć w jedną, płynnie zszytą panoramę;
 -   *Exposure bracketing*: łączenie wielu ekspozycji wykonanych w trudnych warunkach oświetleniowych (silne światło słoneczne i cienie) w jedno doskonale naświetlone zdjęcie;
--   *Morphing*: przekształcanie zdjęcia jednego z przyjaciół w inne, przy użyciu płynnego przejścia morficznego;
+-   *Morphing*: przekształcanie zdjęcia jednego z przyjaciół w inne, przy użyciu płynnego przejścia morficznego (np. nałożenie tworzy przyjaciela na pysk lwa);
 -   Modelowanie 3D: przekształcanie jednego lub więcej ujęć w model 3D fotografowanego obiektu lub osoby;
 -   Ruch i stabilizacja dopasowania wideo: wstawianie obrazów 2D lub modeli 3D do filmów poprzez automatyczne śledzenie pobliskich punktów odniesienia lub wykorzystanie oszacowania ruchu w celu usunięcia drgań z filmów;
 -   Spacer po zdjęciach: poruszanie się po dużej kolekcji zdjęć, np. po wnętrzu domu, poprzez przelatywanie pomiędzy różnymi zdjęciami w 3D.
-
-W tym rozdziale przedstawiam krótkie, subiektywne streszczenie głównych osiągnięć w dziedzinie wizyjności komputerowej w ciągu ostatnich pięćdziesięciu lat, koncentrując się na postępach, które uważam za osobiście interesujące i które przetrwały próbę czasu.
 
 ![Najważniejsze osiągnięcia w wizji komputerowej na przestrzeni lat](images/Zrzut%20ekranu%202023-01-12%20o%2016.08.19.png){#fig-1}
 
@@ -76,8 +74,7 @@ Wykorzystanie stereo jako ilościowej wskazówki kształtu zostało rozszerzone 
 
 ![Przykład wykorzystania techniki piramid blending](images/Zrzut%20ekranu%202023-01-12%20o%2017.00.24.png){#fig-2}
 
-W tym okresie prowadzono również badania nad lepszym wykrywaniem krawędzi i konturów [@cannyComputationalApproachEdge1986; @nalwaDetectingEdges1986], stereografii fotometrycznej [@woodhamAnalysingImagesCurved1981] oraz kształty z tekstur [@witkinRecoveringSurfaceShape1981].
-W tym okresie prowadzono również badania nad lepszym wykrywaniem krawędzi i konturów, w tym wprowadzono dynamicznie ewoluujące trackery konturów, takie jak węże, a także trójwymiarowe modele oparte na fizyce.
+W tym okresie prowadzono również badania nad lepszym wykrywaniem krawędzi i konturów [@cannyComputationalApproachEdge1986; @nalwaDetectingEdges1986], stereografii fotometrycznej [@woodhamAnalysingImagesCurved1981] oraz kształty z tekstur [@witkinRecoveringSurfaceShape1981], w tym wprowadzono dynamicznie ewoluujące trackery konturów, takie jak węże, a także trójwymiarowe modele oparte na fizyce.
 Naukowcy zauważyli, że wiele algorytmów detekcji stereoskopowej, przepływu, *shape-from-X* i krawędzi może być zunifikowanych lub przynajmniej opisanych przy użyciu tych samych ram matematycznych, jeśli zostaną one postawione jako problemy optymalizacji wariacyjnej i uodpornione (dobrze postawione) przy użyciu regularyzacji.
 
 Nieco później wprowadzono warianty on-line algorytmów MRF (ang. *Markov Random Field*), które modelowały i aktualizowały niepewności za pomocą filtru Kalmana.
@@ -87,23 +84,23 @@ Książka [@fischlerReadingsComputerVision1987] zawiera zbiór artykułów skupi
 ## Lata '90
 
 Podczas gdy wiele z wcześniej wymienionych tematów było nadal eksplorowanych, kilka z nich stało się znacznie bardziej aktywnych.
-Nagły wzrost aktywności w zakresie wykorzystania niezmienników projekcyjnych do celów rozpoznania [@mundyGeometricInvarianceComputer1992] przerodził się w skoordynowane wysiłki zmierzające do rozwiązania problemu *structure from motion*.
-Wiele początkowych działań skierowanych było na rekonstrukcje rzutowe, które nie wymagają znajomości kalibracji kamery.
-Równolegle, techniki faktoryzacji zostały opracowane w celu efektywnego rozwiązywania problemów, dla których miały zastosowanie przybliżenia kamery ortograficznej, a następnie rozszerzone na przypadek perspektywiczny.
+Nagły wzrost aktywności w zakresie wykorzystania niezmienników projekcyjnych do celów rozpoznania ruchu [@mundyGeometricInvarianceComputer1992] przerodził się w skoordynowane wysiłki zmierzające do rozwiązania problemu *structure from motion*.
+Wiele początkowych działań skierowanych było na rekonstrukcje rzutowe, które nie wymagają kalibracji kamery.
+Równolegle, techniki faktoryzacji zostały opracowane w celu efektywnego rozwiązywania problemów, dla których miały zastosowanie przybliżenia ortograficzne kamery, a następnie rozszerzone na przypadek perspektywiczny.
 
-W końcu zaczęto stosować pełną optymalizację globalną która później została uznana za tożsama z technikami dopasowania wiązki, tradycyjnie stosowanymi w fotogrametrii.
+W końcu zaczęto stosować pełną optymalizację globalną, która później została uznana za tożsamą z technikami dopasowania wiązki, tradycyjnie stosowanymi w fotogrametrii.
 W pełni zautomatyzowane systemy modelowania 3D zostały zbudowane przy użyciu tych technik.
 
 Prace rozpoczęte w latach 80-tych nad wykorzystaniem szczegółowych pomiarów barwy i natężenia światła w połączeniu z dokładnymi modelami fizycznymi transportu promieniowania i tworzenia kolorowych obrazów stworzyły własną dziedzinę znaną jako widzenie oparte na fizyce.
 Algorytmy stereo na podstawie wielu obrazów, które tworzą kompletne powierzchnie 3D były również aktywnym tematem badań, który jest aktualny do dziś.
 
-Algorytmy śledzenia również uległy dużej poprawie, w tym śledzenie konturów z wykorzystaniem aktywnych konturów, takich jak węże [@kassSnakesActiveContour1988], filtry cząsteczkowe [@blakeActiveContoursApplication2012] i zbiorów poziomnicowych (ang. *level set*) [@malladiShapeModelingFront1995], a także techniki oparte na intensywności (bezpośrednie), często stosowane do śledzenia twarzy.
+Algorytmy śledzenia również uległy dużej poprawie, w tym śledzenie konturów z wykorzystaniem aktywnych konturów, takich jak węże [@kassSnakesActiveContour1988], filtry cząsteczkowe [@blakeActiveContoursApplication2012] i zbiorów poziomicowych (ang. *level set*) [@malladiShapeModelingFront1995], a także techniki oparte na intensywności (bezpośrednie), często stosowane do śledzenia twarzy.
 
 ![Przykład śledzenia twarzy przez algorytm](images/Zrzut%20ekranu%202023-01-12%20o%2017.38.26.png){#fig-3 width="400"}
 
 Segmentacja obrazów, temat, który jest aktywny od początku wizji komputerowej, był również aktywnym tematem badań, produkując techniki oparte na minimalnej energii i minimalnej długości opisu, znormalizowanych cięciach i średnim przesunięciu.
 
-Zaczęły pojawiać się techniki uczenia statystycznego, najpierw w zastosowaniu analizy składowych głównych, eigenface do rozpoznawania twarzy oraz liniowych systemów dynamicznych do śledzenia krzywych.
+Zaczęły pojawiać się techniki uczenia statystycznego, najpierw w zastosowaniu analizy składowych głównych, *eigenface* do rozpoznawania twarzy oraz liniowych systemów dynamicznych do śledzenia krzywych.
 
 Być może najbardziej zauważalnym rozwojem w dziedzinie widzenia komputerowego w tej dekadzie była zwiększona interakcja z grafiką komputerową, zwłaszcza w interdyscyplinarnym obszarze modelowania i renderowania opartego na obrazach.
 Pomysł manipulowania obrazami świata rzeczywistego bezpośrednio w celu tworzenia nowych animacji po raz pierwszy stał się znany dzięki technikom morfingu obrazu.
@@ -111,7 +108,7 @@ Pomysł manipulowania obrazami świata rzeczywistego bezpośrednio w celu tworze
 ## Lata '00
 
 Ta dekada kontynuowała pogłębianie interakcji pomiędzy dziedzinami wizji i grafiki, ale co ważniejsze, przyjęła podejścia oparte na danych i uczeniu się jako kluczowe komponenty wizji.
-Wiele z tematów wprowadzonych w rubryce renderingu opartego na obrazie, takich jak zszywanie obrazów, przechwytywanie i renderowanie pola świetlnego oraz przechwytywanie obrazów o wysokim zakresie dynamicznym (HDR) poprzez bracketing ekspozycji, zostało ponownie ochrzczonych mianem fotografii obliczeniowej, aby potwierdzić zwiększone wykorzystanie takich technik w codziennej fotografii cyfrowej.
+Wiele z tematów wprowadzonych w rubryce renderingu opartego na obrazie, takich jak zszywanie obrazów, przechwytywanie i renderowanie pola świetlnego oraz przechwytywanie obrazów o wysokim zakresie dynamicznym (HDR) poprzez *bracketing* ekspozycji, zostało ponownie ochrzczonych mianem fotografii obliczeniowej, aby potwierdzić zwiększone wykorzystanie takich technik w codziennej fotografii cyfrowej.
 Na przykład, szybkie przyjęcie bracketingu ekspozycji do tworzenia obrazów o wysokim zakresie dynamicznym wymagało opracowania algorytmów kompresji dynamiki, aby przekształcić takie obrazy z powrotem do wyników możliwych do wyświetlenia.
 Oprócz łączenia wielu ekspozycji, opracowano techniki łączenia obrazów z lampą błyskową z ich odpowiednikami bez lampy błyskowej.
 
@@ -120,23 +117,23 @@ Oprócz łączenia wielu ekspozycji, opracowano techniki łączenia obrazów z l
 Drugim wartym uwagi trendem w tej dekadzie było pojawienie się technik opartych na cechach (połączonych z uczeniem) do rozpoznawania obiektów.
 Niektóre z godnych uwagi prac w tej dziedzinie obejmują model konstelacji [@ponceCategoryLevelObjectRecognition2007; @fergusWeaklySupervisedScaleInvariant2007] oraz struktury obrazowe [@felzenszwalbPictorialStructuresObject2005].
 Techniki oparte na cechach dominują również w innych zadaniach rozpoznawania, takich jak rozpoznawanie scen, panoram i lokalizacji.
-I chociaż cechy oparte na punktach zainteresowania (patch-based) dominują w obecnych badaniach, niektóre grupy zajmują się rozpoznawaniem na podstawie konturów i segmentacji regionów.
+I chociaż cechy oparte na punktach kluczowych (*patch-based*) dominują w obecnych badaniach, niektóre grupy zajmują się rozpoznawaniem na podstawie konturów i segmentacji regionów.
 
 Innym istotnym trendem tej dekady było opracowanie bardziej wydajnych algorytmów dla złożonych problemów optymalizacji globalnej.
-Chociaż trend ten rozpoczął się od prac nad cięciami grafów, duży postęp dokonał się również w algorytmach przekazywania wiadomości, takich jak loopy belief propagation (LBP).
+Chociaż trend ten rozpoczął się od prac nad cięciami grafów, duży postęp dokonał się również w algorytmach przekazywania inforamcji, takich jak *loopy belief propagation* (LBP).
 
 Najbardziej zauważalnym trendem tej dekady, który do tej pory całkowicie opanował rozpoznawanie obrazu i większość innych aspektów widzenia komputerowego, było zastosowanie zaawansowanych technik uczenia maszynowego do problemów widzenia komputerowego.
 Trend ten zbiegł się w czasie ze zwiększoną dostępnością ogromnych ilości częściowo oznakowanych danych w Internecie, a także ze znacznym wzrostem mocy obliczeniowej, co sprawiło, że uczenie się kategorii obiektów bez użycia starannego nadzoru człowieka stało się bardziej realne.
 
 ## Lata '10
 
-Trend do wykorzystywania dużych etykietowanych zbiorów danych do rozwoju algorytmów uczenia maszynowego stał się falą, która całkowicie zrewolucjonizowała rozwój algorytmów rozpoznawania obrazów, a także innych aplikacji, takich jak denoising i przepływ optyczny, które wcześniej wykorzystywały techniki Bayesa i optymalizacji globalnej.
+Trend do wykorzystywania dużych etykietowanych zbiorów danych do rozwoju algorytmów uczenia maszynowego stał się falą, która całkowicie zrewolucjonizowała rozwój algorytmów rozpoznawania obrazów, a także innych aplikacji, takich jak *denoising* i przepływ optyczny, które wcześniej wykorzystywały techniki Bayesa i optymalizacji globalnej.
 Tendencję tę umożliwił rozwój wysokiej jakości wielkoskalowych anotowanych zbiorów danych, takich jak ImageNet, Microsoft COCO i LVIS.
 Te zbiory danych dostarczyły nie tylko wiarygodnych metryk do śledzenia postępów algorytmów rozpoznawania i segmentacji semantycznej, ale co ważniejsze, wystarczającej ilości etykietowanych danych do opracowania kompletnych rozwiązań opartych na uczeniu maszynowym.
 
-Innym ważnym trendem był dramatyczny wzrost mocy obliczeniowej dostępny dzięki rozwojowi algorytmów ogólnego przeznaczenia (data-parallel) na jednostkach przetwarzania graficznego (GPGPU).
+Innym ważnym trendem był dramatyczny wzrost mocy obliczeniowej dostępny dzięki rozwojowi algorytmów ogólnego przeznaczenia (*data-parallel*) na jednostkach przetwarzania graficznego (GPGPU).
 Przełomowa głęboka sieć neuronowa SuperVision ("AlexNet"), która jako pierwsza wygrała coroczne zawody w rozpoznawaniu obrazów na dużą skalę ImageNet, opierała się na treningu na GPU, a także na szeregu usprawnień technicznych, które przyczyniły się dramatycznie do wzrostu jej wydajności.
-Po opublikowaniu tej pracy postęp w wykorzystaniu głębokich architektur konwolucyjnych gwałtownie przyspieszył, do tego stopnia, że obecnie są one jedyną architekturą braną pod uwagę w zadaniach rozpoznawania i segmentacji semantycznej, a także preferowaną architekturą w wielu innych zadaniach wizyjnych, w tym w zadaniach przepływu optycznego, denoisingu i wnioskowania o głębi monokularnej [@lecunDeepLearning2015].
+Po opublikowaniu tej pracy postęp w wykorzystaniu głębokich architektur konwolucyjnych gwałtownie przyspieszył, do tego stopnia, że obecnie są one jedyną architekturą braną pod uwagę w zadaniach rozpoznawania i segmentacji semantycznej, a także preferowaną architekturą w wielu innych zadaniach wizyjnych, w tym w zadaniach przepływu optycznego, *denoisingu* i wnioskowania o głębi monokularnej [@lecunDeepLearning2015].
 
 Duże zbiory danych i architektury GPU, w połączeniu z szybkim upowszechnianiem pomysłów poprzez pojawiające się w odpowiednim czasie publikacje na arXiv, a także rozwój języków głębokiego uczenia i otwarty dostęp do modeli sieci neuronowych, przyczyniły się do gwałtownego rozwoju tej dziedziny, zarówno pod względem szybkich postępów i możliwości, jak i samej liczby publikacji i badaczy zajmujących się obecnie tymi tematami.
 Umożliwiły one również rozszerzenie podejść do rozpoznawania obrazów na zadania związane z rozumieniem wideo, takie jak rozpoznawanie akcji, a także zadania regresji strukturalnej, takie jak estymacja w czasie rzeczywistym wieloosobowej pozy ciała.

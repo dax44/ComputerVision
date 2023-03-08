@@ -37,13 +37,13 @@ include_graphics("images/Camera_obscura_1.jpg")
 
 -   1861 -- fizykowi Jamesowi Clerkowi Maxwellowi udało się uzyskać pierwszą trwałą fotografię barwną,
 
--   1907 -- bracia Lumière wprowadzili na rynek pierwsze szklane kolorowe płyty światłoczułe do fotografii barwnej (Autochrome).
+-   1907 -- bracia Lumière wprowadzili na rynek pierwsze szklane kolorowe płyty światłoczułe do fotografii barwnej (*Autochrome*).
     Były one produkowane na bazie barwionej skrobi ziemniaczanej.
-    Autochromy pomimo nowatorskiego użycia koloru miały swoje wady to znaczy małą czułość, duże ziarno i konieczność używania statywu w przeciwieństwie do materiałów czarno-białych,
+    Autochromy pomimo nowatorskiego użycia koloru miały swoje wady, to znaczy małą czułość, duże ziarno i konieczność używania statywu w przeciwieństwie do materiałów czarno-białych,
 
--   1935 -- wprowadzono do sprzedaży pierwszy współczesny trójwarstwowy film barwny -- Kodachrome,
+-   1935 -- wprowadzono do sprzedaży pierwszy współczesny trójwarstwowy film barwny -- *Kodachrome*,
 
--   większość współczesnych filmów barwnych, oprócz Kodachrome, wykorzystuje technologię stworzoną dla filmu Agfacolor w 1936 roku,
+-   większość współczesnych filmów barwnych, oprócz *Kodachrome*, wykorzystuje technologię stworzoną dla filmu *Agfacolor* w 1936 roku,
 
 -   Od 1963 -- jest dostępny natychmiastowy materiał kolorowy firmy Polaroid Corporation,
 
@@ -63,9 +63,9 @@ Model ten nie jest wystarczająco złożony, aby objąć fizyczne szczegóły rz
 Tak więc, choć ten prosty model wystarcza do naszych celów (tj. zrozumienia mechaniki pozyskiwania obrazu), w literaturze można znaleźć znacznie bardziej szczegółowe modele uwzględniające te dodatkowe złożoności.
 
 ::: {#fig-elephants layout-ncol="2"}
-![Camera obscura](images/Zrzut%20ekranu%202023-01-21%20o%2020.16.05.png){#fig-camera}
+![Camera obscura](images/Zrzut%20ekranu%202023-01-21%20o%2020.16.05.png){#fig-camera width="600"}
 
-![Soczewka](images/Zrzut%20ekranu%202023-01-21%20o%2020.16.19.png){#fig-soczewka}
+![Soczewka](images/Zrzut%20ekranu%202023-01-21%20o%2020.16.19.png){#fig-soczewka width="600"}
 
 Porównanie dwóch rozwiązań
 :::
@@ -81,24 +81,24 @@ Próbkowanie przestrzenne obrazu (czyli zamiana sygnału ciągłego na jego repr
 Poszczególne elementy czujnika są ułożone w uporządkowanych rzędach, prawie zawsze pod kątem prostym do siebie, wzdłuż płaszczyzny czujnika (@fig-sensor).
 Aparaty cyfrowe rejestrują obraz za pomocą matrycy CCD (ang. *Charge-Coupled Device*) lub CMOS (ang.*Complementary Metal-Oxide-Semiconductor*), która przetwarza światło na sygnał cyfrowy.
 
-![Fragmenty matryc CCD i CMOS](images/Zrzut%20ekranu%202023-01-26%20o%2017.32.32.png)
+![Fragmenty matryc CCD i CMOS](images/Zrzut%20ekranu%202023-01-26%20o%2017.32.32.png){width="600"}
 
 Próbkowanie czasowe odbywa się poprzez pomiar w regularnych odstępach czasu ilości światła padającego na każdy pojedynczy element czujnika.
 CCD w aparacie cyfrowym robi to poprzez wyzwolenie procesu ładowania, a następnie zmierzenie ilości ładunku elektrycznego, który nagromadził się w określonym czasie, w którym CCD była oświetlona.
 
-![Geometria sensora](images/Zrzut%20ekranu%202023-01-21%20o%2020.36.49.png){#fig-sensor}
+![Geometria sensora](images/Zrzut%20ekranu%202023-01-21%20o%2020.36.49.png){#fig-sensor width="600"}
 
 W celu przechowywania i przetwarzania wartości obrazu w komputerze są one powszechnie konwertowane do skali liczb całkowitych (np. $256 = 2^8$ lub $4096 = 2^{12}$).
 Sporadycznie w zastosowaniach profesjonalnych, takich jak obrazowanie medyczne, stosuje się wartości zmiennoprzecinkowe.
 Konwersja odbywa się za pomocą konwertera analogowo-cyfrowego, który jest zazwyczaj wbudowanym bezpośrednio w elektronikę czujnikiem, tak że konwersja następuje podczas rejestracji obrazu lub jest wykonywana przez specjalny interfejs.
 
-![Zapis cyfrowy obrazu](images/Zrzut%20ekranu%202023-01-21%20o%2020.56.20.png)
+![Zapis cyfrowy obrazu](images/Zrzut%20ekranu%202023-01-21%20o%2020.56.20.png){width="600"}
 
 Matryce CMOS są tańsze w produkcji, bardziej energooszczędne i mogą być łatwiej integrowane z innymi elementami elektronicznymi w aparacie, takimi jak procesor obrazu, a także z innymi funkcjami, takimi jak GPS, WiFi czy Bluetooth.
 Matryce CCD są bardziej wrażliwe na światło i mają lepszą jakość obrazu, zwłaszcza w warunkach słabego oświetlenia.
 Natomiast matryce CMOS są lepsze do zastosowań, w których ważna jest wysoka przepustowość i szybkość rejestracji obrazów oraz niskie zużycie energii.
 
-![Pojedyncza fotodioda](images/Zrzut%20ekranu%202023-01-26%20o%2017.34.40.png){width="500"}
+![Pojedyncza fotodioda](images/Zrzut%20ekranu%202023-01-26%20o%2017.34.40.png){width="600"}
 
 Najpowszechniej stosowany podział obrazów cyfrowych zapisanych na nośniku, to grafika rastrowa i grafika wektorowa.
 Grafika rastrowa (ang. *raster image*), zwana też grafiką bitmapową, to rodzaj grafiki, w której obraz jest składany z pojedynczych pikseli.
@@ -107,9 +107,9 @@ Obrazy rastrowe są zwykle zapisywane w formatach takich jak JPEG, PNG lub GIF.
 
 Grafika wektorowa (ang. *vector image*) to rodzaj grafiki, w której obraz jest składany z kształtów geometrycznych takich jak linie, koła i trójkąty.
 Każdy kształt jest opisany matematycznie i jest zapisany jako indywidualna jednostka danych.
-Obrazy wektorowe są zwykle zapisywane w formatach takich jak SVG, AI lub EPS.
+Obrazy wektorowe są zwykle zapisywane w formatach takich jak SVG, PDF, AI lub EPS.
 
-![Grafika rastrowa vs wektorowa](images/Orc_-_Raster_vs_Vector_comparison.png)
+![Grafika rastrowa vs wektorowa](images/Orc_-_Raster_vs_Vector_comparison.png){width="600"}
 
 Główna różnica między grafiką rastrową a wektorową polega na tym, że obrazy rastrowe składają się z indywidualnych pikseli, podczas gdy obrazy wektorowe składają się z matematycznie opisanych kształtów.
 Obrazy rastrowe tracą jakość po powiększeniu, ponieważ piksele są widoczne, podczas gdy obrazy wektorowe zachowują jakość po powiększeniu, ponieważ są składane z kształtów matematycznych.
@@ -130,7 +130,7 @@ Im więcej pikseli ma obraz, tym więcej szczegółów jest widocznych.
 Rozdzielczość obrazu określa wymiary przestrzenne obrazu w świecie rzeczywistym i jest podawana jako liczba elementów obrazu na jeden pomiar; na przykład w punktach na cal (dpi) lub liniach na cal (lpi) w przypadku produkcji poligraficznej lub w pikselach na kilometr w przypadku zdjęć satelitarnych.
 Jednocześnie, im więcej pikseli ma obraz, tym większy jest jego rozmiar pliku i tym więcej pamięci jest potrzebne do jego przechowywania.
 Wymiary obrazu przedstawiane są za pomocą liczby pikseli poziomo i pionowo, np.
-1920x1080 pikseli.
+1920 x 1080 pikseli.
 
 Innym ważnym czynnikiem wpływającym na wielkość obrazu jest format pliku w jakim jest zapisany.
 Niektóre formaty są kompresowane co pozwala na zmniejszenie wielkości pliku przy zachowaniu jakości obrazu, inne natomiast nie pozwalają na kompresję i zwiększają rozmiar pliku.
@@ -210,9 +210,9 @@ BMP jest często używany do przechowywania obrazów w celach archiwizacyjnych, 
 ### Operacje na plikach
 
 Istnieje wiele zewnętrznych (w stosunku do środowiska R) profesjonalnych narzędzi do obróbki zdjęć.
-Wśród nich z pewnością należy wymienić: Adobe Photoshop, CorelDRAW, Gimp, PIXLR, FIji (ImageJ) i wiele innych.
+Wśród nich z pewnością należy wymienić: *Adobe Photoshop*, *CorelDRAW*, *Gimp*, *PIXLR*, *FIji* (*ImageJ*) i wiele innych.
 Część z nich jest komercyjna, a część darmowa.
-Osobiście do przetwarzania obrazów pochodzących z badań biologicznych, medycznych, czy inżynierskich polecam darmowy program Fiji, będący rozszerzeniem swojego pierwowzoru, czyli ImageJ.
+Osobiście do przetwarzania obrazów pochodzących z badań biologicznych, medycznych, czy inżynierskich polecam darmowy program *Fiji*, będący rozszerzeniem swojego pierwowzoru, czyli *ImageJ*.
 
 Również w samym środowisku R istnieje szereg bibliotek do obsługi obrazów:
 
@@ -272,6 +272,7 @@ image_write(img_orig, path = "images/img4.jpeg",
 Po zapisie do innych formatów pliki znacznie zmniejszyły swoją wielkość.
 
 ```{r}
+#| cache: true
 #| label: tbl-infos
 #| tbl-cap: Podstawowe informacje o obrazach
 img_gif <- image_read("images/img.gif")
@@ -301,6 +302,7 @@ bind_rows(img_orig_info, img_gif_info, img_png_info,
 Pomimo znacznej różnicy w wielkości obrazów (w sensie miejsca zajmowanego na dysku) nie różnią się one znacznie jakością (przynajmniej na pierwszy rzut oka)
 
 ```{r}
+#| cache: true
 #| layout-ncol: 2
 #| label: fig-razem
 #| fig-cap: 
@@ -322,6 +324,7 @@ img_jpeg4
 ```
 
 ```{r}
+#| cache: true
 #| label: fig-hist
 #| layout-ncol: 2
 #| cache: true
