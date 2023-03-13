@@ -221,7 +221,7 @@ im_list <- map_il(c(-1:6), ~imresize(im,
                                      scale = 1.5,
                                      interpolation = .x))
 row1 <- imappend(im_list[1:4], "x")
-row2 <- imappend(im_list[5:7], "x")
+row2 <- imappend(im_list[5:8], "x")
 imappend(list(row1, row2), "y") |>
   plot(interp = F)
 ```

@@ -1,0 +1,47 @@
+---
+code-fold: show
+---
+
+# Sieci rekurencyjne
+
+W tym rozdziale przedstawimy modele głębokiego uczenia, które mogą przetwarzać tekst (rozumiany jako ciąg słów lub ciąg znaków), szeregi czasowe i ogólnie dane sekwencyjne.
+Dwa podstawowe algorytmy głębokiego uczenia się dla przetwarzania sekwencji to rekurencyjne sieci neuronowe (ang. *recurent neural networks*) i sieci splotowe 1D, jako jednowymiarowa wersja sieci splotowych 2D.
+Zastosowania tych algorytmów obejmują:
+
+-   Klasyfikację dokumentów i klasyfikację szeregów czasowych, np. identyfikacja tematu artykułu lub autora książki;
+-   Porównywanie szeregów czasowych, np. szacowanie, jak blisko siebie są dwa dokumenty lub dwa indeksy giełdowe;
+-   Uczenie się od sekwencji do sekwencji, np. dekodowanie zdania angielskiego na francuskie.
+-   Analiza nastrojów (ang. *sentiment analysis*), np. klasyfikacja nastrojów tweetów lub recenzji filmowych jako pozytywnych lub negatywnych;
+-   Prognozowanie w szeregu czasowym, np. przewidywanie przyszłej pogody w danym miejscu na podstawie ostatnich danych pogodowych.
+
+Przykłady w tym rozdziale skupią się na dwóch wąskich zadaniach: analizie sentymentu na zbiorze danych IMDB, do którego to zadania podeszliśmy wcześniej w książce, oraz prognozowaniu pogody.
+Jednak techniki, które zademonstrujemy dla tych dwóch zadań, są istotne dla wszystkich zastosowań, które właśnie wymieniliśmy, i wielu innych.
+
+## Dane tekstowe
+
+Tekst jest jedną z najbardziej rozpowszechnionych form danych sekwencyjnych.
+Może być rozumiany jako ciąg znaków lub ciąg słów, ale najczęściej pracuje się na poziomie słów.
+Modele głębokiego uczenia przetwarzające sekwencje, które przedstawimy w kolejnych rozdziałach, mogą wykorzystać tekst do stworzenia podstawowej formy rozumienia języka naturalnego, wystarczającej do zastosowań takich jak klasyfikacja dokumentów, analiza sentymentu, identyfikacja autorów, a nawet odpowiadanie na pytania (w ograniczonym kontekście).
+Oczywiście należy pamiętać, że żaden z tych modeli głębokiego uczenia nie rozumie tekstu w ludzkim sensie; modele te mogą raczej odwzorować statystyczną strukturę języka pisanego, co jest wystarczające do rozwiązania wielu prostych zadań tekstowych.
+Uczenie głębokie dla przetwarzania języka naturalnego to rozpoznawanie wzorców zastosowane do słów, zdań i akapitów, w podobny sposób jak widzenie komputerowe to rozpoznawanie wzorców zastosowane do pikseli.
+
+Podobnie jak wszystkie inne sieci neuronowe, modele głębokiego uczenia nie przyjmują jako danych wejściowych surowego tekstu: pracują tylko z tensorami liczbowymi.
+Wektoryzacja tekstu to proces przekształcania tekstu w tensory liczbowe.
+Można to zrobić na wiele sposobów:
+
+-   Segmentacja tekstu na słowa i przekształcenie każdego słowa w wektor;
+-   Segmentacja tekstu na znaki i przekształcenie każdego znaku w wektor.
+-   Wyodrębnianie N-gramów słów lub znaków i przekształcenie każdego N-grama w wektor. N-gramy to nakładające się na siebie grupy wielu kolejnych słów lub znaków.
+
+Przykładem 3-gramu dla zdania "The cat sat on the mat" jest:
+
+    "The", "The cat", "cat", "cat sat", "The cat sat",
+      "sat", "sat on", "on", "cat sat on", "on the", "the",
+      "sat on the", "the mat", "mat", "on the mat"
+
+Różne jednostki, na które można podzielić tekst (słowa, znaki lub N-gramy) nazywane są tokenami (ang. *tokens*), a rozbicie tekstu na takie tokeny nazywane jest tokenizacją.
+Wszystkie procesy wektoryzacji tekstu polegają na zastosowaniu pewnego schematu tokenizacji, a następnie skojarzeniu wektorów liczbowych z wygenerowanymi tokenami.
+Wektory te, spakowane w tensory sekwencji, są wprowadzane do głębokich sieci neuronowych.
+Istnieje wiele sposobów na powiązanie wektora z tokenem.
+W tej sekcji przedstawimy dwa główne: kodowanie tokenów metodą *one-hot* oraz osadzanie tokenów (ang. *embeddings* - zwykle używane wyłącznie dla słów).
+Pozostała część tego rozdziału wyjaśnia te techniki i pokazuje jak ich użyć, aby przejść od surowego tekstu do tensora, który można wysłać do sieci.

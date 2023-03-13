@@ -251,6 +251,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./recurent.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Sieci rekurencyjne</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Bibliografia</a>
   </div>
 </li>
@@ -335,14 +340,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="podział-na-zbiór-uczący-walidacyjny-i-testowy" class="level2 page-columns page-full" data-number="11.1">
 <h2 data-number="11.1" class="anchored" data-anchor-id="podział-na-zbiór-uczący-walidacyjny-i-testowy"><span class="header-section-number">11.1</span> Podział na zbiór uczący, walidacyjny i testowy</h2>
 <p>Ocena modelu zawsze sprowadza się do podzielenia dostępnych danych na trzy zestawy: treningowy, walidacyjny i testowy. Trenujesz na danych treningowych i oceniasz swój model na danych walidacyjnych. Kiedy model jest już gotowy do użycia, testujesz go po raz ostatni na danych testowych.</p>
-<p>Możesz zapytać, dlaczego nie mieć dwóch zestawów: treningowego i testowego? Trenowałbyś na danych treningowych i oceniałbyś na danych testowych. To przecież o wiele prostsze!</p>
+
+<div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.memrise.com/hs-fs/hubfs/Blog%2520Posts%2520-%25202021/Hardest%2520Language/Friends.gif?width=480&amp;name=Friends.gif" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div></div><p>Możesz zapytać, dlaczego nie mieć dwóch zestawów: treningowego i testowego? Trenowałbyś na danych treningowych i oceniałbyś na danych testowych. To przecież o wiele prostsze!</p>
 <div class="page-columns page-full"><p>Powodem jest to, że opracowanie modelu zawsze wiąże się z dostrojeniem jego konfiguracji: na przykład wyborem liczby warstw lub rozmiaru warstw (zwanych hiperparametrami modelu, aby odróżnić je od parametrów, które są wagami sieci). Tuningu tego dokonasz, wykorzystując jako sygnał zwrotny wydajność modelu na danych walidacyjnych<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. W istocie, to strojenie jest formą uczenia się: poszukiwaniem dobrej konfiguracji w pewnej przestrzeni parametrów. W rezultacie, dostrajanie hiperparametrów modelu na podstawie jego wydajności na zbiorze walidacyjnym może szybko doprowadzić do przeuczenia do zbioru walidacyjnego, nawet jeśli twój model nigdy nie jest bezpośrednio trenowany na nim.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;mierzoną najczęściej funkcją straty</p></li></div></div>
 <p>Centralnym punktem tego fenomenu jest pojęcie wycieku informacji. Za każdym razem, gdy dostrajasz hiperparametr swojego modelu w oparciu o jego wydajność na zbiorze walidacyjnym, niektóre informacje o danych walidacyjnych wyciekają do modelu. Jeśli zrobisz to tylko raz, dla jednego parametru, wtedy bardzo niewiele bitów informacji wycieknie, a twój zbiór walidacyjny pozostanie wiarygodny do oceny modelu. Ale jeśli powtórzysz to wiele razy - przeprowadzając jeden eksperyment, oceniając go na zbiorze walidacyjnym i modyfikując w rezultacie swój model - wtedy wycieknie coraz większa ilość informacji o zbiorze walidacyjnym do modelu.</p>
 <p>Ostatecznie, skończysz z modelem, który działa podejrzanie dobrze na danych walidacyjnych, ponieważ właśnie po to go zoptymalizowałeś. Zależy Ci na wydajności na zupełnie nowych danych, a nie na danych walidacyjnych, więc musisz użyć zupełnie innego, nigdy wcześniej niewidzianego zbioru danych do oceny modelu: testowego zbioru danych. Twój model nie powinien mieć dostępu do żadnych informacji o zbiorze testowym, nawet pośrednio. Jeśli cokolwiek w modelu zostało dostrojone w oparciu o wydajność zbioru testowego, to Twoja miara uogólnienia będzie błędna.</p>
 <p>Podział danych na zbiory treningowe, walidacyjne i testowe może wydawać się prosty, ale istnieje kilka zaawansowanych sposobów, które mogą się przydać, gdy dostępnych jest niewiele danych. Przyjrzyjmy się trzem klasycznym przepisom oceny: zwykłej walidacji <em>hold-out</em>, walidacji krzyżowej K-krotnej oraz iterowanej krzyżowej walidacji K-krotnej z losowaniem.</p>
-<section id="hold-out" class="level3" data-number="11.1.1">
+<section id="hold-out" class="level3 page-columns page-full" data-number="11.1.1">
 <h3 data-number="11.1.1" class="anchored" data-anchor-id="hold-out"><span class="header-section-number">11.1.1</span> Hold-out</h3>
-<p>Wyodrębnij pewną część danych jako zbiór testowy. Trenuj na pozostałych danych i oceń na zbiorze testowym. Jak widziałeś w poprzednich rozdziałach, aby zapobiec wyciekowi informacji, nie powinieneś dostrajać swojego modelu na podstawie zbioru testowego, dlatego powinieneś również zarezerwować zbiór walidacyjny.</p>
+
+<div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media.tenor.com/WOWDcFzZcDUAAAAC/kitty-kitten.gif" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div></div><p>Wyodrębnij pewną część danych jako zbiór testowy. Trenuj na pozostałych danych i oceń na zbiorze testowym. Jak widziałeś w poprzednich rozdziałach, aby zapobiec wyciekowi informacji, nie powinieneś dostrajać swojego modelu na podstawie zbioru testowego, dlatego powinieneś również zarezerwować zbiór walidacyjny.</p>
 <div id="fig-fund1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-27 o 09.14.23.png" class="img-fluid figure-img" width="600"></p>
@@ -364,23 +379,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="3" data-code-cell="annotated-cell-1" data-code-annotation="1">wylosuj indeksy zbioru uczącego;</span>
+<span data-code-annotation="1" data-code-lines="3" data-code-cell="annotated-cell-1">wylosuj indeksy zbioru uczącego;</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="4" data-code-cell="annotated-cell-1" data-code-annotation="2">zdefiniuj zbiór walidacyjny;</span>
+<span data-code-annotation="2" data-code-lines="4" data-code-cell="annotated-cell-1">zdefiniuj zbiór walidacyjny;</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="5" data-code-cell="annotated-cell-1" data-code-annotation="3">zdefiniuj zbiór uczący;</span>
+<span data-code-annotation="3" data-code-lines="5" data-code-cell="annotated-cell-1">zdefiniuj zbiór uczący;</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="6,7,8" data-code-cell="annotated-cell-1" data-code-annotation="4">ucz model na zbiorze uczący i sprawdzaj dopasowanie na walidacyjnym;</span>
+<span data-code-annotation="4" data-code-lines="6,7,8" data-code-cell="annotated-cell-1">ucz model na zbiorze uczący i sprawdzaj dopasowanie na walidacyjnym;</span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-lines="9,10,11" data-code-cell="annotated-cell-1" data-code-annotation="5">naucz model na pełnym zestawie danych uczących (na połączonym zbiorze uczącym i walidacyjnym).</span>
+<span data-code-annotation="5" data-code-lines="9,10,11" data-code-cell="annotated-cell-1">naucz model na pełnym zestawie danych uczących (na połączonym zbiorze uczącym i walidacyjnym).</span>
 </dd>
 </dl>
 <p>Jest to najprostszy protokół oceny, ale ma jedną wadę: jeśli dostępnych danych jest mało, wtedy twoje zestawy walidacyjne i testowe mogą zawierać zbyt mało próbek, aby być statystycznie reprezentatywne dla danych. Łatwo to rozpoznać: jeśli różne losowe rundy tasowania danych przed podziałem kończą się uzyskaniem bardzo różnych miar wydajności modelu, to masz ten problem.</p>
@@ -421,29 +436,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="10" data-code-cell="annotated-cell-2" data-code-annotation="1">wybierz obserwacje do zbioru walidacyjnego;</span>
+<span data-code-annotation="1" data-code-lines="10" data-code-cell="annotated-cell-2">wybierz obserwacje do zbioru walidacyjnego;</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="11" data-code-cell="annotated-cell-2" data-code-annotation="2">użyj pozostałych danych jako zbioru uczącego (fold);</span>
+<span data-code-annotation="2" data-code-lines="11" data-code-cell="annotated-cell-2">użyj pozostałych danych jako zbioru uczącego (fold);</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-lines="13" data-code-cell="annotated-cell-2" data-code-annotation="3">stwórz model i ucz go na zbiorze uczącym (foldzie);</span>
+<span data-code-annotation="3" data-code-lines="13" data-code-cell="annotated-cell-2">stwórz model i ucz go na zbiorze uczącym (foldzie);</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-lines="19" data-code-cell="annotated-cell-2" data-code-annotation="4">oceń dopasowanie na zbiorze walidacyjnym (uśrednione z foldów);</span>
+<span data-code-annotation="4" data-code-lines="19" data-code-cell="annotated-cell-2">oceń dopasowanie na zbiorze walidacyjnym (uśrednione z foldów);</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-lines="21" data-code-cell="annotated-cell-2" data-code-annotation="5">ucz model na pełnym zestawie uczącym.</span>
+<span data-code-annotation="5" data-code-lines="21" data-code-cell="annotated-cell-2">ucz model na pełnym zestawie uczącym.</span>
 </dd>
 </dl>
 </section>
-<section id="iterowana-metoda-walidacji-krzyżowej-z-losowaniem" class="level3" data-number="11.1.3">
+<section id="iterowana-metoda-walidacji-krzyżowej-z-losowaniem" class="level3 page-columns page-full" data-number="11.1.3">
 <h3 data-number="11.1.3" class="anchored" data-anchor-id="iterowana-metoda-walidacji-krzyżowej-z-losowaniem"><span class="header-section-number">11.1.3</span> Iterowana metoda walidacji krzyżowej z losowaniem</h3>
-<p>Przeznaczona jest dla sytuacji, w których masz stosunkowo mało dostępnych danych i musisz jak najdokładniej ocenić swój model. Polega ona na wielokrotnym zastosowaniu K-krotnej walidacji, tasując dane za każdym razem przed podzieleniem ich na K sposobów. Końcowy wynik jest średnią z wyników uzyskanych w każdym przebiegu K-krotnej walidacji. Zauważ, że kończysz szkolenie i ocenę P * K modeli (gdzie P to liczba iteracji, których używasz), co może być bardzo kosztowne.</p>
+
+<div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media.tenor.com/00E4TNbGbYsAAAAM/valid-self-validation.gif" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div></div><p>Przeznaczona jest dla sytuacji, w których masz stosunkowo mało dostępnych danych i musisz jak najdokładniej ocenić swój model. Polega ona na wielokrotnym zastosowaniu K-krotnej walidacji, tasując dane za każdym razem przed podzieleniem ich na K sposobów. Końcowy wynik jest średnią z wyników uzyskanych w każdym przebiegu K-krotnej walidacji. Zauważ, że kończysz szkolenie i ocenę P * K modeli (gdzie P to liczba iteracji, których używasz), co może być bardzo kosztowne.</p>
 <p>W literaturze tematu metoda ta występuje również pod nazwą K-krotnego sprawdzianu krzyżowego z powtórzeniami.</p>
 </section>
 <section id="uwagi-do-resamplingu" class="level3" data-number="11.1.4">
@@ -455,17 +475,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </section>
 </section>
-<section id="przygotowanie-danych" class="level2" data-number="11.2">
+<section id="przygotowanie-danych" class="level2 page-columns page-full" data-number="11.2">
 <h2 data-number="11.2" class="anchored" data-anchor-id="przygotowanie-danych"><span class="header-section-number">11.2</span> Przygotowanie danych</h2>
 <p>Wiele technik wstępnego przetwarzania danych i inżynierii cech jest specyficznych dla danej dziedziny (np. specyficznych dla danych tekstowych lub danych obrazowych); omówimy je w kolejnych rozdziałach, gdy napotkamy je w praktycznych przykładach. Na razie zajmiemy się podstawami, które są wspólne dla wszystkich domen danych. Skupimy się na najważniejszych.</p>
 <section id="wektoryzacja" class="level3" data-number="11.2.1">
 <h3 data-number="11.2.1" class="anchored" data-anchor-id="wektoryzacja"><span class="header-section-number">11.2.1</span> Wektoryzacja</h3>
 <p>Wszystkie wejścia i cele w sieci neuronowej muszą być tensorami danych zmiennoprzecinkowych (lub, w szczególnych przypadkach, tensorami liczb całkowitych). Jakiekolwiek dane, które chcesz przetworzyć - dźwięk, obraz, tekst - musisz najpierw zamienić na tensory, co nazywamy wektoryzacją danych. Na przykład, jeśli zajmujemy się automatyczna analizą tekstu, to konieczna jest transformacja wyrazów metodą <em>one-hot encoding</em>, która zamieni nam wyrazy na zestaw zmiennych zmiennoprzecinkowych. W przykładach klasyfikacji cyfr dane były już w postaci wektorowej, więc można było pominąć ten krok.</p>
 </section>
-<section id="normalizacja" class="level3" data-number="11.2.2">
+<section id="normalizacja" class="level3 page-columns page-full" data-number="11.2.2">
 <h3 data-number="11.2.2" class="anchored" data-anchor-id="normalizacja"><span class="header-section-number">11.2.2</span> Normalizacja</h3>
 <p>W przykładzie klasyfikacji cyfr, zacząłeś od danych obrazu zakodowanych jako liczby całkowite z zakresu 0-255, kodujące wartości w skali szarości. Zanim wprowadziłeś te dane do sieci, musiałeś podzielić je przez 255, aby uzyskać wartości zmiennoprzecinkowe z zakresu 0-1. Podobnie, przy przewidywaniu cen domów, zacząłeś od cech, które miały różne zakresy - niektóre cechy miały małe wartości zmiennoprzecinkowe, inne miały dość duże wartości całkowite. Zanim wprowadziłeś te dane do swojej sieci, musiałeś znormalizować każdą cechę niezależnie, tak aby jej odchylenie standardowe wynosiło 1, a średnia 0.</p>
-<p>Ogólnie rzecz biorąc, nie jest bezpiecznie podawać do sieci neuronowej danych, które przyjmują stosunkowo duże wartości (na przykład wielocyfrowe liczby całkowite, które są znacznie większe niż wartości początkowe przyjmowane przez wagi sieci) lub dane, które są niejednorodne (na przykład dane, w których jedna cecha jest w zakresie 0-1, a inna w zakresie 100-200). Takie postępowanie może wywołać duże aktualizacje gradientu, które uniemożliwią sieci osiągnięcie zbieżności. Aby ułatwić uczenie się sieci, twoje dane powinny mieć następujące cechy:</p>
+
+<div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.pinimg.com/originals/d9/ce/e8/d9cee87228f811433f7c6a9cc8d38baf.gif" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div></div><p>Ogólnie rzecz biorąc, nie jest bezpiecznie podawać do sieci neuronowej danych, które przyjmują stosunkowo duże wartości (na przykład wielocyfrowe liczby całkowite, które są znacznie większe niż wartości początkowe przyjmowane przez wagi sieci) lub dane, które są niejednorodne (na przykład dane, w których jedna cecha jest w zakresie 0-1, a inna w zakresie 100-200). Takie postępowanie może wywołać duże aktualizacje gradientu, które uniemożliwią sieci osiągnięcie zbieżności. Aby ułatwić uczenie się sieci, twoje dane powinny mieć następujące cechy:</p>
 <ul>
 <li>Przyjmuj małe wartości - większość wartości powinna być w zakresie 0-1.</li>
 <li>Zachowaj jednorodność - to znaczy, że wszystkie cechy powinny przyjmować wartości w mniej więcej tym samym zakresie.</li>
@@ -481,11 +506,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="3" data-code-cell="annotated-cell-3" data-code-annotation="1">oblicz średnią i odchylenie standardowe na zbiorze uczącym;</span>
+<span data-code-annotation="1" data-code-lines="3" data-code-cell="annotated-cell-3">oblicz średnią i odchylenie standardowe na zbiorze uczącym;</span>
 </dd>
 <dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="6" data-code-cell="annotated-cell-3" data-code-annotation="2">zastosuj obliczone parametry do zbioru uczącego i testowego.</span>
+<span data-code-annotation="2" data-code-lines="6" data-code-cell="annotated-cell-3">zastosuj obliczone parametry do zbioru uczącego i testowego.</span>
 </dd>
 </dl>
 </section>
@@ -563,7 +588,12 @@ ________________________________________________________________________________
 <p>Na podstawie powyższego modelu możemy stwierdzić, że wydajność modelu na odłożonych danych walidacyjnych zawsze osiągała szczyt po kilku epokach, a następnie zaczynała się pogarszać. <em>Overfitting</em> zdarza się w każdym problemie uczenia maszynowego. Nauka radzenia sobie z nadmiernym dopasowaniem jest niezbędna do opanowania uczenia maszynowego.</p>
 <p>Podstawowym problemem w uczeniu maszynowym jest konflikt pomiędzy optymalizacją a generalizacją. Optymalizacja odnosi się do procesu dostosowywania modelu w celu uzyskania jak najlepszej wydajności na danych treningowych, podczas gdy generalizacja odnosi się do tego, jak dobrze wyszkolony model radzi sobie na danych, których nigdy wcześniej nie widział.</p>
 <p>Na początku treningu optymalizacja i generalizacja są zbieżne: im mniejsza strata na danych treningowych, tym mniejsza strata na danych testowych. Gdy tak się dzieje, mówi się, że twój model jest niedopasowany: wciąż jest postęp do zrobienia; sieć nie jest nauczona jeszcze wszystkich istotnych wzorców w danych treningowych. Jednak po pewnej liczbie iteracji na danych treningowych, generalizacja przestaje się poprawiać, a metryki dla zbioru walidacyjnego nie poprawiają się, a nawet zaczynają się pogarszać: model zaczyna być nadmiernie dopasowany. Oznacza to, że model zaczyna się uczyć wzorców, które są specyficzne dla danych treningowych, ale które są mylące lub nieistotne, gdy chodzi o nowe dane.</p>
-<p>Aby zapobiec uczeniu się przez model błędnych lub nieistotnych wzorców występujących w danych treningowych, najlepszym rozwiązaniem jest uzyskanie większej ilości danych treningowych. Model wytrenowany na większej ilości danych będzie naturalnie lepiej generalizował. Jeśli nie jest to możliwe, innym rozwiązaniem jest modulowanie ilości informacji, które model może przechowywać, lub dodanie ograniczeń na informacje, które może przechowywać. Jeśli sieć może sobie pozwolić na zapamiętanie tylko niewielkiej liczby wzorców, proces optymalizacji zmusi ją do skupienia się na najbardziej widocznych wzorcach, które mają większą szansę na dobrą generalizację.</p>
+
+<div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.redd.it/wy9b0y106mh81.gif" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div></div><p>Aby zapobiec uczeniu się przez model błędnych lub nieistotnych wzorców występujących w danych treningowych, najlepszym rozwiązaniem jest uzyskanie większej ilości danych treningowych. Model wytrenowany na większej ilości danych będzie naturalnie lepiej generalizował. Jeśli nie jest to możliwe, innym rozwiązaniem jest modulowanie ilości informacji, które model może przechowywać, lub dodanie ograniczeń na informacje, które może przechowywać. Jeśli sieć może sobie pozwolić na zapamiętanie tylko niewielkiej liczby wzorców, proces optymalizacji zmusi ją do skupienia się na najbardziej widocznych wzorcach, które mają większą szansę na dobrą generalizację.</p>
 <p>Proces walki z overfittingiem w ten sposób nazywany jest regularyzacją. Zapoznajmy się z kilkoma najpopularniejszymi technikami regularyzacji i zastosujmy je w praktyce, aby poprawić model klasyfikacji.</p>
 <section id="redukcja-wielkości-sieci" class="level3" data-number="11.3.1">
 <h3 data-number="11.3.1" class="anchored" data-anchor-id="redukcja-wielkości-sieci"><span class="header-section-number">11.3.1</span> Redukcja wielkości sieci</h3>
@@ -611,7 +641,7 @@ ________________________________________________________________________________
 </div>
 <p>Jak widać z powyższej symulacji dla prostszej sieci zjawisko <em>overffitingu</em> pojawia się później i nie ma tak wyraźnego charakteru.</p>
 </section>
-<section id="regularyzacja-za-pomocą-kar" class="level3" data-number="11.3.2">
+<section id="regularyzacja-za-pomocą-kar" class="level3 page-columns page-full" data-number="11.3.2">
 <h3 data-number="11.3.2" class="anchored" data-anchor-id="regularyzacja-za-pomocą-kar"><span class="header-section-number">11.3.2</span> Regularyzacja za pomocą kar</h3>
 <p>Podobnie jak w modelach liniowych prostsze modele są mniej podatne na <em>overfitting</em>, również i sieci głębokiego uczenia również podlegają tej zasadzie - jak się mogliśmy przekonać na podstawie powyższego przykładu. Powyższy przykład ową prostotę modelu realizował poprzez prostą strukturę sieci (uboższy model) ale można go “upraszczać” również inaczej.</p>
 <p>Prosty model to model, w którym rozkład wartości parametrów ma mniejszą entropię (lub model z mniejszą liczbą parametrów, jak widzieliśmy w poprzedniej sekcji). Dlatego powszechnym sposobem łagodzenia overfittingu jest nałożenie ograniczeń na złożoność sieci poprzez zmuszenie jej wag do przyjmowania tylko małych wartości, co czyni rozkład wartości wag bardziej regularnym. Nazywa się to regularyzacją wag i odbywa się poprzez dodanie do funkcji straty sieci kosztu związanego z posiadaniem dużych wag. Koszt ten występuje w dwóch postaciach:</p>
@@ -620,7 +650,12 @@ ________________________________________________________________________________
 <li>L2 - koszt dodany jest proporcjonalny do kwadratu wartości współczynników wagowych (norma L2 wag).</li>
 </ul>
 <p>W <code>keras</code>, regularyzacja wagowa jest dodawana poprzez dodanie instancji regularyzatora wagowego do warstw. Należy pamiętać, że regularyzacja jest stosowana do sieci tylko na etapie uczenia, dlatego na zbiorze testowym strata będzie mniejsza niż na treningowym.</p>
-<div class="cell">
+
+<div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media.tenor.com/6F58VuiJmi8AAAAC/penalty-kicks.gif" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div></div><div class="cell">
 <details open="">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>network <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>() <span class="sc">%&gt;%</span></span>
@@ -781,7 +816,7 @@ ________________________________________________________________________________
 </ul>
 <p>Jeżeli chodzi o wybór funkcji straty, zauważ, że nie zawsze jest możliwa bezpośrednia optymalizacja dla metryki, która mierzy dopasowanie w danym problemie. Czasami nie ma łatwego sposobu na przekształcenie metryki w funkcję straty; funkcje straty, w końcu, muszą być obliczalne biorąc pod uwagę tylko partię danych (idealnie, funkcja straty powinna być obliczalna dla zaledwie jednego punktu danych) i musi być różniczkowalna (w przeciwnym razie nie można użyć wstecznej propagacji do trenowania sieci). Na przykład, szeroko stosowana metryka klasyfikacyjna ROC AUC nie może być bezpośrednio optymalizowana. Dlatego w zadaniach klasyfikacyjnych w jej miejsce używa się entropii krzyżowej (ang. <em>cross-entropy</em>). Można mieć nadzieję, że im niższa będzie entropia krzyżowa, tym wyższy będzie ROC-AUC.</p>
 </section>
-<section id="skalowanie-w-górę" class="level3" data-number="11.4.6">
+<section id="skalowanie-w-górę" class="level3 page-columns page-full" data-number="11.4.6">
 <h3 data-number="11.4.6" class="anchored" data-anchor-id="skalowanie-w-górę"><span class="header-section-number">11.4.6</span> Skalowanie w górę</h3>
 <p>Kiedy już uzyskasz model, który ma moc statystyczną, pojawia się pytanie, czy twój model jest wystarczająco skuteczny? Czy ma on wystarczająco dużo warstw i parametrów, aby prawidłowo modelować dany problem? Na przykład, sieć z pojedynczą warstwą ukrytą z dwoma neuronami miałaby moc statystyczną dla zbioru MNIST, ale nie byłaby wystarczająca do dobrego rozwiązania problemu. Pamiętaj jednak, że w uczeniu maszynowym stale występuje “walka” między optymalizacją a generalizacją; idealny model to model pomiędzy niedostatecznym dopasowaniem a nadmiernym dopasowaniem. Aby dowiedzieć się, gdzie leży ta granica, najpierw trzeba ją przekroczyć 😎.</p>
 <p>Aby dowiedzieć się, jak duży model będzie potrzebny, musisz opracować model, który jest nadmiernie dopasowany. Można to łatwo osiągnąć, realizują następujące kroki:</p>
@@ -791,7 +826,12 @@ ________________________________________________________________________________
 <li>Dłużej trenuj sieć (więcej epok).</li>
 </ol>
 <p>Zawsze monitoruj stratę na zbiorze treningowym i walidacyjnym, jak również wartości wszystkich metryk, na których Ci zależy. Kiedy widzisz, że wydajność modelu na danych walidacyjnych zaczyna się pogarszać, osiągnąłeś nadmierne dopasowanie. Następnym etapem jest rozpoczęcie regularyzacji i dostrajania modelu, aby zbliżyć się jak najbardziej do idealnego modelu, który nie jest ani niedopasowany, ani nadmiernie dopasowany.</p>
-</section>
+
+<div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media.tenor.com/YlxhVNa39lYAAAAM/i-dont-understand-what-just-happened-here-ross-geller.gif" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div></div></section>
 <section id="regularyzacja-modelu" class="level3" data-number="11.4.7">
 <h3 data-number="11.4.7" class="anchored" data-anchor-id="regularyzacja-modelu"><span class="header-section-number">11.4.7</span> Regularyzacja modelu</h3>
 <p>Ten krok zajmie najwięcej czasu: będziesz wielokrotnie modyfikował swój model, trenował go, oceniał na danych walidacyjnych (w tym momencie nie na danych testowych), ponownie go modyfikował i powtarzał, aż model będzie tak dobry, jak to tylko możliwe. Oto kilka rzeczy, które powinieneś wypróbować:</p>

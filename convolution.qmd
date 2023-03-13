@@ -137,7 +137,8 @@ Filtry kodują specyficzne aspekty danych wejściowych: na wysokim poziomie poje
 ![Procedura filtrowania obrazu](images/Zrzut%20ekranu%202023-03-2%20o%2018.58.12.png){#fig-conv fig-align="center" width="600"}
 
 W przykładzie MNIST, pierwsza warstwa konwolucji pobiera mapę cech o rozmiarze `(28, 28, 1)` i wyprowadza mapę cech o rozmiarze `(26, 26, 32)`: oblicza 32 filtry na danych wejściowych.
-Każdy z tych 32 filtrów wyjściowych zawiera siatkę wartości 26 × 26, która jest mapą odpowiedzi filtra, wskazującą odpowiedź tego filtra w różnych miejscach wejścia (patrz @fig-conv). To właśnie oznacza termin mapa cech: każdy wymiar na osi głębokości jest cechą (lub filtrem), a tensor 2D `output[:, :, n]` jest przestrzenną mapą 2D odpowiedzi tego filtra na wejście.
+Każdy z tych 32 filtrów wyjściowych zawiera siatkę wartości 26 × 26, która jest mapą odpowiedzi filtra, wskazującą odpowiedź tego filtra w różnych miejscach wejścia (patrz @fig-conv).
+To właśnie oznacza termin mapa cech: każdy wymiar na osi głębokości jest cechą (lub filtrem), a tensor 2D `output[:, :, n]` jest przestrzenną mapą 2D odpowiedzi tego filtra na wejście.
 
 Konwolucje są definiowane przez dwa kluczowe parametry:
 

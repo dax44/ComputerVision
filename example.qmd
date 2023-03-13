@@ -188,6 +188,8 @@ To może wydawać się nieco zniechęcające, ale na szczęście `keras` ma narz
 W szczególności, zawiera funkcję `image_data_generator()`, która może automatycznie przekształcić pliki graficzne na dysku w partie wstępnie przetworzonych tensorów.
 To właśnie z niej będziemy tutaj korzystać.
 
+![](https://media1.giphy.com/media/d7TkxiMvUS3Ju/giphy.gif?cid=ecf05e47cadc209dce96540c304d2f25c61ca078432e110d&rid=giphy.gif){.column-margin fig-align="center" width="400"}
+
 ```{r}
 train_datagen <- image_data_generator(rescale = 1/255)
 validation_datagen <- image_data_generator(rescale = 1/255)

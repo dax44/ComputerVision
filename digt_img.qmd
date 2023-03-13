@@ -327,7 +327,6 @@ img_jpeg4
 #| cache: true
 #| label: fig-hist
 #| layout-ncol: 2
-#| cache: true
 #| fig-cap: 
 #|    - "Histogramy RGB dla pliku TIFF"
 #|    - "Histogray RGB dla pliku JPEG 100%"

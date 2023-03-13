@@ -31,6 +31,8 @@ Ocena modelu zawsze sprowadza się do podzielenia dostępnych danych na trzy zes
 Trenujesz na danych treningowych i oceniasz swój model na danych walidacyjnych.
 Kiedy model jest już gotowy do użycia, testujesz go po raz ostatni na danych testowych.
 
+![](https://www.memrise.com/hs-fs/hubfs/Blog%2520Posts%2520-%25202021/Hardest%2520Language/Friends.gif?width=480&name=Friends.gif){.column-margin fig-align="center" width="400"}
+
 Możesz zapytać, dlaczego nie mieć dwóch zestawów: treningowego i testowego?
 Trenowałbyś na danych treningowych i oceniałbyś na danych testowych.
 To przecież o wiele prostsze!
@@ -57,6 +59,8 @@ Przyjrzyjmy się trzem klasycznym przepisom oceny: zwykłej walidacji *hold-out*
 
 ### Hold-out
 
+![](https://media.tenor.com/WOWDcFzZcDUAAAAC/kitty-kitten.gif){.column-margin fig-align="center" width="400"}
+
 Wyodrębnij pewną część danych jako zbiór testowy.
 Trenuj na pozostałych danych i oceń na zbiorze testowym.
 Jak widziałeś w poprzednich rozdziałach, aby zapobiec wyciekowi informacji, nie powinieneś dostrajać swojego modelu na podstawie zbioru testowego, dlatego powinieneś również zarezerwować zbiór walidacyjny.
@@ -66,7 +70,7 @@ Jak widziałeś w poprzednich rozdziałach, aby zapobiec wyciekowi informacji, n
 Schematycznie, walidacja hold-out wygląda jak na @fig-fund1.
 Poniższy listing pokazuje prostą implementację.
 
-```r
+``` r
 #| eval: false
 
 indices <- sample(1:nrow(data), size = 0.80 * nrow(data)) # <1>
@@ -79,6 +83,7 @@ model <- get_model()                                      # <5>
 model %>% train(data)                                     # <5>
 test_score <- model %>% evaluate(test_data)               # <5>
 ```
+
 1.  wylosuj indeksy zbioru uczącego;
 2.  zdefiniuj zbiór walidacyjny;
 3.  zdefiniuj zbiór uczący;
@@ -99,7 +104,7 @@ Podobnie jak w przypadku walidacji typu *hold-out,* metoda ta nie zwalnia z uży
 Schematycznie, K-krotna walidacja krzyżowa wygląda jak na @fig-fund2.
 Oto prosta implementacja pseudokodu w R.
 
-```r
+``` r
 #| eval: false
 
 k <- 4
@@ -124,6 +129,7 @@ model <- get_model() # <5>
 model %>% train(data) 
 results <- model %>% evaluate(test_data)
 ```
+
 1.  wybierz obserwacje do zbioru walidacyjnego;
 2.  użyj pozostałych danych jako zbioru uczącego (fold);
 3.  stwórz model i ucz go na zbiorze uczącym (foldzie);
@@ -131,6 +137,8 @@ results <- model %>% evaluate(test_data)
 5.  ucz model na pełnym zestawie uczącym.
 
 ### Iterowana metoda walidacji krzyżowej z losowaniem
+
+![](https://media.tenor.com/00E4TNbGbYsAAAAM/valid-self-validation.gif){.column-margin fig-align="center" width="400"}
 
 Przeznaczona jest dla sytuacji, w których masz stosunkowo mało dostępnych danych i musisz jak najdokładniej ocenić swój model.
 Polega ona na wielokrotnym zastosowaniu K-krotnej walidacji, tasując dane za każdym razem przed podzieleniem ich na K sposobów.
@@ -165,6 +173,8 @@ Zanim wprowadziłeś te dane do sieci, musiałeś podzielić je przez 255, aby u
 Podobnie, przy przewidywaniu cen domów, zacząłeś od cech, które miały różne zakresy - niektóre cechy miały małe wartości zmiennoprzecinkowe, inne miały dość duże wartości całkowite.
 Zanim wprowadziłeś te dane do swojej sieci, musiałeś znormalizować każdą cechę niezależnie, tak aby jej odchylenie standardowe wynosiło 1, a średnia 0.
 
+![](https://i.pinimg.com/originals/d9/ce/e8/d9cee87228f811433f7c6a9cc8d38baf.gif){.column-margin fig-align="center" width="400"}
+
 Ogólnie rzecz biorąc, nie jest bezpiecznie podawać do sieci neuronowej danych, które przyjmują stosunkowo duże wartości (na przykład wielocyfrowe liczby całkowite, które są znacznie większe niż wartości początkowe przyjmowane przez wagi sieci) lub dane, które są niejednorodne (na przykład dane, w których jedna cecha jest w zakresie 0-1, a inna w zakresie 100-200).
 Takie postępowanie może wywołać duże aktualizacje gradientu, które uniemożliwią sieci osiągnięcie zbieżności.
 Aby ułatwić uczenie się sieci, twoje dane powinny mieć następujące cechy:
@@ -175,7 +185,7 @@ Aby ułatwić uczenie się sieci, twoje dane powinny mieć następujące cechy:
 Zazwyczaj będziesz normalizował cechy zarówno w danych treningowych, jak i testowych.
 W tym przypadku będziesz chciał obliczyć średnią i odchylenie standardowe tylko na danych treningowych, a następnie zastosować je zarówno do danych treningowych, jak i testowych.
 
-```r
+``` r
 #| eval: false
 
 mean <- apply(train_data, 2, mean) # <1>
@@ -184,6 +194,7 @@ std <- apply(train_data, 2, sd)
 train_data <- scale(train_data, center = mean, scale = std) # <2>
 test_data <- scale(test_data, center = mean, scale = std)
 ```
+
 1.  oblicz średnią i odchylenie standardowe na zbiorze uczącym;
 2.  zastosuj obliczone parametry do zbioru uczącego i testowego.
 
@@ -199,7 +210,6 @@ W tej sytuacji powinieneś sztucznie wygenerować próbki treningowe z brakując
 ## Nadmierne dopasowanie i niedopasowanie
 
 Zacznijmy od nauczenia sieci neuronowej do rozpoznawania cyfr na podstawie obrazów prezentowany wcześniej.
-
 
 ```{r}
 #| eval: false
@@ -253,7 +263,6 @@ network
 plot(history)
 ```
 
-
 Na podstawie powyższego modelu możemy stwierdzić, że wydajność modelu na odłożonych danych walidacyjnych zawsze osiągała szczyt po kilku epokach, a następnie zaczynała się pogarszać.
 *Overfitting* zdarza się w każdym problemie uczenia maszynowego.
 Nauka radzenia sobie z nadmiernym dopasowaniem jest niezbędna do opanowania uczenia maszynowego.
@@ -265,6 +274,8 @@ Na początku treningu optymalizacja i generalizacja są zbieżne: im mniejsza st
 Gdy tak się dzieje, mówi się, że twój model jest niedopasowany: wciąż jest postęp do zrobienia; sieć nie jest nauczona jeszcze wszystkich istotnych wzorców w danych treningowych.
 Jednak po pewnej liczbie iteracji na danych treningowych, generalizacja przestaje się poprawiać, a metryki dla zbioru walidacyjnego nie poprawiają się, a nawet zaczynają się pogarszać: model zaczyna być nadmiernie dopasowany.
 Oznacza to, że model zaczyna się uczyć wzorców, które są specyficzne dla danych treningowych, ale które są mylące lub nieistotne, gdy chodzi o nowe dane.
+
+![](https://i.redd.it/wy9b0y106mh81.gif){.column-margin fig-align="center" width="400"}
 
 Aby zapobiec uczeniu się przez model błędnych lub nieistotnych wzorców występujących w danych treningowych, najlepszym rozwiązaniem jest uzyskanie większej ilości danych treningowych.
 Model wytrenowany na większej ilości danych będzie naturalnie lepiej generalizował.
@@ -319,7 +330,6 @@ network
 plot(history)
 ```
 
-
 Jak widać z powyższej symulacji dla prostszej sieci zjawisko *overffitingu* pojawia się później i nie ma tak wyraźnego charakteru.
 
 ### Regularyzacja za pomocą kar
@@ -337,6 +347,8 @@ Koszt ten występuje w dwóch postaciach:
 
 W `keras`, regularyzacja wagowa jest dodawana poprzez dodanie instancji regularyzatora wagowego do warstw.
 Należy pamiętać, że regularyzacja jest stosowana do sieci tylko na etapie uczenia, dlatego na zbiorze testowym strata będzie mniejsza niż na treningowym.
+
+![](https://media.tenor.com/6F58VuiJmi8AAAAC/penalty-kicks.gif){.column-margin fig-align="center" width="400"}
 
 ```{r}
 #| eval: false
@@ -369,15 +381,14 @@ network
 plot(history)
 ```
 
-
 Jak widać z powyższego wykresu przez zastosowanie regularyzacji L2 otrzymaliśmy większą zbieżność na obu próbach.
 
 ### Dropout
 
 *Dropout* to jedna z najskuteczniejszych i najczęściej stosowanych technik regularizacji dla sieci neuronowych, opracowana przez Geoffa Hintona i jego studentów z Uniwersytetu w Toronto.
 *Dropout*, zastosowany do warstwy, polega na losowym wyrzuceniu (ustawieniu na zero) pewnej liczby cech wyjściowych warstwy podczas treningu.
-Powiedzmy, że dana warstwa normalnie zwróciłaby podczas treningu wektor [0.2, 0.5, 1.3, 0.8, 1.1] dla danej próbki wejściowej.
-Po zastosowaniu *dropoutu*, wektor ten będzie miał kilka zerowych wpisów rozmieszczonych losowo: na przykład [0, 0.5, 1.3, 0, 1.1].
+Powiedzmy, że dana warstwa normalnie zwróciłaby podczas treningu wektor \[0.2, 0.5, 1.3, 0.8, 1.1\] dla danej próbki wejściowej.
+Po zastosowaniu *dropoutu*, wektor ten będzie miał kilka zerowych wpisów rozmieszczonych losowo: na przykład \[0, 0.5, 1.3, 0, 1.1\].
 
 ![](https://images1.memedroid.com/images/UPLOADED16/4f9caf2dd681d.jpeg){.column-margin fig-align="center" width="400"}
 
@@ -491,7 +502,7 @@ Kiedy już wiesz, na czym trenujesz, co optymalizujesz i jak ocenić swoje rozwi
 Najpierw jednak należy sformatować dane w taki sposób, aby można je było wprowadzić do modelu uczenia maszynowego - tutaj założymy głęboką sieć neuronową:
 
 -   Jak widziałeś wcześniej, twoje dane powinny być sformatowane jako tensory.
--   Wartości przyjmowane przez te tensory powinny być zazwyczaj skalowane do małych wartości: na przykład w zakresie [-1, 1] lub [0, 1].
+-   Wartości przyjmowane przez te tensory powinny być zazwyczaj skalowane do małych wartości: na przykład w zakresie \[-1, 1\] lub \[0, 1\].
 -   Jeśli różne cechy przyjmują wartości w różnych zakresach (dane heterogeniczne), to dane powinny być znormalizowane.
 -   Możesz dokonać inżynierii cech, szczególnie dla problemów z małą liczbą danych.
 
@@ -542,6 +553,8 @@ Można to łatwo osiągnąć, realizują następujące kroki:
 Zawsze monitoruj stratę na zbiorze treningowym i walidacyjnym, jak również wartości wszystkich metryk, na których Ci zależy.
 Kiedy widzisz, że wydajność modelu na danych walidacyjnych zaczyna się pogarszać, osiągnąłeś nadmierne dopasowanie.
 Następnym etapem jest rozpoczęcie regularyzacji i dostrajania modelu, aby zbliżyć się jak najbardziej do idealnego modelu, który nie jest ani niedopasowany, ani nadmiernie dopasowany.
+
+![](https://media.tenor.com/YlxhVNa39lYAAAAM/i-dont-understand-what-just-happened-here-ross-geller.gif){.column-margin fig-align="center" width="400"}
 
 ### Regularyzacja modelu
 
