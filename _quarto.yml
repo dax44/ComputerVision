@@ -41,7 +41,7 @@ book:
     - fundamentals.qmd
     - convolution.qmd
     - example.qmd
-    - recurent.qmd
+    - segmentation.qmd
     - references.qmd
 
 bibliography: references.bib

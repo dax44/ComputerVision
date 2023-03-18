@@ -1,5 +1,6 @@
 ---
 code-fold: show
+code-annotations: hover
 ---
 
 # Fundamenty DNN

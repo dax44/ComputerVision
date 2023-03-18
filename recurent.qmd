@@ -25,23 +25,1009 @@ Modele głębokiego uczenia przetwarzające sekwencje, które przedstawimy w kol
 Oczywiście należy pamiętać, że żaden z tych modeli głębokiego uczenia nie rozumie tekstu w ludzkim sensie; modele te mogą raczej odwzorować statystyczną strukturę języka pisanego, co jest wystarczające do rozwiązania wielu prostych zadań tekstowych.
 Uczenie głębokie dla przetwarzania języka naturalnego to rozpoznawanie wzorców zastosowane do słów, zdań i akapitów, w podobny sposób jak widzenie komputerowe to rozpoznawanie wzorców zastosowane do pikseli.
 
-Podobnie jak wszystkie inne sieci neuronowe, modele głębokiego uczenia nie przyjmują jako danych wejściowych surowego tekstu: pracują tylko z tensorami liczbowymi.
+Modele głębokiego uczenia, będąc funkcjami różniczkowalnymi, mogą przetwarzać tylko tensory liczbowe: nie mogą przyjmować surowego tekstu jako danych wejściowych.
 Wektoryzacja tekstu to proces przekształcania tekstu w tensory liczbowe.
-Można to zrobić na wiele sposobów:
+Procesy wektoryzacji tekstu mają wiele kształtów i form, ale wszystkie przebiegają według tego samego schematu (patrz @fog-token1):
 
--   Segmentacja tekstu na słowa i przekształcenie każdego słowa w wektor;
--   Segmentacja tekstu na znaki i przekształcenie każdego znaku w wektor.
--   Wyodrębnianie N-gramów słów lub znaków i przekształcenie każdego N-grama w wektor. N-gramy to nakładające się na siebie grupy wielu kolejnych słów lub znaków.
+-   Najpierw standaryzujesz tekst, aby ułatwić jego przetwarzanie, np. zamieniając go na małe litery lub usuwając interpunkcję.
+-   Następnie dzielimy tekst na jednostki (zwane tokenami), takie jak znaki, słowa lub grupy słów. Nazywa się to tokenizacją.
+-   Przekształcasz każdy taki token w wektor liczbowy. Zazwyczaj wymaga to uprzedniego zindeksowania wszystkich tokenów występujących w danych.
 
-Przykładem 3-gramu dla zdania "The cat sat on the mat" jest:
+![Przebieg procesu zamiany tekstu na wektory liczbowe](images/Zrzut%20ekranu%202023-03-17%20o%2019.57.48.png){#fig-token1 fig-align="center" width="600"}
 
-    "The", "The cat", "cat", "cat sat", "The cat sat",
-      "sat", "sat on", "on", "cat sat on", "on the", "the",
-      "sat on the", "the mat", "mat", "on the mat"
+### Standaryzacja tekstu
 
-Różne jednostki, na które można podzielić tekst (słowa, znaki lub N-gramy) nazywane są tokenami (ang. *tokens*), a rozbicie tekstu na takie tokeny nazywane jest tokenizacją.
+Standaryzacja tekstu jest podstawową formą inżynierii cech, która ma na celu usunięcie różnic w kodowaniu, z którymi nie chcesz, aby Twój model miał do czynienia.
+Nie jest to wyłączna dziedzina uczenia maszynowego - musiałbyś zrobić to samo, gdybyś budował wyszukiwarkę.
+Jednym z najprostszych i najbardziej rozpowszechnionych schematów standaryzacji jest "konwersja na małe litery i usunięcie znaków interpunkcyjnych".
+
+Innym częstym przekształceniem jest konwersja znaków specjalnych do standardowej formy, np.
+zastąpienie "é" przez "e", "æ" przez "ae" itd.
+Np.
+token "méxico" stałby się wtedy "mexico".
+
+Ostatnim, znacznie bardziej zaawansowanym wzorcem standaryzacji, który jest rzadziej używany w kontekście uczenia maszynowego, jest *stemming*: przekształcanie odmian słów (takich jak różne formy koniugacyjne czasownika) w jedną wspólną reprezentację, jak przekształcanie "złapany" i "łapiąc" w "\[łapać\]" lub "koty" w "\[kot\]".
+Dzięki stemmingowi, "rozpoczynając" i "rozpoczęty" stałyby się czymś w rodzaju "\[rozpoczynać\]".
+
+Dzięki tym technikom standaryzacji, twój model będzie wymagał mniej danych treningowych i będzie lepiej generalizował - nie będzie potrzebował wielu przykładów zarówno "Zachodu słońca", jak i "zachodów słońca", aby nauczyć się, że oznaczają one to samo, i będzie w stanie nadać sens słowu "Meksyk", nawet jeśli widział tylko "meksyk" w swoim zestawie treningowym.
+Oczywiście standaryzacja może również wymazać pewną ilość informacji, więc zawsze należy pamiętać o kontekście: na przykład, jeśli piszesz model, który wyodrębnia pytania z artykułów z wywiadami, powinien on zdecydowanie traktować "?" jako oddzielny token zamiast go upuszczać, ponieważ jest to przydatny sygnał dla tego konkretnego zadania.
+
+### Tokenizacja
+
+Kiedy tekst jest już znormalizowany, musisz podzielić go na jednostki do wektoryzacji (tokeny), krok zwany tokenizacją.
+Można to zrobić na trzy różne sposoby:
+
+-   Tokenizacja na poziomie słowa - gdzie tokeny są oddzielonymi spacjami (lub interpunkcją) podciągami. Wariantem tego jest dalsze dzielenie słów na podsłowia, gdy ma to zastosowanie, na przykład traktowanie "zaczyna" jako "zaczyna+jąc" lub "wezwany" jako "wezwani".
+-   N-gram tokenizacji - gdzie tokeny są grupami N kolejnych słów. Na przykład "the cat" lub "he was" byłyby tokenami 2-gramowymi (zwanymi również bigramami).
+-   Tokenizacja na poziomie znaków - gdzie każdy znak jest swoim własnym tokenem. W praktyce, ten schemat jest rzadko używany i naprawdę widzisz go tylko w specjalistycznych kontekstach, takich jak generowanie tekstu lub rozpoznawanie mowy.
+
+Ogólnie rzecz biorąc, zawsze będziesz używał tokenizacji na poziomie słowa lub N-gramu.
+Istnieją dwa rodzaje modeli przetwarzania tekstu: te, które dbają o kolejność słów, zwane modelami sekwencyjnymi, oraz te, które traktują słowa wejściowe jako zestaw, odrzucając ich oryginalną kolejność, zwane modelami *bag-of-words*.
+Jeśli budujesz model sekwencyjny, używasz tokenizacji na poziomie słów, a jeśli budujesz model worka słów, używasz tokenizacji N-gramów.
+N-gramy są sposobem na sztuczne wprowadzenie do modelu niewielkiej ilości informacji o lokalnym porządku słów.
+W tym rozdziale dowiesz się więcej o każdym typie modelu i o tym, kiedy należy ich używać.
+
+### Indeksowanie słownika
+
+Gdy twój tekst jest podzielony na tokeny, musisz zakodować każdy token w reprezentacji numerycznej.
 Wszystkie procesy wektoryzacji tekstu polegają na zastosowaniu pewnego schematu tokenizacji, a następnie skojarzeniu wektorów liczbowych z wygenerowanymi tokenami.
 Wektory te, spakowane w tensory sekwencji, są wprowadzane do głębokich sieci neuronowych.
 Istnieje wiele sposobów na powiązanie wektora z tokenem.
 W tej sekcji przedstawimy dwa główne: kodowanie tokenów metodą *one-hot* oraz osadzanie tokenów (ang. *embeddings* - zwykle używane wyłącznie dla słów).
 Pozostała część tego rozdziału wyjaśnia te techniki i pokazuje jak ich użyć, aby przejść od surowego tekstu do tensora, który można wysłać do sieci.
+
+## One-hot encoding
+
+Kodowanie one-hot jest najczęstszym, najbardziej podstawowym sposobem przekształcenia tokena w wektor.
+Polega ono na skojarzeniu unikalnego indeksu z każdym słowem, a następnie przekształceniu tego indeksu $i$ w wektor binarny o rozmiarze $N$ (rozmiar słownika); wektor składa się ze wszystkich zer, z wyjątkiem $i$-tego wpisu, który jest 1.
+
+Metoda ta, zważywszy na swoją rzadką reprezentację (większość wartości to 0), rzadko stosowana w praktyce.
+Słaba wydajność tej techniki spowodowała powstanie *embedingów.*
+
+## Embeddings
+
+Obecnie najbardziej popularnym sposobem powiązania wektora ze słowem jest użycie gęstych wektorów słów, zwanych również osadzeniami słów (ang. *embedding*).
+Podczas gdy wektory uzyskane w wyniku kodowania *one-hot* są binarne, rzadkie (składają się głównie z zer) i bardzo wielowymiarowe (ta sama wymiarowość co liczba słów w słowniku), *word embeddings* są niskowymiarowymi wektorami zmiennoprzecinkowymi (czyli wektorami gęstymi, w przeciwieństwie do wektorów rzadkich); patrz @fig-embd1.
+W przeciwieństwie do wektorów słów otrzymanych poprzez kodowanie *one-hot*, embeddingi słów są uczone z danych.
+W przypadku bardzo dużych słowników często spotyka się osadzenia słów 256-, 512- lub 1024-wymiarowe.
+Z drugiej strony, kodowanie słów metodą *one-hot* prowadzi do wektorów, które są 20,000-wymiarowe lub większe (słownik składający się z 20,000 tokenów).
+Tak więc, osadzanie słów pakuje więcej informacji w znacznie mniejszej liczbie wymiarów.
+
+![](images/Zrzut%20ekranu%202023-03-16%20o%2016.42.03.png){#fig-embd1 fig-align="center" width="400"}
+
+Istnieją dwa sposoby na uzyskanie osadzenia słów:
+
+-   Uczenie się embeddingów wspólnie z głównym zadaniem (takim jak klasyfikacja dokumentów lub przewidywanie sentymentu). W tej konfiguracji zaczynasz od losowych wektorów słów, a następnie uczysz się wektorów słów w taki sam sposób, w jaki uczysz się wag sieci neuronowej.
+-   Wczytaj do swojego modelu osadzenia słów, które zostały wstępnie wytrenowane przy użyciu innego zadania uczenia maszynowego niż to, które próbujesz rozwiązać. Są to tzw. wstępnie wytrenowane osadzenia słów.
+
+Przyjrzyjmy się obu tym metodom.
+
+::: {#exm-1}
+Najpierw ze strony [ai.stanford.edu/\~amaas/data/sentiment](ai.stanford.edu/~amaas/data/sentiment) pobierzemy surowy zbiór danych IMDB[^recurent-1].
+Rozkompresuj go.
+Teraz zbierzmy poszczególne recenzje treningowe w listę ciągów, jeden ciąg na recenzję.
+Podobnie etykiety recenzji (pozytywne / negatywne) do listy etykiet.
+
+```{r}
+#| cache: true
+library(fs)
+
+dir_tree("/Users/majerek/Downloads/aclImdb", recurse = 1, type = "directory")
+dir_delete("/Users/majerek/Downloads/aclImdb/train/unsup/")
+writeLines(readLines("/Users/majerek/Downloads/aclImdb/train/pos/4077_10.txt", warn = FALSE))
+
+set.seed(1337)
+base_dir <- path("/Users/majerek/Downloads/aclImdb")
+
+for (category in c("neg", "pos")) {
+  filepaths <- dir_ls(base_dir / "train" / category)
+  num_val_samples <- round(0.2 * length(filepaths))
+  val_files <- sample(filepaths, num_val_samples)
+
+  dir_create(base_dir / "val" / category)
+  file_move(val_files,
+            base_dir / "val" / category)
+}
+```
+
+Zwektoryzujmy tekst i przygotujmy podział na trening i walidację, używając koncepcji, które wprowadziliśmy wcześniej w tym rozdziale.
+
+```{r}
+#| cache: true
+library(keras)
+library(tfdatasets)
+
+train_ds <- text_dataset_from_directory("/Users/majerek/Downloads/aclImdb/train")
+val_ds <- text_dataset_from_directory("/Users/majerek/Downloads/aclImdb/val")
+test_ds <- text_dataset_from_directory("/Users/majerek/Downloads/aclImdb/test")
+```
+
+Te zestawy danych zapewniają wejścia, które są tensorami TensorFlow `tf.string` i obiekty docelowe, które są tensorami `int32` kodującymi wartość "0" lub "1".
+
+Tokenizacji możemy dokonać na dwa sposoby, jak to zostało wspomniane, albo *bag-of-words* albo jako ciąg słów.
+Najpierw pokażemy metodę *bag-of-words*.
+
+Najprostszym sposobem zakodowania fragmentu tekstu do przetworzenia przez model uczenia maszynowego jest odrzucenie kolejności i potraktowanie go jako zbioru ("worka") tokenów.
+Możesz spojrzeć na pojedyncze słowa (unigramy) lub spróbować odzyskać pewne lokalne informacje o kolejności, patrząc na grupy kolejnych tokenów (N-gramy).
+
+Jeśli użyjemy worka z pojedynczymi słowami, zdanie "the cat sat on the mat" staje się wektorem znaków, w którym ignorujemy porządek:
+
+```{r}
+c("cat", "mat", "on", "sat", "the")
+```
+
+Główną zaletą tego kodowania jest to, że możesz reprezentować cały tekst jako pojedynczy wektor, gdzie każdy wpis jest wskaźnikiem obecności dla danego słowa.
+Na przykład, używając kodowania binarnego (multi-hot[^recurent-2]), zakodowałbyś tekst jako wektor o tylu wymiarach, ile jest słów w twoim słowniku, z 0 prawie wszędzie i kilkoma 1 dla wymiarów, które kodują słowa obecne w tekście.
+Wypróbujmy to w naszym zadaniu.
+
+Najpierw przetwórzmy nasze surowe zbiory danych tekstowych za pomocą warstwy `layer_text_vectorization()`, tak aby otrzymały one zakodowane w wielu wymiarach binarne wektory słów.
+Nasza warstwa będzie patrzyła tylko na pojedyncze słowa (czyli unigramy).
+
+```{r}
+#| cache: true
+text_vectorization <-
+  layer_text_vectorization(max_tokens = 20000, # reduce to 20000 words
+                           output_mode = "multi_hot") # encode the output tokens as multi-hot binary vectors
+
+text_only_train_ds <- train_ds %>%
+  dataset_map(function(x, y) x) # prepare a dataset that yields only raw text inputs (no labels)
+
+adapt(text_vectorization, text_only_train_ds) # Use that dataset to index the dataset vocabulary via the adapt() method.
+
+
+#Prepare processed versions of our training, validation, and test dataset. Make sure to specify num_parallel_calls to leverage multiple CPU cores.
+binary_1gram_train_ds <- train_ds %>% 
+  dataset_map( ~ list(text_vectorization(.x), .y),
+              num_parallel_calls = 4) 
+binary_1gram_val_ds <- val_ds %>%
+  dataset_map( ~ list(text_vectorization(.x), .y),
+              num_parallel_calls = 4)
+binary_1gram_test_ds <- test_ds %>%
+  dataset_map( ~ list(text_vectorization(.x), .y),
+              num_parallel_calls = 4)
+
+c(inputs, targets) %<-% iter_next(as_iterator(binary_1gram_train_ds))
+str(inputs)
+str(targets)
+inputs[1, ]
+targets[1]
+```
+
+Napiszmy funkcję budowania modelu wielokrotnego użytku, której będziemy używać we wszystkich naszych eksperymentach w tym rozdziale.
+
+```{r}
+get_model <- function(max_tokens = 20000, hidden_dim = 16) {
+ inputs <- layer_input(shape = c(max_tokens))
+ outputs <- inputs %>%
+   layer_dense(hidden_dim, activation = "relu") %>%
+   layer_dropout(0.5) %>%
+   layer_dense(1, activation = "sigmoid")
+ model <- keras_model(inputs, outputs)
+ model %>% compile(optimizer = "rmsprop",
+                   loss = "binary_crossentropy",
+                   metrics = "accuracy")
+ model
+}
+
+model <- get_model()
+model
+```
+
+```{r}
+#| eval: false
+
+# callbacks to parametr do sterowanie procesem uczenia
+# w przypadku poniżej zapisywane będą wagi najlepszego modelu
+callbacks <- list(
+   callback_model_checkpoint("models/binary_1gram.keras", save_best_only = TRUE)
+ )
+
+ model %>% fit(
+   dataset_cache(binary_1gram_train_ds),
+   validation_data = dataset_cache(binary_1gram_val_ds),
+   epochs = 10,
+   callbacks = callbacks
+ )
+```
+
+```{r}
+ model <- load_model_tf("models/binary_1gram.keras")
+ cat(sprintf(
+   "Test acc: %.3f\n", evaluate(model, binary_1gram_test_ds)["accuracy"]))
+```
+
+To prowadzi nas do dokładności na zbiorze testowym 88.9%.
+Zauważ, że w tym przypadku, ponieważ zbiór danych jest zrównoważonym dwuklasowym zbiorem danych klasyfikacyjnych (jest tyle samo próbek pozytywnych, co negatywnych), "naiwny poziom bazowy", który moglibyśmy osiągnąć bez szkolenia rzeczywistego modelu, wynosiłby tylko 50%.
+Tymczasem najlepszy wynik, jaki można osiągnąć na tym zbiorze danych bez wykorzystania danych zewnętrznych, to około 95% dokładności na zbiorze testowym.
+
+Oczywiście, odrzucenie kolejności słów jest bardzo ograniczające, ponieważ niektóre pojęcia mogą być wyrażone za pomocą wielu słów: termin "Stany Zjednoczone" przekazuje pojęcie, które jest całkiem odmienne od znaczenia słów "Stany" i "Zjednoczone" wziętych osobno.
+Z tego powodu, zazwyczaj wprowadza się informacje o lokalnym porządku do reprezentacji worka słów poprzez N-gramy, a nie pojedyncze słowa (najczęściej bigramy).
+
+Z bigramami nasze zdanie staje się:
+
+```{r}
+#| eval: false
+
+c("the", "the cat", "cat", "cat sat", "sat",
+ "sat on", "on", "on the", "the mat", "mat")
+```
+
+Warstwa `layer_text_vectorization()` może być skonfigurowana do zwracania dowolnych N-gramów: bigramów, trigramów, i tak dalej.
+Wystarczy przekazać argument `ngrams = N`, jak na poniższym listingu.
+
+```{r}
+text_vectorization <- 
+ layer_text_vectorization(ngrams = 2,
+                          max_tokens = 20000,
+                          output_mode = "multi_hot")
+```
+
+Sprawdźmy jak radzi sobie nasz model wytrenowany na takich zakodowanych binarnie workach bigramów.
+
+```{r}
+#| cache: true
+adapt(text_vectorization, text_only_train_ds)
+dataset_vectorize <- function(dataset) {
+  dataset %>%
+    dataset_map(~ list(text_vectorization(.x), .y),
+      num_parallel_calls = 4
+    )
+}
+
+binary_2gram_train_ds <- train_ds %>% dataset_vectorize()
+binary_2gram_val_ds <- val_ds %>% dataset_vectorize()
+binary_2gram_test_ds <- test_ds %>% dataset_vectorize()
+
+model <- get_model()
+model
+
+callbacks <- list(callback_model_checkpoint("models/binary_2gram.keras",
+  save_best_only = TRUE
+))
+```
+
+```{r}
+#| eval: false
+model %>% fit(
+  dataset_cache(binary_2gram_train_ds),
+  validation_data = dataset_cache(binary_2gram_val_ds),
+  epochs = 10,
+  callbacks = callbacks
+)
+```
+
+```{r}
+model <- load_model_tf("models/binary_2gram.keras")
+evaluate(model, binary_2gram_test_ds)["accuracy"] %>%
+  sprintf("Test acc: %.3f\n", .) %>%
+  cat()
+```
+
+Teraz otrzymujemy 89,8% dokładności na zbiorze testowym, co oznacza poprawę dopasowania modelu!
+Okazuje się, że lokalny porządek jest dość ważny.
+
+Możesz również dodać nieco więcej informacji do tej reprezentacji, licząc, ile razy każde słowo lub N-gram występuje, czyli biorąc histogram słów nad tekstem:
+
+```{r}
+#| eval: false
+
+c("the" = 2, "the cat" = 1, "cat" = 1, "cat sat" = 1, "sat" = 1,
+ "sat on" = 1, "on" = 1, "on the" = 1, "the mat" = 1, "mat" = 1)
+```
+
+Jeśli dokonujesz klasyfikacji tekstu, wiedza o tym, ile razy słowo występuje w próbce jest krytyczna: każda wystarczająco długa recenzja filmu może zawierać słowo "okropny" niezależnie od sentymentu, ale recenzja, która zawiera wiele przypadków słowa "okropny" jest prawdopodobnie negatywna.
+Oto jak policzyłbyś wystąpienia bigramu za pomocą `layer_text_ vectorization()`:
+
+```{r}
+text_vectorization <- 
+ layer_text_vectorization(ngrams = 2,
+                          max_tokens = 20000,
+                          output_mode = "count")
+```
+
+Oczywiście, niektóre słowa będą występować częściej niż inne, niezależnie od tego, o czym jest tekst.
+Słowa "the", "a", "is" i "are" zawsze będą dominować w histogramach liczby słów, "zagłuszając" inne słowa, mimo że w kontekście klasyfikacji są to cechy zupełnie bezużyteczne.
+Jak możemy temu zaradzić?
+
+Moglibyśmy po prostu znormalizować liczbę słów poprzez odjęcie średniej i podzielenie jej przez wariancję (obliczoną dla całego zbioru danych treningowych).
+Jednak większość zwektoryzowanych zdań składa się prawie wyłącznie z zer (nasz poprzedni przykład zawiera 12 niezerowych wpisów i 19988 zerowych wpisów), co jest właściwością zwaną "rozproszeniem".
+Jest to pożądana właściwość, ponieważ drastycznie zmniejsza obciążenie obliczeniowe i zmniejsza ryzyko nadmiernego dopasowania.
+Gdybyśmy odjęli średnią od każdej cechy, utracilibyśmy rozproszenie.
+Dlatego też, jakikolwiek schemat normalizacji, którego używamy, powinien być oparty tylko na dzieleniu.
+Co zatem powinniśmy użyć jako mianownika?
+Najlepszą praktyką jest zastosowanie czegoś, co nazywa się normalizacją TF-IDF - to skrót od "*term frequency, inverse document frequency*".
+
+Im więcej dany termin pojawia się w dokumencie, tym ważniejszy jest on dla zrozumienia, o czym jest ten dokument.
+W tym samym momencie, częstotliwość, z jaką termin pojawia się we wszystkich dokumentach w zbiorze danych, również ma znaczenie: terminy, które pojawiają się w prawie każdym dokumencie (jak "the" lub "a") nie są szczególnie informacyjne, podczas gdy terminy, które pojawiają się tylko w małym podzbiorze wszystkich tekstów (jak "Herzog") są bardzo charakterystyczne, a zatem ważne.
+TF-IDF jest metryką, która łączy te dwie idee.
+Waży ona dany termin, biorąc "częstotliwość terminu", ile razy termin pojawia się w bieżącym dokumencie, i dzieląc ją przez miarę "częstotliwości dokumentu", która szacuje, jak często termin pojawia się w całym zbiorze danych.
+
+```{r}
+#| eval: false
+
+tf_idf <- function(term, document, dataset) { 
+  term_freq <- sum(document == term)
+  doc_freqs <- sapply(dataset, function(doc) sum(doc == term))
+  doc_freq <- log(1 + sum(doc_freqs))
+  term_freq / doc_freq
+}
+```
+
+TF-IDF jest tak powszechny, że został wbudowany w `layer_text_vectorization()`.
+Wszystko, co musisz zrobić, aby zacząć go używać, to przełączyć argument `output_mode` na `tf_idf`.
+
+```{r}
+#| cache: true
+text_vectorization <-
+  layer_text_vectorization(
+    ngrams = 2,
+    max_tokens = 20000,
+    output_mode = "tf_idf"
+  )
+
+with(tf$device("CPU"), {
+  adapt(text_vectorization, text_only_train_ds)
+})
+
+
+tfidf_2gram_train_ds <- train_ds %>% dataset_vectorize()
+tfidf_2gram_val_ds <- val_ds %>% dataset_vectorize()
+tfidf_2gram_test_ds <- test_ds %>% dataset_vectorize()
+
+model <- get_model()
+model
+
+callbacks <- list(callback_model_checkpoint("models/tfidf_2gram.keras",
+  save_best_only = TRUE
+))
+```
+
+```{r}
+#| eval: false
+model %>% fit(
+  dataset_cache(tfidf_2gram_train_ds),
+  validation_data = dataset_cache(tfidf_2gram_val_ds),
+  epochs = 10,
+  callbacks = callbacks
+)
+```
+
+```{r}
+ model <- load_model_tf("models/tfidf_2gram.keras")
+ evaluate(model, tfidf_2gram_test_ds)["accuracy"] %>%
+   sprintf("Test acc: %.3f", .) %>%
+   cat("\n")
+```
+
+Uzyskaliśmy 86,6% dokładności na zbiorze testowym, zatem nie wydaje się, by było to szczególnie pomocne w tym przypadku.
+Jednakże, dla wielu zestawów danych klasyfikacji tekstu, typowe byłby wzrost o jeden punkt procentowy przy użyciu TF-IDF w porównaniu do zwykłego kodowania binarnego.
+
+W poprzednich przykładach dokonaliśmy standaryzacji, podziału i indeksowania tekstu jako części potoku TF Dataset.
+Jeśli jednak chcemy wyeksportować samodzielny model, niezależny od tego potoku, powinniśmy upewnić się, że zawiera on własne przetwarzanie wstępne tekstu (w przeciwnym razie trzeba będzie ponownie wdrożyć go do środowiska, co może być trudne lub prowadzić do subtelnych rozbieżności między danymi treningowymi a testowymi).
+Na szczęście jest to łatwe.
+
+Po prostu utwórz nowy model, który ponownie wykorzystuje twoją warstwę `text_vectorization` i dodaje do niej model, który właśnie wyszkoliłeś:
+
+```{r}
+inputs <- layer_input(shape = c(1), dtype = "string")
+outputs <- inputs %>%
+  text_vectorization() %>%
+  model()
+inference_model <- keras_model(inputs, outputs)
+
+raw_text_data <- "That was an excellent movie, I loved it." %>%
+   as_tensor(shape = c(-1, 1))
+
+predictions <- inference_model(raw_text_data)
+str(predictions)
+
+
+cat(sprintf("%.2f percent positive\n",
+             as.numeric(predictions) * 100))
+```
+
+Wspomniane zostało wcześniej, że do NLP można podejść też wykorzystując modele sekwencyjne.
+Pod koniec rozdziału zostanie to podejście przybliżone.
+:::
+
+[^recurent-1]: jeśli adres URL już nie działa, wygoogluj "IMDB dataset"
+
+[^recurent-2]: kodowanie *multi-hot* jest kodowaniem potrzebującym nieco mniejszych wektorów do zakodowania słów, np.
+    cat = \[0,0,0\], dog = \[0,0,1\], fish = \[0,1,0\], bird = \[0,1,1\], ant = \[1,0,0\].
+
+### Osadzenie połączone z siecią
+
+Najprostszym sposobem powiązania gęstego wektora ze słowem jest losowy wybór wartości tego wektora.
+Problem z tym podejściem polega na tym, że wynikowa przestrzeń osadzania nie ma żadnej struktury: na przykład, słowa "piękny" i "uroczy" mogą skończyć z zupełnie różnymi osadzeniami, mimo że są synonimami w większości zdań.
+Trudno jest głębokiej sieci neuronowej nadać sens takiej hałaśliwej, nieuporządkowanej przestrzeni osadzania.
+
+Aby uzyskać nieco więcej abstrakcji, geometryczne relacje między wektorami słów powinny odzwierciedlać semantyczne relacje między tymi słowami.
+Embeddingi słów mają na celu mapowanie ludzkiego języka do przestrzeni geometrycznej.
+Na przykład w rozsądnej przestrzeni osadzania można oczekiwać, że synonimy będą osadzone w podobnych wektorach słów; i ogólnie rzecz biorąc, można oczekiwać, że odległość geometryczna (taka jak odległość L2) między dowolnymi dwoma wektorami słów odnosi się do semantycznej odległości między powiązanymi słowami (słowa oznaczające różne rzeczy są osadzone w punktach odległych od siebie, podczas gdy pokrewne słowa są bliżej).
+Oprócz odległości możemy chcieć, aby konkretne kierunki w przestrzeni osadzania miały znaczenie.
+Aby uczynić to jaśniejszym, spójrzmy na konkretny przykład.
+
+![Przykład osadzenia słów](https://editor.analyticsvidhya.com/uploads/450121_sAJdxEsDjsPMioHyzlN3_A.png){#fig-embd2 alt="Przykład osadzenia słów" fig-align="center" width="600"}
+
+Na @fig-embd2 na płaszczyźnie 2D osadzone są cztery słowa: kobieta, mężczyzna, królowa i król.
+Dzięki wybranej przez nas reprezentacji wektorowej niektóre relacje semantyczne między tymi słowami mogą być zakodowane jako przekształcenia geometryczne.
+Na przykład, ten sam wektor pozwala nam przejść od króla do królowej i od mężczyzny do kobiety: wektor ten może być interpretowany jako wektor "zmiana płci".
+Podobnie, inny wektor pozwala nam przejść od kobiety do królowej i od mężczyzny do króla, co można by zinterpretować jako wektor "nadanie znaczenia".
+
+W przestrzeniach słowotwórczych świata rzeczywistego, powszechnymi przykładami znaczących przekształceń geometrycznych są wektory "płci" i wektory "liczby mnogiej".
+Na przykład, dodając wektor "żeński" do wektora "król", otrzymujemy wektor "królowa".
+Dodając wektor "liczba mnoga" otrzymujemy "królów".
+Przestrzenie słowotwórcze zawierają zwykle tysiące takich interpretowalnych i potencjalnie użytecznych wektorów.
+
+Czy istnieje jakaś idealna przestrzeń słowotwórcza, która doskonale odwzorowywałaby ludzki język i mogłaby być wykorzystana do każdego zadania związanego z przetwarzaniem języka naturalnego?
+Możliwe, ale nie udało nam się jeszcze takiej znaleźć.
+Nie ma też czegoś takiego jak język ludzki - istnieje wiele różnych języków i nie są one izomorficzne, ponieważ język jest odzwierciedleniem konkretnej kultury i konkretnego kontekstu.
+Ale bardziej pragmatycznie, to co czyni dobrą przestrzeń osadzania słów zależy w dużej mierze od zadania: idealna przestrzeń osadzania słów dla anglojęzycznego modelu analizy sentymentów w recenzji filmowej może wyglądać inaczej niż idealna przestrzeń osadzania dla anglojęzycznego modelu klasyfikacji dokumentów prawnych, ponieważ znaczenie pewnych relacji semantycznych różni się w zależności od zadania.
+
+Dlatego rozsądne jest uczenie się nowej przestrzeni osadzania z każdym nowym zadaniem.
+Na szczęście wsteczna propagacja to ułatwia, a pakiet `keras` czyni to jeszcze łatwiejszym.
+Chodzi o uczenie wag warstwy za pomocą `layer_embedding`.
+
+```{r}
+#| eval: false
+
+embedding_layer <- layer_embedding(input_dim = 1000, output_dim = 64)
+```
+
+Warstwa embeddingu przyjmuje co najmniej dwa argumenty: liczbę możliwych tokenów (tutaj 1000) oraz wymiarowość embeddingu (tutaj 64).
+
+`layer_embedding` najlepiej rozumieć jako słownik, który mapuje indeksy liczb całkowitych (oznaczających konkretne słowa) na gęste wektory.
+Przyjmuje on liczby całkowite jako dane wejściowe, szuka tych liczb w wewnętrznym słowniku i zwraca powiązane z nimi wektory.
+Jest to efektywny sposób wyszukiwania w słowniku.
+
+Warstwa osadzająca przyjmuje na wejściu tensor 2D liczb całkowitych o kształcie `(sample, sequence_length)`, gdzie każdy wpis jest sekwencją liczb całkowitych.
+Może ona osadzać sekwencje o zmiennej długości: na przykład, do warstwy osadzania w poprzednim przykładzie można wprowadzić partie o kształtach `(32, 10)` (partia 32 sekwencji o długości 10) lub `(64, 15)` (partia 64 sekwencji o długości 15).
+Wszystkie sekwencje w partii muszą mieć tę samą długość (ponieważ trzeba je spakować do jednego tensora), więc sekwencje krótsze od innych powinny być wypełnione zerami, a dłuższe obcięte.
+
+Warstwa ta zwraca tensor 3D zmiennoprzecinkowy, o kształcie `(sample, sequence_length, embedding_dimensionality)`.
+Taki tensor 3D może być następnie przetwarzany przez warstwę RNN lub warstwę konwolucji 1D.
+
+Gdy inicjujemy warstwę embeddingu, jej wagi (jej wewnętrzny słownik wektorów tokenów) są początkowo losowe, tak jak w przypadku każdej innej warstwy.
+Podczas treningu, te wektory słów są stopniowo dopasowywane za pomocą wstecznej propagacji, strukturyzując przestrzeń w coś, co może wykorzystać dalszy model.
+Po pełnym wytrenowaniu, przestrzeń osadzania będzie wykazywała dużo struktury - rodzaju struktur wyspecjalizowanej dla konkretnego problemu, dla którego trenowałeś swój model.
+
+Zastosujmy ten pomysł do zadania przewidywania sentymentu w recenzji filmu IMDB.
+Ograniczymy recenzje filmów do 10000 najczęściej występujących słów i odetniemy recenzje po 20 słowach.
+Sieć nauczy się 8-wymiarowego osadzenia dla każdego z 10000 słów, przekształci wejściowe sekwencje liczb całkowitych (tensor 2D integer) w sekwencje osadzone (tensor 3D float), spłaszczy tensor do 2D i wytrenuje pojedynczą gęstą warstwę na wierzchu w celu klasyfikacji.
+
+```{r}
+library(keras)
+```
+
+``` r
+#| cache: true
+max_features <- 10000 # <1>
+maxlen <- 20 # <2>
+imdb <- dataset_imdb(num_words = max_features)
+c(c(x_train, y_train), c(x_test, y_test)) %<-% imdb # <3>
+x_train <- pad_sequences(x_train, maxlen = maxlen) # <4>
+x_test <- pad_sequences(x_test, maxlen = maxlen)
+```
+
+1.  Określ liczbę słów rozumianych jako cechy.
+2.  Odetnij tekst recenzji po 20 słowach (będą to najczęściej występujące słowa).
+3.  Załaduj dane jako listę liczb całkowitych - liczby te są indeksami słów występujących w recenzji (tylko 10000 najczęściej używanych słów w recenzji jest branych pod uwagę).
+4.  Zamień listę liczb całkowitych w tensor 2D o kształcie `(sample, maxlen)`.
+
+``` r
+#| eval: false
+model <- keras_model_sequential() %>%
+  layer_embedding(input_dim = 10000, # <1>
+                  output_dim = 8,
+                  input_length = maxlen) %>%
+  layer_flatten() %>% # <2>
+  layer_dense(units = 1, activation = "sigmoid") # <3>
+
+model %>% compile(
+  optimizer = "rmsprop",
+  loss = "binary_crossentropy",
+  metrics = c("acc")
+)
+
+summary(model)
+
+history <- model %>% fit(
+  x_train, y_train,
+  epochs = 10,
+  batch_size = 32,
+  validation_split = 0.2
+)
+```
+
+1.  Określ maksymalną długość danych wejściowych do warstwy osadzania, dzięki czemu można później spłaszczyć osadzone dane wejściowe. Po warstwie *embeddingu* aktywacje mają kształt `(sample, maxlen, 8)`.
+2.  Spłaszczenie tensora 3D *embeddingów* do tensora 2D o kształcie `(sample, maxlen * 8)`.
+3.  Dodaj warstwy klasyfikujące.
+
+```{r}
+#| echo: false
+model <- load_model_hdf5("models/embedding1.h5")
+load("models/hist_embd1.rda")
+plot(history)
+```
+
+Uzyskana dokładność walidacji wyniosła około 75%, co jest całkiem dobre, biorąc pod uwagę, że patrzymy tylko na pierwsze 20 słów w każdej recenzji.
+Zauważmy jednak, że samo spłaszczenie osadzonych sekwencji i wytrenowanie pojedynczej gęstej warstwy na wierzchu prowadzi do modelu, który traktuje każde słowo w sekwencji wejściowej osobno, bez uwzględnienia relacji między słowami i struktury zdania (na przykład, model ten prawdopodobnie potraktowałby zarówno "ten film to bomba", jak i "ten film jest bombowy" jako negatywne recenzje).
+Znacznie lepiej jest dodać warstwy rekurencyjne lub warstwy konwolucyjne 1D na wierzchu osadzonych sekwencji, aby nauczyć się cech, które biorą pod uwagę każdą sekwencję jako całość.
+
+### Użycie wstępnie wytrenowanego osadzenia
+
+Czasami mamy tak mało dostępnych danych treningowych, że nie możemy użyć samych danych do nauki odpowiedniego, specyficznego dla danego zadania osadzenia słownictwa.
+Co wtedy zrobić?
+
+Zamiast uczyć się osadzania słów wspólnie z problemem, który chcesz rozwiązać, możesz załadować wektory osadzania z wstępnie obliczonej przestrzeni osadzania, o której wiesz, że jest wysoce ustrukturyzowana i wykazuje użyteczne właściwości - ujmuje ogólne aspekty struktury języka.
+Uzasadnienie użycia wstępnie przygotowanych embeddingów słów w przetwarzaniu języka naturalnego jest podobne do użycia wstępnie przygotowanych sieci splotowych w klasyfikacji obrazów: nie masz wystarczająco dużo danych, aby nauczyć się naprawdę potężnych cech na własną rękę, ale oczekujesz, że cechy, których potrzebujesz, są dość ogólne - to znaczy, wspólne cechy wizualne lub cechy semantyczne.
+W tym przypadku sensowne jest ponowne wykorzystanie cech poznanych przy okazji innego problemu.
+
+Takie osadzenie słów jest zazwyczaj obliczane przy użyciu statystyki występowania słów (obserwacji o tym, jakie słowa współwystępują w zdaniach lub dokumentach), przy użyciu różnych technik, z których niektóre wykorzystują sieci neuronowe, a inne nie.
+Idea gęstej, niskowymiarowej przestrzeni osadzania słów, obliczanej w sposób nienadzorowany, została początkowo zbadana przez @bengio początku lat 2000, ale zaczęła się ona rozwijać w badaniach i zastosowaniach przemysłowych dopiero po wydaniu jednego z najbardziej znanych i udanych schematów osadzania słów: algorytmu Word2vec, opracowanego przez Tomasa Mikolova w Google w 2013 r.
+
+Istnieją różne wstępnie opracowane bazy danych embeddingów słów, które można pobrać i użyć w warstwie osadzania keras.
+Word2vec jest jedną z nich.
+Inny popularny nazywa się Global Vectors for Word Representation (GloVe), który został opracowany przez naukowców ze Stanforda w 2014 roku.
+Ta technika embeddingu opiera się na faktoryzacji macierzy statystyk współwystępowania słów.
+Jej twórcy udostępnili wstępnie obliczone embeddingi dla milionów angielskich tokenów, pozyskanych z danych Wikipedii oraz danych Common Crawl.
+
+Przyjrzyjmy się, jak można zacząć używać embeddingów GloVe w modelu keras.
+Ta sama metoda będzie oczywiście obowiązywać dla embeddingów Word2vec lub dowolnej innej bazy embeddingów słów.
+
+Wejdź na stronę [nlp.stanford.edu/projects/glove](nlp.stanford.edu/projects/glove) i pobierz wstępnie obliczone embeddingi z 2014 angielskiej Wikipedii.
+Jest to plik zip wielkości 822 MB o nazwie `glove.6B.zip`, zawierający 100-wymiarowe wektory embeddingu dla 400000 słów (lub tokenów nie będących słowami).
+Rozpakuj go.
+
+```{r}
+glove_dir = '~/Downloads/glove.6B'
+lines <- readLines(file.path(glove_dir, "glove.6B.100d.txt"))
+embeddings_index <- new.env(hash = TRUE, parent = emptyenv())
+for (i in 1:length(lines)) {
+  line <- lines[[i]]
+  values <- strsplit(line, " ")[[1]]
+  word <- values[[1]]
+  embeddings_index[[word]] <- as.double(values[-1])
+}
+cat("Found", length(embeddings_index), "word vectors.\n")
+```
+
+Następnie zbuduj macierz embeddingu, którą będziesz mógł załadować do warstwy embeddingu.
+Musi to być macierz o kształcie `(max_words, embedding_dim)`, gdzie każda pozycja $i$ zawiera wektor `embedding_dim`-wymiarowy dla słowa o indeksie $i$ w słowie referencyjnym (zbudowanym podczas tokenizacji).
+
+```{r}
+embedding_dim <- 100
+embedding_matrix <- array(0, c(max_words, embedding_dim))
+for (word in names(word_index)) {
+  index <- word_index[[word]]
+  if (index < max_words) {
+    embedding_vector <- embeddings_index[[word]]
+    if (!is.null(embedding_vector))
+      embedding_matrix[index+1,] <- embedding_vector
+  }
+}
+```
+
+Dalej budujemy sieć
+
+```{r}
+model <- keras_model_sequential() %>%
+  layer_embedding(input_dim = max_words, output_dim = embedding_dim,
+                  input_length = maxlen) %>%
+  layer_flatten() %>%
+  layer_dense(units = 32, activation = "relu") %>%
+  layer_dense(units = 1, activation = "sigmoid")
+summary(model)
+```
+
+Warstwa osadzenia ma pojedynczą macierz wag: dwuwymiarową macierz float, gdzie każdy wpis $i$ jest wektorem słów, które mają być powiązane z indeksem $i$.
+Załaduj przygotowaną macierz *GloVe* do warstwy embedding, pierwszej warstwy w modelu.
+
+```{r}
+get_layer(model, index = 1) %>%
+  set_weights(list(embedding_matrix)) %>%
+  freeze_weights()
+```
+
+Dodatkowo zamrażamy wagi warstwy osadzającej, kierując się tym samym rozumowaniem, które znasz już w kontekście wstępnie wyuczonych cech sieci splotowych: gdy części modelu są wstępnie wyszkolone (jak twoja warstwa osadzająca), a części są losowo inicjalizowane (jak twój klasyfikator), wstępnie wyszkolone części nie powinny być aktualizowane podczas treningu, aby nie zniszczyć tego, co już wiedzą.
+Duże aktualizacje gradientu wywołane przez losowo zainicjowane warstwy byłyby destrukcyjne dla już nauczonych cech.
+
+```{r}
+#| eval: false
+model %>% compile(
+  optimizer = "rmsprop",
+  loss = "binary_crossentropy",
+  metrics = c("acc")
+)
+history <- model %>% fit(
+  x_train, y_train,
+  epochs = 20,
+  batch_size = 32,
+  validation_data = list(x_val, y_val)
+)
+save_model_weights_hdf5(model, "models/pre_trained_glove_model.h5")
+save(history, file = "models/pre_train_glove_hist.rda")
+```
+
+Model szybko zaczyna być przeuczony, co nie jest zaskakujące, biorąc pod uwagę małą liczbę próbek treningowych.
+Dokładność walidacji ma wysoką wariancję z tego samego powodu, mimo to osiąga blisko 60%.
+
+Zauważ, że twój przebieg może się różnić: ponieważ masz tak mało próbek treningowych, wydajność jest silnie zależna od dokładnie tych 200 próbek, które losujesz.
+Jeśli wyniki będą dużo gorsze, spróbuj wybrać inny losowy zestaw 200 próbek.
+
+Oceńmy w końcu jakość dopasowania na zbiorze testowym.
+
+```{r}
+test_dir <- file.path(imdb_dir, "test")
+labels <- c()
+texts <- c()
+for (label_type in c("neg", "pos")) {
+  label <- switch(label_type, neg = 0, pos = 1)
+  dir_name <- file.path(test_dir, label_type)
+  for (fname in list.files(dir_name, pattern = glob2rx("*.txt"),
+                           full.names = TRUE)) {
+    texts <- c(texts, readChar(fname, file.info(fname)$size))
+    labels <- c(labels, label)
+  }
+}
+sequences <- texts_to_sequences(tokenizer, texts)
+x_test <- pad_sequences(sequences, maxlen = maxlen)
+y_test <- as.array(labels)
+
+model %>%
+  load_model_weights_hdf5("models/pre_trained_glove_model.h5") %>%
+  evaluate(x_test, y_test)
+```
+
+Otrzymane dopasowanie na poziomie 58% można poprawić stosując inna architekturę sieci, a mianowicie sieć RNN.
+
+## Sieci RNN
+
+Główną cechą wszystkich sieci neuronowych, które do tej pory widzieliśmy, takich jak sieci gęsto połączone i sieci splotowe, jest to, że nie mają one pamięci.
+Każde pokazane im wejście jest przetwarzane niezależnie, bez zachowania stanu pomiędzy wejściami.
+W takich sieciach, aby przetworzyć sekwencję czasową, musisz pokazać sieci całą sekwencję na raz: czyli zamienić ją w pojedynczy punkt danych.
+To właśnie robiliśmy w przykładzie IMDB: cała recenzja filmu została przekształcona w jeden duży wektor i przetworzona za jednym zamachem.
+Takie sieci nazywane są sieciami typu *feedforward*.
+
+W przeciwieństwie do tego, gdy czytasz obecne zdanie, przetwarzasz je słowo po słowie zachowując pamięć o tym, co było wcześniej; to daje ci płynną reprezentację znaczenia, które przekazujemy tym zdaniem.
+Biologiczna inteligencja przetwarza informacje przyrostowo, utrzymując wewnętrzny model tego, co przetwarza, zbudowany na podstawie informacji z przeszłości i stale aktualizowany w miarę napływu nowych informacji.
+
+Rekursywna lub rekurencyjna sieć neuronowa (RNN) przyjmuje tę samą zasadę, choć w bardzo uproszczonej wersji: przetwarza sekwencje poprzez iterację po elementach sekwencji i utrzymywanie stanu zawierającego informacje związane z tym, co widziała do tej pory.
+W efekcie RNN jest rodzajem sieci neuronowej, która posiada wewnętrzną pętlę (patrz @fig-rnn1).
+Stan sieci RNN jest zerowany pomiędzy przetwarzaniem dwóch różnych, niezależnych sekwencji (takich jak dwie różne recenzje IMDB), więc nadal traktujesz jedną sekwencję jako pojedynczy punkt danych: pojedyncze wejście do sieci.
+Zmienia się to, że ten punkt danych nie jest już przetwarzany w pojedynczym kroku; sieć wewnętrznie zapętla się nad elementami sekwencji.
+
+![Zasada działania sieci RNN](https://editor.analyticsvidhya.com/uploads/17464JywniHv.png){#fig-rnn1 fig-align="center" width="600"}
+
+`keras` ma również swoją implementację tego rodzaju sieci poprzez `layer_simple_rnn()`.
+Przyjmuje on dane wejściowe o kształcie `(batch_size, timesteps, input_features)`.
+Podobnie jak wszystkie warstwy rekurencyjne w `keras,` `layer_simple_rnn` może być uruchomiona w dwóch różnych trybach: może zwrócić albo pełne sekwencje kolejnych wyjść dla każdego kroku czasowego (tensor 3D o kształcie `(batch_size, timesteps, output_features)`) lub tylko ostatnie wyjście dla każdej sekwencji wejściowej (tensor 2D o kształcie `(batch_size, output_features)`).
+Te dwa tryby są kontrolowane przez argument `return_sequences`.
+
+```{r}
+#| eval: false
+model <- keras_model_sequential() %>%
+  layer_embedding(input_dim = 10000, output_dim = 32) %>%
+  layer_simple_rnn(units = 32) # retunr only last state
+
+summary(model)
+```
+
+lub
+
+```{r}
+#| eval: false
+model <- keras_model_sequential() %>%
+  layer_embedding(input_dim = 10000, output_dim = 32) %>%
+  layer_simple_rnn(units = 32, return_sequences = TRUE) # returns the full state sequence
+
+summary(model)
+```
+
+Czasami przydatne jest ułożenie kilku warstw rekurencyjnych jedna po drugiej w celu zwiększenia mocy reprezentacyjnej sieci.
+W takiej konfiguracji musisz pamiętać wszystkie warstwy pośrednie, aby zwrócić pełne sekwencje:
+
+```{r}
+model <- keras_model_sequential() %>%
+  layer_embedding(input_dim = 10000, output_dim = 32) %>%
+  layer_simple_rnn(units = 32, return_sequences = TRUE) %>%
+  layer_simple_rnn(units = 32, return_sequences = TRUE) %>%
+  layer_simple_rnn(units = 32, return_sequences = TRUE) %>%
+  layer_simple_rnn(units = 32)
+
+summary(model)
+```
+
+Wykorzystajmy teraz taki model na problemie klasyfikacji recenzji filmowych IMDB.
+Najpierw należy wstępnie przetworzyć dane.
+
+```{r}
+max_features <- 10000
+maxlen <- 500
+batch_size <- 32
+cat("Loading data...\n")
+imdb <- dataset_imdb(num_words = max_features)
+c(c(input_train, y_train), c(input_test, y_test)) %<-% imdb
+cat(length(input_train), "train sequences\n")
+cat(length(input_test), "test sequences")
+cat("Pad sequences (samples x time)\n")
+input_train <- pad_sequences(input_train, maxlen = maxlen)
+input_test <- pad_sequences(input_test, maxlen = maxlen)
+cat("input_train shape:", dim(input_train), "\n")
+cat("input_test shape:", dim(input_test), "\n")
+```
+
+Wytrenujmy prostą sieć rekurencyjną, używając `layer_embedding` i `layer_simple_rnn`.
+
+```{r}
+#| eval: false
+model <- keras_model_sequential() %>%
+  layer_embedding(input_dim = max_features, output_dim = 32) %>%
+  layer_simple_rnn(units = 32) %>%
+  layer_dense(units = 1, activation = "sigmoid")
+
+model %>% compile(
+  optimizer = "rmsprop",
+  loss = "binary_crossentropy",
+  metrics = c("acc")
+)
+
+history <- model %>% fit(
+  input_train, y_train,
+  epochs = 10,
+  batch_size = 128,
+  validation_split = 0.2
+)
+
+save_model_hdf5(model, filepath = "models/rnn1.h5")
+save(history, file = "models/rnn1_hist.rda")
+```
+
+```{r}
+#| echo: false
+model <- load_model_hdf5("models/rnn1.h5")
+load("models/rnn1_hist.rda")
+plot(history)
+```
+
+Dopasowanie na poziomie 84% nie jest zadowalające, ponadto widać zjawisko przeuczenia.
+Częścią problemu jest to, że nasze dane wejściowe uwzględniają tylko pierwsze 500 słów, a nie pełne sekwencje - stąd RNN ma dostęp do mniejszej ilości informacji niż wcześniejszy model bazowy.
+Innym problemem jest to, że `layer_simple_rnn` nie jest dobra w przetwarzaniu długich sekwencji, takich jak tekst.
+Inne typy warstw rekurencyjnych radzą sobie znacznie lepiej.
+Przyjrzyjmy się kilku bardziej zaawansowanym warstwom.
+
+## Sieć LSTM
+
+Proste RNN to nie jedyne warstwy rekurencyjne dostępne w `keras`.
+Są jeszcze dwie inne: `layer_lstm` i `layer_gru`.
+W praktyce zawsze będziesz używał jednej z nich, ponieważ `layer_simple_rnn` jest ogólnie zbyt prosta, aby była naprawdę użyteczna.
+Jednym z głównych problemów z `layer_simple_rnn` jest to, że chociaż teoretycznie powinna ona być w stanie zachować w czasie $t$ informacje o wejściach widzianych wiele kroków czasowych wcześniej, w praktyce takie długoterminowe zależności są niemożliwe do nauczenia.
+Wynika to z problemu znikającego gradientu, efektu podobnego do tego, który obserwuje się w sieciach nierekursywnych (*feedforward networks*), które mają wiele warstw: w miarę dodawania warstw do sieci, sieć w końcu staje się nie do wytrenowania.
+Teoretyczne przyczyny tego efektu były badane przez @bengio1994 we wczesnych latach 90-tych.
+Warstwy LSTM i GRU zostały zaprojektowane w celu rozwiązania tego problemu.
+
+Weźmy pod uwagę warstwę LSTM.
+Leżący u podstaw algorytmu *Long Short-Term Memory* (LSTM) kod został opracowany przez @hochreiterLongShortTermMemory1997 był on zwieńczeniem ich badań nad problemem znikającego gradientu.
+
+Ta warstwa jest wariantem `layer_simple_rnn`, wzbogaconym o sposób na przenoszenie informacji przez wiele kroków czasowych.
+Wyobraź sobie taśmę transportową biegnącą równolegle do sekwencji, którą przetwarzasz.
+Informacja z sekwencji może wskoczyć na taśmę w dowolnym punkcie, zostać przetransportowana do późniejszego kroku czasowego i wyskoczyć z niej, nienaruszona, kiedy jej potrzebujesz.
+To jest zasadniczo to, co robi LSTM: zapisuje informacje na później, zapobiegając w ten sposób stopniowemu znikaniu starszych sygnałów podczas przetwarzania.
+
+![Schemat sieci LSTM](https://cdn.bulldogjob.com/system/photos/files/000/011/314/original/0_H70aBP2r6TD2KVbq.png){#fig-lstm1 fig-align="center" width="600"}
+
+Typowa jednostka LSTM składa się z komórki (ang. *cell*), bramki wejściowej (ang. *input gate*), bramki wyjściowej (ang. *output gate*) i bramki zapomnienia (ang. *forget gate*).
+Komórka zapamiętuje wartości w dowolnych odstępach czasu, a trzy bramki regulują przepływ informacji do i z komórki.
+Bramki zapominania decydują o tym, jakie informacje z poprzedniego stanu należy odrzucić, przypisując poprzedniemu stanowi, w porównaniu z bieżącym wejściem, wartość z przedziału od 0 do 1.
+Wartość 1 oznacza zachowanie informacji, a wartość 0 - jej odrzucenie.
+Bramki wejściowe decydują, które kawałki nowej informacji zapisać w bieżącym stanie, używając tego samego systemu co bramki zapomnienia.
+Bramki wyjściowe kontrolują, które fragmenty informacji z bieżącego stanu należy wypisać, przypisując im wartość od 0 do 1, biorąc pod uwagę stan poprzedni i bieżący.
+Selektywne wyprowadzanie odpowiednich informacji z bieżącego stanu pozwala sieci LSTM zachować użyteczne, długoterminowe zależności, pozwalające na dokonywanie przewidywań, zarówno w bieżących, jak i przyszłych krokach czasowych.
+
+Przejdźmy teraz do bardziej praktycznych zagadnień: skonfigurujemy model za pomocą `layer_lstm` i wytrenujemy ją na danych IMDB.
+Sieć ta jest podobna do tej z `layer_simple_rnn`, którą właśnie zaprezentowaliśmy.
+Określamy tylko wymiarowość wyjściową `layer_lstm`; każdy inny argument (jest ich wiele) pozostaw na poziomie domyślnym.
+`keras` ma dobre ustawienia domyślne, a rzeczy prawie zawsze będą "po prostu działać" bez konieczności spędzania czasu na ręcznym dostrajaniu parametrów.
+
+```{r}
+#| eval: false
+model <- keras_model_sequential() %>%
+  layer_embedding(input_dim = max_features, output_dim = 32) %>%
+  layer_lstm(units = 32) %>%
+  layer_dense(units = 1, activation = "sigmoid")
+
+model %>% compile(
+  optimizer = "rmsprop",
+  loss = "binary_crossentropy",
+  metrics = c("acc")
+)
+
+history <- model %>% fit(
+  input_train, y_train,
+  epochs = 10,
+  batch_size = 128,
+  validation_split = 0.2
+)
+save_model_hdf5(model, filepath = "models/lstm1.h5")
+save(history, file = "models/lstm1_hist.rda")
+```
+
+```{r}
+#| echo: false
+
+models <- load_model_hdf5("models/lstm1.h5")
+load("models/lstm1_hist.rda")
+plot(history)
+```
+
+Tym razem udało się osiągnąć do 88% dokładności na zbiorze walidacyjnym.
+Znacznie lepiej niż w przypadku prostej sieci RNN - głównie dlatego, że LSTM znacznie mniej cierpi z powodu problemu znikającego gradientu.
+Wynik ten jednak nie jest oszałamiający.
+Dlaczego LSTM nie działa lepiej?
+Jednym z powodów jest to, że nie zadałeś sobie trudu, by dostroić hiperparametry takie jak wymiarowość embeddingów czy wymiarowość wyjścia LSTM.
+Innym może być brak regularyzacji.
+Ale szczerze mówiąc, głównym powodem jest to, że analizowanie globalnej, długoterminowej struktury recenzji (w czym LSTM jest dobry) nie jest pomocne w problemie analizy sentymentów.
+Tak podstawowy problem jest dobrze rozwiązany poprzez sprawdzenie, jakie słowa występują w każdej recenzji i z jaką częstotliwością.
+Istnieją jednak znacznie trudniejsze problemy związane z przetwarzaniem języka naturalnego, gdzie siła LSTM stanie się widoczna: takie jak odpowiadanie na pytania i tłumaczenie maszynowe.
+
+## Zastosowanie sieci rekurencyjnych w szeregach czasowych
+
+W tym podrozdziale omówimy trzy zaawansowane techniki poprawy wydajności i siły generalizacji rekurencyjnych sieci neuronowych.
+Zademonstrujemy wszystkie trzy koncepcje na problemie prognozowania pogody, gdzie mamy dostęp do szeregu obserwacji pochodzących z czujników zainstalowanych na dachu budynku, takich jak temperatura, ciśnienie powietrza i wilgotność, które użyjemy do przewidywania, jaka będzie temperatura 24 godziny po ostatniej obserwacji w bazie danych.
+Jest to dość trudny problem, który ilustruje wiele typowych trudności napotykanych podczas pracy z szeregami czasowymi.
+
+Omówimy następujące techniki:
+
+-   *Recurrent dropout* - to specyficzny, wbudowany sposób użycia *dropoutu* do walki z nadmiernym dopasowaniem w warstwach rekurencyjnych.
+-   Składanie warstw rekurencyjnych - zwiększa to moc reprezentacyjną sieci (kosztem większego obciążenia obliczeniowego).
+-   Dwukierunkowe warstwy rekurencyjne - prezentują one tę samą informację sieci rekurencyjnej na różne sposoby, zwiększając dokładność i łagodząc problemy związane z zapominaniem.
+
+::: {#exm-2}
+W analizowanym zestawie danych 14 różnych wielkości (takich jak temperatura powietrza, ciśnienie atmosferyczne, wilgotność, kierunek wiatru i tak dalej) było rejestrowanych co 10 minut, przez kilka lat.
+Oryginalne dane sięgają 2003 roku, ale ten przykład jest ograniczony do danych z lat 2009-2016.
+
+Na początek pobierzemy dane z serwera <https://s3.amazonaws.com/keras-datasets/jena_climate_2009_2016.csv.zip> i rozpakujemy.
+
+```{r}
+library(tibble)
+library(readr)
+data_dir <- "~/Downloads/jena_climate"
+fname <- file.path(data_dir, "jena_climate_2009_2016.csv")
+data <- read_csv(fname)
+glimpse(data)
+```
+
+```{r}
+library(ggplot2)
+ggplot(data, aes(x = 1:nrow(data), y = `T (deg. C)`)) +
+  geom_line()
+```
+
+Kilka pierwszych dni z tego zestawu wygląda następująco
+
+```{r}
+ggplot(data[1:1440,], aes(x = 1:1440, y = `T (deg. C)`)) +
+  geom_line()
+```
+
+Na tym wykresie widać okresowość dzienną, szczególnie widoczną dla ostatnich 4 dni.
+Zauważ też, że ten 10-dniowy okres musi pochodzić z dość zimnego zimowego miesiąca.
+Gdybyś próbował przewidzieć średnią temperaturę na następny miesiąc biorąc pod uwagę kilka miesięcy danych z przeszłości, problem byłby łatwy, ze względu na okresowość danych w skali roku.
+Ale patrząc na dane w skali dni, temperatura wygląda o wiele bardziej chaotycznie.
+Czy ten szereg czasowy jest przewidywalny w skali dziennej?
+Przekonajmy się.
+
+Dokładne sformułowanie problemu będzie następujące: biorąc pod uwagę dane sięgające tak daleko wstecz jak `lookback` (krok czasowy to 10 minut) i próbkowane co `steps`, czy możesz przewidzieć temperaturę na `delay` kroków czasowych?
+Użyjemy następujących wartości parametrów:
+
+-   `lookback` = 720 - obserwacje do 5 dni wstecz.
+-   `steps` = 6 - obserwacje będą próbkowane z częstotliwością jednego punktu danych na godzinę.
+-   `delay` = 144 - celem będą 24 godziny na przód.
+
+Aby rozpocząć, musimy zrobić dwie rzeczy:
+
+-   Wstępnie przetworzyć dane do formatu, który może przyjąć sieć neuronowa. To jest łatwe: dane są już numeryczne, więc nie musisz robić żadnej wektoryzacji. Ale każdy szereg czasowy w danych jest w innej skali (na przykład, temperatura jest zwykle między -20 i +30, ale ciśnienie, mierzone w mbar, jest około 1000). Musimy znormalizować każdy krok czasowy niezależnie, aby wszystkie przyjmowały małe wartości w podobnej skali.
+-   Napiszemy funkcję generatora, która przyjmuje bieżącą tablicę danych (float) i zwraca partie danych z niedawnej przeszłości wraz z docelową temperaturą w przyszłości. Ponieważ próbki w zbiorze danych są wysoce redundantne (próbka $N$ i próbka $N + 1$ będą miały większość swoich kroków czasowych wspólnych), byłoby marnotrawstwem jawne przydzielanie każdej próbki. Zamiast tego wygenerujemy próbki w locie, używając oryginalnych danych.
+
+Najpierw przekonwertujemy ramkę danych, którą odczytaliśmy wcześniej, na macierz wartości zmiennoprzecinkowych (odrzucimy pierwszą kolumnę, która zawierała tekstowy znacznik czasu):
+
+```{r}
+data <- data.matrix(data[,-1])
+```
+
+Następnie wstępnie przetworzymy dane odejmując średnią każdego szeregu czasowego i dzieląc przez odchylenie standardowe.
+Będziemy używać pierwszych 200000 przebiegów czasowych jako danych treningowych, więc obliczymy średnią i odchylenie standardowe dla normalizacji tylko na tej części danych.
+
+```{r}
+train_data <- data[1:200000,]
+mean <- apply(train_data, 2, mean)
+std <- apply(train_data, 2, sd)
+data <- scale(data, center = mean, scale = std)
+```
+
+Następnie stworzymy generator danych.
+Będzie on generował listę `(sample, targets)`, gdzie `sample` to jedna partia danych wejściowych, a `targets` to odpowiednia tablica temperatur docelowych.
+Generator przyjmuje następujące argumenty:
+
+-   `data` - oryginalna tablica danych, którą znormalizowaliśmy.
+-   `lookback` - ile kroków czasowych wstecz zostanie użytych jako dane wejściowe.
+-   `delay` - ile kroków czasowych w ma przewidywać model.
+-   `min_index` i `max_index` - wskaźniki w tablicy danych, które określają, z których kroków czasowych należy czerpać. Jest to przydatne w przypadku utrzymywania jednego segmentu danych do walidacji, a drugiego do testowania.
+-   `shuffle` - czy próbki mają być permutowane czy losowane w kolejności chronologicznej.
+-   `batch_size` - liczba próbek w partii.
+-   `step` - okres, w krokach czasowych, w którym pobierane są próbki danych. Ustawiamy 6, aby co godzinę pobierać jeden punkt danych.
+
+```{r}
+generator <- function(data, lookback, delay, min_index, max_index,
+                      shuffle = FALSE, batch_size = 128, step = 6) {
+  if (is.null(max_index))
+    max_index <- nrow(data) - delay - 1
+  i <- min_index + lookback
+  function() {
+    if (shuffle) {
+      rows <- sample(c((min_index+lookback):max_index), size = batch_size)
+    } else {
+      if (i + batch_size >= max_index)
+        i <<- min_index + lookback
+      rows <- c(i:min(i+batch_size, max_index))
+      i <<- i + length(rows)
+}
+    samples <- array(0, dim = c(length(rows),
+                                lookback / step,
+                                dim(data)[[-1]]))
+    targets <- array(0, dim = c(length(rows)))
+    for (j in 1:length(rows)) {
+      indices <- seq(rows[[j]] - lookback, rows[[j]],
+                     length.out = dim(samples)[[2]])
+      samples[j,,] <- data[indices,]
+      targets[[j]] <- data[rows[[j]] + delay,2]
+    }
+    list(samples, targets)
+  }
+}
+```
+
+Teraz użyjmy funkcji generatora do zainicjowania trzech generatorów: jednego do treningu, jednego do walidacji i jednego do testowania.
+Każdy z nich będzie patrzył na różne segmenty czasowe oryginalnych danych: generator treningowy patrzy na pierwsze 200000 kroków czasowych, generator walidacyjny patrzy na kolejne 100000, a generator testowy patrzy na resztę.
+
+```{r}
+lookback <- 1440
+step <- 6
+delay <- 144
+batch_size <- 128
+
+train_gen <- generator(
+  data,
+  lookback = lookback,
+  delay = delay,
+  min_index = 1,
+  max_index = 200000,
+  shuffle = TRUE,
+step = step,
+  batch_size = batch_size
+)
+
+val_gen = generator(
+  data,
+  lookback = lookback,
+  delay = delay,
+  min_index = 200001,
+  max_index = 300000,
+  step = step,
+  batch_size = batch_size
+)
+
+test_gen <- generator(
+  data,
+  lookback = lookback,
+  delay = delay,
+  min_index = 300001,
+  max_index = NULL,
+  step = step,
+  batch_size = batch_size
+)
+
+val_steps <- (300000 - 200001 - lookback) / batch_size
+test_steps <- (nrow(data) - 300001 - lookback) / batch_size
+```
+:::
