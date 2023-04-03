@@ -19,7 +19,7 @@ Oto kilka najważniejszych z nich:
 
 -   Kompresja: zmniejszanie rozmiaru pliku obrazu poprzez redukcję jego jakości;
 
--   Filtrowanie: zastosowanie filtrów, takich jak filtr Gaussa, filtr medianowy, filtr laplasjan itp.
+-   Filtrowanie: zastosowanie filtrów, takich jak filtr Gaussa, filtr medianowy, filtr Laplasjan itp.
 
 Skalowanie obrazu to proces zmiany rozmiaru obrazu.
 Może to być zwiększenie lub zmniejszenie wielkości obrazu.

@@ -303,7 +303,7 @@ Bezpośrednią konsekwencją łączności jest rozdzielność filtrów liniowych
 Jeżeli jądro konwolucyjne $H$ można wyrazić jako złożenie wielu jąder $H_i$ w postaci
 
 $$
-H = H1 ∗ H2 ∗ . . . ∗ Hn, 
+H = H_1 ∗ H_2 ∗ \ldots∗ H_n, 
 $$ {#eq-rozlacznosc}
 
 wówczas (jako konsekwencja @eq-lacznosc) operacja filtru $I ∗ H$ może być wykonana jako ciąg konwolucji z jądrami składowymi $H_i,$

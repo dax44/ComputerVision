@@ -78,7 +78,7 @@ $$
 \vert \nabla I\vert = \sqrt{I_u^2+I_v^2}
 $$ {#eq-grad4}
 
-jest niezmienna ze względu na obroty obrazu, a więc niezależna od orientacji leżących u jego podstaw struktur.
+jest niezmiennicza ze względu na obroty obrazu, a więc niezależna od orientacji leżących u jego podstaw struktur.
 Własność ta jest istotna dla izotropowej[^edge-1] lokalizacji krawędzi, a zatem $\vert\nabla I\vert$ jest podstawą wielu praktycznych metod detekcji krawędzi.
 
 [^edge-1]: we wszystkich kierunkach wykazują one te same właściwości fizyczne
@@ -166,7 +166,7 @@ gdzie $I_u$ i $I_v$ powstały przez mnożenie $I*H$ ($H$ jest filtrem Prewitta l
 Natomiast lokalny kąt orientacji krawędzi jest równy
 
 $$
-\Phi(u,v)=\tan^{-1}\left(\frac{I_u(u,v)}{I_v(u,v)}\right)
+\Phi(u,v)=\tan^{-1}\left(\frac{I_v(u,v)}{I_u(u,v)}\right)
 $$ {#eq-edge2}
 
 ![Ilustracja dla długości wektora gradientu i orientacji krawędzi](images/Zrzut%20ekranu%202023-02-9%20o%2022.16.59.png){#fig-edge1 fig-align="center" width="400"}
@@ -286,7 +286,7 @@ W swojej podstawowej (jednoskalowej) postaci operator Canny'ego wykonuje następ
 
 Wyostrzanie obrazów (ang. *sharpening*) jest częstym zadaniem, np.
 w celu poprawy ostrości po zeskanowaniu lub przeskalowaniu obrazu lub w celu wstępnej kompensacji późniejszej utraty ostrości w trakcie drukowania lub wyświetlania obrazu.
-Powszechnym podejściem do wyostrzania obrazu jest wzmacnianie wysokoczęstotliwościowych (ang. *hight-frequency amplifying*) składowych obrazu, które są głównie odpowiedzialne za postrzeganą ostrość obrazu i dla których najsilniejsze występują przy szybkich zmianach intensywności.
+Powszechnym podejściem do wyostrzania obrazu jest wzmacnianie wysokoczęstotliwościowych (ang. *hight-frequency amplifying*) składowych obrazu, które są głównie odpowiedzialne za postrzeganą ostrość obrazu i które występują przy szybkich zmianach intensywności.
 W dalszej części opisujemy dwie metody sztucznego wyostrzania obrazu, które opierają się na technikach podobnych do detekcji krawędzi.
 
 ### Filtr Laplace'a
@@ -362,23 +362,17 @@ Podsumowując, kroki zaangażowane w filtrowanie USM to:
 
 [^edge-4]: utratę ostrości
 
-1.  Obraz maski $M$ jest generowany przez odjęcie od obrazu oryginalnego $I$ jego wygładzonej wersji, uzyskanej przez filtrowanie za pomocą filtru $\tilde{H}$
+1.  Obraz maski $M$ jest generowany przez odjęcie od obrazu oryginalnego $I$ jego wygładzonej wersji, uzyskanej przez filtrowanie za pomocą filtru $\tilde{H}$ $$
+    M\leftarrow I-(I*\tilde{H})=I-\tilde{I}.
+    $$ {#eq-sharp5} się, że jądro $\tilde{H}$ filtra wygładzającego jest znormalizowane.
 
-$$
-M\leftarrow I-(I*\tilde{H})=I-\tilde{I}.
-$$ {#eq-sharp5}
+2.  Aby uzyskać wyostrzony obraz $\check{I}$, maska $M$ jest dodawana do oryginalnego obrazu $I$ z odpowiednią wagą $a$, za pomocą której kontrolujemy stopień wyostrzenia $$
+    \check{I}\leftarrow I+a\cdot M,
+    $$ {#eq-sharp6} zatem podstawiając @eq-sharp5 otrzymujemy $$
+    \check{I}\leftarrow I+a\cdot (I-\tilde{I})=(1+a)\cdot I-a\cdot \tilde{I}.
+    $$
 
-Przyjmuje się, że jądro $\tilde{H}$ filtra wygładzającego jest znormalizowane.
-2.
-Aby uzyskać wyostrzony obraz $\check{I}$, maska $M$ jest dodawana do oryginalnego obrazu $I$ z odpowiednią wagą $a$, za pomocą której kontrolujemy stopień wyostrzenia
-
-$$
-\check{I}\leftarrow I+a\cdot M,
-$$ {#eq-sharp6} zatem podstawiając @eq-sharp5 otrzymujemy
-
-$$
-\check{I}\leftarrow I+a\cdot (I-\tilde{I})=(1+a)\cdot I-a\cdot \tilde{I}.
-$$ Jako filtr wygładzający $\tilde{H}$ można właściwie zastosować dowolny filtr wygładzający, choć najczęściej spotyka się w tym miejscu filtry gassowskie $H^{G,\sigma}$ o $\sigma \in [1,20]$.
+Jako filtr wygładzający $\tilde{H}$ można właściwie zastosować dowolny filtr wygładzający, choć najczęściej spotyka się w tym miejscu filtry gassowskie $H^{G,\sigma}$ o $\sigma \in [1,20]$.
 Natomiast najczęściej przyjmowane wartości dla $a$ mieszczą się w przedziale \[0.2,4\].
 
 ```{r}

@@ -681,12 +681,10 @@ plot_activations(first_layer_activation[, , , 3])
 
 Ten kanał wydaje się kodować detektor krawędzi ukośnych - ale zauważ, że Twoje własne kanały mogą się różnić, ponieważ konkretne filtry uczone przez warstwy konwolucji nie są deterministyczne.
 
-Wykreślmy teraz pełną wizualizację wszystkich aktywacji w sieci (patrz @fig-seg10).
+Wykreślmy teraz pełną wizualizację wszystkich aktywacji w sieci.
 Wyodrębnimy i wykreślimy każdy kanał w każdej z warstw aktywacji, a następnie ułożymy wyniki w jedną dużą siatkę, z kanałami ułożonymi obok siebie.
 
 ```{r}
-#| label: fig-seg10
-#| fig-cap: Wszystkie kanały wszystkich warstw aktywacji
 for (layer_name in names(layer_outputs)) {
   layer_output <- activations[[layer_name]]
 
