@@ -560,6 +560,8 @@ Dane wideo są jednym z niewielu typów danych ze świata rzeczywistego, dla kt�
 Wideo może być rozumiane jako sekwencja klatek, z których każda jest obrazem kolorowym.
 Ponieważ każda klatka może być przechowywana w tensorze 3D `(wysokość, szerokość, głębokość koloru)`, sekwencja klatek może być przechowywana w tensorze 4D `(klatki, wysokość, szerokość, głębokość koloru)`, a zatem partia różnych filmów może być przechowywana w tensorze 5D o kształcie `(próbki, klatki, wysokość, szerokość, głębokość koloru)`.
 
+![](images/reshape.jpg){.column-margin fig-align="center" width="400"}
+
 Na przykład 60-sekundowy klip wideo YouTube o wymiarach 256 × 144, próbkowany z prędkością 4 klatek na sekundę, miałby 240 klatek.
 Partia czterech takich klipów wideo byłaby przechowywana w tensorze o kształcie `(4, 240, 256, 144, 3)`.
 To w sumie 106168320 wartości!

@@ -712,7 +712,7 @@ Zagrożenie
 </div>
 </div>
 </section>
-<section id="operacje-na-tensorach" class="level4" data-number="10.4.1.6">
+<section id="operacje-na-tensorach" class="level4 page-columns page-full" data-number="10.4.1.6">
 <h4 data-number="10.4.1.6" class="anchored" data-anchor-id="operacje-na-tensorach"><span class="header-section-number">10.4.1.6</span> Operacje na tensorach</h4>
 <p>W poprzednim przykładzie wybraliśmy konkretną cyfrę wzdłuż pierwszej osi za pomocą składni <code>train_images[i,,]</code>. Wybieranie konkretnych elementów w tensorze nazywa się <em>tensor slicing</em>. Przyjrzyjmy się operacjom <em>tensor slicing</em>, które można wykonać na tablicach R. Poniżej wybrano cyfry od #10 do #99 i umieszczono je w tablicy o kształcie <code>(90, 28, 28)</code>:</p>
 <div class="cell">
@@ -773,7 +773,12 @@ Zagrożenie
 </div>
 <p>Istnieją dwie konwencje dla kształtów tensorów obrazów: konwencja <em>channels-last</em> (używana przez TensorFlow) i konwencja <em>channels-firs</em>t (używana przez Theano). Framework uczenia maszynowego TensorFlow, od Google, umieszcza oś głębokości koloru na końcu: <code>(sample, height, width, color_depth)</code>. Tymczasem Theano umieszcza oś głębi koloru zaraz po osi wsadowej: <code>(sample, color_depth, height, width)</code>. Keras zapewniają wsparcie dla obu formatów.</p>
 <p>Dane wideo są jednym z niewielu typów danych ze świata rzeczywistego, dla których będziesz potrzebował tensorów 5D. Wideo może być rozumiane jako sekwencja klatek, z których każda jest obrazem kolorowym. Ponieważ każda klatka może być przechowywana w tensorze 3D <code>(wysokość, szerokość, głębokość koloru)</code>, sekwencja klatek może być przechowywana w tensorze 4D <code>(klatki, wysokość, szerokość, głębokość koloru)</code>, a zatem partia różnych filmów może być przechowywana w tensorze 5D o kształcie <code>(próbki, klatki, wysokość, szerokość, głębokość koloru)</code>.</p>
-<p>Na przykład 60-sekundowy klip wideo YouTube o wymiarach 256 × 144, próbkowany z prędkością 4 klatek na sekundę, miałby 240 klatek. Partia czterech takich klipów wideo byłaby przechowywana w tensorze o kształcie <code>(4, 240, 256, 144, 3)</code>. To w sumie 106168320 wartości! Jeśli typ danych tensora to <em>double</em>, to każda wartość jest przechowywana w 64 bitach, więc tensor reprezentowałby 810 MB. Sporo 😱! Filmy, które spotykasz w prawdziwym życiu są znacznie lżejsze, ponieważ nie są przechowywane w <code>float32</code> i zazwyczaj są silnie skompresowane (jak w formacie MPEG).</p>
+
+<div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/reshape.jpg" class="img-fluid figure-img" width="400"></p>
+</figure>
+</div></div><p>Na przykład 60-sekundowy klip wideo YouTube o wymiarach 256 × 144, próbkowany z prędkością 4 klatek na sekundę, miałby 240 klatek. Partia czterech takich klipów wideo byłaby przechowywana w tensorze o kształcie <code>(4, 240, 256, 144, 3)</code>. To w sumie 106168320 wartości! Jeśli typ danych tensora to <em>double</em>, to każda wartość jest przechowywana w 64 bitach, więc tensor reprezentowałby 810 MB. Sporo 😱! Filmy, które spotykasz w prawdziwym życiu są znacznie lżejsze, ponieważ nie są przechowywane w <code>float32</code> i zazwyczaj są silnie skompresowane (jak w formacie MPEG).</p>
 <p>Podobnie jak każdy program komputerowy może być ostatecznie zredukowany do małego zestawu operacji binarnych na wejściach binarnych (AND, OR, NOR, i tak dalej), wszystkie transformacje uczone przez głębokie sieci neuronowe mogą być zredukowane do garści operacji tensorowych stosowanych do tensorów danych liczbowych. Na przykład, możliwe jest dodawanie tensorów, mnożenie tensorów i tak dalej. W naszym początkowym przykładzie budowaliśmy naszą sieć poprzez układanie gęstych warstw jedna na drugiej. Instancja warstwy wygląda tak:</p>
 <div class="cell">
 <details open="">

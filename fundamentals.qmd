@@ -32,7 +32,7 @@ Ocena modelu zawsze sprowadza się do podzielenia dostępnych danych na trzy zes
 Trenujesz na danych treningowych i oceniasz swój model na danych walidacyjnych.
 Kiedy model jest już gotowy do użycia, testujesz go po raz ostatni na danych testowych.
 
-![](https://www.memrise.com/hs-fs/hubfs/Blog%2520Posts%2520-%25202021/Hardest%2520Language/Friends.gif?width=480&name=Friends.gif){.column-margin fig-align="center" width="400"}
+![](images/Friends.gif){.column-margin fig-align="center" width="400"}
 
 Możesz zapytać, dlaczego nie mieć dwóch zestawów: treningowego i testowego?
 Trenowałbyś na danych treningowych i oceniałbyś na danych testowych.
@@ -509,14 +509,14 @@ Najpierw jednak należy sformatować dane w taki sposób, aby można je było wp
 
 Gdy tensory danych wejściowych i danych docelowych są gotowe, możesz rozpocząć trenowanie modeli.
 
-### Rozwijaj modele aby osiągnąć lepsze niż bazowe
+### Porównaj model z modelem bazowym
 
-Twoim celem na tym etapie jest osiągnięcie mocy statystycznej: to znaczy opracowanie małego modelu, który jest w stanie pokonać model podstawowy.
+Twoim celem na tym etapie jest osiągnięcie mocy statystycznej: to znaczy opracowanie małego modelu, który jest w stanie pokonać model bazowy.
 W przykładzie klasyfikacji cyfr MNIST, wszystko co osiąga dokładność większą niż 0,1[^fundamentals-6] można powiedzieć, że ma moc statystyczną.
 
 [^fundamentals-6]: zwykła heurystyka polegająca na wylosowaniu wynikowej cyfry ma prawdopodobieństwo powodzenia właśnie równe 0,1
 
-Zauważ, że nie zawsze jest możliwe osiągnięcie mocy statystycznej.
+Zauważ, że nie zawsze jest możliwe osiągnięcie takiej mocy statystycznej.
 Jeśli nie możesz pokonać przyjętej linii bazowej po wypróbowaniu wielu rozsądnych architektur, może się okazać, że odpowiedź na pytanie, które zadajesz, nie jest dostępna na podstawie danych wejściowych.
 Pamiętaj, że stawiasz dwie hipotezy:
 
@@ -526,7 +526,7 @@ Pamiętaj, że stawiasz dwie hipotezy:
 Może się okazać, że te hipotezy są fałszywe.
 Zakładając, że wszystko idzie dobrze, musisz dokonać trzech kluczowych wyborów, aby zbudować swój pierwszy działający model:
 
--   funkcja aktywacji ostatniej warstwy - utanawia ona praktyczne ograniczenia na wyjściu sieci. Na przykład w sieci ze zmienną wynikową dwuwartościową (dwie kategorie) powinieneś ustawić aktywację sigmoid.
+-   funkcja aktywacji ostatniej warstwy - ustanawia ona praktyczne ograniczenia na wyjściu sieci. Na przykład w sieci ze zmienną wynikową dwuwartościową (dwie kategorie) powinieneś ustawić aktywację sigmoid.
 -   funkcja straty - powinna odpowiadać rodzajowi problemu, który próbujesz rozwiązać. Na przykład w przykładzie MNIST użyto `categorical_crossentropy`.
 -   konfiguracja procedury optymalizacji - jakiego optymalizatora użyjesz? Jaki będzie jego współczynnik szybkości uczenia? W większości przypadków bezpiecznie jest użyć `rmsprop` lub `adam` i jego domyślnego współczynnika uczenia.
 

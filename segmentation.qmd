@@ -19,6 +19,8 @@ Głębokie uczenie dla wizji komputerowej obejmuje również szereg nieco bardzi
 Ale na początek klasyfikacja obrazów, segmentacja obrazów i wykrywanie obiektów stanowią podstawę, z którą każdy pionier uczenia maszynowego powinien być zaznajomiony.
 Większość zastosowań wizji komputerowej sprowadza się do jednego z tych trzech zadań.
 
+![](https://pcl.sitehost.iu.edu/rgoldsto/projects/segmentation.jpg){.column-margin fig-align="center" width="400"}
+
 Segmentacja obrazu z głębokim uczeniem polega na użyciu modelu do przypisania klasy do każdego piksela w obrazie, a tym samym segmentacji obrazu na różne strefy (takie jak "tło" i "pierwszy plan" lub "droga", "samochód" i "chodnik").
 Ta ogólna kategoria technik może być wykorzystana do zasilania znacznej liczby cennych aplikacji w edycji obrazu i wideo, autonomicznej jazdy, robotyki, obrazowania medycznego, i tak dalej.
 Istnieją dwa różne rodzaje segmentacji obrazu, o których powinieneś wiedzieć:
@@ -219,6 +221,8 @@ Kiedy wykonujemy *max pooling* 2 × 2, całkowicie niszczymy informacje o lokali
 Tak więc, mimo że warstwy *max pooling* dobrze sprawdzają się w zadaniach klasyfikacji, to w przypadku zadania segmentacji nie są tak skuteczne.
 W międzyczasie, konwolucje paskowe (*strides*) lepiej radzą sobie z *downsamplingiem* map cech, zachowując jednocześnie informacje o lokalizacji.
 
+![](https://media.giphy.com/media/glmRyiSI3v5E4/giphy-downsized-large.gif){.column-margin fig-align="center" width="400"}
+
 Druga połowa modelu to stos warstw `Conv2DTranspose`.
 Co to jest?
 Cóż, wyjściem pierwszej połowy modelu jest mapa cech o kształcie `(25, 25, 256)`, ale chcemy, aby nasze ostateczne wyjście miało taki sam kształt jak maski docelowe, `(200, 200, 3).` W związku z tym musimy zastosować coś w rodzaju odwrotności dotychczasowych przekształceń - coś, co spowoduje zwiększenie próbkowania map funkcji zamiast ich zmniejszenia.
@@ -294,6 +298,8 @@ I odwrotnie, dobra architektura modelu przyspieszy uczenie i umożliwi efektywne
 Dobra architektura modelu to taka, która zmniejsza rozmiar przestrzeni wyszukiwania lub w inny sposób ułatwia konwergencję do dobrego punktu przestrzeni wyszukiwania.
 Podobnie jak w przypadku inżynierii cech, architektura modelu polega na uproszczeniu problemu do rozwiązania przez spadek gradientu.
 
+![](https://media.giphy.com/media/Fkmgse8OMKn9C/giphy.gif){.column-margin fig-align="center"}
+
 Architektura modelu jest bardziej sztuką niż nauką.
 Doświadczeni inżynierowie uczenia maszynowego są w stanie intuicyjnie poskładać wydajne modele przy pierwszej próbie, podczas gdy początkujący często mają problemy ze stworzeniem modelu, który w ogóle się uczy.
 Kluczowym słowem jest tu intuicja: nikt nie jest w stanie podać jasnego wyjaśnienia, co działa, a co nie.
@@ -325,6 +331,8 @@ Jest to problem znikających gradientów.
 
 Rozwiązanie jest proste: wystarczy wymusić, aby każda funkcja w łańcuchu była nieniszcząca - zachowywała bezszumową wersję informacji zawartej w poprzednim wejściu.
 Najłatwiejszym sposobem wdrożenia tego jest użycie połączenia rezydualnego.
+
+![](https://media.giphy.com/media/OYnjptyYk6Lny/giphy.gif){.column-margin fig-align="center"}
 
 Jest to bardzo proste: wystarczy dodać wejście warstwy lub bloku warstw z powrotem do jej wyjścia (patrz @fig-seg7).
 Połączenie rezydualne działa jak skrót informacyjny wokół destrukcyjnych lub zaszumiających bloków (takich jak bloki zawierające aktywacje `relu` lub warstwy `dropout`), przekazując informację o gradiencie błędu z wczesnych warstw, tak aby propagować przez głęboką sieć.
@@ -410,6 +418,8 @@ Poprzednie przykłady w tej książce normalizowały dane przed wprowadzeniem ic
 Ale normalizacja danych może być interesująca po każdym przekształceniu dokonanym przez sieć: nawet jeśli dane wchodzące do sieci Dense lub Conv2D mają średnią 0 i jednostkową wariancję, nie ma powodu, by a priori oczekiwać, że tak będzie w przypadku danych wychodzących.
 Czy normalizacja aktywacji pośrednich mogłaby pomóc?
 
+![](images/Bayu%20Angora.gif){.column-margin fig-align="center" width="400"}
+
 Normalizacja partii danych właśnie to robi.
 Jest to rodzaj warstwy (`layer_batch_normalization()` w `keras`) wprowadzonej w 2015 roku przez @ioffeBatchNormalizationAccelerating2015; może ona adaptacyjnie normalizować dane, nawet gdy średnia i wariancja zmieniają się w czasie treningu.
 Podczas szkolenia używa średniej i wariancji bieżącej partii danych do normalizacji próbek, a podczas wnioskowania (gdy wystarczająco duża partia reprezentatywnych danych może nie być dostępna), używa wykładniczej średniej ruchomej i wariancji danych widzianych podczas szkolenia.
@@ -476,6 +486,8 @@ Jest to równoznaczne z rozdzieleniem uczenia się cech przestrzennych i uczenia
 W podobny sposób, jak konwolucja opiera się na założeniu, że wzory w obrazach nie są związane z konkretnymi lokalizacjami, konwolucja separowalna wgłębnie opiera się na założeniu, że lokalizacje przestrzenne w aktywacjach pośrednich są wysoce skorelowane, ale różne kanały są wysoce niezależne .
 Ponieważ założenie to jest generalnie prawdziwe dla reprezentacji obrazów uczonych przez głębokie sieci neuronowe, służy jako użyteczne założenie, które pomaga modelowi bardziej efektywnie wykorzystać dane treningowe.
 Model z silniejszymi założeniami dotyczącymi struktury informacji, które będzie musiał przetworzyć, jest lepszym modelem - o ile założenia te są poprawne.
+
+![](https://media.giphy.com/media/3ohfFoXZskaNkuCR32/giphy.gif){.column-margin fig-align="center" width="400"}
 
 Konwolucja separowalna wymaga znacznie mniej parametrów i wymaga mniejszej ilości obliczeń niż zwykła konwolucja, a jednocześnie ma porównywalną moc reprezentacji.
 W rezultacie otrzymujemy mniejsze modele, które szybciej się zbiegają i są mniej podatne na *overfitting*.
@@ -584,6 +596,8 @@ Chcąc jeszcze bardziej poprawić wydajność, powinieneś zacząć systematyczn
 Podstawowym problemem podczas budowania aplikacji wizji komputerowej jest kwestia możliwości interpretacji: dlaczego twój klasyfikator uznał, że dany obraz zawiera lodówkę, podczas gdy wszystko, co widzisz, to ciężarówka?
 Jest to szczególnie istotne w przypadkach użycia, w których głębokie uczenie jest wykorzystywane do uzupełnienia ludzkiej wiedzy, jak na przykład w przypadkach użycia obrazowania medycznego.
 Zakończymy ten rozdział zapoznając Cię z szeregiem różnych technik wizualizacji tego, czego uczą się sieci splotowe i zrozumienia podejmowanych przez nie decyzji.
+
+![](https://media.giphy.com/media/ZNMa7ocjGc0PTlHrP4/giphy.gif){.column-margin fig-align="center"}
 
 Często mówi się, że modele głębokiego uczenia są "czarnymi skrzynkami": uczą się reprezentacji, które są trudne do wyodrębnienia i przedstawienia w formie czytelnej dla człowieka.
 Chociaż jest to częściowo prawdą w przypadku niektórych typów modeli głębokiego uczenia, to zdecydowanie nie jest to prawdą w przypadku sieci splotowych.
@@ -706,6 +720,8 @@ Należy tu zwrócić uwagę na kilka rzeczy:
 Wykazaliśmy właśnie ważną, uniwersalną cechę reprezentacji uczonych przez głębokie sieci neuronowe: cechy wydobywane przez warstwę stają się coraz bardziej abstrakcyjne wraz z głębokością warstwy.
 Aktywacje wyższych warstw niosą coraz mniej informacji o konkretnym widzianym wejściu, a coraz więcej informacji o celu (w tym przypadku klasie obrazu: kot czy pies).
 Głęboka sieć neuronowa działa jak przebieg destylacji informacji, w którym surowe dane (w tym przypadku obrazy RGB) są wielokrotnie przekształcane w taki sposób, że nieistotne informacje są odfiltrowywane (np. specyficzny wygląd wizualny obrazu), a użyteczne informacje są powiększane i udoskonalane (np. klasa obrazu).
+
+![](https://media.giphy.com/media/l46CuDUhXNUx1Bm5G/giphy.gif){.column-margin fig-align="center" width="400"}
 
 Jest to analogiczne do sposobu, w jaki ludzie i zwierzęta postrzegają świat: po obserwacji sceny przez kilka sekund człowiek może pamiętać, jakie abstrakcyjne obiekty były w niej obecne (rower, drzewo), ale nie może pamiętać konkretnego wyglądu tych obiektów.
 W rzeczywistości, gdybyś próbował narysować z pamięci ogólny rower, istnieje prawdopodobieństwo, że nie udałoby Ci się to nawet w najmniejszym stopniu, mimo że w swoim życiu widziałeś tysiące rowerów.
@@ -864,6 +880,8 @@ Przedstawimy jeszcze jedną technikę wizualizacji - przydatną do zrozumienia, 
 Jest to pomocne w "debugowaniu" procesu decyzyjnego sieci konwolucyjnych, szczególnie w przypadku błędu klasyfikacji (problem nazywany interpretacją modelu).
 Może to również pozwolić na zlokalizowanie konkretnych obiektów na obrazie.
 
+![](https://media.giphy.com/media/VFSexwZVYCeuDwqRF5/giphy.gif){.column-margin fig-align="center" width="400"}
+
 Ta ogólna kategoria technik nazywana jest wizualizacją mapy aktywacji klas (ang. *Class Activation Map -* CAM) i polega na tworzeniu map ciepła aktywacji klas na obrazach wejściowych.
 Mapa cieplna aktywacji klas to dwuwymiarowa siatka wyników związanych z konkretną klasą wyjściową, obliczona dla każdej lokalizacji na dowolnym obrazie wejściowym, wskazująca jak ważna jest każda lokalizacja w odniesieniu do rozważanej klasy.
 Na przykład, biorąc pod uwagę obrazek wprowadzony do sieci splotowej psy-vs-koty, wizualizacja CAM pozwoli nam wygenerować mapę ciepła dla klasy "kot", wskazując jak podobne do kotów są różne części obrazka, a także mapę ciepła dla klasy "pies", wskazując jak podobne do psów są części obrazka.
@@ -986,7 +1004,9 @@ rasterImage(heatmap, 0, 0, ncol(img), nrow(img), interpolate = FALSE)
 
 Ta technika wizualizacji odpowiada na dwa ważne pytania:
 
--   Dlaczego sieć uznała, że ten obraz zawiera słonia afrykańskiego.
+-   Dlaczego sieć uznała, że ten obraz zawiera słonia afrykańskiego?
 -   Gdzie na obrazie znajduje się słoń afrykański?
 
 W szczególności interesujące jest to, że uszy słoniowego malca są silnie aktywowane: prawdopodobnie w ten sposób sieć potrafi odróżnić słonie afrykańskie od indyjskich.
+
+![](https://media.giphy.com/media/DAtJCG1t3im1G/giphy.gif){fig-align="center"}

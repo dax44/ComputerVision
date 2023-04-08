@@ -1,0 +1,47 @@
+---
+code-fold: show
+---
+
+# Sieci rekurencyjne
+
+Rekurencyjne sieci neuronowe (ang. *Recurrent Neural Network*) są bardzo często używanym typem sztucznych sieci neuronowych w rozwiązywaniu zadań, w których wartości pewnych cech są obserwowane w następstwie czasowym.
+RNN są specjalnym typem sieci, które pozwalają na przechowywanie informacji "na później" w celu wykorzystania ich przewidywaniu przyszłych wartości.
+W dalszej części tego rozdziału zostaną one szczegółowo omówione.
+Rozdział ten jednak zaczniemy od przybliżenie z jakimi typami szeregów czasowych możemy mieć do czynienia i w jaki sposób możemy używać do nich sieci rekurencyjnych.
+
+## Rodzaje szeregów czasowych
+
+Szereg czasowy może być dowolnym zestawem danych uzyskanym poprzez pomiary w regularnych odstępach czasu, jak np.
+dzienna cena akcji, godzinowe zużycie energii elektrycznej w mieście lub tygodniowa sprzedaż w sklepie.
+Szeregi czasowe są obecne wszędzie, niezależnie od tego, czy patrzymy na zjawiska naturalne (takie jak aktywność sejsmiczna, ewolucja populacji ryb w rzece czy pogoda w danym miejscu), czy na wzorce aktywności ludzkiej (takie jak odwiedzający stronę internetową, PKB kraju czy transakcje kartami kredytowymi).
+W przeciwieństwie do typów danych, z którymi mieliśmy do tej pory do czynienia, praca z szeregami czasowymi wymaga zrozumienia dynamiki systemu - jego cykli okresowych, trendów w czasie, regularnego reżimu i nagłych skoków.
+
+Zdecydowanie najbardziej powszechnym zadaniem związanym z szeregami czasowymi jest prognozowanie: przewidywanie, co stanie się w następnej serii; prognozowanie zużycia energii elektrycznej z kilkugodzinnym wyprzedzeniem, aby można było przewidzieć popyt; prognozowanie przychodów z kilkumiesięcznym wyprzedzeniem, aby można było zaplanować budżet; prognozowanie pogody z kilkudniowym wyprzedzeniem, aby można było zaplanować wyjazd.
+Prognozowanie jest tym, na czym skupia się ten rozdział.
+Ale w rzeczywistości istnieje wiele innych rzeczy, które można zrobić z szeregami czasowymi:
+
+-   klasyfikacja - przypisanie jednej lub więcej etykiet kategorycznych do szeregu czasowego. Na przykład, biorąc pod uwagę szereg czasowy aktywności osoby odwiedzającej stronę internetową, należy sklasyfikować, czy osoba ta jest botem czy człowiekiem.
+-   wykrywanie zdarzeń - identyfikacja wystąpienia określonego, oczekiwanego zdarzenia w ciągłym strumieniu danych. Szczególnie użytecznym zastosowaniem jest "wykrywanie słów kluczy", gdzie model monitoruje strumień audio i wykrywa wypowiedzi takie jak "OK, Google" lub "Hej, Alexa".
+-   wykrywanie anomalii - wykrywanie wszelkich nietypowych zdarzeń w ciągłym strumieniu danych. Nietypowa aktywność w sieci firmowej, które może być rozpoznane jako atak. Nietypowe odczyty na linii produkcyjnej, po to, aby człowiek się temu przyjrzał. Wykrywanie anomalii odbywa się zazwyczaj poprzez uczenie bez nadzoru, ponieważ często nie wiadomo, jakiego rodzaju anomalii się szuka, więc nie można trenować na konkretnych przykładach anomalii.
+
+Podczas pracy z szeregami czasowymi, spotkamy się z szeroką gamą technik reprezentacji danych specyficznych dla danej dziedziny.
+Na przykład, transformata Fouriera, która polega na wyrażeniu serii wartości w kategoriach superpozycji fal o różnych częstotliwościach.
+Transformata Fouriera może być bardzo cenna podczas wstępnego przetwarzania wszelkich danych, które charakteryzują się przede wszystkim cyklami i oscylacjami (jak dźwięk, drgania ramy wieżowca czy fale mózgowe).
+W kontekście głębokiego uczenia, analiza Fouriera (lub powiązana analiza częstotliwości Mel) i inne reprezentacje specyficzne dla danej domeny mogą być przydatne jako forma inżynierii cech, sposób na przygotowanie danych przed trenowaniem modelu na nich, aby ułatwić pracę modelu.
+
+Możemy wyróżnić trzy rodzaje zadań z wykorzystaniem szeregów czasowych:
+
+-   jednowymiarowe szeregi czasowe (ang. *univariate time series*) - problem sekwencyjny, w którym na podstawie historycznych wartości szeregu czasowego przewidujemy przyszłe wartości. Przykładowo na podstawie temperatur z kilku poprzednich dni, chcemy przewidywać temperaturę jutrzejszą.
+-   wielowymiarowe szeregi czasowe (ang. *multivariate time series*) - problem sekwencyjny, w którym na podstawie historycznych wartości kilku zmiennych (w tym historycznych danych na temat zmiennej wyjściowej) przewidujemy przyszłe wartości pewnej zmiennej wyjściowej. Przykładowo jeśli chcemy przewidywać zanieczyszczenie powietrza[^rnn-1] na podstawie wcześniejszych odczytów zanieczyszczenia oraz wcześniejszych informacji o sile i kierunku wiatru, temperaturze, punkcie rosy itp.
+-   wieloetapowe szeregi czasowe (ang. *multistage time series*) - problem sekwencyjny, w którym na postawie historycznych wartości szeregu czasowego przewidujemy kilka (więcej niż jedną) wartość przyszłą tego szeregu czasowego. Przykładowo jeśli na podstawie historycznych wielkości opadów chcemy przewidzieć wielkość opadów w najbliższych trzech dniach.
+
+[^rnn-1]: wyrażone w jednostkach pm2.5
+
+Oprócz wspomnianego podziału rodzajów zadań z wykorzystaniem szeregów czasowych, możemy je również podzielić na typy zadań ze względu na postać wejść i wyjść z modelu sieci neuronowej:
+
+-   jeden do jednego - gdy istnieje jedno wejście i jedno wyjście. Typowym przykładem problemu sekwencji jeden do jednego jest przypadek, gdy mamy obraz i chcemy przewidzieć jedną etykietę dla tego obrazu.
+-   wiele do jednego - problemach sekwencyjnych wiele do jednego, mamy sekwencję danych jako wejście i musimy przewidzieć pojedyncze wyjście. Klasyfikacja tekstu jest doskonałym przykładem problemów sekwencji *many-to-one*, gdzie mamy sekwencję wejściową słów i chcemy przewidzieć pojedynczy tag wyjściowy.
+-   jeden do wielu - w problemach sekwencji jeden do wielu, mamy pojedyncze wejście i sekwencję wyjść. Typowym przykładem jest obraz i odpowiadający mu opis sceny.
+-   wiele do wielu - problemy sekwencji wiele do wielu obejmują sekwencję wejść i sekwencję wyjść. Na przykład, ceny akcji z 7 dni jako dane wejściowe i ceny akcji z kolejnych 7 dni jako dane wyjściowe. Chatboty są również przykładem problemów sekwencji wiele do wielu, gdzie sekwencja tekstowa jest wejściem, a inna sekwencja tekstowa jest wyjściem.
+
+![Różne typy zadań sekwencyjnych realizowanych przez sieci neuronowe](images/Zrzut%20ekranu%202023-04-5%20o%2019.16.30.png){#fig-rnn1 fig-align="center" width="600"}

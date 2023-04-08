@@ -11,6 +11,8 @@ Wkrótce zagłębimy się w teorię tego, czym są sieci splotowe i dlaczego odn
 Ale najpierw przyjrzyjmy się w praktyce prostemu przykładowi sieci splotowej.
 Wykorzystuje on sieć kowolucyjną do klasyfikacji cyfr MNIST, czyli zadania, które wykonaliśmy wcześnej przy użyciu sieci gęsto połączonej (nasza dokładność testu wyniosła wtedy 97,8%).
 
+![](https://editor.analyticsvidhya.com/uploads/999181_BIpRgx5FsEMhr1k2EqBKFg.gif){.column-margin fig-align="center" width="400"}
+
 Poniższe linie kodu pokazują, jak wygląda podstawowa sieć *CovNet*.
 Jest to stos warstw `layer_conv_2d` i `layer_max_pooling_2d` o których zasadzie działania będzie jeszcze więcej za chwilę.
 

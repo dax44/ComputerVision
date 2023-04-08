@@ -103,7 +103,7 @@ Istnieją dwa sposoby na uzyskanie osadzenia słów:
 Przyjrzyjmy się obu tym metodom.
 
 ::: {#exm-1}
-Najpierw ze strony [ai.stanford.edu/\~amaas/data/sentiment](ai.stanford.edu/~amaas/data/sentiment) pobierzemy surowy zbiór danych IMDB[^recurent-1].
+Najpierw ze strony [ai.stanford.edu/\~amaas/data/sentiment](ai.stanford.edu/~amaas/data/sentiment) pobierzemy surowy zbiór danych IMDB[^nlp-1].
 Rozkompresuj go.
 Teraz zbierzmy poszczególne recenzje treningowe w listę ciągów, jeden ciąg na recenzję.
 Podobnie etykiety recenzji (pozytywne / negatywne) do listy etykiet.
@@ -157,7 +157,7 @@ c("cat", "mat", "on", "sat", "the")
 ```
 
 Główną zaletą tego kodowania jest to, że możesz reprezentować cały tekst jako pojedynczy wektor, gdzie każdy wpis jest wskaźnikiem obecności dla danego słowa.
-Na przykład, używając kodowania binarnego (multi-hot[^recurent-2]), zakodowałbyś tekst jako wektor o tylu wymiarach, ile jest słów w twoim słowniku, z 0 prawie wszędzie i kilkoma 1 dla wymiarów, które kodują słowa obecne w tekście.
+Na przykład, używając kodowania binarnego (multi-hot[^nlp-2]), zakodowałbyś tekst jako wektor o tylu wymiarach, ile jest słów w twoim słowniku, z 0 prawie wszędzie i kilkoma 1 dla wymiarów, które kodują słowa obecne w tekście.
 Wypróbujmy to w naszym zadaniu.
 
 Najpierw przetwórzmy nasze surowe zbiory danych tekstowych za pomocą warstwy `layer_text_vectorization()`, tak aby otrzymały one zakodowane w wielu wymiarach binarne wektory słów.
@@ -430,9 +430,9 @@ Wspomniane zostało wcześniej, że do NLP można podejść też wykorzystując 
 Pod koniec rozdziału zostanie to podejście przybliżone.
 :::
 
-[^recurent-1]: jeśli adres URL już nie działa, wygoogluj "IMDB dataset"
+[^nlp-1]: jeśli adres URL już nie działa, wygoogluj "IMDB dataset"
 
-[^recurent-2]: kodowanie *multi-hot* jest kodowaniem potrzebującym nieco mniejszych wektorów do zakodowania słów, np.
+[^nlp-2]: kodowanie *multi-hot* jest kodowaniem potrzebującym nieco mniejszych wektorów do zakodowania słów, np.
     cat = \[0,0,0\], dog = \[0,0,1\], fish = \[0,1,0\], bird = \[0,1,1\], ant = \[1,0,0\].
 
 ### Osadzenie połączone z siecią
