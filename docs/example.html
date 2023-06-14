@@ -552,8 +552,8 @@ ________________________________________________________________________________
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 2
- $ : num [1:20, 1:150, 1:150, 1:3] 0.102 0.1608 0.1804 0.0196 0.6392 ...
- $ : num [1:20(1d)] 0 0 0 1 0 1 1 0 0 0 ...</code></pre>
+ $ : num [1:20, 1:150, 1:150, 1:3] 0.969 0.82 1 0.129 0.651 ...
+ $ : num [1:20(1d)] 0 1 0 0 1 0 0 1 1 1 ...</code></pre>
 </div>
 </div>
 <p>Dopasujmy model do danych uzyskanych za pomocą generatora. Robimy to za pomocą funkcji <code>fit</code>. Jako pierwszy argument oczekuje ona generatora, który będzie generował partie danych wejściowych i docelowych. Ponieważ dane są generowane w nieskończoność, generator musi wiedzieć, ile próbek pobrać z generatora, zanim zadeklaruje koniec epoki. Taką rolę pełni argument <code>steps_per_epoch</code>: po pobraniu z generatora partii próbek - czyli po wykonaniu kroków spadku gradientu - proces dopasowania przejdzie do następnej epoki. W tym przypadku, partie są 20-próbkowe, więc zajmie to 100 partii, aż do osiągnięcia celu 2000 próbek.</p>
