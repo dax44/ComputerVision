@@ -304,7 +304,7 @@ Prześledźmy szybko ten kod:
 
 [^example-4]: obrócona zostanie połowa obrazów
 
-``` r
+```{r}
 fnames <- list.files(train_cats_dir, full.names = TRUE)
 img_path <- fnames[[3]] # <1>
 img <- image_load(img_path, target_size = c(150, 150)) # <2>
@@ -482,7 +482,7 @@ Do funkcji przekazywane są trzy argumenty:
 -   `include_top` - odnosi się do włączenia (lub nie) gęsto połączonego klasyfikatora na szczycie sieci. Domyślnie, ten gęsto połączony klasyfikator odpowiada 1000 klas z ImageNet. Ponieważ zamierzasz użyć własnego gęsto połączonego klasyfikatora (z tylko dwoma klasami: kot i pies), nie musisz go włączać.
 -   `input_shape` - to kształt tensorów obrazów, które podasz sieci. Ten argument jest czysto opcjonalny: jeśli go nie podasz, sieć będzie w stanie przetwarzać dane wejściowe o dowolnym rozmiarze.
 
-``` r
+```{r}
 conv_base # <1>
 
 plot(conv_base) # <2>
@@ -505,7 +505,7 @@ W tym momencie możemy postąpić na dwa sposoby:
 Zacznijmy od uruchomienia instancji wcześniej wprowadzonego `image_data_generator`, aby wyodrębnić obrazy jako tablice, jak również ich etykiety.
 Wyodrębnimy cechy z tych obrazów poprzez wywołanie metody `predict` na modelu.
 
-``` r
+```{r}
 #| eval: false
 datagen <- image_data_generator(rescale = 1/255)
 
