@@ -48,9 +48,10 @@ dir_create(data_dir)
 
 data_url <- path("http://www.robots.ox.ac.uk/~vgg/data/pets/data") 
 for (filename in c("images.tar.gz", "annotations.tar.gz")) {
+  # uncomment for the first time
  # download.file(url = data_url / filename,
  #             destfile = data_dir / filename)
- untar(data_dir / filename, exdir = data_dir)
+ # untar(data_dir / filename, exdir = data_dir)
 }
 ```
 
