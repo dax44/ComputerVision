@@ -328,56 +328,62 @@ div.csl-indent {
 </figure>
 </div>
 <div class="page-columns page-full"><p>Ten zbiór danych zawiera 25000 obrazów psów i kotów (12500 z każdej klasy) i ma rozmiar 569 MB (skompresowany)<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Po pobraniu i rozpakowaniu, utworzysz nowy zbiór danych zawierający trzy podzbiory: zbiór treningowy z 1000 próbek każdej klasy, zbiór walidacyjny z 500 próbkami każdej klasy oraz zbiór testowy z 500 próbkami każdej klasy. Poniżej znajduje się kod do wykonania tego zadania.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;w ściągniętym pliku <code>dogs-vs-cats.zip</code> są zawarte trzy pliki, a skupiamy się na <code>train.zip</code> i to ten rozpakowujemy</p></li></div></div>
-<div class="sourceCode" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a>original_dataset_dir <span class="ot">&lt;-</span> <span class="st">"/Users/majerek/Downloads/dogs-vs-cats/train"</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-3" class="code-annotation-target"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a>base_dir <span class="ot">&lt;-</span> <span class="st">"/Users/majerek/Downloads/cats_and_dogs_small"</span></span>
-<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(base_dir)</span>
-<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a>train_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(base_dir, <span class="st">"train"</span>)</span>
-<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(train_dir)</span>
-<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>validation_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(base_dir, <span class="st">"validation"</span>)</span>
-<span id="annotated-cell-1-8"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(validation_dir)</span>
-<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a>test_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(base_dir, <span class="st">"test"</span>)</span>
-<span id="annotated-cell-1-10"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(test_dir)</span>
-<span id="annotated-cell-1-11"><a href="#annotated-cell-1-11" aria-hidden="true" tabindex="-1"></a>train_cats_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(train_dir, <span class="st">"cats"</span>)</span>
-<span id="annotated-cell-1-12"><a href="#annotated-cell-1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(train_cats_dir)</span>
-<span id="annotated-cell-1-13"><a href="#annotated-cell-1-13" aria-hidden="true" tabindex="-1"></a>train_dogs_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(train_dir, <span class="st">"dogs"</span>)</span>
-<span id="annotated-cell-1-14"><a href="#annotated-cell-1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(train_dogs_dir)</span>
-<span id="annotated-cell-1-15"><a href="#annotated-cell-1-15" aria-hidden="true" tabindex="-1"></a>validation_cats_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(validation_dir, <span class="st">"cats"</span>)</span>
-<span id="annotated-cell-1-16"><a href="#annotated-cell-1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(validation_cats_dir)</span>
-<span id="annotated-cell-1-17"><a href="#annotated-cell-1-17" aria-hidden="true" tabindex="-1"></a>validation_dogs_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(validation_dir, <span class="st">"dogs"</span>)</span>
-<span id="annotated-cell-1-18"><a href="#annotated-cell-1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(validation_dogs_dir)</span>
-<span id="annotated-cell-1-19"><a href="#annotated-cell-1-19" aria-hidden="true" tabindex="-1"></a>test_cats_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(test_dir, <span class="st">"cats"</span>)</span>
-<span id="annotated-cell-1-20"><a href="#annotated-cell-1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(test_cats_dir)</span>
-<span id="annotated-cell-1-21"><a href="#annotated-cell-1-21" aria-hidden="true" tabindex="-1"></a>test_dogs_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(test_dir, <span class="st">"dogs"</span>)</span>
-<span id="annotated-cell-1-22"><a href="#annotated-cell-1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(test_dogs_dir)</span>
-<span id="annotated-cell-1-23"><a href="#annotated-cell-1-23" aria-hidden="true" tabindex="-1"></a>fnames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"cat."</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, <span class="st">".jpg"</span>)</span>
-<span id="annotated-cell-1-24"><a href="#annotated-cell-1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(<span class="fu">file.path</span>(original_dataset_dir, fnames),</span>
-<span id="annotated-cell-1-25"><a href="#annotated-cell-1-25" aria-hidden="true" tabindex="-1"></a>          <span class="fu">file.path</span>(train_cats_dir))</span>
-<span id="annotated-cell-1-26"><a href="#annotated-cell-1-26" aria-hidden="true" tabindex="-1"></a>fnames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"cat."</span>, <span class="dv">1001</span><span class="sc">:</span><span class="dv">1500</span>, <span class="st">".jpg"</span>)</span>
-<span id="annotated-cell-1-27"><a href="#annotated-cell-1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(<span class="fu">file.path</span>(original_dataset_dir, fnames),</span>
-<span id="annotated-cell-1-28"><a href="#annotated-cell-1-28" aria-hidden="true" tabindex="-1"></a>          <span class="fu">file.path</span>(validation_cats_dir))</span>
-<span id="annotated-cell-1-29"><a href="#annotated-cell-1-29" aria-hidden="true" tabindex="-1"></a>fnames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"cat."</span>, <span class="dv">1501</span><span class="sc">:</span><span class="dv">2000</span>, <span class="st">".jpg"</span>)</span>
-<span id="annotated-cell-1-30"><a href="#annotated-cell-1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(<span class="fu">file.path</span>(original_dataset_dir, fnames),</span>
-<span id="annotated-cell-1-31"><a href="#annotated-cell-1-31" aria-hidden="true" tabindex="-1"></a>          <span class="fu">file.path</span>(test_cats_dir))</span>
-<span id="annotated-cell-1-32"><a href="#annotated-cell-1-32" aria-hidden="true" tabindex="-1"></a>fnames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"dog."</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, <span class="st">".jpg"</span>)</span>
-<span id="annotated-cell-1-33"><a href="#annotated-cell-1-33" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(<span class="fu">file.path</span>(original_dataset_dir, fnames),</span>
-<span id="annotated-cell-1-34"><a href="#annotated-cell-1-34" aria-hidden="true" tabindex="-1"></a>          <span class="fu">file.path</span>(train_dogs_dir))</span>
-<span id="annotated-cell-1-35"><a href="#annotated-cell-1-35" aria-hidden="true" tabindex="-1"></a>fnames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"dog."</span>, <span class="dv">1001</span><span class="sc">:</span><span class="dv">1500</span>, <span class="st">".jpg"</span>)</span>
-<span id="annotated-cell-1-36"><a href="#annotated-cell-1-36" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(<span class="fu">file.path</span>(original_dataset_dir, fnames),</span>
-<span id="annotated-cell-1-37"><a href="#annotated-cell-1-37" aria-hidden="true" tabindex="-1"></a>          <span class="fu">file.path</span>(validation_dogs_dir))</span>
-<span id="annotated-cell-1-38"><a href="#annotated-cell-1-38" aria-hidden="true" tabindex="-1"></a>fnames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"dog."</span>, <span class="dv">1501</span><span class="sc">:</span><span class="dv">2000</span>, <span class="st">".jpg"</span>)</span>
-<span id="annotated-cell-1-39"><a href="#annotated-cell-1-39" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(<span class="fu">file.path</span>(original_dataset_dir, fnames),</span>
-<span id="annotated-cell-1-40"><a href="#annotated-cell-1-40" aria-hidden="true" tabindex="-1"></a>          <span class="fu">file.path</span>(test_dogs_dir))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<details open="">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a>original_dataset_dir <span class="ot">&lt;-</span> <span class="st">"/Users/majerek/Downloads/dogs-vs-cats/train"</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a>base_dir <span class="ot">&lt;-</span> <span class="st">"/Users/majerek/Downloads/cats_and_dogs_small"</span></span>
+<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(base_dir)</span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>train_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(base_dir, <span class="st">"train"</span>)</span>
+<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(train_dir)</span>
+<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>validation_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(base_dir, <span class="st">"validation"</span>)</span>
+<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(validation_dir)</span>
+<span id="annotated-cell-1-8"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>test_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(base_dir, <span class="st">"test"</span>)</span>
+<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(test_dir)</span>
+<span id="annotated-cell-1-10"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a>train_cats_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(train_dir, <span class="st">"cats"</span>)</span>
+<span id="annotated-cell-1-11"><a href="#annotated-cell-1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(train_cats_dir)</span>
+<span id="annotated-cell-1-12"><a href="#annotated-cell-1-12" aria-hidden="true" tabindex="-1"></a>train_dogs_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(train_dir, <span class="st">"dogs"</span>)</span>
+<span id="annotated-cell-1-13"><a href="#annotated-cell-1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(train_dogs_dir)</span>
+<span id="annotated-cell-1-14"><a href="#annotated-cell-1-14" aria-hidden="true" tabindex="-1"></a>validation_cats_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(validation_dir, <span class="st">"cats"</span>)</span>
+<span id="annotated-cell-1-15"><a href="#annotated-cell-1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(validation_cats_dir)</span>
+<span id="annotated-cell-1-16"><a href="#annotated-cell-1-16" aria-hidden="true" tabindex="-1"></a>validation_dogs_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(validation_dir, <span class="st">"dogs"</span>)</span>
+<span id="annotated-cell-1-17"><a href="#annotated-cell-1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(validation_dogs_dir)</span>
+<span id="annotated-cell-1-18"><a href="#annotated-cell-1-18" aria-hidden="true" tabindex="-1"></a>test_cats_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(test_dir, <span class="st">"cats"</span>)</span>
+<span id="annotated-cell-1-19"><a href="#annotated-cell-1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(test_cats_dir)</span>
+<span id="annotated-cell-1-20"><a href="#annotated-cell-1-20" aria-hidden="true" tabindex="-1"></a>test_dogs_dir <span class="ot">&lt;-</span> <span class="fu">file.path</span>(test_dir, <span class="st">"dogs"</span>)</span>
+<span id="annotated-cell-1-21"><a href="#annotated-cell-1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(test_dogs_dir)</span>
+<span id="annotated-cell-1-22"><a href="#annotated-cell-1-22" aria-hidden="true" tabindex="-1"></a>fnames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"cat."</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, <span class="st">".jpg"</span>)</span>
+<span id="annotated-cell-1-23"><a href="#annotated-cell-1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(<span class="fu">file.path</span>(original_dataset_dir, fnames),</span>
+<span id="annotated-cell-1-24"><a href="#annotated-cell-1-24" aria-hidden="true" tabindex="-1"></a>          <span class="fu">file.path</span>(train_cats_dir))</span>
+<span id="annotated-cell-1-25"><a href="#annotated-cell-1-25" aria-hidden="true" tabindex="-1"></a>fnames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"cat."</span>, <span class="dv">1001</span><span class="sc">:</span><span class="dv">1500</span>, <span class="st">".jpg"</span>)</span>
+<span id="annotated-cell-1-26"><a href="#annotated-cell-1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(<span class="fu">file.path</span>(original_dataset_dir, fnames),</span>
+<span id="annotated-cell-1-27"><a href="#annotated-cell-1-27" aria-hidden="true" tabindex="-1"></a>          <span class="fu">file.path</span>(validation_cats_dir))</span>
+<span id="annotated-cell-1-28"><a href="#annotated-cell-1-28" aria-hidden="true" tabindex="-1"></a>fnames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"cat."</span>, <span class="dv">1501</span><span class="sc">:</span><span class="dv">2000</span>, <span class="st">".jpg"</span>)</span>
+<span id="annotated-cell-1-29"><a href="#annotated-cell-1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(<span class="fu">file.path</span>(original_dataset_dir, fnames),</span>
+<span id="annotated-cell-1-30"><a href="#annotated-cell-1-30" aria-hidden="true" tabindex="-1"></a>          <span class="fu">file.path</span>(test_cats_dir))</span>
+<span id="annotated-cell-1-31"><a href="#annotated-cell-1-31" aria-hidden="true" tabindex="-1"></a>fnames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"dog."</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, <span class="st">".jpg"</span>)</span>
+<span id="annotated-cell-1-32"><a href="#annotated-cell-1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(<span class="fu">file.path</span>(original_dataset_dir, fnames),</span>
+<span id="annotated-cell-1-33"><a href="#annotated-cell-1-33" aria-hidden="true" tabindex="-1"></a>          <span class="fu">file.path</span>(train_dogs_dir))</span>
+<span id="annotated-cell-1-34"><a href="#annotated-cell-1-34" aria-hidden="true" tabindex="-1"></a>fnames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"dog."</span>, <span class="dv">1001</span><span class="sc">:</span><span class="dv">1500</span>, <span class="st">".jpg"</span>)</span>
+<span id="annotated-cell-1-35"><a href="#annotated-cell-1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(<span class="fu">file.path</span>(original_dataset_dir, fnames),</span>
+<span id="annotated-cell-1-36"><a href="#annotated-cell-1-36" aria-hidden="true" tabindex="-1"></a>          <span class="fu">file.path</span>(validation_dogs_dir))</span>
+<span id="annotated-cell-1-37"><a href="#annotated-cell-1-37" aria-hidden="true" tabindex="-1"></a>fnames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"dog."</span>, <span class="dv">1501</span><span class="sc">:</span><span class="dv">2000</span>, <span class="st">".jpg"</span>)</span>
+<span id="annotated-cell-1-38"><a href="#annotated-cell-1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(<span class="fu">file.path</span>(original_dataset_dir, fnames),</span>
+<span id="annotated-cell-1-39"><a href="#annotated-cell-1-39" aria-hidden="true" tabindex="-1"></a>          <span class="fu">file.path</span>(test_dogs_dir))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-annotation="1" data-code-lines="2">tu ustaw swoją ścieżkę do katalogu z rozpakowanym katalogiem <code>train</code></span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="1" data-code-lines="1">tu ustaw swoją ścieżkę do katalogu z rozpakowanym katalogiem <code>train</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-annotation="2" data-code-lines="3">ustaw ścieżkę gdzie chcesz zapisywać obrazy do uczenia sieci</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="2" data-code-lines="2">ustaw ścieżkę gdzie chcesz zapisywać obrazy do uczenia sieci</span>
 </dd>
 </dl>
+</div>
+</div>
 <p>Jako sprawdzenie poprawności, policzmy, ile zdjęć jest w każdym podziale treningowym (train/validation/test):</p>
 <div class="cell">
 <details open="">
@@ -546,8 +552,8 @@ ________________________________________________________________________________
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 2
- $ : num [1:20, 1:150, 1:150, 1:3] 0.694 0.216 0.816 0.671 0.69 ...
- $ : num [1:20(1d)] 0 0 1 0 1 1 0 0 0 1 ...</code></pre>
+ $ : num [1:20, 1:150, 1:150, 1:3] 0.102 0.1608 0.1804 0.0196 0.6392 ...
+ $ : num [1:20(1d)] 0 0 0 1 0 1 1 0 0 0 ...</code></pre>
 </div>
 </div>
 <p>Dopasujmy model do danych uzyskanych za pomocą generatora. Robimy to za pomocą funkcji <code>fit</code>. Jako pierwszy argument oczekuje ona generatora, który będzie generował partie danych wejściowych i docelowych. Ponieważ dane są generowane w nieskończoność, generator musi wiedzieć, ile próbek pobrać z generatora, zanim zadeklaruje koniec epoki. Taką rolę pełni argument <code>steps_per_epoch</code>: po pobraniu z generatora partii próbek - czyli po wykonaniu kroków spadku gradientu - proces dopasowania przejdzie do następnej epoki. W tym przypadku, partie są 20-próbkowe, więc zajmie to 100 partii, aż do osiągnięcia celu 2000 próbek.</p>
@@ -573,7 +579,7 @@ ________________________________________________________________________________
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(history)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="example_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="example_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Te wykresy są charakterystyczne dla nadmiernego dopasowania. Dokładność szkolenia rośnie liniowo w czasie, aż osiąga prawie 100%, natomiast dokładność walidacji zatrzymuje się na poziomie 70-74%. Strata związana z walidacją osiąga swoje minimum już po pięciu epokach, a następnie zatrzymuje się, podczas gdy strata związana z treningiem zmniejsza się liniowo, aż osiągnie prawie 0.</p>
@@ -662,7 +668,7 @@ ________________________________________________________________________________
 </dl>
 </div>
 <div class="cell-output-display">
-<p><img src="example_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="example_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 <details open="">
 <summary>Kod</summary>
@@ -733,7 +739,7 @@ ________________________________________________________________________________
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="example_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<p><img src="example_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Zanim przejdziemy do oceny dopasowania modelu wspomnijmy najważniejsze parametry w ustawieniu uczenia:</p>
@@ -806,7 +812,7 @@ ________________________________________________________________________________
 </dl>
 </div>
 <div class="cell-output-display">
-<p><img src="example_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="example_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="480"></p>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Model: "vgg16"
@@ -940,7 +946,7 @@ ________________________________________________________________________________
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(history)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="example_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<p><img src="example_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Osiągnięty poziom dopasowania na zbiorze walidacyjnym bliski 90% jest imponujący. Jednak wykres uczenia pokazuje, że wystąpiło zjawisko nadmiernego dopasowania. Jest to spowodowane brakiem augmentacji danych w tym podejściu.</p>
@@ -1050,10 +1056,10 @@ ________________________________________________________________________________
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(history)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="example_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+<p><img src="example_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Jak widać, osiągnęliśmy dokładność walidacji na poziomie ponad 90%. Jest to znacznie lepszy wynik niż ten, który osiągnęliśmy z małą siecią konwolucyjną wytrenowaną od zera.</p>
+<p>Jak widać, osiągnęliśmy dokładność walidacji na poziomie prawie 95%. Jest to znacznie lepszy wynik niż ten, który osiągnęliśmy z małą siecią konwolucyjną wytrenowaną od zera.</p>
 </section>
 </section>
 <section id="dostrajanie-sieci" class="level3 page-columns page-full" data-number="13.5.2">
@@ -1107,7 +1113,7 @@ ________________________________________________________________________________
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="example_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+<p><img src="example_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="page-columns page-full"><p>Dopasowanie tej sieci okazało się najlepsze<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> pomimo, jak widać z rysunku, nadmiernego dopasowania. Być może dołożenie jeszcze jednej warstwy regularyzacji zaradziłoby temu problemowi. Możemy też sprawdzić jak ta sieć radzi sobie z zupełnie nowymi danymi, zbioru testowego.</p><div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;blisko 95% na zbiorze walidacyjnym</p></li></div></div>

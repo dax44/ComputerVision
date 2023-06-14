@@ -55,7 +55,7 @@ Poniżej znajduje się kod do wykonania tego zadania.
 
 [^example-2]: w ściągniętym pliku `dogs-vs-cats.zip` są zawarte trzy pliki, a skupiamy się na `train.zip` i to ten rozpakowujemy
 
-``` r
+```{r}
 #| eval: false
 original_dataset_dir <- "/Users/majerek/Downloads/dogs-vs-cats/train" # <1>
 base_dir <- "/Users/majerek/Downloads/cats_and_dogs_small" # <2>
@@ -483,6 +483,8 @@ Do funkcji przekazywane są trzy argumenty:
 -   `input_shape` - to kształt tensorów obrazów, które podasz sieci. Ten argument jest czysto opcjonalny: jeśli go nie podasz, sieć będzie w stanie przetwarzać dane wejściowe o dowolnym rozmiarze.
 
 ```{r}
+#| fig-height: 15
+#| fig-width: 5
 conv_base # <1>
 
 plot(conv_base) # <2>
@@ -681,7 +683,7 @@ load("models/exm_hist4.rda")
 plot(history)
 ```
 
-Jak widać, osiągnęliśmy dokładność walidacji na poziomie ponad 90%.
+Jak widać, osiągnęliśmy dokładność walidacji na poziomie prawie 95%.
 Jest to znacznie lepszy wynik niż ten, który osiągnęliśmy z małą siecią konwolucyjną wytrenowaną od zera.
 
 ### Dostrajanie sieci
