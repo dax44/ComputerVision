@@ -331,7 +331,7 @@ div.csl-indent {
 </div></div><p>Chociaż uczenie maszynowe zaczęło się rozwijać dopiero w latach 90-tych, szybko stało się najpopularniejszą i odnoszącą największe sukcesy dziedziną AI, a trend ten jest napędzany przez dostępność szybszego sprzętu i większych zbiorów danych. Uczenie maszynowe jest ściśle związane ze statystyką matematyczną, ale różni się od niej na kilka ważnych sposobów. W przeciwieństwie do statystyki, uczenie maszynowe ma tendencję do zajmowania się dużymi, złożonymi zbiorami danych (takimi jak zbiór milionów obrazów, z których każdy składa się z dziesiątek tysięcy pikseli), dla których klasyczna analiza statystyczna byłaby niepraktyczna. W rezultacie, uczenie maszynowe, a zwłaszcza głębokie uczenie, wykazuje stosunkowo mało teorii matematycznej - być może zbyt mało - i jest zorientowane na inżynierię. Jest to praktyczna dyscyplina, w której pomysły są sprawdzane empirycznie znacznie częściej niż teoretycznie.</p>
 <section id="uczenie-się-reprezentacji-na-podstawie-danych" class="level2" data-number="10.1">
 <h2 data-number="10.1" class="anchored" data-anchor-id="uczenie-się-reprezentacji-na-podstawie-danych"><span class="header-section-number">10.1</span> Uczenie się reprezentacji na podstawie danych</h2>
-<p>Na to aby zdefiniować głębokie uczenie i zrozumieć różnicę między głębokim uczeniem a innymi podejściami do uczenia maszynowego, najpierw musimy mieć pewne pojęcie o tym, co robią algorytmy uczenia maszynowego. Właśnie stwierdziliśmy, że uczenie maszynowe odkrywa reguły wykonywania zadania przetwarzania danych, biorąc pod uwagę przykłady tego, co jest oczekiwane na wyjściu. Zatem, aby przeprowadzić uczenie maszynowe, potrzebujemy trzech rzeczy:</p>
+<p>Na to, aby zdefiniować głębokie uczenie i zrozumieć różnicę między głębokim uczeniem a innymi podejściami do uczenia maszynowego, najpierw musimy mieć pewne pojęcie o tym, co robią algorytmy uczenia maszynowego. Właśnie stwierdziliśmy, że uczenie maszynowe odkrywa reguły wykonywania zadania przetwarzania danych, biorąc pod uwagę przykłady tego, co jest oczekiwane na wyjściu. Zatem, aby przeprowadzić uczenie maszynowe, potrzebujemy trzech rzeczy:</p>
 <ul>
 <li>Punkty danych wejściowych - na przykład, jeśli zadaniem jest rozpoznawanie mowy, tymi punktami danych mogą być pliki dźwiękowe osób mówiących. Jeśli zadanie polega na oznaczaniu obrazów, mogą to być pliki z obrazami.</li>
 <li>Przykłady oczekiwanych wyników - w zadaniu rozpoznawania mowy mogą to być generowane przez człowieka transkrypcje plików dźwiękowych. W zadaniu dotyczącym obrazów, oczekiwanymi danymi wyjściowymi mogą być tagi takie jak “pies”, “kot” itd.</li>
@@ -356,11 +356,11 @@ div.csl-indent {
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;10.3: Przedstawienie zasady działania poszczególnych warstw sieci neuronowej w rozpoznawaniu cyfr</figcaption><p></p>
 </figure>
 </div>
-<p>Tak właśnie wygląda głębokie uczenie, technicznie rzecz biorąc: jest to wieloetapowy sposób uczenia się reprezentacji danych. To prosty pomysł - ale jak się okazuje, bardzo proste mechanizmy, odpowiednio skalowane, mogą w końcu wyglądać jak magia.</p>
+<p>Tak właśnie wygląda głębokie uczenie, technicznie rzecz biorąc: jest to wieloetapowy sposób uczenia się reprezentacji danych. To prosty pomysł - ale jak się okazuje, bardzo proste mechanizmy, odpowiednio skalowane, mogą w końcu wyglądać jak magia 🙉.</p>
 </section>
-<section id="jak-działa-deep-learning" class="level2" data-number="10.2">
+<section id="jak-działa-deep-learning" class="level2 page-columns page-full" data-number="10.2">
 <h2 data-number="10.2" class="anchored" data-anchor-id="jak-działa-deep-learning"><span class="header-section-number">10.2</span> Jak działa deep learning?</h2>
-<p>W tym wiemy już, że uczenie maszynowe polega na mapowaniu danych wejściowych (takich jak obrazy) na dane docelowe (takie jak etykieta “kot”), co odbywa się poprzez obserwację wielu przykładów danych wejściowych i danych docelowych. Wiemy też, że głębokie sieci neuronowe wykonują odwzorowanie danych wejściowych na docelowe poprzez głęboką sekwencję prostych transformacji danych (warstwy) i że te transformacje danych są uczone przez ekspozycję na przykłady. Przyjrzyjmy się teraz, jak to uczenie przebiega, konkretnie.</p>
+<p>Wiemy już, że uczenie maszynowe polega na mapowaniu danych wejściowych (takich jak obrazy) na dane docelowe (takie jak etykieta “kot”), co odbywa się poprzez obserwację wielu przykładów danych wejściowych i danych docelowych. Wiemy też, że głębokie sieci neuronowe wykonują odwzorowanie danych wejściowych na docelowe poprzez głęboką sekwencję prostych transformacji danych (warstwy) i że te transformacje danych są uczone przez ekspozycję na przykłady. Przyjrzyjmy się teraz, jak to uczenie przebiega, konkretnie.</p>
 <p>Specyfikacja tego, co warstwa robi ze swoimi danymi wejściowymi, jest przechowywana w wagach warstwy (zwanych wagami synaptycznymi), które w istocie są zbiorem liczb. W sensie technicznym można powiedzieć, że transformacja wykonywana przez warstwę jest sparametryzowana przez jej wagi (patrz <a href="#fig-dl3">Rysunek&nbsp;<span>10.4</span></a>). W tym kontekście uczenie oznacza znalezienie zestawu wartości dla wag wszystkich warstw w sieci, tak aby sieć poprawnie odwzorowywała przykładowe wejścia na przypisane im cele. Rzecz w tym, że głęboka sieć neuronowa może zawierać dziesiątki milionów parametrów. Znalezienie poprawnej wartości dla wszystkich z nich może wydawać się trudnym zadaniem, szczególnie biorąc pod uwagę fakt, że zmiana wartości jednego parametru wpłynie na zachowanie wszystkich pozostałych!</p>
 <div id="fig-dl3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -368,75 +368,74 @@ div.csl-indent {
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;10.4: Sieć neuronowa parametryzowana przez wagi</figcaption><p></p>
 </figure>
 </div>
-<p>Aby coś kontrolować, trzeba najpierw móc to obserwować. Aby kontrolować wyjście sieci neuronowej, musisz być w stanie zmierzyć, jak daleko to wyjście jest od tego, czego się spodziewałeś. Jest to zadanie funkcji straty sieci, zwanej również funkcją celu. Funkcja straty bierze predykcje sieci oraz prawdziwy wynik (to, co chciałeś, aby sieć “wypluła”) i oblicza wynik odległości, ujmując, jak dobrze sieć poradziła sobie z tym konkretnym przykładem (patrz <a href="#fig-dl4">Rysunek&nbsp;<span>10.5</span></a>).</p>
+<p>Aby coś kontrolować, trzeba najpierw móc to obserwować. Aby kontrolować wyjście sieci neuronowej, musimy być w stanie zmierzyć, jak daleko to wyjście jest od tego, czego się spodziewaliśmy. Jest to zadanie dla funkcji straty sieci, zwanej również funkcją celu. Funkcja straty bierze predykcje sieci oraz prawdziwy wynik i oblicza wynik odległości, ujmując, jak dobrze sieć poradziła sobie z tym konkretnym przykładem (patrz <a href="#fig-dl4">Rysunek&nbsp;<span>10.5</span></a>).</p>
 <div id="fig-dl4" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-23 o 19.37.35.png" class="img-fluid figure-img" width="400"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;10.5: Funkcja straty mierząca jakość predykcji</figcaption><p></p>
 </figure>
 </div>
-<p>Podstawową sztuczką w uczeniu głębokim jest wykorzystanie wyniku jako sygnału zwrotnego do skorygowania wartości wag w kierunku, który obniży wynik straty dla bieżącego przykładu (patrz <a href="#fig-dl5">Rysunek&nbsp;<span>10.6</span></a>). Ta korekta jest zadaniem optymalizatora, który implementuje coś, co nazywa się algorytmem wstecznej propagacji (ang. <em>backpropagation</em>): główny algorytm w uczeniu głębokim. W dalszej części wyjaśnimy bardziej szczegółowo, jak działa wsteczna propagacja.</p>
+<div class="page-columns page-full"><p>Podstawową sztuczką w uczeniu głębokim jest wykorzystanie wyniku jako sygnału zwrotnego do skorygowania wartości wag w kierunku, który obniży wynik straty dla bieżącego przykładu (patrz <a href="#fig-dl5">Rysunek&nbsp;<span>10.6</span></a>). Ta korekta jest zadaniem optymalizatora, który implementuje coś, co nazywa się algorytmem wstecznej propagacji (ang. <em>backpropagation</em>)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. W dalszej części wyjaśnimy bardziej szczegółowo, jak działa wsteczna propagacja.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;główny algorytm w uczeniu głębokim</p></li></div></div>
 <div id="fig-dl5" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-23 o 19.37.48.png" class="img-fluid figure-img" width="400"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;10.6: Korekta wag wykorzystująca wartość funkcji straty</figcaption><p></p>
 </figure>
 </div>
-<p>Początkowo wagom sieci przypisane są losowe wartości, więc sieć wykonuje jedynie serię losowych przekształceń. Oczywiście jej wynik jest daleki od tego, jaki powinien być w idealnej sytuacji, a wynik funkcji straty jest bardzo wysoki. Ale z każdym przykładem, który sieć przetwarza, wagi są dostosowywane w prawidłowym kierunku, a wynik strat maleje. Jest to pętla treningowa, która powtarzana odpowiednią ilość razy (zwykle dziesiątki iteracji na tysiącach przykładów) daje wartości wag, które minimalizują funkcję straty. Sieć z minimalną stratą to taka, dla której wyjścia są tak bliskie celom, jak to tylko możliwe - sieć wytrenowana.</p>
+<div class="page-columns page-full"><p>Początkowo wagom sieci przypisane są losowe wartości, więc sieć wykonuje jedynie serię losowych przekształceń. Oczywiście jej wynik jest daleki od tego, jaki powinien być w idealnej sytuacji, a wynik funkcji straty jest bardzo wysoki. Ale z każdym przykładem, który sieć przetwarza, wagi są dostosowywane w prawidłowym kierunku, a wynik strat maleje. Jest to pętla treningowa, która powtarzana odpowiednią ilość razy (zwykle dziesiątki iteracji na tysiącach przykładów) daje wartości wag, które minimalizują funkcję straty. Sieć z minimalną stratą to taka, dla której wyjścia są tak bliskie celom, jak to tylko możliwe<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;sieć wytrenowana</p></li></div></div>
 </section>
 <section id="krótki-rys-historyczny-dl" class="level2 page-columns page-full" data-number="10.3">
 <h2 data-number="10.3" class="anchored" data-anchor-id="krótki-rys-historyczny-dl"><span class="header-section-number">10.3</span> Krótki rys historyczny DL</h2>
 <p>Około 2010 roku, mimo że sieci neuronowe były niemal całkowicie odrzucane przez ogół społeczności naukowej, kilka osób wciąż pracujących nad sieciami neuronowymi zaczęło dokonywać ważnych przełomów: grupy Geoffreya Hintona z Uniwersytetu w Toronto, Yoshua Bengio z Uniwersytetu w Montrealu, Yann LeCun z Uniwersytetu Nowojorskiego oraz IDSIA w Szwajcarii.</p>
-<div class="page-columns page-full"><p>W 2011 roku Dan Ciresan z IDSIA zaczął wygrywać akademickie konkursy klasyfikacji obrazów za pomocą trenowanych na GPU głębokich sieci neuronowych - był to pierwszy praktyczny sukces nowoczesnego uczenia głębokiego. Jednak przełomowy moment nastąpił w 2012 roku, gdy grupa Hintona wzięła udział w corocznym wyzwaniu ImageNet dotyczącym klasyfikacji obrazów na dużą skalę. Wyzwanie ImageNet było w tamtym czasie wyjątkowo trudne, polegało na klasyfikacji kolorowych obrazów o wysokiej rozdzielczości do 1000 różnych kategorii po przeszkoleniu na 1,4 mln obrazów. W 2011 roku dokładność zwycięskiego modelu, opartego na klasycznym podejściu do widzenia komputerowego, wyniosła zaledwie 74,3%. Następnie, w 2012 roku, zespół kierowany przez Alexa Krizhevsky’ego i wspierany przez Geoffreya Hintona był w stanie osiągnąć dokładność w pierwszej piątce<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> na poziomie 83,6% - był to znaczący przełom. Od tego czasu co roku konkurs był zdominowany przez głębokie konwencjonalne sieci neuronowe. W 2015 roku zwycięzca osiągnął dokładność 96,4%, a zadanie klasyfikacji na ImageNet uznano za całkowicie rozwiązany problem.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;(ang. <em>top 5 accuracy</em>) <em>-</em> oznacza, że wśród 5 kategorii z najwyższym prawdopodobieństwem jest prawdziwa klasa</p></li></div></div>
+<div class="page-columns page-full"><p>W 2011 roku Dan Ciresan z IDSIA zaczął wygrywać akademickie konkursy klasyfikacji obrazów za pomocą trenowanych na GPU głębokich sieci neuronowych - był to pierwszy praktyczny sukces nowoczesnego uczenia głębokiego. Jednak przełomowy moment nastąpił w 2012 roku, gdy grupa Hintona wzięła udział w corocznym wyzwaniu ImageNet dotyczącym klasyfikacji obrazów na dużą skalę. Wyzwanie ImageNet było w tamtym czasie wyjątkowo trudne, polegało na klasyfikacji kolorowych obrazów o wysokiej rozdzielczości do 1000 różnych kategorii po przeszkoleniu na 1,4 mln obrazów. W 2011 roku dokładność zwycięskiego modelu, opartego na klasycznym podejściu do widzenia komputerowego, wyniosła zaledwie 74,3%. Następnie, w 2012 roku, zespół kierowany przez Alexa Krizhevsky’ego i wspierany przez Geoffreya Hintona był w stanie osiągnąć dokładność pierwszej piątki<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> na poziomie 83,6% - był to znaczący przełom. Od tego czasu co roku konkurs był zdominowany przez głębokie konwencjonalne sieci neuronowe. W 2015 roku zwycięzca osiągnął dokładność 96,4%, a zadanie klasyfikacji na ImageNet uznano za całkowicie rozwiązany problem.</p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;(ang. <em>top 5 accuracy</em>) <em>-</em> oznacza, że wśród 5 kategorii z najwyższym prawdopodobieństwem jest prawdziwa klasa</p></li></div></div>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/tw2.jpeg" class="img-fluid figure-img" width="400"></p>
 </figure>
 </div></div><p>Od 2012 r. głębokie konwolucyjne sieci neuronowe (CovNets - <em>Convolutional Networks</em>) stały się algorytmem pierwszego wyboru dla wszystkich zadań widzenia komputerowego. Na najważniejszych konferencjach poświęconych widzeniu komputerowemu w 2015 i 2016 r. niemal niemożliwe było znalezienie prezentacji, które w jakiejś formie nie wiązałyby się z CovNets. Jednocześnie głębokie uczenie znalazło zastosowanie w wielu innych typach problemów, takich jak np. przetwarzanie języka naturalnego. W szerokim zakresie zastosowań całkowicie zastąpiło klasyczne modele SVM i drzewa decyzyjne. Na przykład przez kilka lat Europejska Organizacja Badań Jądrowych (CERN), używała metod opartych na drzewach decyzyjnych do analizy danych cząstek z detektora ATLAS w Wielkim Zderzaczu Hadronów (LHC); ale CERN ostatecznie przeszedł na głębokie sieci neuronowe oparte na Keras ze względu na ich wyższą wydajność i łatwość szkolenia na dużych zbiorach danych.</p>
-<p>Podstawowym powodem, dla którego uczenie głębokie odniosło sukces tak szybko, jest to, że oferowało lepszą wydajność w wielu problemach. Ale to nie jest jedyny powód. Głębokie uczenie ułatwia również rozwiązywanie problemów, ponieważ całkowicie automatyzuje to, co kiedyś było najbardziej kluczowym krokiem w procesie uczenia maszynowego: inżynierię cech.</p>
-<p>Poprzednie techniki uczenia maszynowego - uczenie głębokie - polegały jedynie na przekształceniu danych wejściowych w jedną lub dwie kolejne przestrzenie reprezentacji, zwykle poprzez proste przekształcenia, takie jak wielowymiarowe projekcje nieliniowe (SVM) lub drzewa decyzyjne. Jednak wyrafinowane reprezentacje wymagane przez złożone problemy zazwyczaj nie mogą być realizowane przez wspomniane techniki. W związku z tym, ludzie musieli zadać sobie wiele trudu, aby uczynić początkowe dane wejściowe bardziej podatnymi na przetwarzanie przez te metody: to znaczy, musieli ręcznie oparcować dobre warstwy reprezentacji dla swoich danych. Nazywa się to inżynierią cech. Uczenie głębokie całkowicie automatyzuje ten krok: w przypadku uczenia głębokiego, uczysz się wszystkich cech w jednym przejściu i nie musisz ich samodzielnie opracowywać. To znacznie uprościło przepływy pracy związane z uczeniem maszynowym, często zastępując skomplikowane, wieloetapowe potoki jednym, prostym, kompleksowym modelem uczenia głębokiego.</p>
-<p>Można zapytać, skoro sednem sprawy jest posiadanie wielu kolejnych warstw reprezentacji, to czy płytkie metody mogą być stosowane wielokrotnie, aby emulować efekty głębokiego uczenia? W praktyce, korzyść z zastosowania kilku metod płytkiego uczenia szybko maleje, ponieważ optymalna pierwsza warstwa reprezentacji w modelu trójwarstwowym nie jest optymalną pierwszą warstwą w modelu jedno- lub dwuwarstwowym. To, co jest przełomowe w uczeniu głębokim, to fakt, że pozwala ono modelowi uczyć się wszystkich warstw reprezentacji wspólnie, w tym samym czasie, a nie po kolei (zachłannie). Dzięki wspólnemu uczeniu cech, gdy model dostosowuje jedną ze swoich wewnętrznych cech, wszystkie inne cechy, które od niej zależą, automatycznie dostosowują się do tej zmiany, bez konieczności interwencji człowieka. Wszystko jest nadzorowane przez pojedynczy sygnał zwrotny: każda zmiana w modelu służy celowi końcowemu. Jest to znacznie potężniejsze niż składanie płytkich modeli, ponieważ pozwala na uczenie się złożonych, abstrakcyjnych reprezentacji poprzez rozbicie ich na długie serie pośrednich warstw; każda warstwa jest tylko prostym przekształceniem w stosunku do poprzedniej.</p>
-<p>Są to dwie zasadnicze cechy tego, jak głębokie uczenie uczy się z danych: przyrostowy, warstwa po warstwie sposób, w jaki korygowane są coraz bardziej złożone reprezentacje, oraz fakt, że te pośrednie, przyrostowe reprezentacje są uczone wspólnie, a każda warstwa jest aktualizowana, aby podążać zarówno za potrzebami reprezentacyjnymi warstwy powyżej, jak i potrzebami warstwy poniżej. Razem, te dwie właściwości sprawiły, że głębokie uczenie jest znacznie bardziej skuteczne niż poprzednie podejścia do uczenia maszynowego.</p>
-<p>Świetnym sposobem na poznanie aktualnego krajobrazu algorytmów i narzędzi uczenia maszynowego jest przyjrzenie się konkursom uczenia maszynowego na Kaggle. Dzięki wysoce konkurencyjnemu środowisku (niektóre konkursy mają tysiące uczestników i milionowe nagrody) i szerokiej gamie problemów uczenia maszynowego, Kaggle oferuje realistyczny sposób oceny tego, co działa, a co nie. Jaki więc rodzaj algorytmu niezawodnie wygrywa konkursy? Z jakich narzędzi korzystają najlepsi uczestnicy?<br>
-</p>
-<p>W 2016 roku Kaggle został zdominowany przez dwa podejścia: gradient boosting machines i deep learning. Konkretnie, gradient boosting jest używany do problemów, w których dostępne są ustrukturyzowane dane, podczas gdy głębokie uczenie jest używane do problemów percepcyjnych, takich jak klasyfikacja obrazów. Zwolennicy tego pierwszego rozwiązania prawie zawsze korzystają ze znakomitej biblioteki <code>XGBoost</code>. Tymczasem większość uczestników Kaggle wykorzystujących uczenie głębokie używa biblioteki <code>Keras</code>, ze względu na jej łatwość użycia i elastyczność. Zarówno <code>XGBoost</code>, jak i <code>Keras</code> wspierają dwa najpopularniejsze języki data science: R i Python.</p>
+<p>Podstawowym powodem, dla którego uczenie głębokie odniosło sukces tak szybko, jest to, że oferowało lepszą wydajność w wielu problemach. Ale to nie jest jedyny powód. Głębokie uczenie ułatwia również rozwiązywanie problemów, ponieważ całkowicie automatyzuje to, co kiedyś było najbardziej kluczowym krokiem w procesie uczenia maszynowego - inżynierię cech.</p>
+<p>Poprzednie techniki uczenia maszynowego - uczenie głębokie - polegały jedynie na przekształceniu danych wejściowych w jedną lub dwie kolejne przestrzenie reprezentacji, zwykle poprzez proste przekształcenia, takie jak wielowymiarowe projekcje nieliniowe (SVM) lub drzewa decyzyjne. Jednak wyrafinowane reprezentacje wymagane przez złożone problemy zazwyczaj nie mogą być realizowane przez wspomniane techniki. W związku z tym, ludzie musieli zadać sobie wiele trudu, aby uczynić początkowe dane wejściowe bardziej podatnymi na przetwarzanie przez te metody: to znaczy, musieli ręcznie opracować dobre warstwy reprezentacji dla swoich danych. Nazywa się to inżynierią cech. Uczenie głębokie całkowicie automatyzuje ten krok: w przypadku uczenia głębokiego, uczy się wszystkich cech w jednym przejściu i nie musimy ich samodzielnie opracowywać. To znacznie uprościło przepływy pracy związane z uczeniem maszynowym, często zastępując skomplikowane, wieloetapowe potoki jednym, prostym, kompleksowym modelem uczenia głębokiego.</p>
+<p>Można zapytać, skoro sednem sprawy jest posiadanie wielu kolejnych warstw reprezentacji, to czy płytkie metody mogą być stosowane wielokrotnie, aby emulować efekty głębokiego uczenia? W praktyce, korzyść z zastosowania kilku metod płytkiego uczenia szybko maleje, ponieważ optymalna pierwsza warstwa reprezentacji w modelu trójwarstwowym nie jest optymalną pierwszą warstwą w modelu jedno- lub dwuwarstwowym. To, co jest przełomowe w uczeniu głębokim, to fakt, że pozwala ono modelowi uczyć się wszystkich warstw reprezentacji wspólnie, w tym samym czasie. Dzięki wspólnemu uczeniu cech, gdy model dostosowuje jedną ze swoich wewnętrznych cech, wszystkie inne cechy, które od niej zależą, automatycznie dostosowują się do tej zmiany, bez konieczności interwencji człowieka. Wszystko jest nadzorowane przez pojedynczy sygnał zwrotny: każda zmiana w modelu służy celowi końcowemu. Jest to znacznie bardziej efektywne niż składanie płytkich modeli, ponieważ pozwala na uczenie się złożonych, abstrakcyjnych reprezentacji poprzez rozbicie ich na długie serie pośrednich warstw; każda warstwa jest tylko prostym przekształceniem w stosunku do poprzedniej.</p>
+<p>Dwie zasadnicze cechy tego, jak głębokie uczenie uczy się z danych, to: przyrostowy, warstwa po warstwie sposób, w jaki korygowane są coraz bardziej złożone reprezentacje, oraz fakt, że te pośrednie, przyrostowe reprezentacje są uczone wspólnie, a każda warstwa jest aktualizowana, aby podążać zarówno za potrzebami reprezentacyjnymi warstwy powyżej, jak i potrzebami warstwy poniżej. Razem, te dwie właściwości sprawiły, że głębokie uczenie jest znacznie bardziej skuteczne niż poprzednie podejścia do uczenia maszynowego.</p>
+<p>Świetnym sposobem na poznanie aktualnego bogactwa algorytmów i narzędzi uczenia maszynowego jest przyjrzenie się konkursom uczenia maszynowego na Kaggle. Dzięki wysoce konkurencyjnemu środowisku (niektóre konkursy mają tysiące uczestników i milionowe nagrody) i szerokiej gamie problemów uczenia maszynowego, Kaggle oferuje realistyczny sposób oceny tego, co działa, a co nie. Jaki więc rodzaj algorytmu niezawodnie wygrywa konkursy? Z jakich narzędzi korzystają najlepsi uczestnicy?</p>
+<p>W 2016 roku Kaggle został zdominowany przez dwa podejścia: <em>gradient boosting machines</em> i <em>deep learning</em>. Należy nadmienić, że <em>gradient boosting</em> jest używany głównie do problemów, w których dostępne są ustrukturyzowane dane, podczas gdy głębokie uczenie jest używane do problemów percepcyjnych, takich jak klasyfikacja obrazów. Zwolennicy tego pierwszego rozwiązania prawie zawsze korzystają ze znakomitej biblioteki <code>XGBoost</code>. Tymczasem większość uczestników Kaggle wykorzystujących uczenie głębokie używa biblioteki <code>Keras</code>, ze względu na jej łatwość użycia i elastyczność. Zarówno <code>XGBoost</code>, jak i <code>Keras</code> wspierają dwa najpopularniejsze języki data science: R i Python.</p>
 <section id="hardware" class="level3" data-number="10.3.1">
 <h3 data-number="10.3.1" class="anchored" data-anchor-id="hardware"><span class="header-section-number">10.3.1</span> Hardware</h3>
 <p>W latach 1990-2010 procesory dostępne na rynku stały się szybsze o około 5000 razy. W rezultacie, obecnie możliwe jest uruchomienie małych modeli głębokiego uczenia na laptopie, podczas gdy 25 lat temu byłoby to niewykonalne.</p>
 <p>Jednak typowe modele głębokiego uczenia wykorzystywane w wizji komputerowej lub rozpoznawaniu mowy wymagają mocy obliczeniowej o kilka rzędów wielkości większej niż ta, którą może zapewnić laptop. Przez całą dekadę XXI wieku firmy takie jak NVIDIA i AMD inwestowały miliardy dolarów w rozwój szybkich, równoległych układów (procesorów graficznych [GPU]), które napędzały grafikę w coraz bardziej fotorealistycznych grach wideo - tanich, osobistych komputerów zaprojektowanych do renderowania złożonych scen 3D na ekranie w czasie rzeczywistym. Inwestycja ta przyniosła korzyści społeczności naukowej, gdy w 2007 roku NVIDIA wprowadziła CUDA (<a href="https://developer.nvidia.com/about-cuda" class="uri">https://developer.nvidia.com/about-cuda</a>), interfejs programistyczny dla swojej linii układów GPU. Niewielka liczba procesorów graficznych zaczęła zastępować klastry CPU w różnych złożonych zadaniach, począwszy od modelowania w fizyce. Głębokie sieci neuronowe, składające się głównie z wielu mnożeń macierzy, są również wysoce paralelizowalne i około 2011 roku niektórzy badacze zaczęli pisać implementacje CUDA sieci neuronowych - jednymi z pierwszych byli Dan Ciresan<span class="citation" data-cites="ciresanFlexibleHighPerformance">(<a href="references.html#ref-ciresanFlexibleHighPerformance" role="doc-biblioref">Ciresan i in., b.d.</a>)</span> i Alex Krizhevsky<span class="citation" data-cites="krizhevsky2017">(<a href="references.html#ref-krizhevsky2017" role="doc-biblioref">Krizhevsky, Sutskever, i Hinton 2017</a>)</span>.</p>
 <p><br>
-Stało się tak, że rynek gier dofinansował superkomputery dla następnej generacji aplikacji sztucznej inteligencji. Czasami wielkie rzeczy zaczynają się do zabawy 🙈. Dziś NVIDIA Titan X, procesor graficzny dla graczy, który kosztował 1000 dolarów pod koniec 2015 roku, może zapewnić szczytową wydajność 6,6 TLOPS w pojedynczej precyzji: to znaczy 6,6 biliona operacji float32 na sekundę. To około 350 razy więcej niż to, co można wyciągnąć z nowoczesnego laptopa. Na Tytanie X trenowanie modelu ImageNet, który kilka lat temu wygrałby konkurs ILSVRC, zajmuje zaledwie kilka dni. Tymczasem duże firmy trenują modele głębokiego uczenia na klastrach składających się z setek jednostek GPU, takich jak NVIDIA K80, opracowanych specjalnie na potrzeby głębokiego uczenia. Sama moc obliczeniowa takich klastrów jest czymś, co nigdy nie byłoby możliwe bez nowoczesnych procesorów graficznych.</p>
+Stało się tak, że rynek gier dofinansował superkomputery dla następnej generacji aplikacji sztucznej inteligencji. Czasami wielkie rzeczy zaczynają się do zabawy 🙈. Dziś NVIDIA Titan X, procesor graficzny dla graczy, który kosztował 1000 dolarów pod koniec 2015 roku, może zapewnić szczytową wydajność 6,6 TLOPS w pojedynczej precyzji: to znaczy 6,6 biliona operacji <code>float32</code> na sekundę. To około 350 razy więcej niż to, co można wyciągnąć z nowoczesnego laptopa. Na Tytanie X trenowanie modelu ImageNet, który kilka lat temu wygrałby konkurs ILSVRC, zajmuje zaledwie kilka dni. Tymczasem duże firmy trenują modele głębokiego uczenia na klastrach składających się z setek jednostek GPU, takich jak NVIDIA K80, opracowanych specjalnie na potrzeby głębokiego uczenia. Sama moc obliczeniowa takich klastrów jest czymś, co nigdy nie byłoby możliwe bez nowoczesnych procesorów graficznych.</p>
 <p>Co więcej, branża głębokiego uczenia zaczyna wychodzić poza procesory graficzne i inwestuje w coraz bardziej wyspecjalizowane, wydajne układy do głębokiego uczenia. W 2016 roku, na corocznej konwencji I/O, Google ujawniło swój projekt procesora tensorowego (TPU): nowy układ scalony opracowany od podstaw w celu uruchamiania głębokich sieci neuronowych, który jest podobno 10 razy szybszy i znacznie bardziej energooszczędny niż topowe układy GPU.</p>
 </section>
 <section id="dane" class="level3 page-columns page-full" data-number="10.3.2">
 <h3 data-number="10.3.2" class="anchored" data-anchor-id="dane"><span class="header-section-number">10.3.2</span> Dane</h3>
-<div class="page-columns page-full"><p>AI jest czasem zapowiadana jako nowa rewolucja przemysłowa. Jeśli głębokie uczenie jest maszyną parową tej rewolucji, to dane są jej węglem: surowcem, który zasila nasze inteligentne maszyny, bez którego nic nie byłoby możliwe. Jeśli chodzi o dane, to oprócz wykładniczego postępu w dziedzinie sprzętu do przechowywania danych w ciągu ostatnich 20 lat (zgodnie z prawem Moore’a<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>), kluczowym czynnikiem był rozwój Internetu, dzięki któremu możliwe stało się gromadzenie i rozpowszechnianie bardzo dużych zbiorów danych na potrzeby uczenia maszynowego. Obecnie duże firmy pracują z zestawami danych obrazowych, zestawami danych wideo i zestawami danych w języku naturalnym, które nie mogłyby zostać zebrane bez Internetu. Przykładowo, generowane przez użytkowników tagi do obrazów w serwisie Flickr są skarbnicą danych dla wizji komputerowej. Podobnie jest z filmami z YouTube. A Wikipedia jest kluczowym zbiorem danych dla przetwarzania języka naturalnego.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;mówi o tym, że liczba tranzystorów w procesorach rośnie wykładniczo</p></li></div></div>
+<div class="page-columns page-full"><p>AI jest czasem zapowiadana jako nowa rewolucja przemysłowa. Jeśli głębokie uczenie jest maszyną parową tej rewolucji, to dane są jej węglem: surowcem, który zasila nasze inteligentne maszyny, bez którego nic nie byłoby możliwe. Jeśli chodzi o dane, to oprócz wykładniczego postępu w dziedzinie sprzętu do przechowywania danych w ciągu ostatnich 20 lat (zgodnie z prawem Moore’a<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>), kluczowym czynnikiem był rozwój Internetu, dzięki któremu możliwe stało się gromadzenie i rozpowszechnianie bardzo dużych zbiorów danych na potrzeby uczenia maszynowego. Obecnie duże firmy pracują z zestawami danych obrazowych, zestawami danych wideo i zestawami danych w języku naturalnym, które nie mogłyby zostać zebrane bez Internetu. Przykładowo, generowane przez użytkowników tagi do obrazów w serwisie Flickr są skarbnicą danych dla wizji komputerowej. Podobnie jest z filmami z YouTube. A Wikipedia jest kluczowym zbiorem danych dla przetwarzania języka naturalnego.</p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;mówi o tym, że liczba tranzystorów w procesorach rośnie wykładniczo</p></li></div></div>
 <p>Jeśli jest jakiś zbiór danych, który stał się katalizatorem rozwoju głębokiego uczenia, to jest to zbiór danych ImageNet, składający się z 1,4 miliona obrazów, które zostały ręcznie przypisane do 1000 kategorii obrazów (1 kategoria na obraz). Jednak to, co czyni ImageNet wyjątkowym, to nie tylko jego duży rozmiar, ale także coroczny konkurs z nim związany. Jak pokazuje Kaggle od 2010 roku, publiczne konkursy są doskonałym sposobem motywowania naukowców i inżynierów do przekraczania granic. Posiadanie wspólnych benchmarków, które badacze starają się pokonać, bardzo pomogło w niedawnym rozwoju uczenia głębokiego.</p>
 </section>
 <section id="algorytmy" class="level3" data-number="10.3.3">
 <h3 data-number="10.3.3" class="anchored" data-anchor-id="algorytmy"><span class="header-section-number">10.3.3</span> Algorytmy</h3>
-<p>Oprócz sprzętu i danych, aż do późnych lat 2000 brakowało nam niezawodnego sposobu trenowania bardzo głębokich sieci neuronowych. W rezultacie sieci neuronowe były wciąż dość płytkie, wykorzystując tylko jedną lub dwie warstwy reprezentacji; nie były więc w stanie zabłysnąć w porównaniu z bardziej wyrafinowanymi płytkimi metodami, takimi jak SVM czy lasy losowe. Kluczowym problemem była propagacja gradientu przez głębokie stosy warstw. Sygnał zwrotny używany do trenowania sieci neuronowych zanikał wraz ze wzrostem liczby warstw.</p>
+<p>Oprócz sprzętu i danych, aż do późnych lat 2000 brakowało niezawodnego sposobu trenowania bardzo głębokich sieci neuronowych. W rezultacie sieci neuronowe były wciąż dość płytkie, wykorzystując tylko jedną lub dwie warstwy reprezentacji; nie były więc w stanie zabłysnąć w porównaniu z bardziej wyrafinowanymi klasycznymi metodami, takimi jak SVM czy lasy losowe. Kluczowym problemem była propagacja gradientu przez głębokie stosy warstw. Sygnał zwrotny używany do trenowania sieci neuronowych zanikał wraz ze wzrostem liczby warstw.</p>
 <p>Zmieniło się to około 2009-2010 roku wraz z pojawieniem się kilku prostych, ale ważnych ulepszeń algorytmicznych, które pozwoliły na lepszą propagację gradientu:</p>
 <ul>
 <li>lepsze funkcje aktywacji dla warstw neuronowych;</li>
 <li>lepsze schematy inicjalizacji wag, począwszy od wstępnego szkolenia z podziałem na warstwy, które zostało szybko porzucone;</li>
 <li>lepsze schematy optymalizacji, takie jak RMSProp i Adam.</li>
 </ul>
-<p>Dopiero gdy te ulepszenia zaczęły umożliwiać trenowanie modeli z 10 lub więcej warstwami, uczenie głębokie zaczęło błyszczeć. Wreszcie w latach 2014, 2015 i 2016 odkryto jeszcze bardziej zaawansowane sposoby wspomagania propagacji gradientu, takie jak normalizacja partii (ang. <em>batch normalization</em>), połączenia resztkowe (ang. <em>residual connections</em>) czy konwolucje separowalne w głąb (ang. <em>depthwise separable convolutions</em>). Dziś możemy trenować od podstaw modele, które mają tysiące warstw głębokości.</p>
+<p>Dopiero gdy te ulepszenia pozwoliły na trenowanie modeli z 10 lub więcej warstwami, uczenie głębokie zaczęło błyszczeć. Wreszcie w latach 2014, 2015 i 2016 odkryto jeszcze bardziej zaawansowane sposoby wspomagania propagacji gradientu, takie jak normalizacja partii (ang. <em>batch normalization</em>), połączenia resztkowe (ang. <em>residual connections</em>) czy konwolucje separowalne w głąb (ang. <em>depthwise separable convolutions</em>). Dziś możemy trenować od podstaw modele, które mają tysiące warstw głębokości.</p>
 <p>Czy jest coś szczególnego w głębokich sieciach neuronowych, co sprawia, że są one “właściwym” podejściem dla firm, w które należy inwestować i dla naukowców, którzy chcą się nimi zainteresować? Czy może głębokie uczenie się jest tylko modą, która może nie przetrwać? Czy za 20 lat nadal będziemy używać głębokich sieci neuronowych?</p>
 <p>Krótka odpowiedź brzmi: tak 🙏 - głębokie uczenie ma kilka właściwości, które uzasadniają jego status jako rewolucji AI. Być może za dwie dekady nie będziemy używać sieci neuronowych, ale cokolwiek będziemy używać, będzie bezpośrednio dziedziczyć po nowoczesnym głębokim uczeniu i jego podstawowych koncepcjach. Najważniejsze właściwości można ogólnie podzielić na trzy kategorie:</p>
 <ul>
 <li>Prostota - głębokie uczenie eliminuje potrzebę inżynierii cech, zastępując złożone, wrażliwe i wymagające inżynierii potoki prostymi, kompleksowo wytrenowanymi modelami, które są zazwyczaj budowane przy użyciu tylko pięciu lub sześciu różnych operacji na tensorach.</li>
 <li>Skalowalność - głębokie uczenie jest bardzo podatne na równoległe przetwarzanie na układach GPU lub TPU. Dodatkowo, modele głębokiego uczenia są trenowane poprzez iterację na małych partiach danych, co pozwala na ich trenowanie na zbiorach danych o dowolnym rozmiarze. (Jedynym wąskim gardłem jest ilość dostępnej mocy obliczeniowej).</li>
-<li>Wszechstronność i możliwość ponownego wykorzystania - w przeciwieństwie do wielu wcześniejszych podejść do uczenia maszynowego, modele głębokiego uczenia mogą być trenowane na dodatkowych danych bez konieczności ponownego rozpoczynania od zera, co czyni je realnymi dla ciągłego uczenia się na bierząco - ważna właściwość dla bardzo dużych modeli produkcyjnych. Co więcej, wytrenowane modele głębokiego uczenia mogą być ponownie wykorzystane, na przykład, możliwe jest wzięcie modelu głębokiego uczenia wytrenowanego do klasyfikacji obrazów i wrzucenie go do potoku przetwarzania wideo.</li>
+<li>Wszechstronność i możliwość ponownego wykorzystania - w przeciwieństwie do wielu wcześniejszych podejść do uczenia maszynowego, modele głębokiego uczenia mogą być trenowane na dodatkowych danych bez konieczności ponownego rozpoczynania od zera, co czyni je realnymi dla ciągłego uczenia się na bieżąco - ważna właściwość dla bardzo dużych modeli produkcyjnych. Co więcej, wytrenowane modele głębokiego uczenia mogą być ponownie wykorzystane, na przykład, możliwe jest wzięcie modelu głębokiego uczenia wytrenowanego do klasyfikacji obrazów i wrzucenie go do potoku przetwarzania wideo.</li>
 </ul>
 </section>
 </section>
 <section id="elementy-deep-learning" class="level2 page-columns page-full" data-number="10.4">
 <h2 data-number="10.4" class="anchored" data-anchor-id="elementy-deep-learning"><span class="header-section-number">10.4</span> Elementy Deep Learning</h2>
 <p>Zrozumienie głębokiego uczenia wymaga znajomości wielu prostych pojęć matematycznych: tensorów, operacji na tensorach, różniczkowania, spadku gradientu itp. Naszym celem w tym rozdziale będzie zbudowanie intuicji na temat tych pojęć bez nadmiernego zagłębiania się w technikę. W szczególności, będziemy unikać notacji matematycznej, która może być drażniąca dla osób nieposiadających żadnego wykształcenia matematycznego, a nie jest niezbędna do dobrego wytłumaczenia.</p>
-<p>Aby dodać trochę kontekstu dla tensorów i spadku gradientu, rozpoczniemy podrozdział od praktycznego przykładu sieci neuronowej. Następnie przejdziemy przez każde nowe pojęcie, które zostało wprowadzone, punkt po punkcie. Pamiętaj, że pojęcia te będą niezbędne do zrozumienia praktycznych przykładów, które pojawią się w kolejnych rozdziałach!</p>
+<p>Aby dodać trochę kontekstu dla tensorów i spadku gradientu, rozpoczniemy podrozdział od praktycznego przykładu sieci neuronowej. Następnie przejdziemy przez każde nowe pojęcie, które zostało wprowadzone, punkt po punkcie. Pamiętajmy, że pojęcia te będą niezbędne do zrozumienia praktycznych przykładów, które pojawią się w kolejnych rozdziałach!</p>
 <p>Przyjrzyjmy się konkretnemu przykładowi sieci neuronowej, która wykorzystuje pakiet <code>keras</code> do nauki klasyfikacji ręcznie pisanych cyfr.</p>
 <div class="cell">
 <details open="">
@@ -444,7 +443,7 @@ Stało się tak, że rynek gier dofinansował superkomputery dla następnej gene
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(keras)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Problemem, który postaramy się rozwiązać jest klasyfikacja obrazów pisma ręcznego w skali szarości (28 pikseli na 28 pikseli) do 10 kategorii (od 0 do 9). Użyjemy zestawu danych MNIST, klasycznego zestawu danych w społeczności ML, który istnieje prawie tak długo jak sama dziedzina i jest intensywnie badany. Jest to zestaw 60 000 obrazów treningowych oraz 10 000 obrazów testowych, zebranych przez National Institute of Standards and Technology (NIST w MNIST) w latach 80. Możesz myśleć o “rozwiązywaniu” MNIST jako o “Hello World” głębokiego uczenia - to jest to, co robisz, aby zweryfikować, że twoje algorytmy działają zgodnie z oczekiwaniami. Gdy staniesz się praktykiem uczenia maszynowego, zobaczysz, że MNIST pojawia się raz za razem, w pracach naukowych, wpisach na blogach i tak dalej. Kilka próbek MNIST można zobaczyć na <a href="#fig-mnist1">Rysunek&nbsp;<span>10.7</span></a>.</p>
+<p>Problemem, który postaramy się rozwiązać jest klasyfikacja obrazów pisma ręcznego w skali szarości (28 pikseli na 28 pikseli) do 10 kategorii (od 0 do 9). Użyjemy zestawu danych MNIST, klasycznego zestawu danych w społeczności ML, który istnieje prawie tak długo jak sama dziedzina i jest intensywnie badany. Jest to zestaw 60 000 obrazów treningowych oraz 10 000 obrazów testowych, zebranych przez National Institute of Standards and Technology (NIST w MNIST) w latach 80. Możemy myśleć o “rozwiązywaniu” MNIST jako o “Hello World” głębokiego uczenia - to jest to, co robimy, aby zweryfikować, że nasze algorytmy działają zgodnie z oczekiwaniami. Gdy staniemy się praktykami uczenia maszynowego, zobaczymy, że MNIST pojawia się raz za razem, w pracach naukowych, wpisach na blogach i tak dalej. Kilka próbek MNIST można zobaczyć na <a href="#fig-mnist1">Rysunek&nbsp;<span>10.7</span></a>.</p>
 <div id="fig-mnist1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-24 o 17.57.00.png" class="img-fluid figure-img" width="600"></p>
@@ -539,7 +538,7 @@ Zagrożenie
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Zauważ, że funkcja <code>compile()</code> modyfikuje sieć na bieżąco (zamiast zwracać nowy obiekt sieci, co jest bardziej typowe dla R). Powód tego opiszemy, gdy powrócimy do przykładu w dalszej części rozdziału.</p>
+<p>Zauważmy, że funkcja <code>compile()</code> modyfikuje sieć na bieżąco (zamiast zwracać nowy obiekt sieci, co jest bardziej typowe dla R). Powód tego opiszemy, gdy powrócimy do przykładu w dalszej części rozdziału.</p>
 <p>Przed treningiem wstępnie przetworzymy dane, zmieniając ich kształt na taki, jakiego oczekuje sieć, i skalując je tak, by wszystkie wartości mieściły się w przedziale [0, 1]. Poprzednio nasze obrazy treningowe, na przykład, były przechowywane w tablicy o kształcie <code>(60000, 28, 28)</code> typu <code>integer</code> z wartościami w przedziale [0, 255]. Przekształcamy go w podwójną tablicę kształtu <code>(60000, 28 * 28)</code> z wartościami w przedziale [0,1].</p>
 <div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-6_496d486d00834c24faa318baf5f45336">
 <details open="">
@@ -550,7 +549,7 @@ Zagrożenie
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>test_images <span class="ot">&lt;-</span> test_images <span class="sc">/</span> <span class="dv">255</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Zauważ, że używamy funkcji <code>array_reshape()</code> zamiast funkcji <code>dim()</code> do zmiany kształtu tablicy. Powód tego omówimy później, kiedy będziemy mówić o przekształcaniu tensorów. Musimy również zakodować etykiety w sposób kategoryczny.</p>
+<p>Zauważmy, że używamy funkcji <code>array_reshape()</code> zamiast funkcji <code>dim()</code> do zmiany kształtu tablicy. Powód tego omówimy później, kiedy będziemy mówić o przekształcaniu tensorów. Musimy również zakodować etykiety w sposób kategoryczny.</p>
 <div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-7_28d63e0e0f078c20e12c43e97b709e5f">
 <details open="">
 <summary>Kod</summary>
@@ -587,11 +586,11 @@ Zagrożenie
 <pre><code>tf.Tensor([7 2 1 0 4 1 4 9 5 9], shape=(10), dtype=int64)</code></pre>
 </div>
 </div>
-<p>Na tym kończymy nasz pierwszy przykład - właśnie zobaczyłeś, jak można zbudować i wytrenować sieć neuronową do klasyfikacji pisma ręcznego w mniej niż 20 liniach kodu R. W następnym rozdziale omówimy szczegółowo każdy element, który użyliśmy i wyjaśnimy, co on robi. Dowiesz się o tensorach, obiektach przechowujących dane w sieci; o operacjach na tensorach, z których składają się warstwy; oraz o spadku gradientu, który pozwala sieci uczyć się na przykładach treningowych.</p>
+<p>Na tym kończymy nasz pierwszy przykład - właśnie zobaczyliśmy, jak można zbudować i wytrenować sieć neuronową do klasyfikacji pisma ręcznego w mniej niż 20 liniach kodu R. W następnym rozdziale omówimy szczegółowo każdy element, który użyliśmy i wyjaśnimy, co on robi. Dowiemy się o tensorach, obiektach przechowujących dane w sieci; o operacjach na tensorach, z których składają się warstwy oraz o spadku gradientu, który pozwala sieci uczyć się na przykładach treningowych.</p>
 <section id="operacje-na-danych" class="level3 page-columns page-full" data-number="10.4.1">
 <h3 data-number="10.4.1" class="anchored" data-anchor-id="operacje-na-danych"><span class="header-section-number">10.4.1</span> Operacje na danych</h3>
 <p>W poprzednim przykładzie zaczynaliśmy od danych przechowywanych w wielowymiarowych tablicach, zwanych również tensorami. Wszystkie obecne systemy uczenia maszynowego używają tensorów jako podstawowej struktury danych. Tensory są fundamentalne dla tej dziedziny - tak fundamentalne, że Google’s TensorFlow został nazwany na ich cześć. Czym więc jest tensor?</p>
-<p>Tensory są uogólnieniem wektorów i macierzy na dowolną liczbę wymiarów (zauważ, że w kontekście tensorów “wymiar” jest często nazywany “osią”). W R wektory są używane do tworzenia i manipulowania tensorami 1D, a matryce są używane do tensorów 2D. Dla wymiarów wyższego rzędu używane są obiekty tablicowe (które obsługują dowolną liczbę wymiarów).</p>
+<div class="page-columns page-full"><p>Tensory są uogólnieniem wektorów i macierzy na dowolną liczbę wymiarów (zauważmy, że w kontekście tensorów “wymiar” jest często nazywany “osią”). W R wektory są używane do tworzenia i manipulowania tensorami 1D, a macierze są używane do tensorów 2D. Dla wymiarów wyższego rzędu używane są obiekty tablicowe<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> (które obsługują dowolną liczbę wymiarów).</p><div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;ang. <em>array</em></p></li></div></div>
 <section id="skalary" class="level4" data-number="10.4.1.1">
 <h4 data-number="10.4.1.1" class="anchored" data-anchor-id="skalary"><span class="header-section-number">10.4.1.1</span> Skalary</h4>
 <p>Tensor, który zawiera tylko jedną liczbę nazywany jest skalarem (lub tensorem skalarnym, lub tensorem 0-wymiarowym, lub tensorem 0D). Chociaż R nie ma typu danych do reprezentowania skalarów (wszystkie obiekty numeryczne są wektorami, macierzami lub tablicami), wektor R, który ma zawsze długość 1, jest koncepcyjnie podobny do skalara.</p>
@@ -670,17 +669,17 @@ Zagrożenie
 <ul>
 <li>Liczba osi - np. tensor 3D ma trzy osie, a macierz dwie osie.</li>
 <li>Kształt - to wektor liczb całkowitych, który opisuje, ile wymiarów ma tensor wzdłuż każdej osi. Na przykład poprzedni przykład macierzy ma kształt (3, 5), a przykład tensora 3D ma kształt (3, 3, 5). Wektor ma kształt z pojedynczym elementem, o wymiarze 5. Możesz sprawdzić wymiary dowolnej tablicy za pomocą funkcji <code>dim()</code>.</li>
-<li>Typ danych - typ danych zawartych w tensorze; na przykład, typem tensora może być liczba całkowita lub podwójna<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. W rzadkich przypadkach możesz zobaczyć tensor znakowy<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Ponieważ jednak tensory żyją we wstępnie przydzielonych segmentach pamięci, a łańcuchy znaków, będąc zmiennej długości, wykluczyłyby użycie tej implementacji, są one rzadziej używane.</li>
+<li>Typ danych - typ danych zawartych w tensorze; na przykład, typem tensora może być liczba całkowita lub rzeczywista<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. W rzadkich przypadkach możesz zobaczyć tensor znakowy<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. Ponieważ jednak tensory żyją we wstępnie przydzielonych segmentach pamięci, a łańcuchy znaków, będąc zmiennej długości, wykluczyłyby użycie tej implementacji, są one rzadziej używane.</li>
 </ul>
-<div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;float - czyli liczba rzeczywista</p></li><li id="fn4"><p><sup>4</sup>&nbsp;typu <code>character</code></p></li></div><p>Aby to skonkretyzować, spójrzmy na dane, które przetwarzaliśmy w przykładzie MNIST. Najpierw ładujemy zbiór danych MNIST:</p>
-<div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-14_ea3d96b8d181d853268ddaa979c2afdb">
+<div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;float - czyli liczba rzeczywista</p></li><li id="fn7"><p><sup>7</sup>&nbsp;typu <code>character</code></p></li></div><p>Aby to skonkretyzować, spójrzmy na dane, które przetwarzaliśmy w przykładzie MNIST. Najpierw ładujemy zbiór danych MNIST:</p>
+<div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-14_1e1e0d26e36f2c5513a0495d7c2ef569">
 <details open="">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>train_images <span class="ot">&lt;-</span> mnist<span class="sc">$</span>train<span class="sc">$</span>x</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>train_labels <span class="ot">&lt;-</span> mnist<span class="sc">$</span>train<span class="sc">$</span>y</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>test_images <span class="ot">&lt;-</span> mnist<span class="sc">$</span>test<span class="sc">$</span>x</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>test_labels <span class="ot">&lt;-</span> mnist<span class="sc">$</span>test<span class="sc">$</span>y</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">dim</span>(train_images)) <span class="co"># trzy osie</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">dim</span>(train_images)) <span class="co"># osie</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
@@ -700,7 +699,7 @@ Zagrożenie
 <pre><code>[1] "integer"</code></pre>
 </div>
 </div>
-<p>Jak więc widać jest to tensor 3D liczb całkowitych. Dokładniej, jest to tablica 60000 macierzy 28 × 28 liczb całkowitych. Każda taka macierz jest obrazem w skali szarości, o współczynnikach od 0 do 255. Wykreślmy piątą cyfrę w tym tensorze 3D:</p>
+<p>Jak więc widać jest to tensor 3D liczb całkowitych. Dokładniej, jest to tablica 60000 macierzy 28 × 28 liczb całkowitych. Każda taka macierz jest obrazem w skali szarości o współczynnikach od 0 do 255. Wykreślmy piątą cyfrę w tym tensorze 3D:</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -725,22 +724,22 @@ Zagrożenie
 <pre><code>[1] 90 28 28</code></pre>
 </div>
 </div>
-<p>Generalnie, możesz wybrać pomiędzy dwoma dowolnymi indeksami wzdłuż każdej osi tensora. Na przykład, aby wybrać 14 × 14 pikseli w prawym dolnym rogu wszystkich obrazów, użyj:</p>
+<p>Generalnie, możemy wybrać pomiędzy dwoma dowolnymi indeksami wzdłuż każdej osi tensora. Na przykład, aby wybrać 14 × 14 pikseli w prawym dolnym rogu wszystkich obrazów, użyjemy:</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>my_slice <span class="ot">&lt;-</span> train_images[, <span class="dv">15</span><span class="sc">:</span><span class="dv">28</span>, <span class="dv">15</span><span class="sc">:</span><span class="dv">28</span>]</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Generalnie, pierwszą osią we wszystkich tensorach danych, z którymi zetkniesz się w głębokim uczeniu, będzie oś próbek (czasami nazywana wymiarem próbek). W przykładzie MNIST, próbki to obrazy cyfr. Ponadto, modele głębokiego uczenia nie przetwarzają całego zbioru danych na raz, ale raczej dzielą dane na małe partie (ang. <em>batch</em>). Konkretnie, oto jedna partia naszych cyfr MNIST, o rozmiarze partii 128:</p>
+<p>Generalnie, pierwszą osią we wszystkich tensorach danych, z którymi zetkniemy się w głębokim uczeniu, będzie oś próbek (czasami nazywana wymiarem próbek). W przykładzie MNIST, próbki to obrazy cyfr. Ponadto, modele głębokiego uczenia nie przetwarzają całego zbioru danych na raz, ale raczej dzielą dane na małe partie (ang. <em>batch</em>). Konkretnie, oto jedna partia naszych cyfr MNIST, o rozmiarze partii 128:</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>batch <span class="ot">&lt;-</span> train_images[<span class="dv">1</span><span class="sc">:</span><span class="dv">128</span>,,]</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Gdy rozważamy tensor partii, pierwsza oś nazywana jest osią partii lub wymiarem partii. Jest to termin, który często spotkasz podczas korzystania z <code>keras</code> i innych bibliotek uczenia głębokiego.</p>
-<p>Uściślijmy tensory danych za pomocą kilku przykładów podobnych do tego, co napotkasz później. Dane, którymi będziesz manipulował, prawie zawsze będą należały do jednej z następujących kategorii:</p>
+<p>Gdy rozważamy tensor partii, pierwsza oś nazywana jest osią partii lub wymiarem partii. Jest to termin, który często spotkamy podczas korzystania z <code>keras</code> i innych bibliotek uczenia głębokiego.</p>
+<p>Uściślijmy tensory danych za pomocą kilku przykładów podobnych do tego, co napotkamy później. Dane, którymi będziemy manipulować, prawie zawsze będą należały do jednej z następujących kategorii:</p>
 <ul>
 <li>Dane wektorowe-2D tensory kształtu (próbki, cechy);</li>
 <li>Dane czasowe lub dane sekwencyjne-3D tensory kształtu (próbki, kroki czasowe, cechy);</li>
@@ -752,7 +751,7 @@ Zagrożenie
 <li>Aktuarialny zbiór danych osób, gdzie rozpatrujemy wiek, kod i dochód każdej osoby. Każda osoba może być scharakteryzowana jako wektor 3 wartości, a zatem cały zbiór danych 100000 osób może być przechowywany w tensorze 2D o kształcie <code>(100000, 3)</code>.</li>
 <li>Zbiór dokumentów tekstowych, gdzie każdy dokument reprezentujemy poprzez zliczanie ile razy pojawia się w nim każde słowo (ze słownika 20000 słów). Każdy dokument można zakodować jako wektor 20000 wartości (po jednym zliczeniu na słowo w słowniku), a zatem cały zbiór 500 dokumentów można zapisać w tensorze kształtu <code>(500, 20000)</code>.</li>
 </ul>
-<p>Gdy w danych ważny się czas (lub kolejność sekwencji), sensowne jest przechowywanie ich w tensorze 3D z wyraźną osią czasu. Każda próbka może być zakodowana jako ciąg wektorów (tensor 2D), a zatem partia danych będzie zakodowana jako tensor 3D (patrz <a href="#fig-tensor1">Rysunek&nbsp;<span>10.8</span></a>).</p>
+<p>Gdy w danych ważny staje się czas (lub kolejność sekwencji), sensowne jest przechowywanie ich w tensorze 3D z wyraźną osią czasu. Każda próbka może być zakodowana jako ciąg wektorów (tensor 2D), a zatem partia danych będzie zakodowana jako tensor 3D (patrz <a href="#fig-tensor1">Rysunek&nbsp;<span>10.8</span></a>).</p>
 <div id="fig-tensor1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-24 o 18.59.47.png" class="img-fluid figure-img" width="400"></p>
@@ -771,14 +770,14 @@ Zagrożenie
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;10.9: Zapis kolorowego obrazu</figcaption><p></p>
 </figure>
 </div>
-<p>Istnieją dwie konwencje dla kształtów tensorów obrazów: konwencja <em>channels-last</em> (używana przez TensorFlow) i konwencja <em>channels-firs</em>t (używana przez Theano). Framework uczenia maszynowego TensorFlow, od Google, umieszcza oś głębokości koloru na końcu: <code>(sample, height, width, color_depth)</code>. Tymczasem Theano umieszcza oś głębi koloru zaraz po osi wsadowej: <code>(sample, color_depth, height, width)</code>. Keras zapewniają wsparcie dla obu formatów.</p>
-<p>Dane wideo są jednym z niewielu typów danych ze świata rzeczywistego, dla których będziesz potrzebował tensorów 5D. Wideo może być rozumiane jako sekwencja klatek, z których każda jest obrazem kolorowym. Ponieważ każda klatka może być przechowywana w tensorze 3D <code>(wysokość, szerokość, głębokość koloru)</code>, sekwencja klatek może być przechowywana w tensorze 4D <code>(klatki, wysokość, szerokość, głębokość koloru)</code>, a zatem partia różnych filmów może być przechowywana w tensorze 5D o kształcie <code>(próbki, klatki, wysokość, szerokość, głębokość koloru)</code>.</p>
+<p>Istnieją dwie konwencje dla kształtów tensorów obrazów: konwencja <em>channels-last</em> (używana przez TensorFlow) i konwencja <em>channels-firs</em>t (używana przez Theano). Framework uczenia maszynowego TensorFlow, od Google, umieszcza oś głębokości koloru na końcu: <code>(sample, height, width, color_depth)</code>. Tymczasem Theano umieszcza oś głębi koloru zaraz po osi partii: <code>(sample, color_depth, height, width)</code>. Keras zapewniają wsparcie dla obu formatów.</p>
+<p>Dane wideo są jednym z niewielu typów danych ze świata rzeczywistego, dla których będziemy potrzebować tensorów 5D. Wideo może być rozumiane jako sekwencja klatek, z których każda jest obrazem kolorowym. Ponieważ każda klatka może być przechowywana w tensorze 3D <code>(wysokość, szerokość, głębokość koloru)</code>, sekwencja klatek może być przechowywana w tensorze 4D <code>(klatki, wysokość, szerokość, głębokość koloru)</code>, a zatem partia różnych filmów może być przechowywana w tensorze 5D o kształcie <code>(próbki, klatki, wysokość, szerokość, głębokość koloru)</code>.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/reshape.jpg" class="img-fluid figure-img" width="400"></p>
 </figure>
-</div></div><p>Na przykład 60-sekundowy klip wideo YouTube o wymiarach 256 × 144, próbkowany z prędkością 4 klatek na sekundę, miałby 240 klatek. Partia czterech takich klipów wideo byłaby przechowywana w tensorze o kształcie <code>(4, 240, 256, 144, 3)</code>. To w sumie 106168320 wartości! Jeśli typ danych tensora to <em>double</em>, to każda wartość jest przechowywana w 64 bitach, więc tensor reprezentowałby 810 MB. Sporo 😱! Filmy, które spotykasz w prawdziwym życiu są znacznie lżejsze, ponieważ nie są przechowywane w <code>float32</code> i zazwyczaj są silnie skompresowane (jak w formacie MPEG).</p>
+</div></div><p>Na przykład 60-sekundowy klip wideo YouTube o wymiarach 256 × 144, próbkowany z prędkością 4 klatek na sekundę, miałby 240 klatek. Partia czterech takich klipów wideo byłaby przechowywana w tensorze o kształcie <code>(4, 240, 256, 144, 3)</code>. To w sumie 106168320 liczb! Jeśli typ danych tensora to <em>double</em>, to każda wartość jest przechowywana w 64 bitach, więc tensor reprezentowałby 810 MB. Sporo 😱! Filmy, które spotykamy w prawdziwym życiu są znacznie lżejsze, ponieważ nie są przechowywane w <code>float32</code> i zazwyczaj są silnie skompresowane (jak w formacie MPEG).</p>
 <p>Podobnie jak każdy program komputerowy może być ostatecznie zredukowany do małego zestawu operacji binarnych na wejściach binarnych (AND, OR, NOR, i tak dalej), wszystkie transformacje uczone przez głębokie sieci neuronowe mogą być zredukowane do garści operacji tensorowych stosowanych do tensorów danych liczbowych. Na przykład, możliwe jest dodawanie tensorów, mnożenie tensorów i tak dalej. W naszym początkowym przykładzie budowaliśmy naszą sieć poprzez układanie gęstych warstw jedna na drugiej. Instancja warstwy wygląda tak:</p>
 <div class="cell">
 <details open="">
@@ -795,7 +794,7 @@ Zagrożenie
 </details>
 </div>
 <p>Mamy tu trzy operacje na tensorach: iloczyn (<code>dot</code>) między tensorem wejściowym a tensorem <code>W</code>, dodawanie (<code>+</code>) między wynikowym tensorem 2D wektorem <code>b</code> i wreszcie operację <code>relu</code>, gdzie <code>relu(x)</code> to <code>max(x, 0)</code>.</p>
-<p>Operacja <code>relu</code> i dodawanie są operacjami typu <em>element-wise</em>: operacjami, które są stosowane niezależnie do każdego wpisu w rozważanych tensorach. Oznacza to, że operacje te są bardzo podatne na wektoryzacje. W praktyce, gdy mamy do czynienia z tablicami R, operacje te są dostępne jako dobrze zoptymalizowane wbudowane funkcje R, które same delegują ciężką pracę do BLAS (Basic Linear Algebra Subprograms). BLAS to niskopoziomowe, wysoce wektoryzowalne, wydajne procedury manipulacji tensorami, zwykle zaimplementowane w Fortranie lub C.</p>
+<p>Operacja <code>relu</code> i dodawanie są operacjami typu <em>element-wise</em>: operacjami, które są stosowane niezależnie do każdego wpisu w rozważanych tensorach. Oznacza to, że operacje te są bardzo podatne na wektoryzacje. W praktyce, gdy mamy do czynienia z tablicami R, operacje te są dostępne jako dobrze zoptymalizowane wbudowane funkcje R, które same delegują ciężką pracę do BLAS (<em>Basic Linear Algebra Subprograms</em>). BLAS to niskopoziomowe, wysoce wektoryzowalne, wydajne procedury manipulacji tensorami, zwykle zaimplementowane w Fortranie lub C.</p>
 <p>Operacje na tensorach można wykonywać również wtedy, gdy są one innych wymiarów. Przykładowo:</p>
 <div class="cell">
 <details open="">
@@ -898,7 +897,7 @@ Zagrożenie
 </section>
 <section id="optymalizacja-gradientowa" class="level3" data-number="10.4.2">
 <h3 data-number="10.4.2" class="anchored" data-anchor-id="optymalizacja-gradientowa"><span class="header-section-number">10.4.2</span> Optymalizacja gradientowa</h3>
-<p>Jak widziałeś wyżej, każda warstwa neuronowa z naszego pierwszego przykładu sieci przekształca swoje dane wejściowe w następujący sposób:</p>
+<p>Jak widzieliśmy wcześniej, każda warstwa neuronowa z naszego pierwszego przykładu sieci przekształca swoje dane wejściowe w następujący sposób:</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -909,7 +908,7 @@ Zagrożenie
 <p>Początkowo te macierze wag są wypełnione małymi losowymi wartościami (krok zwany inicjalizacją losową). Oczywiście nie ma powodu, by oczekiwać, że <code>relu(dot(W, input) + b)</code>, gdy <code>W</code> i <code>b</code> są losowe, da jakąkolwiek użyteczną reprezentację. Następnym krokiem jest stopniowe dostosowanie tych wag, w oparciu o sygnał zwrotny. To stopniowe dopasowywanie, zwane również treningiem, jest w zasadzie nauką, o którą chodzi w uczeniu modeli.</p>
 <p>Dzieje się to w ramach tak zwanej pętli treningowej, która schematycznie wygląda następująco. Powtarzaj te kroki w pętli, tak długo jak to konieczne:</p>
 <ol type="1">
-<li>Wylosuj partię próbek treningowych <code>x</code> i odpowiadające im cele <code>y</code>.</li>
+<li>Wylosuj partię próbek treningowych <code>x</code> i odpowiadające im odpowiedzi <code>y</code>.</li>
 <li>Uruchom sieć na <code>x</code> (nazywane przejściem w przód), aby uzyskać predykcje <code>y_pred</code>.</li>
 <li>Oblicz stratę sieci na partii, czyli miarę niedopasowania między <code>y_pred</code> a <code>y</code>.</li>
 <li>Zaktualizuj wszystkie wagi sieci w taki sposób, aby nieznacznie zmniejszyć stratę na tej partii.</li>
@@ -917,7 +916,7 @@ Zagrożenie
 <p>W końcu otrzymamy sieć, która ma bardzo niską stratę na swoich danych treningowych: to znaczy, niskie rozbieżności między przewidywaniami <code>y_pred</code> i oczekiwanymi celami <code>y</code>. Ze wszystkich powyższych kroków pierwsze trzy wydają się oczywiste, natomiast 4 jest nieco trudniejszy - aktualizacja wag sieci. Biorąc pod uwagę indywidualny współczynnik wagowy w sieci, jak można obliczyć, czy współczynnik ten powinien być zwiększony czy zmniejszony i o ile?</p>
 <p>Ponieważ wszystkie operacje używane w sieci są różniczkowalne, to można obliczyć gradient funkcji straty względem współczynników sieci. Następnie możesz skorygować współczynniki wagowe w kierunku przeciwnym do gradientu, zmniejszając w ten sposób stratę.</p>
 <p>Biorąc pod uwagę funkcję różniczkowalną, teoretycznie możliwe jest znalezienie jej minimum analitycznie: wiadomo, że minimum funkcji to punkt, w którym pochodna jest równa 0, więc wszystko, co musimy zrobić, to znaleźć wszystkie punkty, w których pochodna zmierza do 0 i sprawdzić, dla którego z tych punktów funkcja ma najmniejszą wartość.</p>
-<p>W przypadku sieci neuronowej oznacza to analityczne znalezienie kombinacji wartości wag, która daje najmniejszą możliwą funkcję straty. Można to zrobić rozwiązując równanie <code>gradient(f)(W) = 0</code> dla <code>W</code>. Jest to równanie wielomianowe o <span class="math inline">\(N\)</span> zmiennych, gdzie <span class="math inline">\(N\)</span> jest liczbą współczynników w sieci. Chociaż możliwe byłoby rozwiązanie takiego równania dla dla <span class="math inline">\(N = 2\)</span> lub <span class="math inline">\(N = 3\)</span>, to zrobienie tego jest niepraktyczne dla rzeczywistych sieci neuronowych, gdzie liczba parametrów nigdy nie jest mniejsza niż kilka tysięcy, a często może wynosić kilkadziesiąt milionów.</p>
+<p>W przypadku sieci neuronowej oznacza to analityczne znalezienie kombinacji wartości wag, która daje najmniejszą możliwą funkcję straty. Można to zrobić rozwiązując równanie <code>gradient(f)(W) = 0</code> dla <code>W</code>. Jest to równanie wielomianowe o <span class="math inline">\(N\)</span> zmiennych, gdzie <span class="math inline">\(N\)</span> jest liczbą współczynników w sieci. Chociaż możliwe byłoby rozwiązanie takiego równania dla <span class="math inline">\(N = 2\)</span> lub <span class="math inline">\(N = 3\)</span>, to zrobienie tego jest niepraktyczne dla rzeczywistych sieci neuronowych, gdzie liczba parametrów nigdy nie jest mniejsza niż kilka tysięcy, a często może wynosić kilkadziesiąt milionów.</p>
 <p>Zamiast tego możesz użyć czteroetapowego algorytmu przedstawionego na początku tej sekcji: modyfikujesz parametry po trochu w oparciu o bieżącą wartość straty na losowej partii danych. Ponieważ mamy do czynienia z funkcją różniczkowalną, możemy obliczyć jej gradient, co daje efektywny sposób implementacji kroku 4. Jeśli zaktualizujesz wagi w kierunku przeciwnym do gradientu, strata będzie za każdym razem nieco mniejsza:</p>
 <ol type="1">
 <li>Wylosuj partię próbek treningowych <code>x</code> i odpowiadające im cele <code>y</code>.</li>
@@ -928,7 +927,7 @@ Zagrożenie
 </ol>
 <p>To, co właśnie opisaliśmy, nazywa się metodą <em>minibatch stochastic gradient descent</em> (minibatch SGD). Termin stochastyczny odnosi się do faktu, że każda partia danych jest losowana.</p>
 <p>Jak widać, intuicyjnie ważne jest, aby wybrać rozsądną wartość współczynnika kroku. Jeśli jest on zbyt mały, zejście w dół krzywej zajmie wiele iteracji i może utknąć w lokalnym minimum. Jeśli krok jest zbyt duży, twoje aktualizacje mogą skończyć się zabraniem cię do całkowicie losowych miejsc na krzywej.</p>
-<p>Zauważ, że wariant algorytmu mini-batch SGD polegający na losowaniu pojedynczej próbki i <code>y</code> w każdej iteracji, zamiast losowania partii danych. Wówczas byłby to oryginalny algorytm SGD, który jest mniej wydajny.</p>
+<p>Zauważmy, że istnieje wariant algorytmu mini-batch SGD polegający na losowaniu pojedynczej próbki i <code>y</code> w każdej iteracji, zamiast losowania partii danych. Jest on oryginalnym algorytmem SGD, który jest mniej wydajny.</p>
 <p>Oprócz wspomnianej metody mini-batch SGD istnieje wiele innych, dużo bardziej skutecznych metod optymalizacji parametrów wagowych modelu. Wśród nich należy wymienić:</p>
 <ul>
 <li>RMSprop</li>
@@ -960,11 +959,11 @@ Zagrożenie
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;10.12: Zasada działania wstecznej propagacji błędu</figcaption><p></p>
 </figure>
 </div>
-<p>Obecnie korzysta się z metod zdolnych do symbolicznego różniczkowania, takich jak TensorFlow. Oznacza to, że biorąc pod uwagę łańcuch operacji ze znaną pochodną, mogą obliczyć funkcję gradientu dla łańcucha (stosując regułę łańcucha), która mapuje wartości parametrów sieci do wartości gradientu. Kiedy masz dostęp do takiej funkcji, przejście wsteczne jest zredukowane do wywołania tej funkcji gradientu. Dzięki symbolicznemu różniczkowaniu nigdy nie będziesz musiał ręcznie implementować algorytmu wstecznej propagacji.</p>
+<p>Obecnie korzysta się z metod zdolnych do symbolicznego różniczkowania, takich jak TensorFlow. Oznacza to, że biorąc pod uwagę łańcuch operacji ze znaną funkcją straty, mogą obliczyć funkcję gradientu dla łańcucha za pomocą pochodnej funkcji złożonej, która mapuje wartości parametrów sieci do wartości gradientu. Kiedy mamy dostęp do takiej funkcji, przejście wsteczne jest zredukowane do wywołania tej funkcji gradientu. Dzięki symbolicznemu różniczkowaniu nigdy nie będziemy musieli ręcznie implementować algorytmu wstecznej propagacji.</p>
 </section>
 <section id="funkcje-straty" class="level3 page-columns page-full" data-number="10.4.4">
 <h3 data-number="10.4.4" class="anchored" data-anchor-id="funkcje-straty"><span class="header-section-number">10.4.4</span> Funkcje straty</h3>
-<div class="page-columns page-full"><p>We wcześniej prezentowanym przykładzie w funkcji <code>compile()</code> pojawiła się funkcja straty <code>loss = 'categorical_crossentropy'</code>, która jest jedną z możliwych do zastosowania funkcji straty<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. Funkcja straty jest używana jako sygnał zwrotny do uczenia tensorów wag i którą w fazie uczenia będzie monimalizowana. Odbywać się to będzie za pomocą mini-batch SGD. Dokładne zasady rządzące konkretną implementacją SGD są zdefiniowane przez optymalizator <code>rmsprop</code> przekazany jako pierwszy argument.</p><div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;o funkcjach straty będziemy jeszcze wspominać przy konkretnych przykładach</p></li></div></div>
+<div class="page-columns page-full"><p>We wcześniej prezentowanym przykładzie w funkcji <code>compile()</code> pojawiła się funkcja straty <code>loss = 'categorical_crossentropy'</code>, która jest jedną z możliwych do zastosowania funkcji straty<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. Funkcja straty jest używana jako sygnał zwrotny do uczenia tensorów wag i którą w fazie uczenia będzie minimalizowana. Odbywać się to będzie za pomocą mini-batch SGD. Dokładne zasady rządzące konkretną implementacją SGD są zdefiniowane przez optymalizator <code>rmsprop</code> przekazany jako pierwszy argument.</p><div class="no-row-height column-margin column-container"><li id="fn8"><p><sup>8</sup>&nbsp;o funkcjach straty będziemy jeszcze wspominać przy konkretnych przykładach</p></li></div></div>
 <p>Uruchamiając</p>
 <div class="cell">
 <details open="">
@@ -1324,25 +1323,90 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
+      // Handle positioning of the toggle
+      window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
           }
-        });
+        };
+      }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
       }
   const findCites = (el) => {
     const parentEl = el.parentElement;

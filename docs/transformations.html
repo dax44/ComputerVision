@@ -318,7 +318,7 @@ y' &amp;= x \sin(\theta) + y \cos(\theta),
 <p>Przekształcenie afiniczne jest często używane w przetwarzaniu obrazów do uzyskania lepszego dopasowania obrazów do siebie, np. w celu wykonania mapowania międzyobrazowego lub w celu korygowania perspektywy obrazów.</p>
 <p>Progowanie obrazu polega na zmianie poziomów jasności pikseli w obrazie na podstawie określonego progu. Próg jest wartością graniczną, po której piksele o niższej jasności są zmieniane na czarne, a piksele o jasności powyżej progu są zmieniane na białe. W ten sposób obraz jest konwertowany na obraz czarno-biały, co może ułatwić dalsze operacje na nim, takie jak analiza obrazu.</p>
 <p>Filtracja obrazów to proces przetwarzania obrazów polegający na przepuszczeniu obrazu przez filtr, który modyfikuje wartości pikseli. Cel filtracji może być różny, np. usunięcie szumów, wzmocnienie krawędzi, rozmycie obrazu.</p>
-<p>Istnieje wiele różnych rodzajów filtrów. Na przykład:</p>
+<p>Istnieje wiele różnych rodzajów filtrów. Wśród nich można wymienić:</p>
 <ul>
 <li>filtry lokalne, które modyfikują każdy piksel na podstawie jego otoczenia,</li>
 <li>filtry globalne, które modyfikują cały obraz jednocześnie,</li>
@@ -335,7 +335,7 @@ y' &amp;= x \sin(\theta) + y \cos(\theta),
 <section id="przykłady-różnych-transformacji" class="level2 exm-2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="przykłady-różnych-transformacji"><span class="header-section-number">4.1</span> Przykłady różnych transformacji</h2>
 <div class="cell">
-<details>
+<details open="">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magick)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>frink <span class="ot">&lt;-</span> <span class="fu">image_read</span>(<span class="st">"https://jeroen.github.io/images/frink.png"</span>)</span>
@@ -351,7 +351,7 @@ y' &amp;= x \sin(\theta) + y \cos(\theta),
 </div>
 </div>
 <div class="cell">
-<details>
+<details open="">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">image_scale</span>(frink, <span class="st">"250%x250%"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -365,7 +365,7 @@ y' &amp;= x \sin(\theta) + y \cos(\theta),
 </div>
 </div>
 <div class="cell">
-<details>
+<details open="">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">image_scale</span>(frink, <span class="st">"300x100!"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -379,7 +379,7 @@ y' &amp;= x \sin(\theta) + y \cos(\theta),
 </div>
 </div>
 <div class="cell">
-<details>
+<details open="">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">image_rotate</span>(frink, <span class="dv">90</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -387,7 +387,7 @@ y' &amp;= x \sin(\theta) + y \cos(\theta),
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="transformations_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="222"></p>
-<p></p><figcaption class="figure-caption">Rotacja o 90 stopni</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Frink obrócony o 90 stopni</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -404,7 +404,7 @@ y' &amp;= x \sin(\theta) + y \cos(\theta),
 </div>
 <div id="fig-rotation2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<details>
+<details open="">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(imager)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(keras)</span>
@@ -466,7 +466,7 @@ y' &amp;= x \sin(\theta) + y \cos(\theta),
 </div>
 <p>Jak widać z powyższych wykresów rotacja wpływa na jakość obrazu, dlatego zaleca się nie stosować kilku występujących po sobie rotacji o kąty niebędące wielokrotnościami <span class="math inline">\(90\degree\)</span>.</p>
 <div class="cell">
-<details>
+<details open="">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>im2 <span class="ot">&lt;-</span> <span class="fu">imlist</span>(im)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>){</span>
@@ -488,9 +488,9 @@ y' &amp;= x \sin(\theta) + y \cos(\theta),
 <h2 data-number="4.3" class="anchored" data-anchor-id="zmiana-rozmiaru-obrazu"><span class="header-section-number">4.3</span> Zmiana rozmiaru obrazu</h2>
 <p>W przypadku gdy zmieniamy rozmiar obrazu w proporcji 0.5, 2, 3 funkcja <code>imresize</code> korzysta z algorytmu opisanego na stronie <a href="http://www.scale2x.it/algorithm.html" class="uri">http://www.scale2x.it/algorithm.html</a>.</p>
 <div class="cell">
-<details>
+<details open="">
 <summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>im_list <span class="ot">&lt;-</span> <span class="fu">map_il</span>(<span class="fu">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>, <span class="dv">2</span>), <span class="sc">~</span><span class="fu">imresize</span>(im, </span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>im_list <span class="ot">&lt;-</span> <span class="fu">map_il</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="sc">~</span><span class="fu">imresize</span>(im, </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">scale =</span> .x)) </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">imappend</span>(im_list, <span class="st">"x"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">interp =</span> F) <span class="co"># antialiasing off</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -516,7 +516,7 @@ y' &amp;= x \sin(\theta) + y \cos(\theta),
 <li>interpolacja Lanczosa (opcja 6).</li>
 </ul>
 <div class="cell">
-<details>
+<details open="">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>im_list <span class="ot">&lt;-</span> <span class="fu">map_il</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>), <span class="sc">~</span><span class="fu">imresize</span>(im, </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">scale =</span> <span class="fl">1.5</span>,</span>
@@ -829,25 +829,90 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
+      // Handle positioning of the toggle
+      window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
           }
-        });
+        };
+      }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
       }
   const findCites = (el) => {
     const parentEl = el.parentElement;

@@ -1,9 +1,6 @@
 ---
-output: html_document
-execute: 
-  warning: false
-editor_options: 
-  chunk_output_type: console
+code-fold: show
+code-annotations: hover
 ---
 
 # Obrazy cyfrowe
@@ -45,7 +42,7 @@ include_graphics("images/Camera_obscura_1.jpg")
 
 -   większość współczesnych filmów barwnych, oprócz *Kodachrome*, wykorzystuje technologię stworzoną dla filmu *Agfacolor* w 1936 roku,
 
--   Od 1963 -- jest dostępny natychmiastowy materiał kolorowy firmy Polaroid Corporation,
+-   Od 1963 -- dostępny jest film kolorowy firmy Polaroid Corporation pozwalający na niemal natychmiastowe odtworzenie sceny uchwyconej aparatem,
 
 -   najpowszechniej stosowanym formatem zapisu analogowego obrazu wideo były taśmy VHS (ang. *Video Home System*) wprowadzone w 1976 roku przez firmę JVC.
     Nośnikiem używanym do zapisu zarówno obrazu, jak i dźwięku była taśma magnetyczna.
@@ -57,9 +54,9 @@ Chociaż prosta geometria kamery szczelinowej sprawia, że jest ona przydatna do
 Jednym z problemów z kamerą szczelinową jest to, że wymaga ona bardzo małego otworu, aby uzyskać ostry obraz.
 To z kolei zmniejsza ilość przepuszczanego światła i prowadzi do ekstremalnie długich czasów naświetlania.
 W rzeczywistości stosuje się szklane soczewki lub systemy soczewek optycznych, których właściwości optyczne są znacznie lepsze w wielu aspektach, ale oczywiście są też znacznie bardziej złożone.
-W modelu (patrz @fig-soczewka) zakłada się, że soczewka jest symetryczna i nieskończenie cienka, tak że wszystkie przechodzące przez nią promienie świetlne przecinają wirtualną płaszczyznę w środku soczewki.
+W modelu (patrz @fig-soczewka) zakłada się, że soczewka jest symetryczna i tak cienka, tak że wszystkie przechodzące przez nią promienie świetlne przecinają wirtualną płaszczyznę w środku soczewki.
 Wynikowa geometria obrazu jest taka sama jak w przypadku kamery szczelinowej.
-Model ten nie jest wystarczająco złożony, aby objąć fizyczne szczegóły rzeczywistych układów soczewek, takie jak zniekształcenia geometryczne i różne właściwości załamania światła w różnych kolorach.
+Model ten nie jest wystarczająco złożony, aby objąć fizyczne cechy rzeczywistych układów soczewek, takie jak zniekształcenia geometryczne i różne właściwości załamania światła w różnych kolorach.
 Tak więc, choć ten prosty model wystarcza do naszych celów (tj. zrozumienia mechaniki pozyskiwania obrazu), w literaturze można znaleźć znacznie bardziej szczegółowe modele uwzględniające te dodatkowe złożoności.
 
 ::: {#fig-elephants layout-ncol="2"}
@@ -73,8 +70,8 @@ Porównanie dwóch rozwiązań
 W przeciwieństwie do fotografii analogowej, fotografia cyfrowa nie wykorzystuje substancji chemicznej do utrwalenia obrazu ale zapisuje energię świetlną dostarczaną przez obiektyw do matrycy światłoczułej.
 Aby przekształcić ten obraz w obraz cyfrowy na naszym komputerze, konieczne są następujące trzy główne kroki:
 
-1.  Rozkład światła ciągłego musi być próbkowany przestrzennie.
-2.  Dalej funkcja ta musi być próbkowana w czasie, aby stworzyć pojedynczy (nieruchomy) obraz.
+1.  Rozkład światła ciągłego musi być próbkowany przestrzennie - rejestrowanie obrazu na siatce.
+2.  Dalej funkcja ta musi być próbkowana w jednym momencie czasowym, aby stworzyć pojedynczy (nieruchomy) obraz.
 3.  Wreszcie, wartości wynikowe muszą być skwantowane do skończonego zakresu liczb całkowitych (lub wartości zmiennoprzecinkowych), tak aby mogły być reprezentowane przez liczby.
 
 Próbkowanie przestrzenne obrazu (czyli zamiana sygnału ciągłego na jego reprezentację dyskretną) zależy od geometrii elementów sensorycznych urządzenia akwizycyjnego (np. kamery cyfrowej lub wideo).
@@ -112,7 +109,7 @@ Obrazy wektorowe są zwykle zapisywane w formatach takich jak SVG, PDF, AI lub E
 ![Grafika rastrowa vs wektorowa](images/Orc_-_Raster_vs_Vector_comparison.png){width="600"}
 
 Główna różnica między grafiką rastrową a wektorową polega na tym, że obrazy rastrowe składają się z indywidualnych pikseli, podczas gdy obrazy wektorowe składają się z matematycznie opisanych kształtów.
-Obrazy rastrowe tracą jakość po powiększeniu, ponieważ piksele są widoczne, podczas gdy obrazy wektorowe zachowują jakość po powiększeniu, ponieważ są składane z kształtów matematycznych.
+Obrazy rastrowe tracą jakość po powiększeniu, ponieważ piksele są widoczne, podczas gdy obrazy wektorowe zachowują jakość po powiększeniu, ponieważ są składane z kształtów matematycznych rysowanych na bierząco.
 Obie techniki, grafika rastrowa i wektorowa, mają swoje własne zalety i wady, i nie ma jednej techniki, która jest ogólnie uważana za bardziej dokładną.
 
 Grafika rastrowa jest bardziej odpowiednia do przedstawiania szczegółowych i skomplikowanych obrazów, takich jak zdjęcia lub malarstwo.
@@ -127,7 +124,7 @@ W ramach tego przedmiotu głównie będziemy się zajmować grafiką rastrową.
 
 Rozdzielczość jest jednym z najważniejszych czynników wpływających na jakość obrazu.
 Im więcej pikseli ma obraz, tym więcej szczegółów jest widocznych.
-Rozdzielczość obrazu określa wymiary przestrzenne obrazu w świecie rzeczywistym i jest podawana jako liczba elementów obrazu na jeden pomiar; na przykład w punktach na cal (dpi) lub liniach na cal (lpi) w przypadku produkcji poligraficznej lub w pikselach na kilometr w przypadku zdjęć satelitarnych.
+Rozdzielczość obrazu określa wymiary przestrzenne obrazu w świecie rzeczywistym i jest podawana jako liczba elementów obrazu na jednostkę pola; na przykład w punktach na cal (dpi) lub liniach na cal (lpi) w przypadku produkcji poligraficznej lub w pikselach na kilometr w przypadku zdjęć satelitarnych.
 Jednocześnie, im więcej pikseli ma obraz, tym większy jest jego rozmiar pliku i tym więcej pamięci jest potrzebne do jego przechowywania.
 Wymiary obrazu przedstawiane są za pomocą liczby pikseli poziomo i pionowo, np.
 1920 x 1080 pikseli.
@@ -141,9 +138,7 @@ Niektóre formaty są kompresowane co pozwala na zmniejszenie wielkości pliku p
     W większości przypadków sens mają tylko wartości dodatnie, ponieważ liczby reprezentują natężenie energii świetlnej lub gęstość filmu, a więc nie mogą być ujemne, więc zwykle używa się całych liczb całkowitych z zakresu $0, \ldots , 2^{k - 1}$ są używane.
     Na przykład typowy obraz w skali szarości wykorzystuje $k = 8$ bitów (1 bajt) na piksel i wartości intensywności z zakresu $0,\ldots,255$, gdzie wartość 0 oznacza minimalną jasność (czerń), a 255 maksymalną jasność (biel).
     W wielu zastosowaniach profesjonalnej fotografii i druku, a także w medycynie i astronomii, 8 bitów na piksel nie jest wystarczające.
-    W tych dziedzinach często spotyka się głębię obrazu 12, 14, a nawet 16 bitów.
-    Zauważ, że głębia bitowa zwykle odnosi się do liczby bitów używanych do reprezentowania jednego składnika koloru, a nie liczby bitów potrzebnych do reprezentowania koloru piksela.
-    Na przykład, zakodowany w RGB kolorowy obraz z 8-bitową głębią wymagałby 8 bitów dla każdego kanału, co daje w sumie 24 bity, podczas gdy ten sam obraz z 12-bitową głębią wymagałby w sumie 36 bitów.
+    W tych dziedzinach często spotyka się głębię obrazu 12, 14, a nawet 16 bitów.[^digt_img-1]
 
 2.  Obrazy binarne (ang. *binary images*) - to specjalny rodzaj obrazu, w którym piksele mogą przyjmować tylko jedną z dwóch wartości, czarną lub białą.
     Wartości te są zwykle kodowane przy użyciu pojedynczego bitu (0/1) na piksel.
@@ -161,12 +156,15 @@ Niektóre formaty są kompresowane co pozwala na zmniejszenie wielkości pliku p
     Obrazy z wartościami ujemnymi powstają podczas etapów przetwarzania obrazu, takich jak filtrowanie w celu wykrywania krawędzi, a obrazy z wartościami zmiennoprzecinkowymi są często spotykane w zastosowaniach medycznych, biologicznych lub astronomicznych, gdzie wymagany jest zwiększony zakres liczbowy i precyzja.
     Te specjalne formaty są w większości przypadków specyficzne dla danego zastosowania i dlatego mogą być trudne do wykorzystania przez standardowe narzędzia do przetwarzania obrazów.
 
+[^digt_img-1]: Zauważ, że głębia bitowa zwykle odnosi się do liczby bitów używanych do reprezentowania jednego składnika koloru, a nie liczby bitów potrzebnych do reprezentowania koloru piksela.
+    Na przykład, zakodowany w RGB kolorowy obraz z 8-bitową głębią wymagałby 8 bitów dla każdego kanału, co daje w sumie 24 bity, podczas gdy ten sam obraz z 12-bitową głębią wymagałby w sumie 36 bitów.
+
 ## Formaty zapisu
 
 ### TIFF
 
 TIFF (ang. *Tagged Image File Format*) jest formatem pliku, który jest używany do przechowywania i wymiany obrazów cyfrowych.
-Jest to format bezstratny, co oznacza, że po zapisaniu i odczytaniu obrazu jego jakość pozostaje taka sama.
+Jest to format bezstratnej kompresji, co oznacza, że po zapisaniu i odczytaniu obrazu jego jakość pozostaje taka sama.
 TIFF jest obsługiwany przez wiele programów do edycji obrazów i może być używany do przechowywania różnych rodzajów obrazów, w tym obrazów w skali szarości, kolorowych oraz map bitowych.
 Format TIFF jest często używany przez profesjonalnych fotografów i grafików, ponieważ pozwala na zachowanie wysokiej jakości obrazu i jest kompatybilny z wieloma programami i urządzeniami.
 
@@ -182,13 +180,29 @@ GIF jest również ograniczony do 256 kolorów, co oznacza, że nie jest on dobr
 PNG (ang. *Portable Network Graphics*) jest bezstratnym formatem pliku graficznego, który jest używany do przechowywania i wymiany obrazów w internecie.
 Podobnie jak GIF może być kompresowany w celu zmniejszenia rozmiaru pliku.
 Co ważne, format PNG jest formatem obsługującym przezroczystość, co oznacza, że może on przechowywać kanał alfa, który jest odpowiedzialny za przezroczystość obrazu, co pozwala na zastosowanie efektu przezroczystości na obrazie bez konieczności dodatkowego tworzenia specjalnego tła.
-PNG jest również w stanie przechowywać więcej kolorów niż GIF, co oznacza, że jest to lepsze rozwiązanie dla obrazów o wysokiej jakości.
+PNG jest również w stanie przechowywać więcej kolorów niż GIF, co oznacza, że jest to lepsze rozwiązanie dla obrazów o wysokiej jakości [^digt_img-2].
+
+[^digt_img-2]:
+    1.  PNG-8: Jest to najbardziej podstawowy typ PNG, który może przechowywać maksymalnie 256 kolorów (8-bitowa głębia kolorów).
+        Jest idealny dla obrazów o ograniczonej liczbie kolorów, takich jak ikony, grafiki o dużej ilości powtarzających się kolorów lub obrazy z przezroczystością.
+
+    2.  PNG-24: Ten typ PNG może przechowywać do 16,7 miliona kolorów (24-bitowa głębia kolorów).
+        Wykorzystuje trzy kanały RGB (po 8 bitów na kanał) do reprezentacji pełnej gamy kolorów.
+        Jest bardziej odpowiedni do zdjęć, grafiki z gradientami i obrazów złożonych.
+
+    3.  PNG-32: Ten typ PNG jest rozszerzeniem PNG-24, który dodaje dodatkowy kanał alfa (8 bitów) dla obsługi przezroczystości.
+        Oznacza to, że może przechowywać do 16,7 miliona kolorów plus informacje o przezroczystości.
 
 ### JPEG
 
 JPEG (ang. *Joint Photographic Experts Group*) to popularny format zapisu obrazów cyfrowych, który jest szczególnie przydatny do przechowywania zdjęć.
 Format ten pozwala na kompresję pliku (stratną), dzięki czemu pliki JPEG są mniejsze niż pliki niekompresowane.
-Format ten jest szczególnie przydatny do przechowywania zdjęć z wysokim poziomem szczegółów, takich jak zdjęcia przyrody czy portrety.
+Format JPEG obsługuje pełny zakres kolorów, co oznacza, że jest odpowiedni dla fotografii i innych obrazów, które wykorzystują szeroką gamę kolorów.
+Użytkownik może wybrać poziom kompresji, który wpływa na rozmiar pliku i jakość obrazu.
+Działa dobrze dla obrazów, które zawierają fotograficzne szczegóły, gradienty kolorów i inne elementy charakterystyczne dla fotografii.
+Wyższy poziom kompresji skutkuje mniejszym rozmiarem pliku, ale może prowadzić do większej utraty jakości.
+Format JPEG nie obsługuje warstw przezroczystości.
+Tło obrazu jest zazwyczaj zapisane jako kolor stały (np. biały), co może ograniczać zastosowanie JPEG w przypadku obrazów z przezroczystością.
 
 ### EXIF
 
@@ -204,6 +218,8 @@ BMP jest formatem pliku natywnym dla systemów operacyjnych Windows, co oznacza,
 BMP jest formatem bezstratnym, co oznacza, że po zapisie obrazu w tym formacie, jego jakość pozostaje taka sama jak przed zapisem.
 Pliki BMP są jednak dość duże, ponieważ nie są skompresowane, co oznacza, że zajmują więcej miejsca na dysku niż pliki skompresowane innymi formatami.
 BMP jest często używany do przechowywania obrazów w celach archiwizacyjnych, ponieważ zachowuje pełną jakość obrazu.
+Format BMP obsługuje różne głębokości kolorów, od 1-bitowego (czarno-biały) do 32-bitowego (kolor z przezroczystością).
+Najczęściej spotykane głębokości kolorów to 8-bitowe (256 kolorów) oraz 24-bitowe (16,7 miliona kolorów).
 
 ![Porównanie formatów](images/Zrzut%20ekranu%202023-01-21%20o%2022.25.09.png)
 
@@ -216,11 +232,12 @@ Osobiście do przetwarzania obrazów pochodzących z badań biologicznych, medyc
 
 Również w samym środowisku R istnieje szereg bibliotek do obsługi obrazów:
 
--   `imager` - pozwala na szybkie przetwarzanie obrazów w maksymalnie 4 wymiarach (dwa wymiary przestrzenne, jeden wymiar czasowy/głębokościowy, jeden wymiar koloru). Udostępnia większość tradycyjnych narzędzi do przetwarzania obrazów (filtrowanie, morfologia, transformacje, itp.), jak również różne funkcje do łatwej analizy danych obrazowych przy użyciu R.
--   `imagerExtra` - poszerzenie zestawu funkcji pakietu `imager`.
--   `magick` - dostarcza nowoczesnego i prostego zestawu narzędzi do przetwarzania obrazów w R. Obejmuje on ImageMagick STL, który jest najbardziej wszechstronną biblioteką przetwarzania obrazów typu open-source dostępną obecnie.
--   `imageseg` - pakiet ogólnego przeznaczenia do segmentacji obrazów z wykorzystaniem modeli TensorFlow opartych na architekturze U-Net autorstwa @ronnebergerUNetConvolutionalNetworks2015 oraz architekturze U-Net++ autorstwa @zhouUNetNestedUNet2018. Dostarcza wstępnie wytrenowane modele do oceny gęstości łanu i gęstości roślinności podszytu na podstawie zdjęć roślinności. Ponadto pakiet zapewnia workflow do łatwego tworzenia wejściowych modeli i architektur modeli dla segmentacji obrazów ogólnego przeznaczenia na podstawie obrazów w skali szarości lub kolorowych, zarówno dla segmentacji obrazów binarnych, jak i wieloklasowych.
--   `pliman` - jest pakietem do analizy obrazów, ze szczególnym uwzględnieniem obrazów roślin. Jest użytecznym narzędziem do uzyskania informacji ilościowej dla obiektów docelowych. W kontekście obrazów roślin, ilościowe określanie powierzchni liści, nasilenia chorób, liczby zmian chorobowych, liczenie liczby ziaren, uzyskiwanie statystyk ziaren (np. długość i szerokość) można wykonać stosując pakiet `pliman`.
+-   `imager` - pozwala na szybkie przetwarzanie obrazów w maksymalnie 4 wymiarach (dwa wymiary przestrzenne, jeden wymiar czasowy/głębokościowy, jeden wymiar koloru). Udostępnia większość tradycyjnych narzędzi do przetwarzania obrazów (filtrowanie, morfologia, transformacje, itp.), jak również różne funkcje do łatwej analizy danych obrazowych przy użyciu R [@imager].
+-   `imagerExtra` - poszerzenie zestawu funkcji pakietu `imager`[@imagerExtra].
+-   `magick` - dostarcza nowoczesnego i prostego zestawu narzędzi do przetwarzania obrazów w R. Obejmuje on ImageMagick STL, który jest najbardziej wszechstronną biblioteką przetwarzania obrazów typu open-source dostępną obecnie [@magick].
+-   `imageseg` - pakiet ogólnego przeznaczenia do segmentacji obrazów z wykorzystaniem modeli TensorFlow opartych na architekturze U-Net autorstwa @ronnebergerUNetConvolutionalNetworks2015 oraz architekturze U-Net++ autorstwa @zhouUNetNestedUNet2018. Dostarcza wstępnie wytrenowane modele do oceny gęstości łanu i gęstości roślinności podszytu na podstawie zdjęć roślinności. Ponadto pakiet zapewnia workflow do łatwego tworzenia wejściowych modeli i architektur modeli dla segmentacji obrazów ogólnego przeznaczenia na podstawie obrazów w skali szarości lub kolorowych, zarówno dla segmentacji obrazów binarnych, jak i wieloklasowych [@imageseg].
+-   `pliman` - jest pakietem do analizy obrazów, ze szczególnym uwzględnieniem obrazów roślin. Jest użytecznym narzędziem do uzyskania informacji ilościowej dla obiektów docelowych. W kontekście obrazów roślin, ilościowe określanie powierzchni liści, nasilenia chorób, liczby zmian chorobowych, liczenie liczby ziaren, uzyskiwanie statystyk ziaren (np. długość i szerokość) można wykonać stosując pakiet `pliman`[@pliman].
+-   `Rvision` - to rozwijająca się biblioteka wizji komputerowej dla R. Jest ona oparta na potężnej bibliotece OpenCV dla C/C++, najnowocześniejszej bibliotece wizji komputerowej w świecie open source [@Rvision].
 
 ::: {#exm-1 .exm}
 W tym przykładzie przedstawiona zostanie procedura importu i eksportu obrazów do różnych formatów.

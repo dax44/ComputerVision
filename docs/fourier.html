@@ -258,10 +258,8 @@ ul.task-list li input[type="checkbox"] {
 
 <p>Analiza Fourierowska to narzędzie matematyczne służące do rozkładu dowolnej funkcji okresowej na sumę funkcji trygonometrycznych o różnych częstotliwościach. To znaczy, że możemy reprezentować funkcję jako sumę sinusów i cosinusów o różnych amplitudach i częstotliwościach. Analiza Fourierowska jest szeroko stosowana w dziedzinach, takich jak przetwarzanie sygnałów, grafika komputerowa, akustyka, obróbka obrazów, kryptografia i wiele innych. Możliwość rozkładu funkcji na funkcje trygonometryczne pozwala na wiele praktycznych zastosowań, takich jak przetwarzanie i analiza sygnałów, filtracja szumów i rozpoznawanie wzorców w danych.</p>
 <p>Analiza Fourierowska ma wiele zastosowań w dziedzinie analizy obrazów. W zasadzie wszystkie obrazy cyfrowe można traktować jako funkcje dwuwymiarowe, gdzie wartość funkcji reprezentuje jasność piksela w danym miejscu na obrazie.</p>
-<p>Jednym ze sposobów zastosowania analizy Fourierowskiej w analizie obrazu jest transformata Fouriera 2D, która pozwala na rozkładanie obrazów na zestaw sinusów i cosinusów o różnych częstotliwościach. W ten sposób możemy zobaczyć, jakie częstotliwości dominują w obrazie i jakie wzorce występują.</p>
-<p>Transformata Fouriera 2D pozwala również na filtrację obrazów, poprzez usunięcie pewnych zakresów częstotliwości. Na przykład, można usunąć wysokie częstotliwości, co prowadzi do zmiękczenia krawędzi obiektów i wygładzenia obrazu. Z drugiej strony, można usunąć niskie częstotliwości, co prowadzi do usunięcia szumu i poprawy jakości obrazu.</p>
-<p>Analiza Fourierowska może być również stosowana w celu rozpoznawania wzorców w obrazach. Po rozkładzie obrazu na funkcje trygonometryczne można wykryć wzorce poprzez analizę wartości amplitud i faz poszczególnych częstotliwości.</p>
-<p>Wszystkie te zastosowania analizy Fourierowskiej pozwalają na lepsze zrozumienie i analizę obrazów cyfrowych oraz ich poprawę i ulepszanie.</p>
+<p>Jednym ze sposobów zastosowania analizy Fourierowskiej w analizie obrazu jest transformata Fouriera 2D, która pozwala na rozkładanie obrazów na zestaw sinusów i cosinusów o różnych częstotliwościach. W ten sposób możemy zobaczyć, jakie częstotliwości dominują w obrazie i jakie wzorce występują. Transformata Fouriera 2D pozwala również na filtrację obrazów, poprzez usunięcie pewnych zakresów częstotliwości. Na przykład, można usunąć wysokie częstotliwości, co prowadzi do zmiękczenia krawędzi obiektów i wygładzenia obrazu. Z drugiej strony, można usunąć niskie częstotliwości, co prowadzi do usunięcia szumu i poprawy jakości obrazu.</p>
+<p>Analiza Fourierowska może być również stosowana w celu rozpoznawania wzorców w obrazach. Po rozkładzie obrazu na funkcje trygonometryczne można wykryć wzorce poprzez analizę wartości amplitud i faz poszczególnych częstotliwości. Wszystkie te zastosowania analizy Fourierowskiej pozwalają na lepsze zrozumienie i analizę obrazów cyfrowych oraz ich poprawę i ulepszanie.</p>
 <p>Ponieważ transformatę Fouriera będziemy stosować do obrazów cyfrowych, to zajmiemy się jej dyskretną odmianą (ang. <em>Discrete Fourier Transform</em> - DFT). Formalna definicja dyskretnej transformaty Fouriera dla obrazu 2D <span class="math inline">\(g(u,v)\)</span> o wymiarach <span class="math inline">\(M\times N\)</span> jest następująca</p>
 <p><span id="eq-fourier1"><span class="math display">\[
 \begin{align}
@@ -278,12 +276,12 @@ ul.task-list li input[type="checkbox"] {
 <p>dla współrzędnych obrazu <span class="math inline">\(u = 0,\dots,M-1\)</span> i <span class="math inline">\(v = 0,\dots,N-1\)</span>.</p>
 <p>Z powyższych definicji wynika, że transformata Fouriera 2D jest złożeniem dwóch transformat Fouriera 1D po poszczególnych koordynatach.</p>
 <p>Niestety, nie istnieje prosta metoda wizualizacji dwuwymiarowych funkcji o wartościach z ciała liczb zespolonych, takich jak wynik 2D DFT. Jedną z alternatyw jest wyświetlanie części rzeczywistej i urojonej osobno jako powierzchni 2D. W większości przypadków jednak przedstawiana jest wartość bezwzględna funkcji zespolonych, którą w przypadku transformaty Fouriera jest <span class="math inline">\(|G(m, n)|\)</span>, widmo mocy (ang. <em>power spectrum</em>).</p>
-<p>Dla większości naturalnych obrazów “energia spektralna” koncentruje się na niższych częstotliwościach z wyraźnym maksimum w centrum układu współrzędnych. Wartości widma mocy obejmują zwykle szeroki zakres, a wyświetlanie ich liniowo często sprawia, że mniejsze wartości są niewidoczne. Aby pokazać pełny zakres wartości widma, w szczególności mniejsze wartości dla wysokich częstotliwości, często wyświetla się pierwiastek kwadratowy <span class="math inline">\(\sqrt{|G(m,n)|}\)</span> lub logarytm <span class="math inline">\(\log|G((m,n)|\)</span> odpowiednio.</p>
+<p>Dla większości naturalnych obrazów “energia spektralna” koncentruje się na niższych częstotliwościach z wyraźnym maksimum w centrum układu współrzędnych. Wartości widma mocy obejmują zwykle szeroki zakres, a wyświetlanie ich liniowo często sprawia, że mniejsze wartości są niewidoczne. Aby pokazać pełny zakres wartości widma, w szczególności mniejsze wartości dla wysokich częstotliwości, często wyświetla się <span class="math inline">\(\sqrt{|G(m,n)|}\)</span> lub <span class="math inline">\(\log|G((m,n)|\)</span> odpowiednio.</p>
 <p>Ponieważ, zarówno DFT, jak i spektrum mocy są symetryczne względem środka układu współrzędnych, to przedstawia się je często w reprezentacji scentrowanej.</p>
 <div id="fig-dft1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 19.10.21.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.1: Centrowanie widma Fouriera 2D. W oryginalnym (nie wycentrowanym) widmie centrum współrzędnych (tj. region niskich częstotliwości) znajduje się w lewym górnym rogu, a ze względu na periodyczność widma także we wszystkich pozostałych rogach (a). W tym przypadku współczynniki dla największych częstotliwości leżą w centrum. Zamiana kwadrantów parami, jak pokazano w (b), powoduje przesunięcie wszystkich współczynników dla niskich częstotliwości do centrum, a wysokich częstotliwości na peryferia. Rzeczywiste widmo mocy 2D jest pokazane w swojej oryginalnej formie w (c) i w formie wyśrodkowanej w (d)</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.1: Centrowanie widma Fouriera 2D. W oryginalnym (niewycentrowanym) widmie centrum współrzędnych (tj. region niskich częstotliwości) znajduje się w lewym górnym rogu, a ze względu na periodyczność widma także we wszystkich pozostałych rogach (a). W tym przypadku współczynniki dla największych częstotliwości leżą w centrum. Zamiana kwadrantów parami, jak pokazano w (b), powoduje przesunięcie wszystkich współczynników dla niskich częstotliwości do centrum, a wysokich częstotliwości na peryferia. Rzeczywiste widmo mocy 2D jest pokazane w swojej oryginalnej formie w (c) i w formie wyśrodkowanej w (d)</figcaption><p></p>
 </figure>
 </div>
 <p>Na rysunku widać jak się różni reprezentacją widmową (spektralną) ten sam obraz kiedy go wyrazimy widmem bez centralizacji i z centralizacją.</p>
@@ -300,7 +298,7 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="images/AliasingSines.svg" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;9.3: Przykład aliasingu</figcaption><p></p>
 </figure>
-</div></div><p>Najwyraźniej najniższa efektywna częstotliwość próbkowania występuje w kierunkach osi współrzędnych siatki próbkującej. Aby zapewnić, że określony wzór obrazu może być zrekonstruowany bez aliasingu przy dowolnej orientacji, efektywna częstotliwość sygnału <span class="math inline">\(\hat{f}\)</span> tego wzoru musi być ograniczona do <span class="math inline">\(\frac{1}{2\tau}\)</span> w każdym kierunku, ponownie zakładając, że częstotliwość próbkowania <span class="math inline">\(\tau\)</span> jest taka sama dla obu współrzędnych.</p>
+</div></div><p>Najniższa efektywna częstotliwość próbkowania występuje w kierunkach osi współrzędnych siatki próbkującej. Aby zapewnić, że określony wzór obrazu może być zrekonstruowany bez aliasingu przy dowolnej orientacji, efektywna częstotliwość sygnału <span class="math inline">\(\hat{f}\)</span> tego wzoru musi być ograniczona do <span class="math inline">\(\frac{1}{2\tau}\)</span> w każdym kierunku, ponownie zakładając, że częstotliwość próbkowania <span class="math inline">\(\tau\)</span> jest taka sama dla obu współrzędnych.</p>
 <p>Orientacja przestrzenna fal kosinusowych i sinusowych 2D o współrzędnych spektralnych <span class="math inline">\(m,n\)</span> jest dana wzorem</p>
 <p><span id="eq-fourier2"><span class="math display">\[
 \psi(m,n)=\operatorname{ArcTan}(m/M,n/N)=\operatorname{ArcTan}(mN,nM),
@@ -313,49 +311,56 @@ ul.task-list li input[type="checkbox"] {
 <p><span id="eq-dft3"><span class="math display">\[
 (m,n)=\pm(\lambda M, \lambda N), \quad-1/2\leq\lambda\leq 1/2,
 \tag{9.5}\]</span></span></p>
-<p>czyli na przekątnych widma. O ile obraz (a więc i widmo) jest kwadratowy (<span class="math inline">\(M = N\)</span>), to kąty orientacji w obrazie i w widmie nie są takie same, choć pokrywają się wzdłuż kierunków osi współrzędnych. Oznacza to, że obrót obrazu o jakiś kąt <span class="math inline">\(\alpha\)</span> powoduje obrót widma w tym samym kierunku, ale na ogół nie o ten sam kąt <span class="math inline">\(\alpha\)</span>. Aby uzyskać identyczne orientacje i kąty zwrotu zarówno w obrazie, jak i w widmie, wystarczy przeskalować widmo do rozmiaru kwadratu, tak aby rozdzielczość spektralna była taka sama wzdłuż obu osi częstotliwości.</p>
+<p>czyli na przekątnych widma.</p>
+<div id="fig-angles" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/Zrzut ekranu 2023-06-15 o 20.59.50.png" class="img-fluid figure-img" width="500"></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.4: Porównanie kątów w obrazie i widmie</figcaption><p></p>
+</figure>
+</div>
+<div class="page-columns page-full"><p>O ile obraz nie jest kwadratowy (<span class="math inline">\(M = N\)</span>)<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, to kąty orientacji w obrazie i w widmie nie są takie same, choć pokrywają się z kierunkami wzlgędem osi współrzędnych. Oznacza to, że obrót obrazu o jakiś kąt <span class="math inline">\(\alpha\)</span> powoduje obrót widma w tym samym kierunku, ale na ogół nie o ten sam kąt <span class="math inline">\(\alpha\)</span>. Aby uzyskać identyczne orientacje i kąty zwrotu zarówno w obrazie, jak i w widmie, wystarczy przeskalować widmo do rozmiaru kwadratu, tak aby rozdzielczość spektralna była taka sama wzdłuż obu osi częstotliwości.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;a więc i widmo</p></li></div></div>
 <div id="fig-dft3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.03.01.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.4: Normalizacja widma 2D. Oryginalny obraz (a) z dominującymi zorientowanymi wzorami, które pokazują się jako wyraźne piki w odpowiednim widmie (b). Ponieważ obraz i widmo nie są kwadratowe (<span class="math inline">\(M \neq N\)</span>), orientacje w obrazie nie są takie same jak w rzeczywistym widmie (b). Po znormalizowaniu widma do proporcji kwadratowych (c), możemy wyraźnie zauważyć, że cylindry tego silnika (Harley-Davidson V-Rod) są w rzeczywistości ułożone pod kątem <span class="math inline">\(60\degree\)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.5: Normalizacja widma 2D. Oryginalny obraz (a) z dominującymi zorientowanymi wzorami, które pokazują się jako wyraźne piki w odpowiednim widmie (b). Ponieważ obraz i widmo nie są kwadratowe (<span class="math inline">\(M \neq N\)</span>), orientacje w obrazie nie są takie same jak w rzeczywistym widmie (b). Po znormalizowaniu widma do proporcji kwadratowych (c), możemy wyraźnie zauważyć, że cylindry tego silnika (Harley-Davidson V-Rod) są w rzeczywistości ułożone pod kątem <span class="math inline">\(60\degree\)</span>.</figcaption><p></p>
 </figure>
 </div>
 <section id="przykłady-zastosowań-dft" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="przykłady-zastosowań-dft"><span class="header-section-number">9.1</span> Przykłady zastosowań DFT</h2>
-<p>Poniższe przykłady demonstrują pewne podstawowe właściwości DFT na rzeczywistych obrazach. Wszystkie przykłady na <a href="#fig-dft4">Rysunek&nbsp;<span>9.5</span></a> - <a href="#fig-dft9">Rysunek&nbsp;<span>9.10</span></a> pokazują wyśrodkowane i skwantowane widmo z logarytmicznymi wartościami natężenia.</p>
+<p>Poniższe przykłady demonstrują pewne podstawowe właściwości DFT na rzeczywistych obrazach. Wszystkie przykłady na <a href="#fig-dft4">Rysunek&nbsp;<span>9.6</span></a> - <a href="#fig-dft9">Rysunek&nbsp;<span>9.11</span></a> pokazują wyśrodkowane i skwantowane widmo z logarytmicznymi wartościami natężenia.</p>
 <section id="skalowanie" class="level3" data-number="9.1.1">
 <h3 data-number="9.1.1" class="anchored" data-anchor-id="skalowanie"><span class="header-section-number">9.1.1</span> Skalowanie</h3>
-<p>Na <a href="#fig-dft4">Rysunek&nbsp;<span>9.5</span></a> widać, że skalowanie obrazu w przestrzeni sygnału ma odwrotny efekt w przestrzeni częstotliwości</p>
+<p>Na <a href="#fig-dft4">Rysunek&nbsp;<span>9.6</span></a> widać, że skalowanie obrazu w przestrzeni sygnału ma odwrotny efekt w przestrzeni częstotliwości</p>
 <div id="fig-dft4" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.17.26.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.5: Skalowanie</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.6: Skalowanie</figcaption><p></p>
 </figure>
 </div>
 </section>
 <section id="powtarzane-wzorce" class="level3" data-number="9.1.2">
 <h3 data-number="9.1.2" class="anchored" data-anchor-id="powtarzane-wzorce"><span class="header-section-number">9.1.2</span> Powtarzane wzorce</h3>
-<p>Obrazy na <a href="#fig-dft5">Rysunek&nbsp;<span>9.6</span></a> zawierają powtarzające się wzory periodyczne w różnych orientacjach i skalach. Pojawiają się one jako wyraźne piki w odpowiednich miejscach w widmie.</p>
+<p>Obrazy na <a href="#fig-dft5">Rysunek&nbsp;<span>9.7</span></a> zawierają powtarzające się wzory periodyczne w różnych orientacjach i skalach. Pojawiają się one jako wyraźne piki w odpowiednich miejscach w widmie.</p>
 <div id="fig-dft5" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.17.40.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.6: Powtarzający się wzór</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.7: Powtarzający się wzór</figcaption><p></p>
 </figure>
 </div>
 </section>
 <section id="rotacje" class="level3" data-number="9.1.3">
 <h3 data-number="9.1.3" class="anchored" data-anchor-id="rotacje"><span class="header-section-number">9.1.3</span> Rotacje</h3>
-<p><a href="#fig-dft6">Rysunek&nbsp;<span>9.7</span></a> pokazuje, że obrót obrazu o pewien kąt <span class="math inline">\(\alpha\)</span> powoduje obrót widma w tym samym kierunku i - jeśli obraz jest kwadratowy - o ten sam kąt.</p>
+<p><a href="#fig-dft6">Rysunek&nbsp;<span>9.8</span></a> pokazuje, że obrót obrazu o pewien kąt <span class="math inline">\(\alpha\)</span> powoduje obrót widma w tym samym kierunku i - jeśli obraz jest kwadratowy - o ten sam kąt.</p>
 <div id="fig-dft6" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.17.55.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.7: Rotacje obrazu</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.8: Rotacje obrazu</figcaption><p></p>
 </figure>
 </div>
 </section>
 <section id="struktury-zorientowane-wydłużone" class="level3" data-number="9.1.4">
 <h3 data-number="9.1.4" class="anchored" data-anchor-id="struktury-zorientowane-wydłużone"><span class="header-section-number">9.1.4</span> Struktury zorientowane, wydłużone</h3>
-<p>Obrazy przedmiotów pochodzenia ludzkiego często wykazują regularne wzory lub wydłużone struktury, które pojawiają się dominująco w widmie. Obrazy na <a href="#fig-dft6">Rysunek&nbsp;<span>9.7</span></a> pokazują kilka wydłużonych struktur, które pojawiają się w widmie jako jasne smugi zorientowane prostopadle do głównego kierunku wzorów obrazu.</p>
+<p>Obrazy przedmiotów pochodzenia ludzkiego często wykazują regularne wzory lub wydłużone struktury, które dominują w widmie. Obrazy na <a href="#fig-dft6">Rysunek&nbsp;<span>9.8</span></a> pokazują kilka wydłużonych struktur, które pojawiają się w widmie jako jasne smugi zorientowane prostopadle do głównego kierunku wzorów obrazu.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.18.06.png" class="img-fluid figure-img" width="600"></p>
@@ -365,27 +370,27 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="obrazy-naturalne" class="level3" data-number="9.1.5">
 <h3 data-number="9.1.5" class="anchored" data-anchor-id="obrazy-naturalne"><span class="header-section-number">9.1.5</span> Obrazy naturalne</h3>
-<p>Proste i regularne struktury są zwykle mniej dominujące w obrazach naturalnych obiektów i scen, a zatem efekty wizualne w widmie nie są tak oczywiste jak w przypadku obiektów sztucznych. Kilka przykładów tej klasy obrazów pokazano na <a href="#fig-dft7">Rysunek&nbsp;<span>9.8</span></a> i <a href="#fig-dft8">Rysunek&nbsp;<span>9.9</span></a>.</p>
+<p>Proste i regularne struktury są zwykle mniej dominujące w obrazach naturalnych obiektów i scen, a zatem efekty wizualne w widmie nie są tak oczywiste jak w przypadku obiektów sztucznych. Kilka przykładów tej klasy obrazów pokazano na <a href="#fig-dft7">Rysunek&nbsp;<span>9.9</span></a> i <a href="#fig-dft8">Rysunek&nbsp;<span>9.10</span></a>.</p>
 <div id="fig-dft7" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.18.16.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.8: Wzorce występujące w naturze</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.9: Wzorce występujące w naturze</figcaption><p></p>
 </figure>
 </div>
 <div id="fig-dft8" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.18.23.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.9: Wzorce naturalne</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.10: Wzorce naturalne</figcaption><p></p>
 </figure>
 </div>
 </section>
 <section id="wzorce-druku" class="level3" data-number="9.1.6">
 <h3 data-number="9.1.6" class="anchored" data-anchor-id="wzorce-druku"><span class="header-section-number">9.1.6</span> Wzorce druku</h3>
-<p>Regularne wzory generowane przez powszechnie stosowane techniki druku rastrowego (<a href="#fig-dft9">Rysunek&nbsp;<span>9.10</span></a>) są typowymi przykładami periodycznych struktur wielokierunkowych, które wyraźnie wyróżniają się w odpowiednim widmie Fouriera.</p>
+<p>Regularne wzory generowane przez powszechnie stosowane techniki druku rastrowego (<a href="#fig-dft9">Rysunek&nbsp;<span>9.11</span></a>) są typowymi przykładami periodycznych struktur wielokierunkowych, które wyraźnie wyróżniają się w odpowiednim widmie Fouriera.</p>
 <div id="fig-dft9" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.18.39.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.10: Wzorce druku rastrowego</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.11: Wzorce druku rastrowego</figcaption><p></p>
 </figure>
 </div>
 </section>
@@ -393,8 +398,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="zastosowania-dft" class="level2" data-number="9.2">
 <h2 data-number="9.2" class="anchored" data-anchor-id="zastosowania-dft"><span class="header-section-number">9.2</span> Zastosowania DFT</h2>
 <p>DFT można stosować na wiele sposobów w zagadnieniach z zakresu analizy obrazu. Nie mniej jednak najczęściej można spotkać połączenie DFT i filtrów liniowych. Polega to na zastosowaniu transformaty Fouriera do oryginalnego obrazu, a następnie nałożenie filtrów na widmo powstałe z DFT. Ostatecznie na przekształcony obraz (po DFT i filtrach) nakłada się odwrotną transformatę Fouriera.</p>
-<p>Filtrowanie w dziedzinie częstotliwości otwiera jeszcze jedną ciekawą perspektywę: odwrócenie efektów działania filtra, przynajmniej w ograniczonych warunkach.</p>
-<p>Załóżmy, że mamy obraz <span class="math inline">\(g_{blur}\)</span>, który został wygenerowany z oryginalnego obrazu <span class="math inline">\(g_{orig}\)</span> przez pewien filtr liniowy, na przykład rozmycie ruchu wywołane przez poruszającą się kamerę. Przy założeniu, że ta modyfikacja obrazu może być wystarczająco zamodelowana przez funkcję filtru liniowego <span class="math inline">\(h_{blur}\)</span> możemy stwierdzić, że</p>
+<p>Filtrowanie w dziedzinie częstotliwości otwiera jeszcze jedną ciekawą perspektywę: odwrócenie efektów działania filtra, przynajmniej w ograniczonych warunkach. Załóżmy, że mamy obraz <span class="math inline">\(g_{blur}\)</span>, który został wygenerowany z oryginalnego obrazu <span class="math inline">\(g_{orig}\)</span> przez pewien filtr liniowy, na przykład rozmycie ruchu wywołane przez poruszającą się kamerę. Przy założeniu, że ta modyfikacja obrazu może być wystarczająco zamodelowana przez funkcję filtru liniowego <span class="math inline">\(h_{blur}\)</span> możemy stwierdzić, że</p>
 <p><span id="eq-dft4"><span class="math display">\[
 g_{blur}(u,v)=(g_{orig}*h_{blur})(u,v).
 \tag{9.6}\]</span></span></p>
@@ -404,11 +408,11 @@ G_{blur}(m,n)=G_{orig}(m,n)\cdot H_{blur}(m,n)
 \]</span> więc powinno być możliwe odtworzenie oryginalnego (nie zamazanego) obrazu poprzez obliczenie odwrotnej transformaty Fouriera wyrażenia</p>
 <p><span class="math display">\[
 G_{orig}(m,n)=\frac{G_{blur}(m,n)}{H_{blur}(m,n)}.
-\]</span> Niestety “odwrotny filtr” działa tylko wtedy, gdy współczynniki spektralne <span class="math inline">\(H_{blur}\)</span> są niezerowe, ponieważ w przeciwnym razie wartości wynikowe są nieskończone. Jednak nawet małe wartości <span class="math inline">\(H_{blur}\)</span>, które są typowe dla wysokich częstotliwości, prowadzą do dużych współczynników w zrekonstruowanym widmie i w konsekwencji do dużych ilości szumów obrazu. Ważne jest również dokładne przybliżenie rzeczywistej funkcji filtru, gdyż w przeciwnym razie zrekonstruowany obraz może silnie odbiegać od oryginału. Przykład na rysunku <a href="#fig-dft10">Rysunek&nbsp;<span>9.11</span></a> przedstawia obraz rozmyty przez płynny ruch poziomy, którego efekt można łatwo zamodelować jako liniową konwolucję. Jeśli funkcja filtrująca, która spowodowała rozmycie, jest dokładnie znana, to rekonstrukcja oryginalnego obrazu może być wykonana bez problemów (<a href="#fig-dft10">Rysunek&nbsp;<span>9.11</span></a> (b)). Jednak, jak widać na <a href="#fig-dft10">Rysunek&nbsp;<span>9.11</span></a> (c), duże błędy pojawiają się, jeśli filtr odwrotny tylko nieznacznie odbiega od filtra rzeczywistego, co szybko czyni metodę bezużyteczną.</p>
+\]</span>Niestety “odwrotny filtr” działa tylko wtedy, gdy współczynniki spektralne <span class="math inline">\(H_{blur}\)</span> są niezerowe, ponieważ w przeciwnym razie wartości wynikowe są nieskończone. Jednak nawet małe wartości <span class="math inline">\(H_{blur}\)</span>, które są typowe dla wysokich częstotliwości, prowadzą do dużych współczynników w zrekonstruowanym widmie i w konsekwencji do dużych ilości szumów obrazu. Ważne jest również dokładne przybliżenie rzeczywistej funkcji filtru, gdyż w przeciwnym razie zrekonstruowany obraz może silnie odbiegać od oryginału. Przykład na rysunku <a href="#fig-dft10">Rysunek&nbsp;<span>9.12</span></a> przedstawia obraz rozmyty przez płynny ruch poziomy, którego efekt można łatwo zamodelować jako liniową konwolucję. Jeśli funkcja filtrująca, która spowodowała rozmycie, jest dokładnie znana, to rekonstrukcja oryginalnego obrazu może być wykonana bez problemów (<a href="#fig-dft10">Rysunek&nbsp;<span>9.12</span></a> (b)). Jednak, jak widać na <a href="#fig-dft10">Rysunek&nbsp;<span>9.12</span></a> (c), duże błędy pojawiają się, jeśli filtr odwrotny tylko nieznacznie odbiega od filtra rzeczywistego, co szybko czyni metodę bezużyteczną.</p>
 <div id="fig-dft10" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.59.56.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.11: Przykłady usunięcia efektu rozmycia (poruszenia) za pomocą DFT</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.12: Przykłady usunięcia efektu rozmycia (poruszenia) za pomocą DFT</figcaption><p></p>
 </figure>
 </div>
 <p>Istnieje kilka transformacji spektralnych, które mają właściwości podobne do DFT, ale nie działają na dziedzinie zespolonej. Dyskretna transformata kosinusowa (DCT) jest dobrze znanym przykładem, który jest szczególnie interesujący w naszym kontekście, ponieważ jest często używany do kompresji obrazów i wideo. DCT wykorzystuje jako funkcje bazowe wyłącznie funkcje kosinus różnych częstotliwości i operuje na sygnałach i współczynnikach spektralnych o wartościach rzeczywistych. Podobnie istnieje również dyskretna transformata sinusoidalna (DST) oparta na układzie funkcji sinusoidalnych.</p>

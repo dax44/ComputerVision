@@ -1,7 +1,6 @@
 ---
-output: html_document
-editor_options: 
-  chunk_output_type: console
+code-fold: show
+code-annotations: hover
 ---
 
 # Transformacje geometryczne
@@ -87,7 +86,7 @@ Cel filtracji może być różny, np.
 usunięcie szumów, wzmocnienie krawędzi, rozmycie obrazu.
 
 Istnieje wiele różnych rodzajów filtrów.
-Na przykład:
+Wśród nich można wymienić:
 
 -   filtry lokalne, które modyfikują każdy piksel na podstawie jego otoczenia,
 -   filtry globalne, które modyfikują cały obraz jednocześnie,
@@ -122,7 +121,7 @@ image_scale(frink, "300x100!")
 ```
 
 ```{r}
-#| fig-cap: Rotacja o 90 stopni
+#| fig-cap: Frink obrócony o 90 stopni
 image_rotate(frink, 90)
 ```
 :::
@@ -196,7 +195,7 @@ W przypadku gdy zmieniamy rozmiar obrazu w proporcji 0.5, 2, 3 funkcja `imresize
 #| label: fig-zooming1
 #| fig-cap: Zmiana rozmiaru obrazu 
 
-im_list <- map_il(c(0.5,1, 2), ~imresize(im, 
+im_list <- map_il(c(0.5, 1, 2), ~imresize(im, 
                                          scale = .x)) 
 imappend(im_list, "x") |>
   plot(interp = F) # antialiasing off

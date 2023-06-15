@@ -274,14 +274,14 @@ div.csl-indent {
 
 </header>
 
-<p>Omawiając filtr medianowy , zauważyliśmy, że ten typ filtra może w pewien sposób zmieniać struktury obrazów dwuwymiarowych. <a href="#fig-med1">Rysunek&nbsp;<span>8.1</span></a> ilustruje, w jaki sposób zaokrąglane są narożniki, wypełniane otwory o określonym rozmiarze oraz usuwane małe struktury, takie jak pojedyncze kropki lub cienkie linie. Filtr medianowy reaguje więc wybiórczo na lokalny kształt struktur obrazu, co jest właściwością, która może być przydatna do innych celów, jeśli można ją stosować nie tylko losowo, ale w sposób kontrolowany. Zmienianie lokalnej struktury w przewidywalny sposób jest właśnie tym, co potrafią robić filtry “morfologiczne”, na których skupiamy się w tym rozdziale.</p>
+<p>Omawiając filtr medianowy , zauważyliśmy, że ten typ filtra może w pewien sposób zmieniać struktury obrazów dwuwymiarowych. <a href="#fig-med1">Rysunek&nbsp;<span>8.1</span></a> ilustruje, w jaki sposób wypełniane są otwory o określonym rozmiarze oraz usuwane małe struktury, takie jak pojedyncze kropki lub cienkie linie. Filtr medianowy reaguje więc wybiórczo na lokalny kształt struktur obrazu, co jest właściwością, która może być przydatna do innych celów, jeśli można ją stosować nie tylko losowo, ale w sposób kontrolowany. Zmienianie lokalnej struktury w przewidywalny sposób jest właśnie tym, co potrafią robić filtry “morfologiczne”, na których skupiamy się w tym rozdziale.</p>
 <div id="fig-med1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-21 o 19.37.04.png" class="img-fluid figure-img" width="600"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;8.1: Zastosowanie filtra medianowego. (a) oryginalny obraz, (b) obraz z filtrem 3x3, (c) obraz z filtrem 5x5</figcaption><p></p>
 </figure>
 </div>
-<p>W swojej pierwotnej formie filtry morfologiczne są ukierunkowane na obrazy binarne, obrazy o tylko dwóch możliwych wartościach pikseli, odpowiednio 0 i 1 lub czarny i biały. Obrazy binarne spotykane są w wielu miejscach, w szczególności w druku cyfrowym, transmisji dokumentów (fax) i przechowywaniu danych, czy też jako maski selekcyjne w edycji obrazów i filmów. Obrazy binarne można uzyskać z obrazów w skali szarości poprzez proste progowanie z użyciem globalnej lub lokalnie zmiennej wartości progowej. Piksele binarne o wartościach 1 i 0 oznaczamy odpowiednio jako piksele pierwszego planu i tła. W większości poniższych przykładów piksele pierwszego planu są przedstawione w kolorze czarnym, a piksele tła w kolorze białym, tak jak to się dzieje w druku.</p>
+<p>W swojej pierwotnej formie filtry morfologiczne były ukierunkowane na obrazy binarne, obrazy o tylko dwóch możliwych wartościach pikseli, odpowiednio 0 i 1 lub czarny i biały. Obrazy binarne spotykane są w wielu miejscach, w szczególności w druku cyfrowym, transmisji dokumentów (fax) i przechowywaniu danych, czy też jako maski selekcyjne w edycji obrazów i filmów. Obrazy binarne można uzyskać z obrazów w skali szarości poprzez proste progowanie z użyciem globalnej lub lokalnie zmiennej wartości progowej. Piksele binarne o wartościach 1 i 0 oznaczamy odpowiednio jako piksele pierwszego planu i tła. W większości poniższych przykładów piksele pierwszego planu są przedstawione w kolorze czarnym, a piksele tła w kolorze białym, tak jak to się dzieje w druku.</p>
 <p>Pod koniec tego rozdziału przekonamy się, że filtry morfologiczne mają zastosowanie nie tylko do obrazów binarnych, ale także do obrazów w skali szarości, a nawet kolorowych, choć operacje te różnią się znacznie od ich binarnych odpowiedników.</p>
 <p>Naszym punktem wyjścia była obserwacja, że prosty filtr medianowy o wymiarach 3×3 pikseli może zaokrąglić większe struktury obrazu i usunąć mniejsze, takie jak punkty i cienkie linie, w obrazie binarnym. Może to być przydatne do eliminacji struktur, które są poniżej pewnego rozmiaru (np. do oczyszczenia obrazu z szumów lub zanieczyszczeń). Ale jak możemy kontrolować rozmiar i ewentualnie kształt struktur dotkniętych taką operacją?</p>
 <p>Chociaż jego efekty strukturalne mogą być interesujące, pomijamy w tym momencie filtr medianowy i zaczynamy to zadanie od początku. Załóżmy, że chcemy usunąć małe struktury z obrazu binarnego, nie zmieniając znacząco pozostałych większych struktur. Pomysł na realizacje tego zadania może być następujący:</p>
@@ -297,7 +297,7 @@ div.csl-indent {
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;8.2: “Kurczenie” obrazu. (a) oryginał, (b) obraz z zidentyfikowanymi pikselami sąsiadującymi z tłem, (c) obraz po usunięciu pikseli zidentyfikowanych jako sąsiadujące z tłem</figcaption><p></p>
 </figure>
 </div>
-<p>Potrzebujemy do tego jedynie dwóch rodzajów operacji. ” Kurczenie” oznacza usunięcie warstwy pikseli z regionu pierwszoplanowego wokół wszystkich jego granic na tle (<a href="#fig-shrunk">Rysunek&nbsp;<span>8.2</span></a>). Z drugiej strony, “rośnięcie”, dodaje warstwę pikseli wokół granicy regionu pierwszoplanowego (<a href="#fig-grow">Rysunek&nbsp;<span>8.3</span></a>).</p>
+<p>Potrzebujemy do tego jedynie dwóch rodzajów operacji. “Kurczenie” oznacza usunięcie warstwy pikseli z regionu pierwszoplanowego wokół wszystkich jego granic na tle (<a href="#fig-shrunk">Rysunek&nbsp;<span>8.2</span></a>). Z drugiej strony, “rośnięcie”, dodaje warstwę pikseli wokół granicy regionu pierwszoplanowego (<a href="#fig-grow">Rysunek&nbsp;<span>8.3</span></a>).</p>
 <div id="fig-grow" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-21 o 19.50.15.png" class="img-fluid figure-img" width="600"></p>
@@ -306,7 +306,7 @@ div.csl-indent {
 </div>
 <section id="identyfikacja-sąsiadów" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="identyfikacja-sąsiadów"><span class="header-section-number">8.1</span> Identyfikacja sąsiadów</h2>
-<p>W przypadku prostokątnych siatek pikseli powszechnie stosowane są dwie definicje “sąsiedztwa” ():</p>
+<p>W przypadku prostokątnych siatek pikseli powszechnie stosowane są dwie definicje “sąsiedztwa”:</p>
 <ul>
 <li>cztery piksele sąsiadujące z danym pikselem w kierunku poziomym i pionowym;</li>
 <li>osiem sąsiadujących pikseli z analizowanym.</li>
@@ -336,7 +336,7 @@ div.csl-indent {
 <p><span id="eq-fore1"><span class="math display">\[
 \mathcal{Q}_I =\{p\vert I(p)=1\}.
 \tag{8.1}\]</span></span></p>
-<p>Oczywiście, jak pokazano na rys, nie tylko obraz binarny <span class="math inline">\(I\)</span>, ale również element strukturyzujący <span class="math inline">\(H\)</span> może być opisany jako zbiór punktów.</p>
+<p>Oczywiście, jak pokazano na <a href="#fig-hot-spot">Rysunek&nbsp;<span>8.5</span></a>, nie tylko obraz binarny <span class="math inline">\(I\)</span>, ale również element strukturyzujący <span class="math inline">\(H\)</span> może być opisany jako zbiór punktów.</p>
 <div id="fig-point1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-21 o 20.09.43.png" class="img-fluid figure-img" width="400"></p>
@@ -345,7 +345,7 @@ div.csl-indent {
 </div>
 <p>Dzięki temu, że opisujemy je jako zbiory punktów, podstawowe operacje na obrazach binarnych można również wyrazić jako proste operacje na zbiorach. Na przykład, odwrócenie obrazu binarnego <span class="math inline">\(I \rightarrow \bar{I}\)</span> (czyli zamiana pierwszego planu i tła) jest równoważne zbudowaniu zbioru dopełniającego</p>
 <p><span id="eq-fore2"><span class="math display">\[
-\mathcal{Q}_{\bar{I}}=\bar{\mathcal{Q}}_I=\{p\in \mathbb{Z}^2\vert p\in \mathcal{Q}_I\}.
+\mathcal{Q}_{\bar{I}}=\bar{\mathcal{Q}}_I=\{p\in \mathbb{Z}^2\vert p\notin \mathcal{Q}_I\}.
 \tag{8.2}\]</span></span></p>
 <p>Łącząc dwa obrazy binarne <span class="math inline">\(I_1\)</span> i <span class="math inline">\(I_2\)</span> za pomocą operacji OR między odpowiadającymi im pikselami, otrzymany zbiór punktów jest unią indywidualnych zbiorów punktów <span class="math inline">\(Q_{I_1}\)</span> i <span class="math inline">\(Q_{I_2}\)</span>. Ponieważ zbiór punktów <span class="math inline">\(Q_I\)</span> jest tylko alternatywną reprezentacją obrazu binarnego <span class="math inline">\(I\)</span> (tzn. <span class="math inline">\(I = Q_I\)</span>), to w dalszej części będziemy używać synonimicznie obu notacji: obrazu i zbioru.</p>
 </section>
@@ -394,7 +394,7 @@ I\ominus H= \{p\in \mathbb{Z}^2| (p+q)\in I, q\in H \}.
 </section>
 <section id="otwarcie-i-zamknięcie" class="level4" data-number="8.2.1.4">
 <h4 data-number="8.2.1.4" class="anchored" data-anchor-id="otwarcie-i-zamknięcie"><span class="header-section-number">8.2.1.4</span> Otwarcie i zamknięcie</h4>
-<p>Złożenia funkcji dylatacji i erozji w odpowiedniej kolejności tworzą nowe transformacje nazywane otwarcie (ang. <em>opening</em>) i zamknięcie (ang. <em>closing</em>)<em>. S</em>ą one prawdopodobnie najczęściej używanymi przekształceniami morfologicznymi.</p>
+<p>Złożenia funkcji dylatacji i erozji w odpowiedniej kolejności tworzą nowe transformacje nazywane otwarciem (ang. <em>opening</em>) i zamknięciem (ang. <em>closing</em>)<em>. S</em>ą one prawdopodobnie najczęściej używanymi przekształceniami morfologicznymi.</p>
 <p>Otwarcie binarne <span class="math inline">\(I\circ H\)</span> oznacza erozję, po której następuje dylatacja z tym samym elementem strukturyzującym <span class="math inline">\(H\)</span>, czyli</p>
 <p><span id="eq-opening"><span class="math display">\[
 I\circ H=(I\ominus H)\oplus H.
@@ -414,25 +414,25 @@ I\bullet H=(I\oplus H)\ominus H.
 </section>
 <section id="przerzedzanie" class="level4" data-number="8.2.1.5">
 <h4 data-number="8.2.1.5" class="anchored" data-anchor-id="przerzedzanie"><span class="header-section-number">8.2.1.5</span> Przerzedzanie</h4>
-<p>Rozrzedzanie (ang. <em>thininng</em>) zwana też szkieletyzacją (ang. <em>skeletonization</em>) jest powszechną techniką morfologiczną, której celem jest zmniejszenie struktur binarnych do maksymalnej szerokości jednego piksela bez dzielenia ich na wiele części. Osiąga się to poprzez iteracyjną erozję “warunkową”. Jest ona stosowana w lokalnym sąsiedztwie tylko wtedy, gdy pozostaje wystarczająco szeroka struktura i operacja nie powoduje separacji. Wymaga to, aby w zależności od lokalnej struktury obrazu, w każdej pozycji obrazu podejmowana była decyzja, czy można zastosować kolejny krok erozji, czy też nie. Operacja jest kontynuowana do momentu, gdy w obrazie wynikowym nie pojawią się już żadne zmiany. Wynika z tego, że w porównaniu ze zwykłą (“homogeniczną”) morfologią omówioną wcześniej, thinning jest kosztowny obliczeniowo. Częstym zastosowaniem rozrzedzania jest obliczanie “szkieletu” regionu binarnego, np. w celu strukturalnego dopasowania kształtów 2D.</p>
+<p>Przerzedzanie lub rozrzedzanie (ang. <em>thininng</em>) zwane też szkieletyzacją (ang. <em>skeletonization</em>) jest powszechną techniką morfologiczną, której celem jest zmniejszenie struktur binarnych do maksymalnej szerokości jednego piksela bez dzielenia ich na wiele części. Osiąga się to poprzez iteracyjną erozję “warunkową”. Jest ona stosowana w lokalnym sąsiedztwie tylko wtedy, gdy pozostaje wystarczająco szeroka struktura i operacja nie powoduje separacji. Wymaga to, aby w zależności od lokalnej struktury obrazu, w każdej pozycji obrazu podejmowana była decyzja, czy można zastosować kolejny krok erozji, czy też nie. Operacja jest kontynuowana do momentu, gdy w obrazie wynikowym nie pojawią się już żadne zmiany. Wynika z tego, że w porównaniu ze zwykłą (“homogeniczną”) morfologią omówioną wcześniej, thinning jest kosztowny obliczeniowo. Częstym zastosowaniem rozrzedzania jest obliczanie “szkieletu” regionu binarnego, np. w celu strukturalnego dopasowania kształtów 2D.</p>
 <p>Rozrzedzanie znane jest również pod terminami wykrywanie linii środkowej i transformacji osi środkowej. Istnieje wiele różnych implementacji o zróżnicowanej złożoności i wydajności. Poniżej opisujemy klasyczny algorytm autorstwa <span class="citation" data-cites="zhang1984">Zhang i Suen (<a href="references.html#ref-zhang1984" role="doc-biblioref">1984</a>)</span> oraz jego implementację jako reprezentatywny przykład.</p>
 <p>Wejściem do tego algorytmu jest obraz binarny <span class="math inline">\(I\)</span>, w którym piksele pierwszego planu mają wartość 1, a piksele tła wartość 0. Algorytm skanuje obraz i w każdej pozycji <span class="math inline">\((u, v)\)</span> bada sąsiedztwo rozmiaru 3x3 z centralnym elementem <span class="math inline">\(P\)</span> i otaczającymi go wartościami <span class="math inline">\(N = (N_0, N_1, \ldots , N_7)\)</span>.</p>
 <p>W celu sklasyfikowania zawartości lokalnego sąsiedztwa <span class="math inline">\(N\)</span> definiujemy najpierw funkcję</p>
 <p><span id="eq-bn"><span class="math display">\[
 B(N)=N_0+N_1+\dots+N_7=\sum_{i=0}^7N_i,
 \tag{8.7}\]</span></span></p>
-<p>która zlicza piksele otaczającego tła. Definiujemy również tzw. liczbę łączności, która wyraża ile składowych binarnych jest połączonych poprzez bieżący piksel centralny w pozycji $(u, v)$. Wielkość ta jest równoważna liczbie przejść <span class="math inline">\(1\to 0\)</span> w ciągu <span class="math inline">\((N_0, . . . , N_7, N_0)\)</span>, lub wyrażona w sposób arytmetyczny</p>
+<p>która zlicza piksele otaczającego tła. Definiujemy również tzw. liczbę połączeń, która wyraża ile składowych binarnych jest połączonych poprzez bieżący piksel centralny w pozycji <span class="math inline">\((u, v)\)</span>. Wielkość ta jest równoważna liczbie przejść <span class="math inline">\(1\to 0\)</span> w ciągu <span class="math inline">\((N_0, . . . , N_7, N_0)\)</span>, lub wyrażona w sposób arytmetyczny</p>
 <p><span id="eq-cn"><span class="math display">\[
 C(N)=\sum_{i=0}^7N_i\cdot [N_i-N_{(i+1) \text{ mod }8}].
 \tag{8.8}\]</span></span></p>
-<p>Rysunek 9.19 przedstawia kilka wybranych przykładów dla sąsiedztwa <span class="math inline">\(N\)</span> oraz związane z nimi wartości funkcji <span class="math inline">\(B(N)\)</span> i <span class="math inline">\(C(N)\)</span>. Na podstawie powyższych funkcji definiujemy ostatecznie dwa predykaty booleańskie <span class="math inline">\(R_1,R_2\)</span> na sąsiedztwie <span class="math inline">\(N\)</span>.</p>
+<p><a href="#fig-thinning">Rysunek&nbsp;<span>8.12</span></a> przedstawia kilka wybranych przykładów dla sąsiedztwa <span class="math inline">\(N\)</span> oraz związane z nimi wartości funkcji <span class="math inline">\(B(N)\)</span> i <span class="math inline">\(C(N)\)</span>. Na podstawie powyższych funkcji definiujemy ostatecznie dwa predykaty boolowskie <span class="math inline">\(R_1,R_2\)</span> na sąsiedztwie <span class="math inline">\(N\)</span>.</p>
 <div id="fig-thinning" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 17.01.13.png" class="img-fluid figure-img" width="400"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;8.12: Przebieg rozrzedzania</figcaption><p></p>
 </figure>
 </div>
-<p>W zależności od wyniku <span class="math inline">\(R_1(N)\)</span> i <span class="math inline">\(R_2(N)\)</span> piksel pierwszego planu na środkowej pozycji <span class="math inline">\(N\)</span> jest albo usuwany (czyli erodowany), albo oznaczany jako nieusuwalny.</p>
+<p>W zależności od wyniku <span class="math inline">\(R_1(N)\)</span> i <span class="math inline">\(R_2(N)\)</span> piksel pierwszego planu na środkowej pozycji <span class="math inline">\(P\)</span> jest albo usuwany (czyli erodowany), albo oznaczany jako nieusuwalny.</p>
 <div id="fig-thinning2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 17.06.19.png" class="img-fluid figure-img" width="600"></p>
@@ -484,7 +484,7 @@ H(i,j)\in\mathbb{R}, \quad (i,j)\in\mathbb{Z}^2.
 </section>
 <section id="otwarcie-i-domknięcie" class="level4" data-number="8.3.1.2">
 <h4 data-number="8.3.1.2" class="anchored" data-anchor-id="otwarcie-i-domknięcie"><span class="header-section-number">8.3.1.2</span> Otwarcie i domknięcie</h4>
-<p>Otwarcie i domknięcie na obrazach w skali szarości definiuje się, identycznie jak w przypadku binarnym, jako operacje złożone z dylatacji i erozji z tym samym elementem strukturyzującym. Kilka przykładów pokazano na rysunku 9.27 dla elementów strukturyzujących w kształcie dysku oraz na rysunku 9.29 dla różnych niestandardowych elementów strukturyzujących. Zauważ, że można uzyskać interesujące efekty, szczególnie w przypadku elementów strukturyzujących przypominających kształtem pędzel lub inne wzory pociągnięć.</p>
+<p>Otwarcie i domknięcie na obrazach w skali szarości definiuje się, identycznie jak w przypadku binarnym, jako operacje złożone z dylatacji i erozji z tym samym elementem strukturyzującym. Kilka przykładów pokazano na <a href="#fig-opening3">Rysunek&nbsp;<span>8.16</span></a> dla elementów strukturyzujących w kształcie dysku oraz na <a href="#fig-opening4">Rysunek&nbsp;<span>8.17</span></a> dla różnych niestandardowych elementów strukturyzujących. Zauważ, że można uzyskać interesujące efekty, szczególnie w przypadku elementów strukturyzujących przypominających kształtem pędzel lub inne wzory pociągnięć.</p>
 <div id="fig-opening3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 17.39.43.png" class="img-fluid figure-img" width="600"></p>

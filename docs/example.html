@@ -375,11 +375,11 @@ div.csl-indent {
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-annotation="1" data-code-lines="1">tu ustaw swoją ścieżkę do katalogu z rozpakowanym katalogiem <code>train</code></span>
+<span data-code-annotation="1" data-code-lines="1" data-code-cell="annotated-cell-1">tu ustaw swoją ścieżkę do katalogu z rozpakowanym katalogiem <code>train</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-annotation="2" data-code-lines="2">ustaw ścieżkę gdzie chcesz zapisywać obrazy do uczenia sieci</span>
+<span data-code-annotation="2" data-code-lines="2" data-code-cell="annotated-cell-1">ustaw ścieżkę gdzie chcesz zapisywać obrazy do uczenia sieci</span>
 </dd>
 </dl>
 </div>
@@ -552,8 +552,8 @@ ________________________________________________________________________________
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 2
- $ : num [1:20, 1:150, 1:150, 1:3] 0.969 0.82 1 0.129 0.651 ...
- $ : num [1:20(1d)] 0 1 0 0 1 0 0 1 1 1 ...</code></pre>
+ $ : num [1:20, 1:150, 1:150, 1:3] 0.62 0.235 0.298 0.341 0.945 ...
+ $ : num [1:20(1d)] 1 0 1 0 1 1 0 0 1 1 ...</code></pre>
 </div>
 </div>
 <p>Dopasujmy model do danych uzyskanych za pomocą generatora. Robimy to za pomocą funkcji <code>fit</code>. Jako pierwszy argument oczekuje ona generatora, który będzie generował partie danych wejściowych i docelowych. Ponieważ dane są generowane w nieskończoność, generator musi wiedzieć, ile próbek pobrać z generatora, zanim zadeklaruje koniec epoki. Taką rolę pełni argument <code>steps_per_epoch</code>: po pobraniu z generatora partii próbek - czyli po wykonaniu kroków spadku gradientu - proces dopasowania przejdzie do następnej epoki. W tym przypadku, partie są 20-próbkowe, więc zajmie to 100 partii, aż do osiągnięcia celu 2000 próbek.</p>
@@ -643,27 +643,27 @@ ________________________________________________________________________________
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-annotation="1" data-code-lines="2">wybierz obraz do augmentacji</span>
+<span data-code-annotation="1" data-code-lines="2" data-code-cell="annotated-cell-15">wybierz obraz do augmentacji</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-annotation="2" data-code-lines="3">wczytaj obraz i zmień rozmiar na 150 x 150</span>
+<span data-code-annotation="2" data-code-lines="3" data-code-cell="annotated-cell-15">wczytaj obraz i zmień rozmiar na 150 x 150</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-annotation="3" data-code-lines="4">zamień obraz do formatu (150, 150, 3)</span>
+<span data-code-annotation="3" data-code-lines="4" data-code-cell="annotated-cell-15">zamień obraz do formatu (150, 150, 3)</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-annotation="4" data-code-lines="5">przekształć na tensor (1, 150, 150, 3)</span>
+<span data-code-annotation="4" data-code-lines="5" data-code-cell="annotated-cell-15">przekształć na tensor (1, 150, 150, 3)</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-annotation="5" data-code-lines="7">generuj partie losowo przekształconych obrazów</span>
+<span data-code-annotation="5" data-code-lines="7" data-code-cell="annotated-cell-15">generuj partie losowo przekształconych obrazów</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-annotation="6" data-code-lines="13">wyświetl obrazy</span>
+<span data-code-annotation="6" data-code-lines="13" data-code-cell="annotated-cell-15">wyświetl obrazy</span>
 </dd>
 </dl>
 </div>
@@ -803,11 +803,11 @@ ________________________________________________________________________________
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-19" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-19" data-code-annotation="1" data-code-lines="1">sieć można przestawić jako podsumowanie tekstowe</span>
+<span data-code-annotation="1" data-code-lines="1" data-code-cell="annotated-cell-19">sieć można przestawić jako podsumowanie tekstowe</span>
 </dd>
 <dt data-target-cell="annotated-cell-19" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-19" data-code-annotation="2" data-code-lines="3">ale również jako wykres</span>
+<span data-code-annotation="2" data-code-lines="3" data-code-cell="annotated-cell-19">ale również jako wykres</span>
 </dd>
 </dl>
 </div>
@@ -897,7 +897,7 @@ ________________________________________________________________________________
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-20" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-20" data-code-annotation="1" data-code-lines="26">ponieważ generator obrazów tworzy je w nieskończoność, to musimy go zatrzymać po tym jak każdy obraz zostanie obejrzany raz</span>
+<span data-code-annotation="1" data-code-lines="26" data-code-cell="annotated-cell-20">ponieważ generator obrazów tworzy je w nieskończoność, to musimy go zatrzymać po tym jak każdy obraz zostanie obejrzany raz</span>
 </dd>
 </dl>
 </div>
@@ -1131,8 +1131,8 @@ ________________________________________________________________________________
 <span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>model <span class="sc">%&gt;%</span> <span class="fu">evaluate</span>(test_generator, <span class="at">steps =</span> <span class="dv">50</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>     loss  accuracy 
-0.3945951 0.9400000 </code></pre>
+<pre><code>    loss accuracy 
+0.394595 0.940000 </code></pre>
 </div>
 </div>
 <p>Jak widać również na zbiorze testowym sieć jest dobrze dopasowana.</p>

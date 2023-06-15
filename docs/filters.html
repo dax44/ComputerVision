@@ -260,7 +260,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#filtry-liniowe" id="toc-filtry-liniowe" class="nav-link active" data-scroll-target="#filtry-liniowe"><span class="header-section-number">6.1</span> Filtry liniowe</a>
   <ul class="collapse">
   <li><a href="#przykładowe-filtry-wygładzające-ang.-smoothing" id="toc-przykładowe-filtry-wygładzające-ang.-smoothing" class="nav-link" data-scroll-target="#przykładowe-filtry-wygładzające-ang.-smoothing"><span class="header-section-number">6.1.1</span> Przykładowe filtry wygładzające (ang. <em>smoothing</em>)</a></li>
-  <li><a href="#przykład-filtru-różnicującego" id="toc-przykład-filtru-różnicującego" class="nav-link" data-scroll-target="#przykład-filtru-różnicującego"><span class="header-section-number">6.1.2</span> Przykład filtru różnicującego</a></li>
+  <li><a href="#przykład-filtra-różnicującego" id="toc-przykład-filtra-różnicującego" class="nav-link" data-scroll-target="#przykład-filtra-różnicującego"><span class="header-section-number">6.1.2</span> Przykład filtra różnicującego</a></li>
   <li><a href="#formalny-zapis-operatorów-filtracji" id="toc-formalny-zapis-operatorów-filtracji" class="nav-link" data-scroll-target="#formalny-zapis-operatorów-filtracji"><span class="header-section-number">6.1.3</span> Formalny zapis operatorów filtracji</a></li>
   <li><a href="#własności-filtrów-liniowych" id="toc-własności-filtrów-liniowych" class="nav-link" data-scroll-target="#własności-filtrów-liniowych"><span class="header-section-number">6.1.4</span> Własności filtrów liniowych</a></li>
   </ul></li>
@@ -480,9 +480,9 @@ H^{G,\sigma}(x,y) = e^{-\frac{x^2+y^2}{2\sigma^2}},
 \]</span> gdzie <span class="math inline">\(\sigma\)</span> oznacza odchylenie standardowe rozkładu.</p></li>
 </ol>
 </section>
-<section id="przykład-filtru-różnicującego" class="level3" data-number="6.1.2">
-<h3 data-number="6.1.2" class="anchored" data-anchor-id="przykład-filtru-różnicującego"><span class="header-section-number">6.1.2</span> Przykład filtru różnicującego</h3>
-<p>Jeśli niektóre współczynniki filtra są ujemne, to obliczenie filtra można zinterpretować jako różnicę dwóch sum: suma ważona wszystkich pikseli z przypisanymi współczynnikami dodatnimi minus suma ważona pikseli z ujemnymi współczynnikami w regionie filtra RH , czyli</p>
+<section id="przykład-filtra-różnicującego" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="przykład-filtra-różnicującego"><span class="header-section-number">6.1.2</span> Przykład filtra różnicującego</h3>
+<p>Jeśli niektóre współczynniki filtra są ujemne, to obliczenie filtra można zinterpretować jako różnicę dwóch sum: suma ważona wszystkich pikseli z przypisanymi współczynnikami dodatnimi minus suma ważona pikseli z ujemnymi współczynnikami w regionie filtra <span class="math inline">\(R\)</span> , czyli</p>
 <p><span id="eq-gauss2"><span class="math display">\[
 \begin{align}
   I'(u,v)=&amp;\sum_{(i,j)\in R^+}I(u+i, v+j)\cdot \vert H(i,j)\vert -\\
@@ -573,7 +573,7 @@ H = H_1 ∗ H_2 ∗ \ldots∗ H_n,
 I ∗ H = I ∗ (H_1 ∗ H_2 ∗ . . . ∗ H_n)
 = (\ldots((I ∗H_1)∗H_2)∗\ldots∗H_n).
 \tag{6.13}\]</span></span></p>
-<p>W zależności od rodzaju dekompozycji może to przynieść znaczne oszczędności obliczeniowe. O rozdzielczości filtrów możemy myśleć również nieco inaczej</p>
+<p>W zależności od rodzaju dekompozycji może to przynieść znaczne oszczędności obliczeniowe. O rozłączności filtrów możemy myśleć również nieco inaczej</p>
 <p><span class="math display">\[
 I'=(I*h_x)*h_y,
 \]</span> gdzie <span class="math inline">\(h_x, h_y\)</span> są filtrami 1D, które po wymnożeniu tworzą filtr o wymiarze <span class="math inline">\(k\times m\)</span>. Przykładowo</p>
@@ -629,14 +629,14 @@ H=\delta*H=H*\delta.
   I'(u,v)=&amp;\max_{(i,j)\in R}\{I(u+i, v+j)\}
 \end{align}
 \tag{6.19}\]</span></span></p>
-<p>gdzie <span class="math inline">\(R\)</span> oznacza region filtra (zbiór współrzędnych filtra, zwykle kwadrat o rozmiarach 3x3 pikseli). <a href="#fig-min">Rysunek&nbsp;<span>6.10</span></a> ilustruje wpływ minimalnego filtra 1D na różne lokalne struktury sygnału.</p>
+<p>gdzie <span class="math inline">\(R\)</span> oznacza region filtra (zbiór współrzędnych filtra, zwykle kwadrat o rozmiarach 3x3 pikseli). <a href="#fig-min">Rysunek&nbsp;<span>6.9</span></a> ilustruje wpływ minimalnego filtra 1D na różne lokalne struktury sygnału.</p>
 <div id="fig-min" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-8 o 19.52.39.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.9: Zastosowanie filtru minimum 1D do różnych sygnałów wejściowych. Górny rząd przedstawia oryginalny sygnał, a dolny spleciony z filtrem minimum</figcaption><p></p>
 </figure>
 </div>
-<div class="cell" data-hash="filters_cache/html/fig-min_d7bb2711bfe570e432e18daef18beeab">
+<div class="cell" data-hash="filters_cache/html/fig-min2_9ac05e62e4b43b2ab7b9e9cef2d03bd7">
 <details>
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>kwiat <span class="ot">&lt;-</span> <span class="fu">load.image</span>(<span class="at">file =</span> <span class="st">"~/kwiat.jpg"</span>) <span class="sc">|&gt;</span> <span class="fu">grayscale</span>()</span>
@@ -667,9 +667,9 @@ H=\delta*H=H*\delta.
 <span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>kwiat_filtered <span class="sc">|&gt;</span> <span class="fu">plot</span>(<span class="at">main =</span> <span class="st">"filtr minimum"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-min" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-min2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="filters_files/figure-html/fig-min-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="filters_files/figure-html/fig-min2-1.png" class="img-fluid figure-img" width="672"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;6.10: Zastosowanie filtru minimum</figcaption><p></p>
 </figure>
 </div>
@@ -780,7 +780,7 @@ I'(u,v)=\operatorname{Median}_{(i,j)\in R}\{I(u+i, v+j)\}.
 <h2 data-number="6.3" class="anchored" data-anchor-id="obramowania-obrazów"><span class="header-section-number">6.3</span> Obramowania obrazów</h2>
 <p>Jak to zostało zaznaczone wcześniej zastosowanie jakiegokolwiek filtru (liniowego lub nieliniowego) wiąże się z pewna niedogodnością. Mianowicie wszystkie filtry kwadratowe czy prostokątne są kłopotliwe w zastosowaniu jeśli centrum (<em>hot spot</em>) filtra leży blisko brzegu obrazu. Teoretycznie filtry nie mogą być stosowane w miejscach, gdzie macierz filtrów nie jest w pełni zawarta w macierzy obrazu. Zatem każda operacja filtrująca zmniejszyłaby rozmiar obrazu wynikowego, co w większości zastosowań jest nie do przyjęcia. Choć nie istnieje formalnie poprawne remedium, istnieje kilka mniej lub bardziej praktycznych metod obsługi regionów granicznych:</p>
 <ol type="1">
-<li>Ustaw nieprzetworzone piksele na granicach na jakąś stałą wartość (np. “czarny”). Jest to z pewnością najprostsza metoda, ale w wielu sytuacjach nie do przyjęcia, ponieważ rozmiar obrazu jest stopniowo zmniejszany przez każdą operację filtra.</li>
+<li>Ustaw nieprzetworzone piksele na granicach filtra na jakąś stałą wartość (np. “czarny”). Jest to z pewnością najprostsza metoda, ale w wielu sytuacjach nie do przyjęcia, ponieważ rozmiar obrazu jest stopniowo zmniejszany przez każdą operację filtra.</li>
 <li>Ustaw nieprzetworzone piksele na oryginalne (niefiltrowane) wartości obrazu. Zazwyczaj wyniki są również nie do przyjęcia, ze względu na zauważalną różnicę między przefiltrowanymi i nieprzetworzonymi fragmentami obrazu.</li>
 <li>Rozwiń obraz, “wypełniając” (ang. <em>padding</em>) dodatkowe piksele wokół niego i zastosuj filtr również do regionów granicznych. Na <a href="#fig-border">Rysunek&nbsp;<span>6.15</span></a> pokazano różne opcje wypełniania obrazów (obraz (a) jest oryginałem).
 <ol type="1">

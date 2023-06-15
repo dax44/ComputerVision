@@ -196,9 +196,9 @@ Powyższa formuła ma zastosowanie do filtrów o dowolnym rozmiarze i kształcie
     H^{G,\sigma}(x,y) = e^{-\frac{x^2+y^2}{2\sigma^2}},
     $$ gdzie $\sigma$ oznacza odchylenie standardowe rozkładu.
 
-### Przykład filtru różnicującego
+### Przykład filtra różnicującego
 
-Jeśli niektóre współczynniki filtra są ujemne, to obliczenie filtra można zinterpretować jako różnicę dwóch sum: suma ważona wszystkich pikseli z przypisanymi współczynnikami dodatnimi minus suma ważona pikseli z ujemnymi współczynnikami w regionie filtra RH , czyli
+Jeśli niektóre współczynniki filtra są ujemne, to obliczenie filtra można zinterpretować jako różnicę dwóch sum: suma ważona wszystkich pikseli z przypisanymi współczynnikami dodatnimi minus suma ważona pikseli z ujemnymi współczynnikami w regionie filtra $R$ , czyli
 
 $$
 \begin{align}
@@ -314,7 +314,7 @@ I ∗ H = I ∗ (H_1 ∗ H_2 ∗ . . . ∗ H_n)
 $$ {#eq-lacznosc2}
 
 W zależności od rodzaju dekompozycji może to przynieść znaczne oszczędności obliczeniowe.
-O rozdzielczości filtrów możemy myśleć również nieco inaczej
+O rozłączności filtrów możemy myśleć również nieco inaczej
 
 $$
 I'=(I*h_x)*h_y,
@@ -392,7 +392,7 @@ gdzie $R$ oznacza region filtra (zbiór współrzędnych filtra, zwykle kwadrat 
 ![Zastosowanie filtru minimum 1D do różnych sygnałów wejściowych. Górny rząd przedstawia oryginalny sygnał, a dolny spleciony z filtrem minimum](images/Zrzut%20ekranu%202023-02-8%20o%2019.52.39.png){#fig-min fig-align="center"}
 
 ```{r}
-#| label: fig-min
+#| label: fig-min2
 #| fig-cap: Zastosowanie filtru minimum
 #| cache: true
 
@@ -501,7 +501,7 @@ Teoretycznie filtry nie mogą być stosowane w miejscach, gdzie macierz filtrów
 Zatem każda operacja filtrująca zmniejszyłaby rozmiar obrazu wynikowego, co w większości zastosowań jest nie do przyjęcia.
 Choć nie istnieje formalnie poprawne remedium, istnieje kilka mniej lub bardziej praktycznych metod obsługi regionów granicznych:
 
-1.  Ustaw nieprzetworzone piksele na granicach na jakąś stałą wartość (np. "czarny"). Jest to z pewnością najprostsza metoda, ale w wielu sytuacjach nie do przyjęcia, ponieważ rozmiar obrazu jest stopniowo zmniejszany przez każdą operację filtra.
+1.  Ustaw nieprzetworzone piksele na granicach filtra na jakąś stałą wartość (np. "czarny"). Jest to z pewnością najprostsza metoda, ale w wielu sytuacjach nie do przyjęcia, ponieważ rozmiar obrazu jest stopniowo zmniejszany przez każdą operację filtra.
 2.  Ustaw nieprzetworzone piksele na oryginalne (niefiltrowane) wartości obrazu. Zazwyczaj wyniki są również nie do przyjęcia, ze względu na zauważalną różnicę między przefiltrowanymi i nieprzetworzonymi fragmentami obrazu.
 3.  Rozwiń obraz, "wypełniając" (ang. *padding*) dodatkowe piksele wokół niego i zastosuj filtr również do regionów granicznych. Na @fig-border pokazano różne opcje wypełniania obrazów (obraz (a) jest oryginałem).
     1.  Piksele poza obrazem mają stałą wartość (np. "czarny" lub "szary", patrz @fig-border (b)).
