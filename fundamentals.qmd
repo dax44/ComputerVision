@@ -56,22 +56,24 @@ Twój model nie powinien mieć dostępu do żadnych informacji o zbiorze testowy
 Jeśli cokolwiek w modelu zostało dostrojone w oparciu o wydajność zbioru testowego, to Twoja miara uogólnienia będzie błędna.
 
 Podział danych na zbiory treningowe, walidacyjne i testowe może wydawać się prosty, ale istnieje kilka zaawansowanych sposobów, które mogą się przydać, gdy dostępnych jest niewiele danych.
-Przyjrzyjmy się trzem klasycznym przepisom oceny: zwykłej walidacji *hold-out*, walidacji krzyżowej K-krotnej oraz iterowanej krzyżowej walidacji K-krotnej z losowaniem.
+Przyjrzyjmy się trzem klasycznym przepisom oceny: zwykłej walidacji *hold-out*, walidacji krzyżowej k-krotnej oraz iterowanej krzyżowej walidacji k-krotnej z losowaniem[^fundamentals-2].
+
+[^fundamentals-2]: zwanej także k-krotną walidacja krzyżową z powtórzeniami
 
 ### Hold-out
 
 ![](https://media.tenor.com/WOWDcFzZcDUAAAAC/kitty-kitten.gif){.column-margin fig-align="center" width="400"}
 
-Wyodrębnij pewną część danych jako zbiór testowy.
-Trenuj na pozostałych danych i oceń na zbiorze testowym.
-Jak widziałeś w poprzednich rozdziałach, aby zapobiec wyciekowi informacji, nie powinieneś dostrajać swojego modelu na podstawie zbioru testowego, dlatego powinieneś również zarezerwować zbiór walidacyjny.
+Wyodrębniamy pewną część danych jako zbiór testowy.
+Trenujemy na pozostałych danych i oceniamy na zbiorze testowym.
+Jak widzieliśmy w poprzednich rozdziałach, aby zapobiec wyciekowi informacji, nie powinniśmy dostrajać swojego modelu na podstawie zbioru testowego, dlatego powinniśmy również zarezerwować zbiór walidacyjny.
 
 ![Walidacja hold-out](images/Zrzut%20ekranu%202023-02-27%20o%2009.14.23.png){#fig-fund1 fig-align="center" width="600"}
 
 Schematycznie, walidacja hold-out wygląda jak na @fig-fund1.
 Poniższy listing pokazuje prostą implementację.
 
-``` r
+```{r}
 #| eval: false
 
 indices <- sample(1:nrow(data), size = 0.80 * nrow(data)) # <1>
@@ -94,18 +96,18 @@ test_score <- model %>% evaluate(test_data)               # <5>
 Jest to najprostszy protokół oceny, ale ma jedną wadę: jeśli dostępnych danych jest mało, wtedy twoje zestawy walidacyjne i testowe mogą zawierać zbyt mało próbek, aby być statystycznie reprezentatywne dla danych.
 Łatwo to rozpoznać: jeśli różne losowe rundy tasowania danych przed podziałem kończą się uzyskaniem bardzo różnych miar wydajności modelu, to masz ten problem.
 
-### Walidacja krzyżowa K-krotna
+### Walidacja krzyżowa k-krotna
 
-W tym podejściu dzielimy dane na K podzbiorów (foldów) o (w miarę) równym rozmiarze.Trenuj swój model na K-1 foldach, a na jednym pozostałym foldzie oceń jego jakość.
-Twój ostateczny wynik jest średnią z K uzyskanych wyników.
+W tym podejściu dzielimy dane na k podzbiorów (foldów) o (w miarę) równym rozmiarze. Trenuj swój model na k-1 foldach, a na jednym pozostałym foldzie oceń jego jakość.
+Twój ostateczny wynik jest średnią z k uzyskanych wyników.
 Podobnie jak w przypadku walidacji typu *hold-out,* metoda ta nie zwalnia z używania odrębnego zbioru walidacyjnego do kalibracji modelu.
 
 ![Walidacja krzyżowa K-krotna](images/Zrzut%20ekranu%202023-02-27%20o%2009.14.34.png){#fig-fund2 width="600"}
 
-Schematycznie, K-krotna walidacja krzyżowa wygląda jak na @fig-fund2.
+Schematycznie, k-krotna walidacja krzyżowa wygląda jak na @fig-fund2.
 Oto prosta implementacja pseudokodu w R.
 
-``` r
+```{r}
 #| eval: false
 
 k <- 4
@@ -142,51 +144,43 @@ results <- model %>% evaluate(test_data)
 ![](https://media.tenor.com/00E4TNbGbYsAAAAM/valid-self-validation.gif){.column-margin fig-align="center" width="400"}
 
 Przeznaczona jest dla sytuacji, w których masz stosunkowo mało dostępnych danych i musisz jak najdokładniej ocenić swój model.
-Polega ona na wielokrotnym zastosowaniu K-krotnej walidacji, tasując dane za każdym razem przed podzieleniem ich na K sposobów.
-Końcowy wynik jest średnią z wyników uzyskanych w każdym przebiegu K-krotnej walidacji.
-Zauważ, że kończysz szkolenie i ocenę P \* K modeli (gdzie P to liczba iteracji, których używasz), co może być bardzo kosztowne.
+Polega ona na wielokrotnym zastosowaniu k-krotnej walidacji, tasując dane za każdym razem przed podzieleniem ich na k sposobów.
+Końcowy wynik jest średnią z wyników uzyskanych w każdym przebiegu k-krotnej walidacji.
+Zauważ, że kończysz szkolenie i ocenę P * k modeli (gdzie P to liczba iteracji, których używasz), co może być bardzo kosztowne.
 
-W literaturze tematu metoda ta występuje również pod nazwą K-krotnego sprawdzianu krzyżowego z powtórzeniami.
+W literaturze tematu metoda ta występuje również pod nazwą k-krotnego sprawdzianu krzyżowego z powtórzeniami.
 
 ### Uwagi do resamplingu
 
--   Reprezentatywność danych - chcesz, aby zarówno zbiór treningowy, jak i testowy były reprezentatywne dla danych. Na przykład, jeśli próbujesz sklasyfikować obrazy cyfr i zaczynasz od tablicy próbek, gdzie próbki są uporządkowane według ich klasy, to biorąc pierwsze 80% tablicy jako zbiór treningowy, a pozostałe 20% jako testowy, twój zbiór treningowy będzie zawierał tylko klasy 0-7, podczas gdy twój zbiór testowy zawiera tylko klasy 8-9. Wydaje się to niedorzecznym błędem, ale jest zaskakująco powszechne. Z tego powodu, zazwyczaj powinieneś losowo przetasować swoje dane przed podzieleniem ich na zestawy treningowe i testowe.
--   Oś czasu - jeśli próbujesz przewidzieć przyszłe wartości biorąc pod uwagę przeszłość (na przykład, pogoda jutro, zmiany cen akcji, i tak dalej), nie powinieneś losowo tasować swoich danych przed ich podziałem, ponieważ robiąc to, stworzysz czasowy wyciek danych: twój model będzie skutecznie trenowany na danych z przyszłości. W takich sytuacjach zawsze powinieneś upewnić się, że wszystkie dane w twoim zestawie testowym są potomne w stosunku do danych w zestawie treningowym.
--   Redundancja w danych - Jeśli niektóre obserwacje pojawiają się dwukrotnie (co jest dość powszechne w przypadku danych ze świata rzeczywistego), to przetasowanie danych i podzielenie ich na zbiór treningowy i walidacyjny spowoduje redundancję pomiędzy zbiorem treningowym i walidacyjnym. W efekcie, będziesz testował na części danych treningowych, co jest najgorszą rzeczą jaką możesz zrobić! Upewnij się, że twój zestaw treningowy i zestaw walidacyjny są rozłączne.
+-   Reprezentatywność danych - chcemy, aby zarówno zbiór treningowy, jak i testowy były reprezentatywne dla danych. Na przykład, jeśli próbujemy sklasyfikować obrazy cyfr i zaczynamy od tablicy próbek, gdzie próbki są uporządkowane według ich klasy, to biorąc pierwsze 80% tablicy jako zbiór treningowy, a pozostałe 20% jako testowy, nasz zbiór treningowy będzie zawierał tylko klasy 0-7, podczas gdy zbiór testowy zawiera tylko klasy 8-9. Wydaje się to niedorzecznym błędem, ale jest zaskakująco powszechne. Z tego powodu, zazwyczaj powinniśmy losowo przetasować swoje dane przed podzieleniem ich na zestawy treningowe i testowe.
+-   Oś czasu - jeśli próbujemy przewidzieć przyszłe wartości biorąc pod uwagę przeszłość (na przykład, pogoda jutro, zmiany cen akcji, i tak dalej), nie powinniśmy losowo tasować swoich danych przed ich podziałem, ponieważ robiąc to, stworzymy czasowy wyciek danych: nasz model będzie skutecznie trenowany na danych z przyszłości. W takich sytuacjach zawsze powinniśmy upewnić się, że wszystkie dane w naszym zestawie testowym są potomne w stosunku do danych w zestawie treningowym.
+-   Redundancja w danych - jeśli niektóre obserwacje pojawiają się dwukrotnie (co jest dość powszechne w przypadku danych ze świata rzeczywistego), to przetasowanie danych i podzielenie ich na zbiór treningowy i walidacyjny spowoduje redundancję pomiędzy zbiorem treningowym i walidacyjnym. W efekcie, będziemy testowali na części danych treningowych, co jest najgorszą rzeczą jaką możesz zrobić! Upewnijmy się, że nasz zestaw treningowy i zestaw walidacyjny są rozłączne.
 
 ## Przygotowanie danych
 
-Wiele technik wstępnego przetwarzania danych i inżynierii cech jest specyficznych dla danej dziedziny (np. specyficznych dla danych tekstowych lub danych obrazowych); omówimy je w kolejnych rozdziałach, gdy napotkamy je w praktycznych przykładach.
-Na razie zajmiemy się podstawami, które są wspólne dla wszystkich domen danych.
-Skupimy się na najważniejszych.
+Wiele technik wstępnego przetwarzania danych i inżynierii cech jest specyficznych dla danej dziedziny (np. specyficznych dla danych tekstowych lub danych obrazowych); omówimy je w kolejnych rozdziałach, gdy napotkamy je w praktycznych przykładach. Na razie zajmiemy się podstawami, które są wspólne dla wszystkich domen danych. Skupimy się na najważniejszych.
 
 ### Wektoryzacja
 
-Wszystkie wejścia i cele w sieci neuronowej muszą być tensorami danych zmiennoprzecinkowych (lub, w szczególnych przypadkach, tensorami liczb całkowitych).
-Jakiekolwiek dane, które chcesz przetworzyć - dźwięk, obraz, tekst - musisz najpierw zamienić na tensory, co nazywamy wektoryzacją danych.
+Wszystkie wejścia i cele w sieci neuronowej muszą być tensorami danych zmiennoprzecinkowych (lub, w szczególnych przypadkach, tensorami liczb całkowitych). Jakiekolwiek dane, które chcemy przetworzyć - dźwięk, obraz, tekst - musimy najpierw zamienić na tensory, co nazywamy wektoryzacją danych.
 Na przykład, jeśli zajmujemy się automatyczna analizą tekstu, to konieczna jest transformacja wyrazów metodą *one-hot encoding*, która zamieni nam wyrazy na zestaw zmiennych zmiennoprzecinkowych.
 W przykładach klasyfikacji cyfr dane były już w postaci wektorowej, więc można było pominąć ten krok.
 
 ### Normalizacja
 
-W przykładzie klasyfikacji cyfr, zacząłeś od danych obrazu zakodowanych jako liczby całkowite z zakresu 0-255, kodujące wartości w skali szarości.
-Zanim wprowadziłeś te dane do sieci, musiałeś podzielić je przez 255, aby uzyskać wartości zmiennoprzecinkowe z zakresu 0-1.
-Podobnie, przy przewidywaniu cen domów, zacząłeś od cech, które miały różne zakresy - niektóre cechy miały małe wartości zmiennoprzecinkowe, inne miały dość duże wartości całkowite.
-Zanim wprowadziłeś te dane do swojej sieci, musiałeś znormalizować każdą cechę niezależnie, tak aby jej odchylenie standardowe wynosiło 1, a średnia 0.
+W przykładzie klasyfikacji cyfr, zaczęliśmy od danych obrazu zakodowanych jako liczby całkowite z zakresu 0-255, kodujące wartości w skali szarości. Zanim wprowadzimy te dane do sieci, musieliśmy podzielić je przez 255, aby uzyskać wartości zmiennoprzecinkowe z zakresu 0-1. Podobnie, przy przewidywaniu cen domów, zaczęliśmy od cech, które miały różne zakresy - niektóre cechy miały małe wartości zmiennoprzecinkowe, inne miały dość duże wartości całkowite. Zanim wprowadziliśmy te dane do swojej sieci, musieliśmy znormalizować każdą cechę niezależnie, tak aby jej odchylenie standardowe wynosiło 1, a średnia 0.
 
 ![](https://i.pinimg.com/originals/d9/ce/e8/d9cee87228f811433f7c6a9cc8d38baf.gif){.column-margin fig-align="center" width="400"}
 
-Ogólnie rzecz biorąc, nie jest bezpiecznie podawać do sieci neuronowej danych, które przyjmują stosunkowo duże wartości (na przykład wielocyfrowe liczby całkowite, które są znacznie większe niż wartości początkowe przyjmowane przez wagi sieci) lub dane, które są niejednorodne (na przykład dane, w których jedna cecha jest w zakresie 0-1, a inna w zakresie 100-200).
-Takie postępowanie może wywołać duże aktualizacje gradientu, które uniemożliwią sieci osiągnięcie zbieżności.
-Aby ułatwić uczenie się sieci, twoje dane powinny mieć następujące cechy:
+Ogólnie rzecz biorąc, nie jest bezpiecznie podawać do sieci neuronowej danych, które przyjmują stosunkowo duże wartości (na przykład wielocyfrowe liczby całkowite, które są znacznie większe niż wartości początkowe przyjmowane przez wagi sieci) lub dane, które są niejednorodne (na przykład dane, w których jedna cecha jest w zakresie 0-1, a inna w zakresie 100-200). Takie postępowanie może wywołać duże aktualizacje gradientu, które uniemożliwią sieci osiągnięcie zbieżności. Aby ułatwić uczenie się sieci, nasze dane powinny mieć następujące cechy:
 
--   Przyjmuj małe wartości - większość wartości powinna być w zakresie 0-1.
--   Zachowaj jednorodność - to znaczy, że wszystkie cechy powinny przyjmować wartości w mniej więcej tym samym zakresie.
+-   Przyjmują małe wartości - większość wartości powinna być w zakresie 0-1.
+-   Zachowują jednorodność - to znaczy, że wszystkie cechy powinny przyjmować wartości w mniej więcej tym samym zakresie.
 
-Zazwyczaj będziesz normalizował cechy zarówno w danych treningowych, jak i testowych.
-W tym przypadku będziesz chciał obliczyć średnią i odchylenie standardowe tylko na danych treningowych, a następnie zastosować je zarówno do danych treningowych, jak i testowych.
+Zazwyczaj będziemy normalizować cechy zarówno w danych treningowych, jak i testowych.
+W tym przypadku będziemy chcieli obliczyć średnią i odchylenie standardowe tylko na danych treningowych, a następnie zastosować je zarówno do danych treningowych, jak i testowych.
 
-``` r
+```{r}
 #| eval: false
 
 mean <- apply(train_data, 2, mean) # <1>
@@ -201,12 +195,11 @@ test_data <- scale(test_data, center = mean, scale = std)
 
 ### Usuń braki danych
 
-Czasami w danych mogą pojawić się brakujące wartości.
-Genralnie, w sieciach neuronowych bezpiecznie jest wprowadzić brakujące wartości jako 0, pod warunkiem, że 0 nie jest już wartością znaczącą.
+Czasami w danych mogą pojawić się brakujące wartości. Generalnie, w sieciach neuronowych bezpiecznie jest zastępować brakujące wartości przez 0, pod warunkiem, że 0 nie jest już wartością znaczącą.
 Sieć nauczy się z ekspozycji na dane, że wartość 0 oznacza brakujące dane i zacznie ignorować tę wartość.
 
-Zauważ, że jeśli spodziewasz się brakujących wartości w danych testowych, ale sieć była trenowana na danych bez żadnych brakujących wartości, sieć nie nauczy się ignorować brakujących wartości!
-W tej sytuacji powinieneś sztucznie wygenerować próbki treningowe z brakującymi wpisami: skopiuj kilka próbek treningowych kilka razy i opuść niektóre cechy, które spodziewasz się, że prawdopodobnie będą brakować w danych testowych.
+Zauważmy, że jeśli spodziewamy się brakujących wartości w danych testowych, ale sieć była trenowana na danych bez żadnych brakujących wartości, to sieć nie nauczy się ignorować brakujących wartości!
+W tej sytuacji powinniśmy sztucznie wygenerować próbki treningowe z brakującymi wpisami: skopiować kilka próbek treningowych kilka razy i opuścić niektóre cechy, które spodziewamy się, że prawdopodobnie będą wybrakowane w danych testowych.
 
 ## Nadmierne dopasowanie i niedopasowanie
 
@@ -271,37 +264,23 @@ Nauka radzenia sobie z nadmiernym dopasowaniem jest niezbędna do opanowania ucz
 Podstawowym problemem w uczeniu maszynowym jest konflikt pomiędzy optymalizacją a generalizacją.
 Optymalizacja odnosi się do procesu dostosowywania modelu w celu uzyskania jak najlepszej wydajności na danych treningowych, podczas gdy generalizacja odnosi się do tego, jak dobrze wyszkolony model radzi sobie na danych, których nigdy wcześniej nie widział.
 
-Na początku treningu optymalizacja i generalizacja są zbieżne: im mniejsza strata na danych treningowych, tym mniejsza strata na danych testowych.
-Gdy tak się dzieje, mówi się, że twój model jest niedopasowany: wciąż jest postęp do zrobienia; sieć nie jest nauczona jeszcze wszystkich istotnych wzorców w danych treningowych.
-Jednak po pewnej liczbie iteracji na danych treningowych, generalizacja przestaje się poprawiać, a metryki dla zbioru walidacyjnego nie poprawiają się, a nawet zaczynają się pogarszać: model zaczyna być nadmiernie dopasowany.
+Na początku treningu optymalizacja i generalizacja są zbieżne: im mniejsza strata na danych treningowych, tym mniejsza strata na danych testowych. Gdy tak się dzieje, mówi się, że twój model jest niedopasowany: wciąż jest miejsce na postęp w zakresie dopasowania; sieć nie jest nauczona jeszcze wszystkich istotnych wzorców w danych treningowych. Jednak po pewnej liczbie iteracji na danych treningowych, generalizacja przestaje się poprawiać, a metryki dla zbioru walidacyjnego nie poprawiają się, a nawet zaczynają się pogarszać: model zaczyna być nadmiernie dopasowany.
 Oznacza to, że model zaczyna się uczyć wzorców, które są specyficzne dla danych treningowych, ale które są mylące lub nieistotne, gdy chodzi o nowe dane.
 
 ![](https://i.redd.it/wy9b0y106mh81.gif){.column-margin fig-align="center" width="400"}
 
 Aby zapobiec uczeniu się przez model błędnych lub nieistotnych wzorców występujących w danych treningowych, najlepszym rozwiązaniem jest uzyskanie większej ilości danych treningowych.
-Model wytrenowany na większej ilości danych będzie naturalnie lepiej generalizował.
-Jeśli nie jest to możliwe, innym rozwiązaniem jest modulowanie ilości informacji, które model może przechowywać, lub dodanie ograniczeń na informacje, które może przechowywać.
-Jeśli sieć może sobie pozwolić na zapamiętanie tylko niewielkiej liczby wzorców, proces optymalizacji zmusi ją do skupienia się na najbardziej widocznych wzorcach, które mają większą szansę na dobrą generalizację.
+Model wytrenowany na większej ilości danych będzie naturalnie lepiej generalizował. Jeśli nie jest to możliwe, innym rozwiązaniem jest modulowanie ilości informacji, które model może przechowywać, lub dodanie ograniczeń na informacje, które może przechowywać. Jeśli sieć może sobie pozwolić na zapamiętanie tylko niewielkiej liczby wzorców, proces optymalizacji zmusi ją do skupienia się na najbardziej widocznych wzorcach, które mają większą szansę na dobrą generalizację.
 
-Proces walki z overfittingiem w ten sposób nazywany jest regularyzacją.
-Zapoznajmy się z kilkoma najpopularniejszymi technikami regularyzacji i zastosujmy je w praktyce, aby poprawić model klasyfikacji.
+Proces walki z *overfittingiem* w ten sposób nazywany jest regularyzacją. Zapoznajmy się z kilkoma najpopularniejszymi technikami regularyzacji i zastosujmy je w praktyce, aby poprawić model klasyfikacji.
 
 ### Redukcja wielkości sieci
 
-Najprostszym sposobem zapobiegania overfittingowi jest zmniejszenie rozmiaru modelu: czyli liczby możliwych do nauczenia się parametrów w modelu (która jest określona przez liczbę warstw i liczbę neuronów na warstwę).
-W uczeniu głębokim liczba możliwych do nauczenia się parametrów w modelu jest często określana jako pojemność modelu.
-Intuicyjnie, model z większą liczbą parametrów ma większą zdolność zapamiętywania i dlatego może łatwo nauczyć się idealnego odwzorowania między próbkami treningowymi a ich celami - odwzorowania bez żadnej mocy generalizacji.
-Na przykład, model z 500 000 parametrów binarnych mógłby z łatwością nauczyć się każdej cyfry w zbiorze treningowym MNIST: potrzebowalibyśmy tylko 10 parametrów binarnych dla każdej z 50 000 cyfr.
-Ale taki model byłby bezużyteczny do klasyfikowania nowych próbek.
-Zawsze należy o tym pamiętać: modele głębokiego uczenia mają tendencję do dobrego dopasowania do danych treningowych, ale prawdziwym wyzwaniem jest generalizacja, a nie dopasowanie.
+Najprostszym sposobem zapobiegania *overfittingowi* jest zmniejszenie rozmiaru modelu: czyli liczby możliwych do nauczenia się parametrów w modelu (która jest określona przez liczbę warstw i liczbę neuronów na warstwę). W uczeniu głębokim liczba możliwych do nauczenia się parametrów w modelu jest często określana jako pojemność modelu. Intuicyjnie, model z większą liczbą parametrów ma większą zdolność zapamiętywania i dlatego może łatwo nauczyć się idealnego odwzorowania między próbkami treningowymi a ich celami - odwzorowania bez żadnej mocy generalizacji. Na przykład, model z 500000 parametrów binarnych mógłby z łatwością nauczyć się każdej cyfry w zbiorze treningowym MNIST: potrzebowalibyśmy tylko 10 parametrów binarnych dla każdej z 50000 cyfr. Ale taki model byłby bezużyteczny do klasyfikowania nowych próbek. Zawsze należy o tym pamiętać: modele głębokiego uczenia mają tendencję do dobrego dopasowania do danych treningowych, ale prawdziwym wyzwaniem jest generalizacja, a nie dopasowanie.
 
-Z drugiej strony, jeśli sieć ma ograniczone zasoby pamięci, nie będzie w stanie nauczyć się tego odwzorowania tak łatwo; dlatego, aby zminimalizować straty, będzie musiała uciec się do uczenia skompresowanych reprezentacji, które mają moc predykcyjną w odniesieniu do celów - dokładnie ten typ reprezentacji nas interesuje.
-Jednocześnie pamiętaj, że powinieneś używać modeli, które mają wystarczająco dużo parametrów, aby nie były niedostosowane: twój model nie powinien być ograniczany ze względu na zasoby pamięciowe.
-Trzeba znaleźć kompromis między zbyt dużą pojemnością a niewystarczającą.
+Z drugiej strony, jeśli sieć ma ograniczone zasoby pamięci, nie będzie w stanie nauczyć się tego odwzorowania tak łatwo; dlatego, aby zminimalizować straty, będzie musiała uciec się do uczenia skompresowanych reprezentacji, które mają moc predykcyjną w odniesieniu do celów - dokładnie ten typ reprezentacji nas interesuje. Jednocześnie pamiętajmy, że powinniśmy używać modeli, które mają wystarczająco dużo parametrów, aby nie były niedopasowane: nasz model nie powinien być ograniczany ze względu na zasoby pamięciowe. Trzeba znaleźć kompromis między zbyt dużą pojemnością a niewystarczającą.
 
-Niestety, nie ma magicznej formuły, aby określić właściwą liczbę warstw lub właściwy rozmiar dla każdej warstwy.
-Musisz ocenić szereg różnych architektur (oczywiście na zbiorze walidacyjnym, nie na zbiorze testowym), aby znaleźć właściwy rozmiar modelu dla twoich danych.
-Ogólny tok postępowania w celu znalezienia odpowiedniego rozmiaru modelu polega na rozpoczęciu od stosunkowo niewielkiej liczby warstw i parametrów, a następnie zwiększaniu rozmiaru warstw lub dodawaniu nowych warstw, dopóki nie zobaczysz malejących zwrotów w odniesieniu do utraty walidacji.
+Niestety, nie ma magicznej formuły, aby określić właściwą liczbę warstw lub właściwy rozmiar dla każdej warstwy. Musimy ocenić szereg różnych architektur (oczywiście na zbiorze walidacyjnym, nie na zbiorze testowym), aby znaleźć właściwy rozmiar modelu dla twoich danych. Ogólny tok postępowania w celu znalezienia odpowiedniego rozmiaru modelu polega na rozpoczęciu od stosunkowo niewielkiej liczby warstw i parametrów, a następnie zwiększaniu rozmiaru warstw lub dodawaniu nowych warstw, dopóki nie zobaczymy zjawiska przeuczenia na zbiorze walidacyjnym.
 
 ```{r}
 #| eval: false
@@ -335,19 +314,14 @@ Jak widać z powyższej symulacji dla prostszej sieci zjawisko *overffitingu* po
 
 ### Regularyzacja za pomocą kar
 
-Podobnie jak w modelach liniowych prostsze modele są mniej podatne na *overfitting*, również i sieci głębokiego uczenia również podlegają tej zasadzie - jak się mogliśmy przekonać na podstawie powyższego przykładu.
-Powyższy przykład ową prostotę modelu realizował poprzez prostą strukturę sieci (uboższy model) ale można go "upraszczać" również inaczej.
+Podobnie jak w modelach liniowych prostsze modele są mniej podatne na *overfitting*, również i sieci głębokiego uczenia również podlegają tej zasadzie - jak się mogliśmy przekonać na podstawie powyższego przykładu. Powyższy przykład, ową prostotę modelu realizował poprzez prostą strukturę sieci (uboższy model) ale można go "upraszczać" również inaczej.
 
-Prosty model to model, w którym rozkład wartości parametrów ma mniejszą entropię (lub model z mniejszą liczbą parametrów, jak widzieliśmy w poprzedniej sekcji).
-Dlatego powszechnym sposobem łagodzenia overfittingu jest nałożenie ograniczeń na złożoność sieci poprzez zmuszenie jej wag do przyjmowania tylko małych wartości, co czyni rozkład wartości wag bardziej regularnym.
-Nazywa się to regularyzacją wag i odbywa się poprzez dodanie do funkcji straty sieci kosztu związanego z posiadaniem dużych wag.
-Koszt ten występuje w dwóch postaciach:
+Prosty model to model, w którym rozkład wartości parametrów ma mniejszą entropię (lub model z mniejszą liczbą parametrów, jak widzieliśmy w poprzedniej sekcji). Dlatego powszechnym sposobem łagodzenia *overfittingu* jest nałożenie ograniczeń na złożoność sieci poprzez zmuszenie jej wag do przyjmowania tylko małych wartości, co czyni rozkład wartości wag bardziej regularnym. Nazywa się to regularyzacją wag i odbywa się poprzez dodanie do funkcji straty sieci kosztu związanego z posiadaniem dużych wag. Koszt ten występuje w dwóch postaciach:
 
 -   L1 - dodany koszt jest proporcjonalny do wartości bezwzględnej współczynników wagowych (norma L1 wag).
 -   L2 - koszt dodany jest proporcjonalny do kwadratu wartości współczynników wagowych (norma L2 wag).
 
-W `keras`, regularyzacja wagowa jest dodawana poprzez dodanie instancji regularyzatora wagowego do warstw.
-Należy pamiętać, że regularyzacja jest stosowana do sieci tylko na etapie uczenia, dlatego na zbiorze testowym strata będzie mniejsza niż na treningowym.
+W `keras`, regularyzacja wagowa jest dodawana poprzez dodanie instancji regularyzatora wagowego do warstw. Należy pamiętać, że regularyzacja jest stosowana do sieci tylko na etapie uczenia, dlatego na zbiorze testowym strata będzie mniejsza niż na treningowym.
 
 ![](https://media.tenor.com/6F58VuiJmi8AAAAC/penalty-kicks.gif){.column-margin fig-align="center" width="400"}
 
@@ -386,23 +360,16 @@ Jak widać z powyższego wykresu przez zastosowanie regularyzacji L2 otrzymaliś
 
 ### Dropout
 
-*Dropout* to jedna z najskuteczniejszych i najczęściej stosowanych technik regularizacji dla sieci neuronowych, opracowana przez Geoffa Hintona i jego studentów z Uniwersytetu w Toronto.
-*Dropout*, zastosowany do warstwy, polega na losowym wyrzuceniu (ustawieniu na zero) pewnej liczby cech wyjściowych warstwy podczas treningu.
-Powiedzmy, że dana warstwa normalnie zwróciłaby podczas treningu wektor \[0.2, 0.5, 1.3, 0.8, 1.1\] dla danej próbki wejściowej.
-Po zastosowaniu *dropoutu*, wektor ten będzie miał kilka zerowych wpisów rozmieszczonych losowo: na przykład \[0, 0.5, 1.3, 0, 1.1\].
+*Dropout* to jedna z najskuteczniejszych i najczęściej stosowanych technik regularizacji sieci neuronowych, opracowana przez Geoffa Hintona i jego studentów z Uniwersytetu w Toronto. *Dropout*, zastosowany do warstwy, polega na losowym wyrzuceniu (ustawieniu na zero) pewnej liczby cech wyjściowych warstwy podczas treningu. Powiedzmy, że dana warstwa normalnie zwróciłaby podczas treningu wektor [0.2, 0.5, 1.3, 0.8, 1.1] dla danej próbki wejściowej. Po zastosowaniu *dropoutu*, wektor ten będzie miał kilka zerowych wpisów rozmieszczonych losowo: na przykład [0, 0.5, 1.3, 0, 1.1].
 
 ![](https://images1.memedroid.com/images/UPLOADED16/4f9caf2dd681d.jpeg){.column-margin fig-align="center" width="400"}
 
-Współczynnik *dropoutu* to frakcja cech, które mają być wyzerowane; zwykle jest ustawiony między 0,2 a 0,5.
-W czasie ewaluacji modelu na zbiorze testowym żadne jednostki nie są usuwane; zamiast tego wartości wyjściowe warstwy są skalowane w dół o czynnik równy współczynnikowi usuwania, aby zrównoważyć fakt, że więcej jednostek jest aktywnych niż w czasie treningu.
-Czyli przykładowo jeśli warstwa miała współczynnik dropout 0,25, to w czasie ewaluacji na zbiorze testowym wartości wyjściowe tej warstwy są mnożone przez 0,75.
+Współczynnik *dropoutu* to frakcja cech, które mają być wyzerowane; zwykle jest ustawiony między 0,2 a 0,5. W czasie ewaluacji modelu na zbiorze testowym żadne jednostki nie są usuwane; zamiast tego wartości wyjściowe warstwy są skalowane w dół o czynnik równy współczynnikowi usuwania, aby zrównoważyć fakt, że więcej jednostek jest aktywnych niż w czasie treningu.
+Czyli przykładowo jeśli warstwa miała współczynnik *dropout* 0,25, to w czasie ewaluacji na zbiorze testowym wartości wyjściowe tej warstwy są mnożone przez 0,75.
 
 ![Zasada działania dropout](http://s3-ap-south-1.amazonaws.com/av-blog-media/wp-content/uploads/2018/04/1IrdJ5PghD9YoOyVAQ73MJw.gif){#fig-dropout1 fig-align="center" width="400"}
 
-Ta technika może wydawać się dziwna i przypadkowa.
-Dlaczego miałoby to pomóc w redukcji *overfitting*?
-Hinton mówi, że zainspirował go między innymi mechanizm zapobiegania oszustwom stosowany przez banki.
-Mówiąc jego własnymi słowami: "Poszedłem do swojego banku. Kasjerzy ciągle się zmieniali i zapytałem jednego z nich, dlaczego. Powiedział, że nie wie, ale są często przenoszeni. Uznałem, że musi to być spowodowane tym, że skuteczne oszukanie banku wymagałoby współpracy między pracownikami. To uświadomiło mi, że losowe usuwanie różnych podzbiorów neuronów na każdym przykładzie zapobiegnie spiskom, a tym samym zmniejszy *overfitting*." Główna idea polega na tym, że wprowadzenie szumu do wartości wyjściowych warstwy może rozbić przypadkowe wzorce, które nie są istotne (co Hinton określa jako spiski), które sieć zacznie zapamiętywać, jeśli nie będzie w niej szumu.
+Ta technika może wydawać się dziwna i przypadkowa. Dlaczego miałoby to pomóc w redukcji *overfitting*? Hinton mówi, że zainspirował go między innymi mechanizm zapobiegania oszustwom stosowany przez banki. Mówiąc jego własnymi słowami: "Poszedłem do swojego banku. Kasjerzy ciągle się zmieniali i zapytałem jednego z nich, dlaczego. Powiedział, że nie wie, ale są często przenoszeni. Uznałem, że musi to być spowodowane tym, że skuteczne oszukanie banku wymagałoby współpracy między pracownikami. To uświadomiło mi, że losowe usuwanie różnych podzbiorów neuronów na każdym przykładzie zapobiegnie spiskom, a tym samym zmniejszy *overfitting*." Główna idea polega na tym, że wprowadzenie szumu do wartości wyjściowych warstwy może rozbić przypadkowe wzorce, które nie są istotne (co Hinton określa jako spiski), które sieć zacznie zapamiętywać, jeśli nie będzie w niej szumu.
 
 ```{r}
 #| eval: false
@@ -437,141 +404,107 @@ plot(history)
 
 ## Reguła postępowania w czasie budowy modelu
 
-W tym rozdziale przedstawimy uniwersalny schemat, który można wykorzystać do rozwiązania każdego problemu uczenia maszynowego.
-Dyskusja łączy koncepcje, które poznałeś w tym rozdziale: definicję problemu, ocenę, inżynierię cech i walkę z *overfittingiem*.
+W tym rozdziale przedstawimy uniwersalny schemat, który można wykorzystać do rozwiązania każdego problemu uczenia maszynowego. Dyskusja łączy koncepcje, które poznaliśmy w tym rozdziale: definicję problemu, ocenę, inżynierię cech i walkę z *overfittingiem*.
 
 ### Definiowanie problemu i przygotowanie zbioru danych
 
-Po pierwsze, musisz zdefiniować problem:
+Po pierwsze, musimy zdefiniować problem:
 
--   Jakie będą twoje dane wejściowe? Co próbujesz przewidzieć? Możesz nauczyć się przewidywać coś tylko wtedy, gdy masz dostępne dane treningowe: na przykład, możesz nauczyć się klasyfikować sentyment[^fundamentals-2] recenzji filmowych tylko wtedy, gdy masz dostępne zarówno recenzje filmów, jak i adnotacje sentymentu. W związku z tym, dostępność danych jest zwykle czynnikiem ograniczającym na tym etapie (chyba, że masz środki, aby zapłacić ludziom, aby zebrać dane dla Ciebie).
--   Z jakim typem problemu masz do czynienia? Czy jest to klasyfikacja binarna? Klasyfikacja wieloklasowa? Regresja skalarna? Regresja wektorowa? Klasyfikacja wieloklasowa, wieloetykietowa? Coś innego, jak klastrowanie, generowanie lub uczenie wzmacniające[^fundamentals-3]? Określenie typu problemu pozwoli Ci na wybór architektury modelu, funkcji straty i tak dalej.
+-   Jakie będą nasze dane wejściowe? Co próbujemy przewidzieć? Możemy nauczyć się przewidywać coś tylko wtedy, gdy mamy dostępne dane treningowe: na przykład, możemy nauczyć się klasyfikować sentyment[^fundamentals-3] recenzji filmowych tylko wtedy, gdy mamy dostępne zarówno recenzje filmów, jak i adnotacje sentymentu. W związku z tym, dostępność danych jest zwykle czynnikiem ograniczającym na tym etapie (chyba, że mamy środki, aby zapłacić ludziom, aby ci zebrali więcej danych).
+-   Z jakim typem problemu mamy do czynienia? Czy jest to klasyfikacja binarna? Klasyfikacja wieloklasowa? Regresja skalarna? Regresja wektorowa? Klasyfikacja wieloklasowa, wieloetykietowa? Coś innego, jak klastrowanie, generowanie lub uczenie wzmacniające[^fundamentals-4]? Określenie typu problemu pozwoli nam na wybór architektury modelu, funkcji straty i tak dalej.
 
-[^fundamentals-2]: nastawienie
+[^fundamentals-3]: nastawienie
 
-[^fundamentals-3]: ang.
+[^fundamentals-4]: ang.
     *reinforcement learning*
 
-Nie możesz przejść do następnego etapu, dopóki nie wiesz, jakie są twoje wejścia i wyjścia oraz z jakich danych będziesz korzystać.
-Bądź świadomy hipotez, które stawiasz.
-Dopóki nie masz działającego modelu, są to jedynie hipotezy, czekające na potwierdzenie lub unieważnienie.
-Nie wszystkie problemy można rozwiązać; tylko dlatego, że zebrałeś przykłady wejść X i celów Y, nie oznacza to bowiem, że X zawiera wystarczająco dużo informacji, aby przewidzieć Y.
-Na przykład, jeśli próbujesz przewidzieć ruchy akcji na giełdzie, biorąc pod uwagę jej niedawną historię cenową, raczej ci się to nie uda, ponieważ historia cenowa nie zawiera zbyt wielu informacji prognostycznych.
+Nie możemy przejść do następnego etapu, dopóki nie wiemy, jakie są nasze wejścia i wyjścia oraz z jakich danych będziemy korzystać. Bądźmy świadomi hipotez, które stawiamy. Dopóki nie mamy działającego modelu, są to jedynie hipotezy, czekające na potwierdzenie lub unieważnienie.
+Nie wszystkie problemy można rozwiązać; tylko dlatego, że zebraliśmy przykłady wejść X i celów Y, nie oznacza to bowiem, że X zawiera wystarczająco dużo informacji, aby przewidzieć Y. Na przykład, jeśli próbujemy przewidzieć ruchy akcji na giełdzie, biorąc pod uwagę jej niedawną historię cenową, raczej nam się to nie uda, ponieważ historia cenowa nie zawiera zbyt wielu informacji prognostycznych.
 
-Jedną z klas nierozwiązywalnych problemów, o których powinieneś wiedzieć, są problemy niestacjonarne.
-Załóżmy, że próbujesz zbudować silnik rekomendacji do sprzedaży ubrań, trenujesz go na jednym miesiącu danych (sierpień) i chcesz zacząć generować rekomendacje w zimie.
-Jednym z poważnych problemów jest to, że rodzaje ubrań, które ludzie kupują, zmieniają się z sezonu na sezon: kupowanie ubrań jest zjawiskiem niestacjonarnym w skali kilku miesięcy.
-To, co próbujesz modelować, zmienia się w czasie.
-W tym przypadku, właściwym posunięciem jest ciągłe doszkalanie modelu na danych z niedawnej przeszłości lub zbieranie danych w skali czasowej, w której problem jest stacjonarny.
-Dla problemu cyklicznego, takiego jak kupowanie ubrań, wystarczy kilka lat danych, aby uchwycić sezonową zmienność - ale pamiętaj, aby czas roku był wejściem do modelu!
+Jedną z klas nierozwiązywalnych problemów, o których powinniśmy wiedzieć, są problemy niestacjonarne.
+Załóżmy, że próbujemy zbudować silnik rekomendacji do sprzedaży ubrań, trenujemy go na jednym miesiącu danych (sierpień) i chcemy zacząć generować rekomendacje w zimie. Jednym z poważnych problemów jest to, że rodzaje ubrań, które ludzie kupują, zmieniają się z sezonu na sezon: kupowanie ubrań jest zjawiskiem niestacjonarnym w skali kilku miesięcy. To, co próbujemy modelować, zmienia się w czasie. W tym przypadku, właściwym posunięciem jest ciągłe doszkalanie modelu na danych z niedawnej przeszłości lub zbieranie danych w skali czasowej, w której problem jest stacjonarny. Dla problemu cyklicznego, takiego jak kupowanie ubrań, wystarczy kilka lat danych, aby uchwycić sezonową zmienność - ale pamiętaj, aby czas roku był wejściem do modelu!
 
-Pamiętaj, że uczenie maszynowe może być użyte tylko do zapamiętania wzorców, które są obecne w danych treningowych.
-Możesz rozpoznać tylko to, co widziałeś wcześniej.
-Używając uczenia maszynowego wyszkolonego na danych z przeszłości do przewidywania przyszłości, przyjmujesz założenie, że przyszłość będzie zachowywać się jak przeszłość, co nie zawsze jest prawdą.
+Pamiętajmy, że uczenie maszynowe może być użyte tylko do zapamiętania wzorców, które są obecne w danych treningowych. Możemy rozpoznać tylko to, co wcześniej widzieliśmy. Używając uczenia maszynowego wyszkolonego na danych z przeszłości do przewidywania przyszłości, przyjmujemy założenie, że przyszłość będzie zachowywać się jak przeszłość, co nie zawsze jest prawdą.
 
 ### Określenie miary do oceny jakości dopasowania modelu
 
-Aby coś kontrolować, musisz być w stanie to obserwować.
-Aby osiągnąć sukces, musisz zdefiniować, co rozumiesz przez sukces: dokładność?
-Twoja miara sukcesu będzie kierowała wyborem funkcji straty: czyli tego, co twój model będzie optymalizował.
+Aby coś kontrolować, musimy być w stanie to obserwować. Aby osiągnąć sukces, musimy zdefiniować, co rozumiemy przez sukces: dokładność? Nasza miara sukcesu będzie kierowała wyborem funkcji straty: czyli tego, co nasz model będzie optymalizował.
 
-Dla problemów klasyfikacji zrównoważonej, gdzie każda klasa jest mniej więcej równie prawdopodobna, dokładność[^fundamentals-4] i obszar pod krzywą ROC są powszechnymi metrykami.
-W przypadku problemów związanych z niezbalansowaną klasyfikacją, można użyć precision-recall.
-Dla problemów rankingowych lub klasyfikacji wieloznakowej można użyć średniej średniej precyzji[^fundamentals-5]
-. Nierzadko trzeba też zdefiniować własną, niestandardową metrykę, za pomocą której mierzy się sukces
-. Aby uzyskać poczucie różnorodności metryk dopasowania uczenia maszynowego i jak odnoszą się one do różnych domen problemowych, warto przejrzeć konkursy na Kaggle (kaggle.com); pokazują one szeroki zakres problemów i metryk
-.
+Dla problemów klasyfikacji zrównoważonej, gdzie każda klasa jest mniej więcej równie prawdopodobna, dokładność[^fundamentals-5] i obszar pod krzywą ROC są powszechnie stosowanymi metrykami.
+W przypadku problemów związanych z niezbalansowaną klasyfikacją, można użyć *precision-recall*.
+Dla problemów rankingowych lub klasyfikacji wieloznakowej, można użyć średniej średniej precyzji[^fundamentals-6]. Nierzadko trzeba też zdefiniować własną, niestandardową metrykę, za pomocą której mierzy się sukces. Aby uzyskać poczucie różnorodności metryk dopasowania uczenia maszynowego i jak odnoszą się one do różnych domen problemowych, warto przejrzeć konkursy na Kaggle (kaggle.com); pokazują one szeroki zakres problemów i metryk.
 
-[^fundamentals-4]: *accuracy*
+[^fundamentals-5]: *accuracy*
 
-[^fundamentals-5]: *mean average precision*
+[^fundamentals-6]: *mean average precision*
 
 ### Określenie techniki oceny wydajności modelu
 
-Kiedy już wiesz, do czego dążysz, musisz ustalić, jak będziesz mierzyć swoje bieżące postępy.
+Kiedy już wiemy, do czego dążymy, musimy ustalić, jak będziemy mierzyć nasze bieżące postępy.
 Wcześniej omówiliśmy trzy popularne protokoły oceny:
 
--   Utrzymywanie zbioru walidacyjnego typu *hold-out* - dobry sposób, gdy masz dużo danych;
--   Przeprowadzanie K-krotnej walidacji krzyżowej - właściwy wybór, gdy masz zbyt mało próbek, aby walidacja była wiarygodna.
--   Przeprowadzanie iterowanej walidacji K-krotnej z losowaniem - bardzo dokładna oceny modelu, gdy dostępnych jest niewiele danych.
+-   Utrzymywanie zbioru walidacyjnego typu *hold-out* - dobry sposób, gdy mamy dużo danych;
+-   Przeprowadzanie k-krotnej walidacji krzyżowej - właściwy wybór, gdy mamy zbyt mało próbek, aby walidacja była wiarygodna.
+-   Przeprowadzanie iterowanej walidacji k-krotnej z losowaniem - bardzo dokładna oceny modelu, gdy dostępnych jest niewiele danych.
 
 W większości przypadków pierwsza będzie działać wystarczająco dobrze.
 
 ### Przygotuj dane
 
-Kiedy już wiesz, na czym trenujesz, co optymalizujesz i jak ocenić swoje rozwiązanie, jesteś prawie gotowy do rozpoczęcia treningu modeli.
-Najpierw jednak należy sformatować dane w taki sposób, aby można je było wprowadzić do modelu uczenia maszynowego - tutaj założymy głęboką sieć neuronową:
+Kiedy już wiemy, na czym trenujemy, co optymalizujemy i jak oceniamy nasze rozwiązanie, jesteśmy prawie gotowi do rozpoczęcia treningu modeli. Najpierw jednak należy sformatować dane w taki sposób, aby można je było wprowadzić do modelu uczenia maszynowego - tutaj założymy głęboką sieć neuronową:
 
--   Jak widziałeś wcześniej, twoje dane powinny być sformatowane jako tensory.
--   Wartości przyjmowane przez te tensory powinny być zazwyczaj skalowane do małych wartości: na przykład w zakresie \[-1, 1\] lub \[0, 1\].
+-   Jak widzieliśmy wcześniej, nasze dane powinny być sformatowane jako tensory.
+-   Wartości przyjmowane przez te tensory powinny być zazwyczaj skalowane do małych wartości: na przykład w zakresie [-1, 1] lub [0, 1].
 -   Jeśli różne cechy przyjmują wartości w różnych zakresach (dane heterogeniczne), to dane powinny być znormalizowane.
 -   Możesz dokonać inżynierii cech, szczególnie dla problemów z małą liczbą danych.
 
-Gdy tensory danych wejściowych i danych docelowych są gotowe, możesz rozpocząć trenowanie modeli.
+Gdy tensory danych wejściowych i danych docelowych są gotowe, możemy rozpocząć trenowanie modeli.
 
-### Porównaj model z modelem bazowym
+### Porównanie modelu z modelem bazowym
 
-Twoim celem na tym etapie jest osiągnięcie mocy statystycznej: to znaczy opracowanie małego modelu, który jest w stanie pokonać model bazowy.
-W przykładzie klasyfikacji cyfr MNIST, wszystko co osiąga dokładność większą niż 0,1[^fundamentals-6] można powiedzieć, że ma moc statystyczną.
+Naszym celem na tym etapie jest osiągnięcie mocy statystycznej: to znaczy opracowanie małego modelu, który jest w stanie pokonać model bazowy. W przykładzie klasyfikacji cyfr MNIST, wszystko co osiąga dokładność większą niż 0,1[^fundamentals-7] można powiedzieć, że ma moc statystyczną.
 
-[^fundamentals-6]: zwykła heurystyka polegająca na wylosowaniu wynikowej cyfry ma prawdopodobieństwo powodzenia właśnie równe 0,1
+[^fundamentals-7]: zwykła heurystyka polegająca na wylosowaniu wynikowej cyfry ma prawdopodobieństwo powodzenia właśnie równe 0,1
 
-Zauważ, że nie zawsze jest możliwe osiągnięcie takiej mocy statystycznej.
-Jeśli nie możesz pokonać przyjętej linii bazowej po wypróbowaniu wielu rozsądnych architektur, może się okazać, że odpowiedź na pytanie, które zadajesz, nie jest dostępna na podstawie danych wejściowych.
-Pamiętaj, że stawiasz dwie hipotezy:
+Zauważmy, że nie zawsze jest możliwe osiągnięcie takiej mocy statystycznej. Jeśli nie możemy pokonać przyjętej linii bazowej po wypróbowaniu wielu rozsądnych architektur, może się okazać, że odpowiedź na pytanie, które zadajemy, nie jest dostępna na podstawie danych wejściowych. Pamiętajmy, że stawiamy dwie hipotezy:
 
 -   zmienną wynikową można przewidzieć, na postawie danych wejściowych;
 -   dane zawierają wystarczająco dużo informacji, aby poznać związek pomiędzy wejściami i wyjściami.
 
-Może się okazać, że te hipotezy są fałszywe.
-Zakładając, że wszystko idzie dobrze, musisz dokonać trzech kluczowych wyborów, aby zbudować swój pierwszy działający model:
+Może się okazać, że te hipotezy są fałszywe. Zakładając, że wszystko idzie dobrze, musimy dokonać trzech kluczowych wyborów, aby zbudować swój pierwszy działający model:
 
--   funkcja aktywacji ostatniej warstwy - ustanawia ona praktyczne ograniczenia na wyjściu sieci. Na przykład w sieci ze zmienną wynikową dwuwartościową (dwie kategorie) powinieneś ustawić aktywację sigmoid.
--   funkcja straty - powinna odpowiadać rodzajowi problemu, który próbujesz rozwiązać. Na przykład w przykładzie MNIST użyto `categorical_crossentropy`.
--   konfiguracja procedury optymalizacji - jakiego optymalizatora użyjesz? Jaki będzie jego współczynnik szybkości uczenia? W większości przypadków bezpiecznie jest użyć `rmsprop` lub `adam` i jego domyślnego współczynnika uczenia.
+-   funkcja aktywacji ostatniej warstwy - ustanawia ona praktyczne ograniczenia na wyjściu sieci. Na przykład w sieci ze zmienną wynikową dwuwartościową (dwie kategorie) powinniśmy ustawić aktywację `sigmoid`.
+-   funkcja straty - powinna odpowiadać rodzajowi problemu, który próbujemy rozwiązać. Na przykład w przykładzie MNIST użyto `categorical_crossentropy`.
+-   konfiguracja procedury optymalizacji - jakiego optymalizatora użyjemy? Jaki będzie jego współczynnik szybkości uczenia? W większości przypadków bezpiecznie jest użyć `rmsprop` lub `adam` i jego domyślnego współczynnika uczenia.
 
-Jeżeli chodzi o wybór funkcji straty, zauważ, że nie zawsze jest możliwa bezpośrednia optymalizacja dla metryki, która mierzy dopasowanie w danym problemie.
-Czasami nie ma łatwego sposobu na przekształcenie metryki w funkcję straty; funkcje straty, w końcu, muszą być obliczalne biorąc pod uwagę tylko partię danych (idealnie, funkcja straty powinna być obliczalna dla zaledwie jednego punktu danych) i musi być różniczkowalna (w przeciwnym razie nie można użyć wstecznej propagacji do trenowania sieci).
-Na przykład, szeroko stosowana metryka klasyfikacyjna ROC AUC nie może być bezpośrednio optymalizowana.
-Dlatego w zadaniach klasyfikacyjnych w jej miejsce używa się entropii krzyżowej (ang. *cross-entropy*).
-Można mieć nadzieję, że im niższa będzie entropia krzyżowa, tym wyższy będzie ROC-AUC.
+Jeżeli chodzi o wybór funkcji straty, zauważmy, że nie zawsze jest możliwa bezpośrednia optymalizacja dla metryki, która mierzy dopasowanie w danym problemie. Czasami nie ma łatwego sposobu na przekształcenie metryki w funkcję straty; w końcu funkcje straty, muszą być obliczalne biorąc pod uwagę tylko partię danych (idealnie, funkcja straty powinna być obliczalna dla zaledwie jednego punktu danych) i musi być różniczkowalna (w przeciwnym razie nie można użyć wstecznej propagacji do trenowania sieci). Na przykład, szeroko stosowana metryka klasyfikacyjna ROC AUC nie może być bezpośrednio optymalizowana. Dlatego w zadaniach klasyfikacyjnych w jej miejsce używa się entropii krzyżowej (ang. *cross-entropy*). Można mieć nadzieję, że im niższa będzie entropia krzyżowa, tym wyższy będzie ROC-AUC.
 
 ### Skalowanie w górę
 
-Kiedy już uzyskasz model, który ma moc statystyczną, pojawia się pytanie, czy twój model jest wystarczająco skuteczny?
-Czy ma on wystarczająco dużo warstw i parametrów, aby prawidłowo modelować dany problem?
-Na przykład, sieć z pojedynczą warstwą ukrytą z dwoma neuronami miałaby moc statystyczną dla zbioru MNIST, ale nie byłaby wystarczająca do dobrego rozwiązania problemu.
-Pamiętaj jednak, że w uczeniu maszynowym stale występuje "walka" między optymalizacją a generalizacją; idealny model to model pomiędzy niedostatecznym dopasowaniem a nadmiernym dopasowaniem.
-Aby dowiedzieć się, gdzie leży ta granica, najpierw trzeba ją przekroczyć `r emo::ji("sunglasses")`.
+Kiedy już uzyskamy model, który ma moc statystyczną, pojawia się pytanie, czy nasz model jest wystarczająco skuteczny? Czy ma on wystarczająco dużo warstw i parametrów, aby prawidłowo modelować dany problem? Na przykład, sieć z pojedynczą warstwą ukrytą z dwoma neuronami miałaby moc statystyczną dla zbioru MNIST, ale nie byłaby wystarczająca do dobrego rozwiązania problemu.
+Pamiętajmy jednak, że w uczeniu maszynowym stale występuje "walka" między optymalizacją a generalizacją; idealny model to model pomiędzy niedostatecznym dopasowaniem a nadmiernym dopasowaniem. Aby dowiedzieć się, gdzie leży ta granica, najpierw trzeba ją przekroczyć `r emo::ji("sunglasses")`.
 
-Aby dowiedzieć się, jak duży model będzie potrzebny, musisz opracować model, który jest nadmiernie dopasowany.
-Można to łatwo osiągnąć, realizują następujące kroki:
+Aby dowiedzieć się, jak duży model będzie potrzebny, musimy opracować model, który jest nadmiernie dopasowany. Można to łatwo osiągnąć, realizując następujące kroki:
 
-1.  Dodaj warstwy.
-2.  Spraw, by warstwy były większe (więcej neuronów).
-3.  Dłużej trenuj sieć (więcej epok).
+1.  Dodajmy warstwy.
+2.  Sprawmy, by warstwy były większe (więcej neuronów).
+3.  Dłużej trenujmy sieć (więcej epok).
 
-Zawsze monitoruj stratę na zbiorze treningowym i walidacyjnym, jak również wartości wszystkich metryk, na których Ci zależy.
-Kiedy widzisz, że wydajność modelu na danych walidacyjnych zaczyna się pogarszać, osiągnąłeś nadmierne dopasowanie.
-Następnym etapem jest rozpoczęcie regularyzacji i dostrajania modelu, aby zbliżyć się jak najbardziej do idealnego modelu, który nie jest ani niedopasowany, ani nadmiernie dopasowany.
+Zawsze monitorujmy stratę na zbiorze treningowym i walidacyjnym, jak również wartości wszystkich metryk, na których nam zależy. Kiedy widzimy, że wydajność modelu na danych walidacyjnych zaczyna się pogarszać, osiągnęliśmy nadmierne dopasowanie. Następnym etapem jest rozpoczęcie regularyzacji i dostrajania modelu, aby zbliżyć się jak najbardziej do idealnego modelu, który nie jest ani niedopasowany, ani nadmiernie dopasowany.
 
 ![](https://media.tenor.com/YlxhVNa39lYAAAAM/i-dont-understand-what-just-happened-here-ross-geller.gif){.column-margin fig-align="center" width="400"}
 
 ### Regularyzacja modelu
 
-Ten krok zajmie najwięcej czasu: będziesz wielokrotnie modyfikował swój model, trenował go, oceniał na danych walidacyjnych (w tym momencie nie na danych testowych), ponownie go modyfikował i powtarzał, aż model będzie tak dobry, jak to tylko możliwe.
-Oto kilka rzeczy, które powinieneś wypróbować:
+Ten krok zajmie najwięcej czasu: będziemy wielokrotnie modyfikowali nasz model, trenowali go, oceniali na danych walidacyjnych (w tym momencie nie na danych testowych), ponownie go modyfikowali i powtarzali tą procedurę, aż model będzie tak dobry, jak to tylko możliwe.
+Oto kilka rzeczy, które powinniśmy wypróbować:
 
--   dodaj dropout;
--   spróbuj różnych architektur - dodaj lub usuń warstwy;
--   dodaj regularyzację L1 i/lub L2.
--   wypróbuj różne hiperparametry (takie jak liczba jednostek na warstwę lub szybkość uczenia optymalizatora), aby znaleźć optymalną konfigurację;
--   opcjonalnie, wykonaj inżynierię cech - dodaj nowe cechy lub usuń cechy, które nie wydają się być informacyjne.
+-   dodaj warstwy *dropout*;
+-   spróbujmy różnych architektur - dodajmy lub usuńmy warstwy;
+-   dodajmy regularyzację L1 i/lub L2.
+-   wypróbujmy różne hiperparametry (takie jak liczba jednostek na warstwę lub szybkość uczenia optymalizatora), aby znaleźć optymalną konfigurację;
+-   opcjonalnie, wykonajmy inżynierię cech - dodajmy nowe cechy lub usuńmy cechy, które nie wydają się być informacyjne.
 
-Należy pamiętać o tym, że za każdym razem, gdy używamy informacji zwrotnej z procesu walidacji do dostrojenia modelu, do modelu wyciekają informacje o procesie walidacji.
-Powtarzając to tylko kilka razy, nie jest to wielki problem; ale robiąc to systematycznie przez wiele iteracji, w końcu spowoduje to, że Twój model będzie nadmiernie dopasowany do walidacji (nawet jeśli żaden model nie jest trenowany bezpośrednio na żadnych danych walidacyjnych).
-To sprawia, że proces oceny jest mniej wiarygodny.
+Należy pamiętać o tym, że za każdym razem, gdy używamy informacji zwrotnej z procesu walidacji do dostrojenia modelu, do modelu wyciekają informacje o procesie walidacji. Powtarzając to tylko kilka razy, nie jest to wielki problem; ale robiąc to systematycznie przez wiele iteracji, w końcu spowoduje to, że nasz model będzie nadmiernie dopasowany do walidacji (nawet jeśli żaden model nie jest trenowany bezpośrednio na żadnych danych walidacyjnych). To sprawia, że proces oceny jest mniej wiarygodny.
 
-Po opracowaniu wystarczająco dobrej konfiguracji modelu, możesz wytrenować swój ostateczny model na wszystkich dostępnych danych (treningowych i walidacyjnych) i ocenić go po raz ostatni na zbiorze testowym.
-Jeśli okaże się, że wydajność na zestawie testowym jest znacznie gorsza niż wydajność zmierzona na danych walidacyjnych, może to oznaczać, że albo twoja procedura walidacji nie była wiarygodna, albo wcześniej pojawiło się zjawisko nadmiernego dopasowania do danych walidacyjnych podczas dostrajania parametrów modelu.
-W tym przypadku możesz zmienić procedurę oceny modelu na bardziej wiarygodną (jak np. iterowana walidacja K-krotna).
+Po opracowaniu wystarczająco dobrej konfiguracji modelu, możemy wytrenować nasz ostateczny model na wszystkich dostępnych danych (treningowych i walidacyjnych) i ocenić go po raz ostatni na zbiorze testowym. Jeśli okaże się, że wydajność na zestawie testowym jest znacznie gorsza niż wydajność zmierzona na danych walidacyjnych, może to oznaczać, że albo nasza procedura walidacji nie była wiarygodna, albo wcześniej pojawiło się zjawisko nadmiernego dopasowania do danych walidacyjnych podczas dostrajania parametrów modelu. W tym przypadku możemy zmienić procedurę oceny modelu na bardziej wiarygodną (jak np. iterowana walidacja k-krotna).
