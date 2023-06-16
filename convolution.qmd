@@ -7,14 +7,11 @@ code-annotations: hover
 
 W tym rozdziale przedstawimy konwolucyjne (lub splotowe) sieci neuronowe (ang. *convolutional neural networks*), znane również jako *CovNets*, rodzaj modelu głębokiego uczenia się, który jest niemal zawsze stosowany w aplikacjach widzenia komputerowego.
 
-Wkrótce zagłębimy się w teorię tego, czym są sieci splotowe i dlaczego odniosły taki sukces w zadaniach związanych z widzeniem komputerowym.
-Ale najpierw przyjrzyjmy się w praktyce prostemu przykładowi sieci splotowej.
-Wykorzystuje on sieć kowolucyjną do klasyfikacji cyfr MNIST, czyli zadania, które wykonaliśmy wcześnej przy użyciu sieci gęsto połączonej (nasza dokładność testu wyniosła wtedy 97,8%).
+Wkrótce zagłębimy się w teorię tego, czym są sieci splotowe i dlaczego odniosły taki sukces w zadaniach związanych z widzeniem komputerowym. Ale najpierw przyjrzyjmy się w praktyce prostemu przykładowi sieci splotowej. Wykorzystuje on sieć kowolucyjną do klasyfikacji cyfr MNIST, czyli zadania, które wykonaliśmy wcześniej przy użyciu sieci gęsto połączonej (nasza dokładność testu wyniosła wtedy 97,8%).
 
 ![](https://editor.analyticsvidhya.com/uploads/999181_BIpRgx5FsEMhr1k2EqBKFg.gif){.column-margin fig-align="center" width="400"}
 
-Poniższe linie kodu pokazują, jak wygląda podstawowa sieć *CovNet*.
-Jest to stos warstw `layer_conv_2d` i `layer_max_pooling_2d` o których zasadzie działania będzie jeszcze więcej za chwilę.
+Poniższe linie kodu pokazują, jak wygląda podstawowa sieć *CovNet*. Jest to stos warstw `layer_conv_2d` i `layer_max_pooling_2d`, o których zasadzie działania będzie jeszcze więcej za chwilę.
 
 ```{r}
 library(keras)
@@ -27,22 +24,18 @@ model <- keras_model_sequential() %>%
   layer_conv_2d(filters = 64, kernel_size = c(3, 3), activation = "relu")
 ```
 
-Co ważne, *CovNet* przyjmuje jako dane wejściowe tensory o kształcie `(image_height, image_width, image_channels)` (nie licząc wymiaru partii).
-W tym przypadku skonfigurujemy sieć do przetwarzania danych wejściowych o rozmiarze `(28, 28, 1)`, czyli w formacie obrazów MNIST.
-Zrobimy to przekazując argument `input_shape = c(28, 28, 1)` do pierwszej warstwy.
+Co ważne, *CovNet* przyjmuje jako dane wejściowe tensory o kształcie `(image_height, image_width, image_channels)` (nie licząc wymiaru partii). W tym przypadku skonfigurujemy sieć do przetwarzania danych wejściowych o rozmiarze `(28, 28, 1)`, czyli w formacie obrazów MNIST. Zrobimy to przekazując argument `input_shape = c(28, 28, 1)` do pierwszej warstwy.
 
 ```{r}
 model
 ```
 
-Możesz zauważyć, że wyjście z warstw `layer_conv_2d` i `layer_max_pooling_2d` jest tensorem 3D kształtu `(wysokość, szerokość, filtry)`[^convolution-1].
-Wymiary szerokości i wysokości mają tendencję do kurczenia się, gdy wchodzisz głębiej w sieć.
-Liczba filtrów jest kontrolowana przez pierwszy argument przekazany do `layer_conv_2d` (32 lub 64).
+Zauważmy, że wyjścia z warstw `layer_conv_2d` i `layer_max_pooling_2d` są tensorami 3D kształtu `(wysokość, szerokość, filtry)`[^convolution-1]. Wymiary szerokości i wysokości mają tendencję do kurczenia się, gdy wchodzimy głębiej w sieć. Liczba filtrów jest kontrolowana przez pierwszy argument przekazany do `layer_conv_2d` (32 lub 64).
 
 [^convolution-1]: w niektórych publikacjach ostatni parametr jest nazywany kanałami, ale aby nie wprowadzać zamieszania, ponieważ nazwa kanał jest zarezerwowana do obrazów, to zostanę przy nazwie filtry
 
-Następnym krokiem jest wprowadzenie ostatniego tensora wyjściowego (o kształcie `(3, 3, 64)`) do gęsto połączonej sieci klasyfikatorów, takich jak te, które już znasz - stosu gęstych warstw.
-Te klasyfikatory przetwarzają wektory, które są 1D, podczas gdy bieżące wyjście jest tensorem 3D.
+Następnym krokiem jest wprowadzenie ostatniego tensora wyjściowego (o kształcie `(3, 3, 64)`) do gęsto połączonej sieci klasyfikatorów, takich jak te, które już znamy - stosu gęstych warstw.
+Te klasyfikatory przetwarzają wektory 1D, podczas gdy bieżące wyjście jest tensorem 3D.
 Najpierw musimy spłaszczyć wyjścia 3D do 1D, a następnie dodać kilka gęstych warstw na wierzchu.
 
 ```{r}
@@ -52,7 +45,7 @@ model <- model %>%
   layer_dense(units = 10, activation = "softmax")
 ```
 
-Zrobimy klasyfikację 10-kierunkową, używając warstwy końcowej z 10 wyjściami i aktywacją softmax.
+Zrobimy klasyfikację 10-kierunkową, używając warstwy końcowej z 10 wyjściami i aktywacją `softmax`.
 Oto jak wygląda teraz sieć:
 
 ```{r}
@@ -61,7 +54,7 @@ model
 
 Jak widać, wyjścia `(3, 3, 64)` są spłaszczane do wektorów o kształcie `(576)`[^convolution-2] przed przejściem przez dwie warstwy gęste.
 
-[^convolution-2]: ponieważ 3\*3\*64=576
+[^convolution-2]: ponieważ 3*3*64=576
 
 ```{r}
 #| cache: true
@@ -100,8 +93,7 @@ load("models/conv_hist1.rda")
 plot(history)
 ```
 
-Jak widać z powyższego wykresu model bardzo dobrze dopasował się do danych.
-Sprawdźmy zatem jak sobie radzi na zbiorze testowym.
+Jak widać z powyższego wykresu model bardzo dobrze dopasował się do danych. Sprawdźmy zatem jak sobie radzi na zbiorze testowym.
 
 ```{r}
 # cache: true
@@ -109,32 +101,20 @@ results <- model %>% evaluate(test_images, test_labels)
 results
 ```
 
-W rezultacie otrzymaliśmy sieć o dokładności 0.9908.
-Choć może to w stosunku do 0.9779, czyli dokładności dla sieci gęstej z pierwszego przykładu MNIST, to jednak względny błąd predykcji dla sieci splotowej zmalał o ponad 58% `r emo::ji("star_struck")`.
-Wynik imponujący, zatem pojawia się pytanie skąd taka dokładność?
-na czym polega magia sieci splotowych?
-W poniższych listingach postaramy się to wyjaśnić.
+W rezultacie otrzymaliśmy sieć o dokładności 99,08%. Choć może to w stosunku do 97,79%, czyli dokładności dla sieci gęstej z pierwszego przykładu MNIST, to jednak względny błąd predykcji dla sieci splotowej zmalał o ponad 58% `r emo::ji("star_struck")`. Wynik imponujący, zatem pojawia się pytanie skąd taka dokładność? Na czym polega magia sieci splotowych? W poniższych listingach postaramy się to wyjaśnić.
 
 ## Działanie sieci splotowej
 
-Podstawową różnicą pomiędzy warstwą gęstych połączeń a siecią splotową jest to, że warstwy `dense` uczą się cech parametrów globalnych w swoich wejściowych przestrzeniach (w przypadku cyfr MNIST są to wzorce związane ze wszystkimi pikselami), a warstwy konwolucyjne uczą się lokalnych wzorców (patrz rys) - w przypadku obrazów wzorce są znajdowane w małych dwuwymiarowych oknach danych wejściowych.
-W zaprezentowanym przykładzie wszystkie te okna charakteryzowały się wymiarami 3x3.
+Podstawową różnicą pomiędzy warstwą gęstych połączeń a siecią splotową jest to, że warstwy `dense` uczą się cech parametrów globalnych w swoich wejściowych przestrzeniach (w przypadku cyfr MNIST są to wzorce związane ze wszystkimi pikselami), a warstwy konwolucyjne uczą się lokalnych wzorców (patrz @fig-wz1) - w przypadku obrazów wzorce są znajdowane w małych dwuwymiarowych oknach danych wejściowych. W zaprezentowanym przykładzie wszystkie te okna charakteryzowały się wymiarami 3x3.
 
 ![Rozbicie obrazu na lokalne wzorce](images/Zrzut%20ekranu%202023-03-2%20o%2018.34.26.png){#fig-wz1 fig-align="center" width="400"}
 
 Dzięki tej kluczowej charakterystyce sieci konwolucyjne mają dwie ciekawe własności:
 
 -   wzorce rozpoznawane przez sieć są niezależne od przesunięcia. Sieć konwolucyjna po rozpoznaniu określonego wzoru w prawym dolnym rogu obrazu może rozpoznać go np. w lewym górnym rogu obrazu. Sieć gęsta w celu rozpoznania wzorca znajdującego się w innym miejscu musi nauczyć się go na nowo. W związku z tym sieci konwolucyjne charakteryzują się dużą wydajnością podczas przetwarzania obrazów. Sieci splotowe mogą skutecznie tworzyć uogólnienia po przetworzeniu mniejszego zbioru testowego.
--   sieci splotowe mogą uczyć się przestrzennej hierarchii wzorców (patrz @fig-conv2). Pierwsza warstwa uczy się rozpoznania położenia kluczowych obiektów przez zmianę konturów i kontrastu. Druga warstwa (*pooling*) redukuje najważniejsze informacje do prostszej postaci (zmniejszenie rozdzielczości). Kolejna warstwa stara się wyciągnąć kluczowe elementy (wzorce) występujące w obiekcie, jak linie proste, ukośne, okręgi, łuki, itp. Kolejne dwie warstwy ponownie redukują rozdzielczość wyciągając kluczowe elementy obrazu. Ostatecznie wartości wyjściowe z ostatniej warstwy konwolucyjnej przekazują kluczowe informacje do sieci gęstej, a ta ostatecznie zamienia je za pomocą funkcji softmax na przewidywane cyfry.
+-   sieci splotowe mogą uczyć się przestrzennej hierarchii wzorców (patrz @fig-conv2). Pierwsza warstwa uczy się rozpoznania położenia kluczowych obiektów przez zmianę konturów i kontrastu. Druga warstwa (*pooling*) redukuje najważniejsze informacje do prostszej postaci (zmniejszenie rozdzielczości). Kolejna warstwa stara się wyciągnąć kluczowe elementy (wzorce) występujące w obiekcie, jak linie proste, ukośne, okręgi, łuki, itp. Kolejne dwie warstwy ponownie redukują rozdzielczość wyciągając kluczowe elementy obrazu. Ostatecznie wartości wyjściowe z ostatniej warstwy konwolucyjnej przekazują kluczowe informacje do sieci gęstej, a ta ostatecznie zamienia je za pomocą funkcji `softmax` na przewidywane cyfry.
 
-Sieci konwolucyjne działają na trójwymiarowych tensorach określanych mianem map cech, zawierających dwie przestrzenne osie definiujące wysokość i szerokość.
-Trzecią osią jest oś głębi, nazywana również osią kanałów.
-W przypadku obrazu RGB oś głębi ma trzy wymiary (po jednym dla każdego koloru).
-Obrazy monochromatyczne (takie jak MNIST), mają jeden wymiar głębi (kolor opisuje tylko skalę nasycenia szarości).
-Operacja konwolucji wyodrębnia fragmenty z wejściowej mapy cech i stosuje to samo przekształcenie do wszystkich tych fragmentów, dając wyjściową mapę cech.
-Ta wyjściowa mapa cech jest nadal tensorem 3D: ma szerokość i wysokość.
-Jej głębokość może być dowolna, ponieważ głębokość wyjściowa jest parametrem warstwy, a różne kanały w tej osi głębokości nie oznaczają już konkretnych kolorów, jak w przypadku wejścia RGB; oznaczają one raczej filtry.
-Filtry kodują specyficzne aspekty danych wejściowych: na wysokim poziomie pojedynczy filtr może kodować na przykład pojęcie "obecności twarzy na wejściu".
+Sieci konwolucyjne działają na trójwymiarowych tensorach określanych mianem map cech, zawierających dwie przestrzenne osie definiujące wysokość i szerokość. Trzecią osią jest oś głębi, nazywana również osią kanałów. W przypadku obrazu RGB oś głębi ma trzy wymiary (po jednym dla każdego koloru). Obrazy monochromatyczne (takie jak MNIST), mają jeden wymiar głębi (kolor opisuje tylko skalę nasycenia szarości). Operacja konwolucji wyodrębnia fragmenty z wejściowej mapy cech i stosuje to samo przekształcenie do wszystkich tych fragmentów, dając wyjściową mapę cech. Ta wyjściowa mapa cech jest nadal tensorem 3D: ma szerokość i wysokość. Jej głębokość może być dowolna, ponieważ głębokość wyjściowa jest parametrem warstwy, a różne kanały w tej osi głębokości nie oznaczają już konkretnych kolorów, jak w przypadku wejścia RGB; oznaczają one raczej filtry. Filtry kodują specyficzne aspekty danych wejściowych: na wysokim poziomie pojedynczy filtr może kodować na przykład pojęcie "obecności twarzy na wejściu".
 
 ![Procedura filtrowania obrazu](images/Zrzut%20ekranu%202023-03-2%20o%2018.58.12.png){#fig-conv fig-align="center" width="600"}
 
@@ -149,65 +129,38 @@ Konwolucje są definiowane przez dwa kluczowe parametry:
 
 W `keras` parametry te są pierwszymi argumentami przekazywanymi do warstwy: `layer_conv_2d(output_depth, c(window_height, window_width))`.
 
-Konwolucja działa poprzez przesuwanie tych okien o rozmiarze 3 × 3 lub 5 × 5 po wejściowej mapie cech 3D, zatrzymując się w każdym możliwym miejscu, i wyodrębniając trójwymiarową łatę otaczających cech (kształt `(window_height, window_width, input_depth)`).
-Każda taka paczka 3D jest następnie przekształcana (poprzez iloczyn tensorowy z tą samą uczoną macierzą wag, zwaną jądrem konwolucji) w 1D wektor kształtu (`output_depth`).
-Wszystkie te wektory są następnie przestrzennie składane w trójwymiarową wyjściową mapę kształtu `(wysokość, szerokość, głębokość wyjściowa)`.
-Każde miejsce w wyjściowej mapie cech odpowiada temu samemu miejscu w wejściowej mapie cech (na przykład prawy dolny róg wyjścia zawiera informacje o prawym dolnym rogu wejścia).
-Na przykład, przy oknach 3 × 3, wektor `output[i, j, ]` pochodzi z wejściowej mapy 3D `input[i-1:i+1, j-1:j+1, ]`.
+Konwolucja działa poprzez przesuwanie tych okien o rozmiarze 3 × 3 lub 5 × 5 po wejściowej mapie cech 3D, zatrzymując się w każdym możliwym miejscu, i wyodrębniając trójwymiarową łatę otaczających cech (kształt `(window_height, window_width, input_depth)`). Każda taka paczka 3D jest następnie przekształcana (poprzez iloczyn tensorowy z tą samą uczoną macierzą wag, zwaną jądrem konwolucji) w 1D wektor kształtu (`output_depth`). Wszystkie te wektory są następnie przestrzennie składane w trójwymiarową wyjściową mapę kształtu `(wysokość, szerokość, głębokość wyjściowa)`. Każde miejsce w wyjściowej mapie cech odpowiada temu samemu miejscu w wejściowej mapie cech (na przykład prawy dolny róg wyjścia zawiera informacje o prawym dolnym rogu wejścia). Na przykład, przy oknach 3 × 3, wektor `output[i, j, ]` pochodzi z wejściowej mapy 3D `input[i-1:i+1, j-1:j+1, ]`.
 Pełny proces został szczegółowo przedstawiony na @fig-conv0.
 
 ![Zasada działania filtrów w sieci splotowej](https://mukulrathi.com/aad8a78e265cb76c3b0ebe17a058b19c/conv-slide.gif){#fig-conv0 fig-align="center" width="600"}
 
-Zauważ, że szerokość i wysokość wyjściowa może się różnić od szerokości i wysokości wejściowej.
+Zauważmy, że szerokość i wysokość wyjściowa może się różnić od szerokości i wysokości wejściowej.
 Mogą się one różnić z dwóch powodów:
 
--   Efekty brzegowe, którym można przeciwdziałać poprzez padding wejściowej mapy funkcji
+-   Efekty brzegowe, którym można przeciwdziałać poprzez *padding* wejściowej mapy funkcji
 -   Użycie pasków (ang. *strides*), które zdefiniujemy za chwilę.
 
 ### Efekty brzegowe - *padding*
 
-Rozważmy mapę cech 5 × 5 (łącznie 25 kwadratów).
-Jest tylko 9 kwadratów, wokół których można wyśrodkować okno 3 × 3, tworząc siatkę 3 × 3.
-Dlatego też wyjściowa mapa cech zmniejsza się nieco: w tym przypadku dokładnie o dwa kwadraty wzdłuż każdego wymiaru.
-Ten efekt brzegowy można zobaczyć w działaniu we wcześniejszym przykładzie: zaczynasz z 28 × 28 na danych wejściowych, które po pierwszej warstwie konwolucji stają się 26 × 26.
+Rozważmy mapę cech 5 × 5 (łącznie 25 kwadratów). Jest tylko 9 kwadratów, wokół których można wyśrodkować okno 3 × 3, tworząc siatkę 3 × 3. Dlatego też wyjściowa mapa cech zmniejsza się nieco: w tym przypadku dokładnie o dwa kwadraty wzdłuż każdego wymiaru. Ten efekt brzegowy można zobaczyć w działaniu we wcześniejszym przykładzie: zaczynamy z 28 × 28 na danych wejściowych, które po pierwszej warstwie konwolucji stają się 26 × 26.
 
-Jeśli chcesz uzyskać wyjściową mapę cech o takich samych wymiarach przestrzennych jak wejściowa, możesz użyć *paddingu*.
-*Padding* polega na dodaniu odpowiedniej liczby wierszy i kolumn po każdej stronie wejściowej mapy cech, tak aby umożliwić dopasowanie środkowych okien konwolucji wokół każdego kafelka wejściowego.
-Dla okna 3 × 3 dodasz jedną kolumnę po prawej, jedną kolumnę po lewej, jeden rząd na górze i jeden rząd na dole.
-Dla okna 5 × 5 dodałbyś dwa rzędy (patrz @fig-conv0).
+Jeśli chcemy uzyskać wyjściową mapę cech o takich samych wymiarach przestrzennych jak wejściowa, możemy użyć *paddingu*. *Padding* polega na dodaniu odpowiedniej liczby wierszy i kolumn po każdej stronie wejściowej mapy cech, tak aby umożliwić dopasowanie środkowych okien konwolucji wokół każdego kafelka wejściowego. Dla okna 3 × 3 dodamy jedną kolumnę po prawej, jedną kolumnę po lewej, jeden rząd na górze i jeden rząd na dole. Dla okna 5 × 5 dodalibyśmy dwa rzędy (patrz @fig-conv0).
 
-W warstwach `layer_conv_2d` *padding* jest konfigurowalny poprzez argument `padding`, który przyjmuje dwie wartości: "`valid`", co oznacza brak *paddingu* (zostaną użyte tylko poprawne lokalizacje okien); oraz "`same`", co oznacza "rozszerz wejście w taki sposób, aby mieć wyjście o takiej samej szerokości i wysokości jak wejście".
-Argument *padding* domyślnie przyjmuje wartość "`valid`".
+W warstwach `layer_conv_2d` *padding* jest konfigurowalny poprzez argument `padding`, który przyjmuje dwie wartości: `valid`, co oznacza brak *paddingu* (zostaną użyte tylko poprawne lokalizacje okien); oraz `same`, co oznacza "rozszerz wejście w taki sposób, aby mieć wyjście o takiej samej szerokości i wysokości jak wejście". Argument *padding* domyślnie przyjmuje wartość `valid`.
 
 ![Przykłady *paddingu* i konwolucji kroczącej](https://miro.medium.com/v2/resize:fit:1400/1*s-Hm4M6au-bqW8VLL5qo3g.gif){#fig-padd fig-align="center" width="600"}
 
 ### Efekty brzegowe - *stirdes*
 
-Innym czynnikiem, który może wpływać na wielkość wyjścia jest pojęcie kroku (ang. *strides*).
-Dotychczasowy opis konwolucji zakładał, że wszystkie środkowe kwadraty okien konwolucji są przylegające.
-Jednak odległość między dwoma kolejnymi oknami jest parametrem konwolucji, zwanym jej krokiem, który domyślnie wynosi 1.
-Możliwe jest istnienie konwolucji kroczących: konwolucji o kroku większym niż jeden.
-Na @fig-padd widać części wyekstrahowane przez konwolucję 3 x 3 z rozstępem 2 na wejściu 5 × 5 (bez wypełnienia).
-Użycie kroku 2 oznacza, że szerokość i wysokość mapy cech są pomniejszane o współczynnik 2 (oprócz zmian wywołanych przez efekty brzegowe).
-Konwersje z przesunięciem są rzadko używane w praktyce, choć mogą być przydatne w niektórych typach modeli; dobrze jest zapoznać się z tą koncepcją.
-Do *downsamplingu* map cech, zamiast kroków, używamy zwykle operacji *max* *pooling*, którą zastosowaliśmy w sieci do przykładu MNIST.
-Przyjrzyjmy się jej bardziej szczegółowo.
+Innym czynnikiem, który może wpływać na wielkość wyjścia jest pojęcie pasków (ang. *strides*). Dotychczasowy opis konwolucji zakładał, że wszystkie środkowe kwadraty okien konwolucji są przylegające. Jednak odległość między dwoma kolejnymi oknami jest parametrem konwolucji, zwanym jej paskiem, który domyślnie wynosi 1. Możliwe jest istnienie konwolucji paskowych: konwolucji o pasku większym niż jeden. Na @fig-padd widać części wyekstrahowane przez konwolucję 3 x 3 z paskiem 2 na wejściu 5 × 5 (bez wypełnienia). Użycie paska o szerokości 2 oznacza, że szerokość i wysokość mapy cech są pomniejszane o współczynnik 2 (oprócz zmian wywołanych przez efekty brzegowe). Konwolucje z paskami są rzadko używane w praktyce, choć mogą być przydatne w niektórych typach modeli; dobrze jest zapoznać się z tą koncepcją. Do *downsamplingu* map cech, zamiast kroków, używamy zwykle operacji *max* *pooling*, którą zastosowaliśmy w sieci do przykładu MNIST. Przyjrzyjmy się jej bardziej szczegółowo.
 
 ## Max pooling
 
-W przykładzie MNIST mogłeś zauważyć, że rozmiar map cech jest zmniejszany o połowę po każdej operacji `layer_max_pooling_2d`.
-Na przykład przed pierwszą `layer_max_pooling_2d` mapa cech ma rozmiar 26 × 26, ale operacja *max* *poolingu* zmniejsza ją o połowę do 13 × 13.
-Taka jest właśnie rola *max poolingu*: agresywne zmniejszanie próbkowania map cech, podobnie jak w przypadku konwolucji krokowych.
+W przykładzie MNIST mogliśmy zauważyć, że rozmiar map cech jest zmniejszany o połowę po każdej operacji `layer_max_pooling_2d`. Na przykład przed pierwszą `layer_max_pooling_2d` mapa cech ma rozmiar 26 × 26, ale operacja *max* *poolingu* zmniejsza ją o połowę do 13 × 13. Taka jest właśnie rola *max poolingu*: agresywne zmniejszanie próbkowania map cech, podobnie jak w przypadku konwolucji krokowych.
 
-Operacja *max pooling* polega na wyodrębnieniu okien z wejściowych map cech i wyprowadzeniu maksymalnej wartości każdego filtra.
-Koncepcyjnie jest to podobne do konwolucji, z tą różnicą, że zamiast przekształcać lokalne plamy poprzez wyuczone przekształcenie liniowe (jądro konwolucji), są one przekształcane poprzez zakodowaną operację `max` tensora.
-Dużą różnicą w stosunku do konwolucji jest to, że *max pooling* jest zwykle wykonywany z oknami 2 × 2 i krokiem 2, w celu zmniejszenia próbkowania map cech o współczynnik 2.
-Z drugiej strony, konwolucja jest zwykle wykonywana z oknami 3 × 3 i bez kroku (*stride* 1).
+Operacja *max pooling* polega na wyodrębnieniu okien z wejściowych map cech i wyprowadzeniu maksymalnej wartości każdego filtra. Koncepcyjnie jest to podobne do konwolucji, z tą różnicą, że zamiast przekształcać lokalne łaty poprzez wyuczone przekształcenie liniowe (jądro konwolucji), są one przekształcane poprzez zakodowaną operację `max` tensora. Dużą różnicą w stosunku do konwolucji jest to, że *max pooling* jest zwykle wykonywany z oknami 2 × 2 i krokiem 2, w celu zmniejszenia próbkowania map cech o współczynnik 2. Z drugiej strony, konwolucja jest zwykle wykonywana z oknami 3 × 3 i bez kroku (*stride* 1).
 
-Dlaczego obniżamy rozmiar mapy cech w ten sposób?
-Dlaczego nie usunąć warstw *max pooling* i zachować dość duże mapy funkcji przez całą sieć?
-Przyjrzyjmy się tej opcji.
-Konwolucyjna baza modelu wyglądałaby wtedy tak:
+Dlaczego obniżamy rozmiar mapy cech w ten sposób? Dlaczego nie usunąć warstw *max pooling* i zachować dość duże mapy funkcji przez całą sieć? Przyjrzyjmy się tej opcji. Konwolucyjna baza modelu wyglądałaby wtedy tak:
 
 ```{r}
 model_no_max_pool <- keras_model_sequential() %>%
@@ -219,24 +172,21 @@ model_no_max_pool <- keras_model_sequential() %>%
 model_no_max_pool
 ```
 
-Co jest nie tak z tą architekturą?
-Dwie rzeczy:
+Co jest nie tak z tą architekturą? Dwie rzeczy:
 
--   Nie sprzyja uczeniu się przestrzennej hierarchii cech. Okna 3 × 3 w trzecich warstwach będą zawierały jedynie informacje pochodzące z okien 7 × 7 wejścia początkowego. Wzorce wysokopoziomowe wyuczone przez sieć splotową będą nadal bardzo małe w stosunku do początkowego wejścia, co może nie wystarczyć do nauki klasyfikacji cyfr (spróbuj rozpoznać cyfrę, patrząc na nią tylko przez okna o wymiarach 7 × 7 pikseli!). Potrzebujemy, aby cechy z ostatniej warstwy konwolucji zawierały informacje o całości danych wejściowych.
--   Ostateczna mapa cech ma 22 \* 22 \* 64 = 30 976 wszystkich współczynników na próbkę. Jest to ogromna ilość. Jeśli miałbyś ją spłaszczyć, aby dołaczyć gęstą warstwę o rozmiarze 512, ta warstwa miałaby 15,8 miliona parametrów. Jest to zdecydowanie zbyt dużo dla tak małego modelu i spowodowałoby przeuczenie.
+-   Nie sprzyja uczeniu się przestrzennej hierarchii cech. Okna 3 × 3 w trzecich warstwach będą zawierały jedynie informacje pochodzące z okien 7 × 7 wejścia początkowego. Wzorce wysokopoziomowe wyuczone przez sieć splotową będą nadal bardzo małe w stosunku do początkowego wejścia, co może nie wystarczyć do klasyfikacji cyfr (spróbujmy rozpoznać cyfrę, patrząc na nią tylko przez okna o wymiarach 7 × 7 pikseli!). Potrzebujemy, aby cechy z ostatniej warstwy konwolucji zawierały informacje o całości danych wejściowych.
+-   Ostateczna mapa cech ma 22 * 22 * 64 = 30976 wszystkich współczynników na próbkę. Jest to ogromna ilość. Jeśli mielibyśmy ją spłaszczyć, aby dołączyć gęstą warstwę o rozmiarze 512, ta warstwa miałaby 15,8 miliona parametrów. Jest to zdecydowanie zbyt dużo dla tak małego modelu i spowodowałoby przeuczenie.
 
 W skrócie, powodem użycia redukcji wymiaru jest zmniejszenie liczby współczynników mapy cech do przetworzenia, jak również wywołanie hierarchii filtrów przestrzennych poprzez sprawienie, że kolejne warstwy konwolucji będą patrzyły na coraz większe okna (w sensie ułamka oryginalnego wejścia, które obejmują).
 
-Zauważ, że *max pooling* nie jest jedynym sposobem, w jaki możesz osiągnąć taki redukcję wymiaru.
-Jak już wiesz, możesz również użyć kroków w poprzedniej warstwie konwolucji.
-I możesz użyć *average pooling* zamiast *max pooling*, gdzie każdy lokalny fragment wejściowy jest przekształcany przez użycie średniej wartości każdego filtra w tym fragmencie, a nie maksimum.
+Zauważmy, że *max pooling* nie jest jedynym sposobem, w jaki możemy osiągnąć taką redukcję wymiaru.
+Możemy też użyć *average pooling* zamiast *max pooling*, gdzie każdy lokalny fragment wejściowy jest przekształcany przez użycie średniej wartości każdego filtra w tym fragmencie, a nie maksimum.
 Mimo to, *max pooling* jest preferowanym rozwiązaniem ponieważ często daje lepsze rezultaty.
-W skrócie, powodem jest to, że cechy mają tendencję do kodowania przestrzennej obecności jakiegoś wzoru lub koncepcji w różnych kaflach mapy cech (stąd termin mapa cech), a bardziej informatywne jest spojrzenie na maksymalną obecność różnych cech niż na ich średnią obecność.
-Tak więc najrozsądniejszą strategią redukcji wymiaru jest najpierw wytworzenie map cech, a następnie spojrzenie na maksymalną aktywację cech w małych fragmentach, a nie patrzenie na rzadsze okna wejść lub uśrednianie fragmentów wejściowych, co może spowodować przegapienie lub rozmycie informacji o obecności cech.
+W skrócie, powodem jest to, że cechy mają tendencję do kodowania przestrzennej obecności jakiegoś wzoru lub koncepcji w różnych kaflach mapy cech (stąd termin mapa cech), a bardziej informatywne jest spojrzenie na maksymalną obecność różnych cech niż na ich średnią obecność. Tak więc najrozsądniejszą strategią redukcji wymiaru jest najpierw wytworzenie map cech, a następnie spojrzenie na maksymalną aktywację cech w małych fragmentach, a nie patrzenie na rzadsze okna wejść lub uśrednianie fragmentów wejściowych, co może spowodować przegapienie lub rozmycie informacji o obecności cech.
 
 Poniżej zaprezentowane są wyniki działania poszczególnych warstw sieci konwolucyjnej.
 
-``` r
+```{r}
 #| label: fig-conv1
 #| fig-cap: Wyniki filtracji pierwszą warstwą splotową (wybrano filtry 4 i 10)
 #| layout-ncol: 2
@@ -279,7 +229,7 @@ plot_channel(first_layer_activation[1,,,10])
 
 Tak wygląda wynik pierwszej warstwy splotowej dla wybranych dwóch filtrów (kanałów), a jakby to wyglądało gdyby wyświetlić wyniki wszystkich warstw i kanałów.
 
-``` r
+```{r}
 #| eval: false
 dir.create("nine_activations") # <1>
 image_size <- 58 # <2>
@@ -312,7 +262,7 @@ for (i in 1:5) { # <4>
 1.  stwórz katalog na obrazy
 2.  wybierz wielkość obrazu w px
 3.  wybierz ile obrazów ma się mieścić w wierszu
-4.  rozpocznij pętlę po wszystkich nr warstw splowych
+4.  rozpocznij pętlę po wszystkich nr warstw splotowych
 5.  przypisz i-tą warstwę
 6.  zapisz nazwę warstwy
 7.  wyciągnij liczbę filtrów
