@@ -276,7 +276,7 @@ div.csl-indent {
   <ul>
   <li><a href="#nowoczesne-architektury-sieci-splotowych" id="toc-nowoczesne-architektury-sieci-splotowych" class="nav-link active" data-scroll-target="#nowoczesne-architektury-sieci-splotowych"><span class="header-section-number">14.1</span> Nowoczesne architektury sieci splotowych</a>
   <ul class="collapse">
-  <li><a href="#połączenia-resztowe" id="toc-połączenia-resztowe" class="nav-link" data-scroll-target="#połączenia-resztowe"><span class="header-section-number">14.1.1</span> Połączenia resztowe</a></li>
+  <li><a href="#połączenia-rezydualne" id="toc-połączenia-rezydualne" class="nav-link" data-scroll-target="#połączenia-rezydualne"><span class="header-section-number">14.1.1</span> Połączenia rezydualne</a></li>
   <li><a href="#normalizacja-partii" id="toc-normalizacja-partii" class="nav-link" data-scroll-target="#normalizacja-partii"><span class="header-section-number">14.1.2</span> Normalizacja partii</a></li>
   <li><a href="#konwolucje-separowalne" id="toc-konwolucje-separowalne" class="nav-link" data-scroll-target="#konwolucje-separowalne"><span class="header-section-number">14.1.3</span> Konwolucje separowalne</a></li>
   <li><a href="#przykład-wykorzystania-sieci-xception" id="toc-przykład-wykorzystania-sieci-xception" class="nav-link" data-scroll-target="#przykład-wykorzystania-sieci-xception"><span class="header-section-number">14.1.4</span> Przykład wykorzystania sieci Xception</a></li>
@@ -305,25 +305,25 @@ div.csl-indent {
 
 </header>
 
-<p>Do tej pory skupialiśmy się na modelach klasyfikacji obrazów: wchodzi obraz, wychodzi etykieta: “Ten obraz prawdopodobnie zawiera kota; ten inny prawdopodobnie zawiera psa”. Ale klasyfikacja obrazów jest tylko jednym z kilku możliwych zastosowań głębokiego uczenia w wizji komputerowej. Ogólnie rzecz biorąc, istnieją trzy podstawowe zadania wizji komputerowej, o których musisz wiedzieć:</p>
+<p>Do tej pory skupialiśmy się na modelach klasyfikacji obrazów gdzie wejściem był obraz, a wyjściem etykieta: “Ten obraz prawdopodobnie zawiera kota; ten inny prawdopodobnie zawiera psa”. Ale klasyfikacja obrazów jest tylko jednym z kilku możliwych zastosowań głębokiego uczenia w wizji komputerowej. Ogólnie rzecz biorąc, istnieją trzy podstawowe zadania wizji komputerowej:</p>
 <ul>
-<li>Klasyfikacja obrazu - gdy celem jest przypisanie jednej lub więcej etykiet do obrazu. Może to być klasyfikacja jednoetykietowa (obraz może należeć tylko do jednej kategorii, z pominięciem innych) lub wieloetykietowa (oznaczanie wszystkich kategorii, do których należy obraz, jak widać na <a href="#fig-seg1">Rysunek&nbsp;<span>14.1</span></a>). Na przykład, gdy wyszukujesz słowo kluczowe w aplikacji Zdjęcia Google, za kulisami odpytujesz bardzo duży model klasyfikacji wieloznakowej - jedena z ponad 20 000 różnych klas, wytrenowany na milionach obrazów.</li>
-<li>Segmentacja obrazu - gdy celem jest “podział” obrazu na różne obszary, przy czym każdy obszar reprezentuje zazwyczaj kategorię (jak widać na <a href="#fig-seg1">Rysunek&nbsp;<span>14.1</span></a>). Na przykład, gdy podczas rozmowy wideo Zoom lub Google Meet wyświetlają za Tobą niestandardowe tło, używają modelu segmentacji obrazu, aby odróżnić Twoją twarz od tego, co znajduje się za nią, z dokładnością do piksela.</li>
+<li>Klasyfikacja obrazu - gdy celem jest przypisanie jednej lub więcej etykiet do obrazu. Może to być klasyfikacja jednoetykietowa (obraz może należeć tylko do jednej kategorii, z pominięciem innych) lub wieloetykietowa (oznaczanie wszystkich kategorii, do których należy obraz, jak widać na <a href="#fig-seg1">Rysunek&nbsp;<span>14.1</span></a>). Na przykład, gdy wyszukujemy słowo kluczowe w aplikacji Zdjęcia Google, za kulisami odpytujemy bardzo duży model klasyfikacji wieloznakowej - jedna z ponad 20 000 różnych klas, wytrenowany na milionach obrazów.</li>
+<li>Segmentacja obrazu - gdy celem jest “podział” obrazu na różne obszary, przy czym każdy obszar reprezentuje zazwyczaj kategorię (jak widać na <a href="#fig-seg1">Rysunek&nbsp;<span>14.1</span></a>). Na przykład, gdy podczas rozmowy wideo Zoom lub Google Meet wyświetlają za nami niestandardowe tła, wykorzystywana jest wówczas segmentacji obrazu, aby odróżnić naszą twarz od tego, co znajduje się za nią, z dokładnością do piksela.</li>
 <li>Wykrywanie obiektów - gdzie celem jest narysowanie prostokątów (zwanych polami ograniczającymi) wokół interesujących obiektów na obrazie i powiązanie każdego prostokąta z klasą. Samochód samojezdny może używać modelu wykrywania obiektów do monitorowania samochodów, pieszych i znaków w polu widzenia kamer.</li>
 </ul>
 <div id="fig-seg1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="images/Zrzut ekranu 2023-03-18 o 10.29.55.png" class="img-fluid figure-img" width="600"></p>
+<p><img src="images/Zrzut ekranu 2023-03-18 o 10.29.55.png" class="img-fluid figure-img" width="700"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;14.1: Przykłady wykorzystania sieci splotowych w zadaniach z wizji komputerowej</figcaption><p></p>
 </figure>
 </div>
-<p>Głębokie uczenie dla wizji komputerowej obejmuje również szereg nieco bardziej niszowych zadań poza tymi trzema, takich jak ocena podobieństwa obrazów (szacowanie, jak bardzo dwa obrazy są podobne wizualnie), wykrywanie punktów kluczowych (wskazywanie atrybutów zainteresowania na obrazie, takich jak rysy twarzy), ocena pozy czy humoru, estymacja siatki 3D i tak dalej. Ale na początek klasyfikacja obrazów, segmentacja obrazów i wykrywanie obiektów stanowią podstawę, z którą każdy pionier uczenia maszynowego powinien być zaznajomiony. Większość zastosowań wizji komputerowej sprowadza się do jednego z tych trzech zadań.</p>
+<p>Głębokie uczenie dla wizji komputerowej obejmuje również szereg nieco bardziej niszowych zadań poza tymi trzema, takich jak ocena podobieństwa obrazów (szacowanie, jak bardzo dwa obrazy są podobne wizualnie), wykrywanie punktów kluczowych (wskazywanie atrybutów zainteresowania na obrazie, takich jak rysy twarzy), ocena pozy czy humoru, estymacja siatki 3D i tak dalej. Ale na początek klasyfikacja obrazów, segmentacja obrazów i wykrywanie obiektów stanowią podstawę, z którą powinniśmy poznać. Większość zastosowań wizji komputerowej sprowadza się do jednego z tych trzech zadań.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://pcl.sitehost.iu.edu/rgoldsto/projects/segmentation.jpg" class="img-fluid figure-img" width="400"></p>
 </figure>
-</div></div><p>Segmentacja obrazu z głębokim uczeniem polega na użyciu modelu do przypisania klasy do każdego piksela w obrazie, a tym samym segmentacji obrazu na różne strefy (takie jak “tło” i “pierwszy plan” lub “droga”, “samochód” i “chodnik”). Ta ogólna kategoria technik może być wykorzystana do zasilania znacznej liczby cennych aplikacji w edycji obrazu i wideo, autonomicznej jazdy, robotyki, obrazowania medycznego, i tak dalej. Istnieją dwa różne rodzaje segmentacji obrazu, o których powinieneś wiedzieć:</p>
+</div></div><p>Segmentacja obrazu z głębokim uczeniem polega na użyciu modelu do przypisania klasy do każdego piksela w obrazie, a tym samym segmentacji obrazu na różne strefy (takie jak “tło” i “pierwszy plan” lub “droga”, “samochód” i “chodnik”). Ta ogólna kategoria technik może być wykorzystana do zasilania znacznej liczby cennych aplikacji w edycji obrazu i wideo, autonomicznej jazdy, robotyki, obrazowania medycznego, itp. Istnieją dwa różne rodzaje segmentacji obrazu, o których powinniśmy wiedzieć:</p>
 <ul>
 <li>Segmentacja semantyczna, gdzie każdy piksel jest niezależnie klasyfikowany do kategorii semantycznej, jak “kot”. Jeśli na obrazie są dwa koty, to wszystkie odpowiadające im piksele są mapowane do tej samej ogólnej kategorii “kot” (patrz <a href="#fig-seg2">Rysunek&nbsp;<span>14.2</span></a>).</li>
 <li>Segmentacja instancji, która ma na celu nie tylko klasyfikację pikseli obrazu według kategorii, ale także wyodrębnienie poszczególnych instancji obiektu. W przypadku obrazu z dwoma kotami segmentacja instancji traktowałaby “kot 1” i “kot 2” jako dwie oddzielne klasy pikseli (patrz <a href="#fig-seg2">Rysunek&nbsp;<span>14.2</span></a>).</li>
@@ -335,7 +335,7 @@ div.csl-indent {
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;14.2: Przykłady segmentacji</figcaption><p></p>
 </figure>
 </div>
-<p>Będziemy pracować z zestawem danych Oxford-IIIT Pets (<a href="http://www.robots.ox.ac.uk/~vgg/data/pets/" class="uri">http://www.robots.ox.ac.uk/~vgg/data/pets/</a>), który zawiera 7 390 zdjęć różnych ras kotów i psów, wraz z maskami segmentacji pierwszego planu i tła dla każdego zdjęcia. Maska segmentacyjna jest odpowiednikiem etykiety: jest to obraz o tym samym rozmiarze co obraz wejściowy, z jednym kanałem koloru, gdzie każda wartość całkowita odpowiada klasie odpowiadającego jej piksela na obrazie wejściowym. W naszym przypadku piksele masek segmentacyjnych mogą przyjmować jedną z trzech wartości całkowitych:</p>
+<p>Będziemy pracować z zestawem danych Oxford-IIIT Pets (<a href="http://www.robots.ox.ac.uk/~vgg/data/pets/" class="uri">http://www.robots.ox.ac.uk/~vgg/data/pets/</a>), który zawiera 7390 zdjęć różnych ras kotów i psów, wraz z maskami segmentacji pierwszego planu i tła dla każdego zdjęcia. Maska segmentacyjna jest odpowiednikiem etykiety: jest to obraz o tym samym rozmiarze co obraz wejściowy, z jednym kanałem koloru, gdzie każda wartość całkowita odpowiada klasie odpowiadającego jej piksela na obrazie wejściowym. W naszym przypadku piksele masek segmentacyjnych mogą przyjmować jedną z trzech wartości całkowitych:</p>
 <ol type="1">
 <li>pierwszy plan</li>
 <li>tło</li>
@@ -493,14 +493,15 @@ $ target &lt;fs::path&gt; "/Users/majerek/Downloads/pets_dataset/annotations/tri
 <span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dataset_batch</span>(<span class="dv">32</span>)</span>
 <span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>num_val_samples <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>val_idx <span class="ot">&lt;-</span> <span class="fu">sample.int</span>(<span class="fu">nrow</span>(image_paths), num_val_samples)</span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>val_paths <span class="ot">&lt;-</span> image_paths[val_idx, ]</span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>train_paths <span class="ot">&lt;-</span> image_paths[<span class="sc">-</span>val_idx, ]</span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>validation_dataset <span class="ot">&lt;-</span> <span class="fu">make_dataset</span>(val_paths)</span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="ot">&lt;-</span> <span class="fu">make_dataset</span>(train_paths)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">44</span>)</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>num_val_samples <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>val_idx <span class="ot">&lt;-</span> <span class="fu">sample.int</span>(<span class="fu">nrow</span>(image_paths), num_val_samples)</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>val_paths <span class="ot">&lt;-</span> image_paths[val_idx, ]</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>train_paths <span class="ot">&lt;-</span> image_paths[<span class="sc">-</span>val_idx, ]</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>validation_dataset <span class="ot">&lt;-</span> <span class="fu">make_dataset</span>(val_paths)</span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="ot">&lt;-</span> <span class="fu">make_dataset</span>(train_paths)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Teraz zdefiniujemy model:</p>
@@ -572,14 +573,14 @@ Non-trainable params: 0
 ________________________________________________________________________________</code></pre>
 </div>
 </div>
-<p>Pierwsza połowa modelu bardzo przypomina sieć splotową używaną do klasyfikacji obrazów: stos warstw <code>Conv2D</code> ze stopniowo zwiększającymi się rozmiarami filtrów. Obniżamy próbkowanie naszych obrazów trzy razy po dwa, kończąc na aktywacjach o rozmiarze <code>(25, 25, 256)</code>. Celem tej pierwszej połowy jest zakodowanie obrazów w mniejsze mapy cech, gdzie każde miejsce przestrzenne (lub piksel) zawiera informację o dużym przestrzennym kawałku oryginalnego obrazu. Można to rozumieć jako rodzaj kompresji.</p>
+<p>Pierwsza połowa modelu bardzo przypomina sieć splotową używaną do klasyfikacji obrazów: stos warstw <code>Conv2D</code> ze stopniowo zwiększającymi się rozmiarami filtrów. Obniżamy próbkowanie naszych obrazów dwukrotnie aż trzy razy, kończąc na aktywacjach o rozmiarze <code>(25, 25, 256)</code>. Celem tej pierwszej połowy jest zakodowanie obrazów w mniejsze mapy cech, gdzie każde miejsce przestrzenne (lub piksel) zawiera informację o dużym przestrzennym kawałku oryginalnego obrazu. Można to rozumieć jako rodzaj kompresji.</p>
 <p>Jedną z ważnych różnic pomiędzy pierwszą połową tego modelu a modelami klasyfikacyjnymi, które widziałeś wcześniej, jest sposób, w jaki dokonujemy <em>downsamplingu</em>: w sieciach splotowych klasyfikacyjnych z wcześniejszego rozdziału używaliśmy warstw <code>MaxPooling2D</code> do <em>downsamplingu</em> map cech. W tym przypadku <em>downsamplingu</em> dokonujemy poprzez dodanie <em>strides</em> do każdej kolejnej warstwy konwolucji. Robimy to, ponieważ w przypadku segmentacji obrazu bardzo zależy nam na przestrzennej lokalizacji informacji w obrazie, ponieważ musimy wyprodukować docelowe maski pikselowe jako wyjście modelu. Kiedy wykonujemy <em>max pooling</em> 2 × 2, całkowicie niszczymy informacje o lokalizacji w każdym oknie <em>poolingu</em>: zwracamy jedną wartość na okno, z zerową wiedzą o tym, z której z czterech lokalizacji pochodzi ta wartość. Tak więc, mimo że warstwy <em>max pooling</em> dobrze sprawdzają się w zadaniach klasyfikacji, to w przypadku zadania segmentacji nie są tak skuteczne. W międzyczasie, konwolucje paskowe (<em>strides</em>) lepiej radzą sobie z <em>downsamplingiem</em> map cech, zachowując jednocześnie informacje o lokalizacji.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://media.giphy.com/media/glmRyiSI3v5E4/giphy-downsized-large.gif" class="img-fluid figure-img" width="400"></p>
 </figure>
-</div></div><p>Druga połowa modelu to stos warstw <code>Conv2DTranspose</code>. Co to jest? Cóż, wyjściem pierwszej połowy modelu jest mapa cech o kształcie <code>(25, 25, 256)</code>, ale chcemy, aby nasze ostateczne wyjście miało taki sam kształt jak maski docelowe, <code>(200, 200, 3).</code> W związku z tym musimy zastosować coś w rodzaju odwrotności dotychczasowych przekształceń - coś, co spowoduje zwiększenie próbkowania map funkcji zamiast ich zmniejszenia. Jest to cel warstwy <code>Conv2DTranspose</code>: można o niej myśleć jak o warstwie konwolucji, która uczy się zwiększać próbkowanie. Jeśli masz wejście o kształcie <code>(100, 100, 64)</code> i przepuścisz je przez warstwę <code>layer_conv_2d(128, 3, strides = 2, padding = "same")</code>, otrzymasz wyjście o kształcie <code>(50, 50, 128)</code>. Jeśli przepuścimy to wyjście przez warstwę <code>layer_conv_2d_transpose(64, 3, strides = 2, padding = "same")</code>, otrzymamy z powrotem wyjście o kształcie <code>(100, 100, 64)</code>, takie samo jak oryginał. Tak więc po skompresowaniu naszych danych wejściowych do map funkcji o kształcie <code>(25, 25, 256)</code> poprzez stos warstw <code>Conv2D</code>, możemy po prostu zastosować odpowiednią sekwencję warstw <code>Conv2DTranspose</code>, aby uzyskać z powrotem obrazy o kształcie <code>(200, 200, 3)</code>.</p>
+</div></div><p>Druga połowa modelu to stos warstw <code>Conv2DTranspose</code>. Co to jest? Cóż, wyjściem pierwszej połowy modelu jest mapa cech o kształcie <code>(25, 25, 256)</code>, ale chcemy, aby nasze ostateczne wyjście miało taki sam kształt jak maski docelowe, <code>(200, 200, 3).</code> W związku z tym musimy zastosować coś w rodzaju odwrotności dotychczasowych przekształceń - coś, co spowoduje zwiększenie próbkowania map funkcji zamiast ich zmniejszenia. Jest to cel warstwy <code>Conv2DTranspose</code>: można o niej myśleć jak o warstwie konwolucji, która uczy się zwiększać próbkowanie. Jeśli mamy wejście o kształcie <code>(100, 100, 64)</code> i przepuścimy je przez warstwę <code>layer_conv_2d(128, 3, strides = 2, padding = "same")</code>, otrzymamy wyjście o kształcie <code>(50, 50, 128)</code>. Jeśli przepuścimy to wyjście przez warstwę <code>layer_conv_2d_transpose(64, 3, strides = 2, padding = "same")</code>, otrzymamy z powrotem wyjście o kształcie <code>(100, 100, 64)</code>, takie samo jak oryginał. Tak więc po skompresowaniu naszych danych wejściowych do map funkcji o kształcie <code>(25, 25, 256)</code> poprzez stos warstw <code>Conv2D</code>, możemy po prostu zastosować odpowiednią sekwencję warstw <code>Conv2DTranspose</code>, aby uzyskać z powrotem obrazy o kształcie <code>(200, 200, 3)</code>.</p>
 <p>Możemy teraz skompilować i dopasować nasz model:</p>
 <div class="cell">
 <details open="">
@@ -616,7 +617,7 @@ ________________________________________________________________________________
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>test_image <span class="ot">&lt;-</span> val_paths<span class="sc">$</span>input[<span class="dv">44</span>] <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>test_image <span class="ot">&lt;-</span> val_paths<span class="sc">$</span>input[<span class="dv">4</span>] <span class="sc">|&gt;</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tf_read_image_and_resize</span>(<span class="st">"jpeg"</span>, <span class="at">channels =</span> 3L)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>predicted_mask_probs <span class="ot">&lt;-</span> </span>
@@ -643,8 +644,8 @@ ________________________________________________________________________________
 <p>Jest kilka małych artefaktów w naszej przewidywanej masce. Niemniej jednak nasz model wydaje się działać poprawnie.</p>
 <section id="nowoczesne-architektury-sieci-splotowych" class="level2 page-columns page-full" data-number="14.1">
 <h2 data-number="14.1" class="anchored" data-anchor-id="nowoczesne-architektury-sieci-splotowych"><span class="header-section-number">14.1</span> Nowoczesne architektury sieci splotowych</h2>
-<p>Architektura modelu jest sumą wyborów, które zostały dokonane przy jego tworzeniu: jakich warstw użyć, jak je skonfigurować i w jakim układzie je połączyć. Te wybory definiują przestrzeń hipotez twojego modelu: przestrzeń możliwych funkcji, które mogą być przeszukiwane przez spadek gradientu, parametryzowane przez wagi modelu. Podobnie jak w przypadku inżynierii cech, dobra przestrzeń hipotez koduje wcześniejszą wiedzę, którą posiadasz na temat danego problemu i jego rozwiązania. Na przykład, użycie warstw konwolucji oznacza, że z góry wiemy, że istotne wzory obecne na obrazach wejściowych są niezmienne względem translacji. Aby skutecznie uczyć się z danych, musisz przyjąć założenia dotyczące tego, czego szukasz.</p>
-<p>Architektura modelu jest często balansem pomiędzy sukcesem a porażką. Jeśli dokonasz niewłaściwego wyboru architektury, Twój model może utknąć z nieoptymalnymi metrykami i żadna ilość danych treningowych go nie uratuje. I odwrotnie, dobra architektura modelu przyspieszy uczenie i umożliwi efektywne wykorzystanie dostępnych danych treningowych, zmniejszając zapotrzebowanie na duże zbiory danych. Dobra architektura modelu to taka, która zmniejsza rozmiar przestrzeni wyszukiwania lub w inny sposób ułatwia konwergencję do dobrego punktu przestrzeni wyszukiwania. Podobnie jak w przypadku inżynierii cech, architektura modelu polega na uproszczeniu problemu do rozwiązania przez spadek gradientu.</p>
+<p>Architektura modelu jest sumą wyborów, które zostały dokonane przy jego tworzeniu: jakich warstw użyć, jak je skonfigurować i w jakim układzie je połączyć. Te wybory definiują przestrzeń hipotez twojego modelu: przestrzeń możliwych funkcji, które mogą być przeszukiwane przez spadek gradientu, parametryzowane przez wagi modelu. Podobnie jak w przypadku inżynierii cech, dobra przestrzeń hipotez koduje wcześniejszą wiedzę, którą posiadamy na temat danego problemu i jego rozwiązania. Na przykład, użycie warstw konwolucji oznacza, że z góry wiemy, że istotne wzory obecne na obrazach wejściowych są niezmienne względem translacji. Aby skutecznie uczyć się z danych, musimy przyjąć założenia dotyczące tego, czego szukamy.</p>
+<p>Jeśli dokonamy niewłaściwego wyboru architektury, nasz model może utknąć z nieoptymalnymi metrykami i żadna ilość danych treningowych go nie uratuje. I odwrotnie, dobra architektura modelu przyspieszy uczenie i umożliwi efektywne wykorzystanie dostępnych danych treningowych, zmniejszając zapotrzebowanie na duże zbiory danych. Dobra architektura modelu to taka, która zmniejsza rozmiar przestrzeni wyszukiwania lub w inny sposób ułatwia konwergencję do dobrego punktu przestrzeni wyszukiwania. Podobnie jak w przypadku inżynierii cech, architektura modelu polega na uproszczeniu problemu do rozwiązania przez spadek gradientu.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -652,31 +653,31 @@ ________________________________________________________________________________
 </figure>
 </div></div><p>Architektura modelu jest bardziej sztuką niż nauką. Doświadczeni inżynierowie uczenia maszynowego są w stanie intuicyjnie poskładać wydajne modele przy pierwszej próbie, podczas gdy początkujący często mają problemy ze stworzeniem modelu, który w ogóle się uczy. Kluczowym słowem jest tu intuicja: nikt nie jest w stanie podać jasnego wyjaśnienia, co działa, a co nie. Eksperci polegają na kojarzeniu wzorców, umiejętności, którą nabywają poprzez bogate doświadczenie praktyczne.</p>
 <p>W dalszej części omówimy kilka podstawowych praktyk architektury sieci konwolucyjnych: w szczególności połączenia resztkowe (ang. <em>residual connection</em>), normalizację partii (ang. <em>batch normalization</em>) i konwolucje separowalne (ang. <em>separable convolutions</em>).</p>
-<p>Większość sieci splotowych często charakteryzuje się strukturami przypominającymi piramidy (hierarchie cech). Przypomnij sobie na przykład progresję w liczbie filtrów konwolucyjnych, których użyliśmy w pierwszej sieci splotowej: 32, 64, 128. Liczba filtrów rośnie wraz z głębokością warstw, podczas gdy rozmiar map cech odpowiednio się kurczy. Ten sam wzór zauważysz w blokach modelu VGG16 (patrz <a href="#fig-seg6">Rysunek&nbsp;<span>14.6</span></a>).</p>
+<p>Większość sieci splotowych często charakteryzuje się strukturami przypominającymi piramidy (hierarchie cech). Przypomnij sobie na przykład progresję w liczbie filtrów konwolucyjnych, których użyliśmy w pierwszej sieci splotowej: 32, 64, 128. Liczba filtrów rośnie wraz z głębokością warstw, podczas gdy rozmiar map cech odpowiednio się kurczy. Ten sam wzór zauważymy w blokach modelu VGG16 (patrz <a href="#fig-seg6">Rysunek&nbsp;<span>14.6</span></a>).</p>
 <div id="fig-seg6" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-03-18 o 14.10.24.png" class="img-fluid figure-img" width="600"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;14.6: Architektura sieci VGG16</figcaption><p></p>
 </figure>
 </div>
-<p>Głębsze hierarchie są z natury dobre, ponieważ zachęcają do ponownego użycia funkcji, a zatem abstrakcji. Ogólnie rzecz biorąc, głęboki stos wąskich warstw działa lepiej niż płytki stos dużych warstw. Istnieje jednak granica, jak głęboko można układać warstwy, ze względu na problem znikających gradientów. To prowadzi nas do naszego pierwszego istotnego wzorca architektury modelu: połączeń szczątkowych.</p>
-<section id="połączenia-resztowe" class="level3 page-columns page-full" data-number="14.1.1">
-<h3 data-number="14.1.1" class="anchored" data-anchor-id="połączenia-resztowe"><span class="header-section-number">14.1.1</span> Połączenia resztowe</h3>
-<p>Wsteczna propagacja używania do uczenia modeli głębokich przypomina grę w “głuchy telefon”, gdzie kolejne osoby szepczą sobie do ucha przekazjuąc pewną - wymyśloną przez pierwszego gracza - informację. Po kilku przejściach informacja ta jest znacznie zniekształcona. Podobnie jest w uczeniu sieci, gdzie propagacją błędów wstecz powoduje wprowadzenie pewnych błędów w kolejnych warstwach sieci. Każda kolejna funkcja w łańcuchu wprowadza pewną ilość szumu. Jeśli łańcuch funkcji jest zbyt głęboki, szum ten zaczyna przytłaczać informacje o gradiencie i wsteczna propagacja przestaje działać. Twój model nie będzie w ogóle trenowany. Jest to problem znikających gradientów.</p>
-<p>Rozwiązanie jest proste: wystarczy wymusić, aby każda funkcja w łańcuchu była nieniszcząca - zachowywała bezszumową wersję informacji zawartej w poprzednim wejściu. Najłatwiejszym sposobem wdrożenia tego jest użycie połączenia rezydualnego.</p>
+<p>Ogólnie rzecz biorąc, głęboki stos wąskich warstw działa lepiej niż płytki stos dużych warstw. Istnieje jednak pewne ograniczenie, jak głęboko można układać warstwy, a wiąże się z problem znikających gradientów. To prowadzi nas do naszego pierwszego istotnego wzorca architektury modelu: połączeń resztkowych.</p>
+<section id="połączenia-rezydualne" class="level3 page-columns page-full" data-number="14.1.1">
+<h3 data-number="14.1.1" class="anchored" data-anchor-id="połączenia-rezydualne"><span class="header-section-number">14.1.1</span> Połączenia rezydualne</h3>
+<p>Wsteczna propagacja używania do uczenia modeli głębokich przypomina grę w “głuchy telefon”, gdzie kolejne osoby szepczą sobie do ucha przekazując pewną - wymyśloną przez pierwszego gracza - informację. Po kilku przejściach informacja ta jest znacznie zniekształcona. Podobnie jest w uczeniu sieci, gdzie propagacją błędów wstecz powoduje wprowadzenie pewnych błędów w kolejnych warstwach sieci. Każda kolejna funkcja w łańcuchu wprowadza pewną ilość szumu. Jeśli łańcuch funkcji jest zbyt głęboki, szum ten zaczyna przytłaczać informacje o gradiencie i wsteczna propagacja przestaje działać. Jest to problem znikających gradientów.</p>
+<p>Rozwiązanie jest proste: wystarczy wymusić, aby każda funkcja w łańcuchu była nieniszcząca - zachowywała “czystą” wersję informacji zawartej w poprzednim wejściu. Najłatwiejszym sposobem wdrożenia tego jest użycie połączenia rezydualnego.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://media.giphy.com/media/OYnjptyYk6Lny/giphy.gif" class="img-fluid figure-img"></p>
 </figure>
-</div></div><p>Jest to bardzo proste: wystarczy dodać wejście warstwy lub bloku warstw z powrotem do jej wyjścia (patrz <a href="#fig-seg7">Rysunek&nbsp;<span>14.7</span></a>). Połączenie rezydualne działa jak skrót informacyjny wokół destrukcyjnych lub zaszumiających bloków (takich jak bloki zawierające aktywacje <code>relu</code> lub warstwy <code>dropout</code>), przekazując informację o gradiencie błędu z wczesnych warstw, tak aby propagować przez głęboką sieć. Technika ta została wprowadzona w 2015 roku wraz z rodziną modeli ResNet (opracowanych przez <span class="citation" data-cites="heDeepResidualLearning2015">He i in. (<a href="references.html#ref-heDeepResidualLearning2015" role="doc-biblioref">2015</a>)</span>).</p>
+</div></div><p>Jest to bardzo proste: wystarczy dodać wejście warstwy lub bloku warstw z powrotem do jej wyjścia (patrz <a href="#fig-seg7">Rysunek&nbsp;<span>14.7</span></a>). Połączenie rezydualne działa jak skrót informacyjny wokół destrukcyjnych lub zaszumiających bloków (takich jak bloki zawierające aktywacje <code>relu</code> lub warstwy <code>dropout</code>), przekazując informację o gradiencie błędu z wczesnych warstw, tak aby propagować przez głęboką sieć. Technika ta została wprowadzona w 2015 roku wraz z rodziną modeli <em>ResNet</em> (opracowanych przez <span class="citation" data-cites="heDeepResidualLearning2015">He i in. (<a href="references.html#ref-heDeepResidualLearning2015" role="doc-biblioref">2015</a>)</span>).</p>
 <div id="fig-seg7" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-03-18 o 14.23.47.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;14.7: Połączenie resztowe</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Rysunek&nbsp;14.7: Połączenie rezydualne</figcaption><p></p>
 </figure>
 </div>
-<p>Zauważ, że dodanie wejścia z powrotem do wyjścia bloku sugeruje, że wyjście powinno mieć taki sam kształt jak wejście. Jednak tak nie jest, jeśli twój blok zawiera warstwy konwolucyjne ze zwiększoną liczbą filtrów lub warstwę <em>max-pooling</em>. W takich przypadkach użyj warstwy 1x1 <code>layer_conv_2d()</code> bez aktywacji, aby liniowo rzutować resztę na pożądany kształt wyjścia. Zazwyczaj używamy <code>paddingu = "same"</code> w warstwach konwolucji w bloku docelowym, aby uniknąć przestrzennego <em>downsamplingu</em> spowodowanego <em>paddingiem</em>, a w projekcji resztkowej używamy <em>strides</em>.</p>
+<p>Zauważmy, że dodanie wejścia z powrotem do wyjścia bloku sugeruje, że wyjście powinno mieć taki sam kształt jak wejście. Jednak tak nie jest, jeśli nasz blok zawiera warstwy konwolucyjne ze zwiększoną liczbą filtrów lub warstwę <em>max-pooling</em>. W takich przypadkach używamy warstwy 1x1 <code>layer_conv_2d()</code> bez aktywacji, aby liniowo rzutować resztę na pożądany kształt wyjścia. Zazwyczaj używamy <code>paddingu = "same"</code> w warstwach konwolucji w bloku docelowym, aby uniknąć przestrzennego <em>downsamplingu</em> spowodowanego <em>paddingiem</em>, a w projekcji resztkowej używamy <em>strides</em>.</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -704,7 +705,7 @@ ________________________________________________________________________________
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">layer_add</span>(<span class="fu">list</span>(x, residual))</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Aby uczynić te pomysły bardziej konkretnymi, oto przykład prostego sieci splotowej zorganizowanej w serię bloków, z których każdy składa się z dwóch warstw konwolucji i jednej opcjonalnej warstwy <em>max-pooling</em>, z połączeniem szczątkowym wokół każdego bloku:</p>
+<p>Aby uczynić te pomysły bardziej konkretnymi, oto przykład prostej sieci splotowej zorganizowanej w serię bloków, z których każdy składa się z dwóch warstw konwolucji i jednej opcjonalnej warstwy <em>max-pooling</em>, z połączeniem rezydualnym wokół każdego bloku:</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -802,7 +803,7 @@ ________________________________________________________________________________
 <figure class="figure">
 <p><img src="images/Bayu Angora.gif" class="img-fluid figure-img" width="400"></p>
 </figure>
-</div></div><p>Normalizacja partii danych właśnie to robi. Jest to rodzaj warstwy (<code>layer_batch_normalization()</code> w <code>keras</code>) wprowadzonej w 2015 roku przez <span class="citation" data-cites="ioffeBatchNormalizationAccelerating2015">Ioffe i Szegedy (<a href="references.html#ref-ioffeBatchNormalizationAccelerating2015" role="doc-biblioref">2015</a>)</span>; może ona adaptacyjnie normalizować dane, nawet gdy średnia i wariancja zmieniają się w czasie treningu. Podczas szkolenia używa średniej i wariancji bieżącej partii danych do normalizacji próbek, a podczas wnioskowania (gdy wystarczająco duża partia reprezentatywnych danych może nie być dostępna), używa wykładniczej średniej ruchomej i wariancji danych widzianych podczas szkolenia.</p>
+</div></div><p>Normalizacja partii danych jest to rodzaj warstwy (<code>layer_batch_normalization()</code> w <code>keras</code>) wprowadzonej w 2015 roku przez <span class="citation" data-cites="ioffeBatchNormalizationAccelerating2015">Ioffe i Szegedy (<a href="references.html#ref-ioffeBatchNormalizationAccelerating2015" role="doc-biblioref">2015</a>)</span>; może ona adaptacyjnie normalizować dane, nawet gdy średnia i wariancja zmieniają się w czasie treningu. Podczas szkolenia używa średniej i wariancji bieżącej partii danych do normalizacji próbek, a podczas wnioskowania (gdy wystarczająco duża partia reprezentatywnych danych może nie być dostępna), używa wykładniczej średniej ruchomej i wariancji danych widzianych podczas szkolenia.</p>
 <p>Chociaż w oryginalnym artykule stwierdzono, że normalizacja partii działa poprzez “redukcję wewnętrznego przesunięcia kowariancji”, nikt tak naprawdę nie wie na pewno, dlaczego normalizacja partii pomaga. Różne hipotezy istnieją, ale nie ma pewności.</p>
 <p>W praktyce, głównym efektem normalizacji partii wydaje się być to, że pomaga ona w propagacji gradientu - podobnie jak połączenia resztkowe - i tym samym pozwala na tworzenie głębszych sieci. Niektóre bardzo głębokie sieci mogą być trenowane tylko wtedy, gdy zawierają wiele warstw <em>BatchNormalization</em>. Na przykład, normalizacja partii jest szeroko stosowana w wielu zaawansowanych architekturach sieci konwolucyjnych, które są dostarczane z <code>keras</code>, takich jak ResNet50, EfficientNet i Xception.</p>
 <p>Zarówno <code>layer_dense()</code> jak i <code>layer_conv_2d()</code> wykorzystują wektor obciążeń (ang. <em>bias</em>), wyuczoną zmienną, której celem jest uczynienie warstwy afiniczną, a nie czysto liniową. Na przykład, funkcja <code>layer_ conv_2d()</code> zwraca, <code>y = conv(x, kernel) + bias</code>, a <code>layer_dense()</code> zwraca <code>y = dot(x, kernel) + bias</code>. Ponieważ krok normalizacji zajmie się wyśrodkowaniem wyjścia warstwy na zero, wektor obciążenia nie jest już potrzebny w użyciu funkcji <code>layer_batch_normalization()</code>, a warstwę można utworzyć bez niego za pomocą opcji <code>use_bias = FALSE</code>.</p>
@@ -822,8 +823,8 @@ ________________________________________________________________________________
 <span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_activation</span>(<span class="st">"relu"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Intuicyjnym powodem tego podejścia jest to, że normalizacja partii skupi twoje wejścia na zerze, podczas gdy twoja aktywacja <code>relu</code> używa zera jako punktu zwrotnego dla utrzymania lub porzucenia aktywowanych kanałów: robienie normalizacji przed aktywacją maksymalizuje wykorzystanie <code>relu</code>.</p>
-<p>Normalizacja wsadowa ma wiele pułapek. Jedena z głównych dotyczy dostrajania: podczas dostrajania modelu, który zawiera warstwy BatchNormalization, zaleca się pozostawienie tych warstw zamrożonymi (wywołaj <code>freeze_weights()</code>, aby ustawić ich atrybut <code>trainable</code> na <code>FALSE</code>). W przeciwnym razie, będą one aktualizować swoją wewnętrzną średnią i wariancję, co może kolidować z bardzo małymi aktualizacjami zastosowanymi w otaczających warstwach Conv2D:</p>
+<p>Intuicyjnym powodem tego podejścia jest to, że normalizacja partii skupi naszes wejścia na zerze, podczas gdy nasza aktywacja <code>relu</code> używa zera jako punktu zwrotnego dla utrzymania lub porzucenia aktywowanych kanałów: robienie normalizacji przed aktywacją maksymalizuje wykorzystanie <code>relu</code>.</p>
+<p>Normalizacja partii wiążę się też z szeregiem pułapek. Jedna z głównych dotyczy dostrajania: podczas dostrajania modelu, który zawiera warstwy BatchNormalization, zaleca się pozostawienie tych warstw zamrożonymi (wywołaj <code>freeze_weights()</code>, aby ustawić ich atrybut <code>trainable</code> na <code>FALSE</code>). W przeciwnym razie, będą one aktualizować swoją wewnętrzną średnią i wariancję, co może kolidować z bardzo małymi aktualizacjami zastosowanymi w otaczających warstwach Conv2D:</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -1400,7 +1401,7 @@ ________________________________________________________________________________
 </section>
 <section id="konwolucje-separowalne" class="level3 page-columns page-full" data-number="14.1.3">
 <h3 data-number="14.1.3" class="anchored" data-anchor-id="konwolucje-separowalne"><span class="header-section-number">14.1.3</span> Konwolucje separowalne</h3>
-<p>A gdybym ci powiedział, że istnieje warstwa, której możesz użyć jako zamiennika <code>layer_ conv_2d()</code>, która sprawi, że twój model będzie mniejszy (mniej trenowanych parametrów) i szczuplejszy (mniej operacji zmiennoprzecinkowych) i spowoduje, że wykona kilka punktów procentowych lepiej swoje zadanie? To jest właśnie to, co robi warstwa konwolucji separowalnej wgłębnie (<code>layer_separable_conv_2d()</code> w <code>keras</code>). Warstwa ta wykonuje konwolucję przestrzenną na każdym kanale swojego wejścia, niezależnie, przed zmieszaniem kanałów wyjściowych poprzez konwolucję punktową (konwolucja 1 × 1), jak pokazano na <a href="#fig-seg8">Rysunek&nbsp;<span>14.8</span></a></p>
+<p>A gdybym powiedział, że istnieje warstwa, której możemy użyć jako zamiennika <code>layer_ conv_2d()</code>, która sprawi, że nasz model będzie mniejszy (mniej trenowanych parametrów) i szczuplejszy (mniej operacji zmiennoprzecinkowych) i spowoduje, że wykona kilka punktów procentowych lepiej swoje zadanie? To właśnie robi warstwa konwolucji separowalnej wgłębnie (<code>layer_separable_conv_2d()</code> w <code>keras</code>). Warstwa ta wykonuje konwolucję przestrzenną na każdym kanale swojego wejścia, niezależnie, przed zmieszaniem kanałów wyjściowych poprzez konwolucję punktową (konwolucja 1 × 1), jak pokazano na <a href="#fig-seg8">Rysunek&nbsp;<span>14.8</span></a></p>
 <div id="fig-seg8" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-03-18 o 16.05.49.png" class="img-fluid figure-img" width="600"></p>
@@ -1413,17 +1414,17 @@ ________________________________________________________________________________
 <figure class="figure">
 <p><img src="https://media.giphy.com/media/3ohfFoXZskaNkuCR32/giphy.gif" class="img-fluid figure-img" width="400"></p>
 </figure>
-</div></div><p>Konwolucja separowalna wymaga znacznie mniej parametrów i wymaga mniejszej ilości obliczeń niż zwykła konwolucja, a jednocześnie ma porównywalną moc reprezentacji. W rezultacie otrzymujemy mniejsze modele, które szybciej się zbiegają i są mniej podatne na <em>overfitting</em>. Te zalety stają się szczególnie ważne, gdy trenujesz małe modele od podstaw na ograniczonych danych.</p>
+</div></div><p>Konwolucja separowalna wymaga znacznie mniej parametrów i wymaga mniejszej ilości obliczeń niż zwykła konwolucja, a jednocześnie ma porównywalną moc reprezentacji. W rezultacie otrzymujemy mniejsze modele, które szybciej osiągają zbieżność i są mniej podatne na <em>overfitting</em>. Te zalety stają się szczególnie ważne, gdy trenujemy małe modele od podstaw na ograniczonych zbiorach danych.</p>
 <p>Konwolucje separowalne wgłębnie są podstawą architektury Xception, wysokowydajnej sieci splotowej.</p>
 </section>
 <section id="przykład-wykorzystania-sieci-xception" class="level3" data-number="14.1.4">
 <h3 data-number="14.1.4" class="anchored" data-anchor-id="przykład-wykorzystania-sieci-xception"><span class="header-section-number">14.1.4</span> Przykład wykorzystania sieci Xception</h3>
-<p>Dla przypomnienia, oto zasady architektury sieci splotowej, które poznałeś do tej pory:</p>
+<p>Dla przypomnienia, oto zasady architektury sieci splotowej, które poznaliśmy do tej pory:</p>
 <ul>
-<li>Twój model powinien być zorganizowany w powtarzające się bloki warstw, zwykle składających się z wielu warstw konwolucji i warstwy <em>max pooling</em>.</li>
-<li>Liczba filtrów w twoich warstwach powinna rosnąć wraz ze zmniejszaniem się rozmiaru przestrzennych map cech.</li>
+<li>Nasz model powinien być zorganizowany w powtarzające się bloki warstw, zwykle składających się z wielu warstw konwolucji i warstwy <em>max pooling</em>.</li>
+<li>Liczba filtrów w naszych warstwach powinna rosnąć wraz ze zmniejszaniem się rozmiaru przestrzennych map cech.</li>
 <li>Głębokie i wąskie sieci są lepsze niż szerokie i płytkie.</li>
-<li>Wprowadzenie połączeń resztkowych wokół bloków warstw pomaga trenować głębsze sieci.</li>
+<li>Wprowadzenie połączeń rezydualnych wokół bloków warstw pomaga trenować głębsze sieci.</li>
 <li>Korzystne może być wprowadzenie warstw normalizacji partii po twoich warstwach konwolucji.</li>
 <li>Korzystne może być zastąpienie <code>layer_conv_2d()</code> przez <code>layer_separable_conv_2d()</code>, które są bardziej wydajne pod względem parametrów.</li>
 </ul>
@@ -1511,12 +1512,12 @@ ________________________________________________________________________________
 <p><img src="segmentation_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Nasz nowy model osiąga dokładność testu 90,2%, w porównaniu z 83% dla modelu z poprzedniego rozdziału. Jak widać, stosowanie najlepszych praktyk architektonicznych ma natychmiastowy, znaczący wpływ na wydajność modelu! Chcąc jeszcze bardziej poprawić wydajność, powinieneś zacząć systematycznie dostrajać hiperparametry swojej architektury.</p>
+<p>Nasz nowy model osiąga dokładność testu 90,2%, w porównaniu z 83% dla modelu z poprzedniego rozdziału. Jak widać, stosowanie najlepszych architektur ma natychmiastowy, znaczący wpływ na wydajność modelu! Chcąc jeszcze bardziej poprawić wydajność, powinniśmy zacząć systematycznie dostrajać hiperparametry naszej architektury.</p>
 </section>
 </section>
 <section id="co-widzi-sieć-konwolucyjna" class="level2 page-columns page-full" data-number="14.2">
 <h2 data-number="14.2" class="anchored" data-anchor-id="co-widzi-sieć-konwolucyjna"><span class="header-section-number">14.2</span> Co widzi sieć konwolucyjna?</h2>
-<p>Podstawowym problemem podczas budowania aplikacji wizji komputerowej jest kwestia możliwości interpretacji: dlaczego twój klasyfikator uznał, że dany obraz zawiera lodówkę, podczas gdy wszystko, co widzisz, to ciężarówka? Jest to szczególnie istotne w przypadkach użycia, w których głębokie uczenie jest wykorzystywane do uzupełnienia ludzkiej wiedzy, jak na przykład w przypadkach użycia obrazowania medycznego. Zakończymy ten rozdział zapoznając Cię z szeregiem różnych technik wizualizacji tego, czego uczą się sieci splotowe i zrozumienia podejmowanych przez nie decyzji.</p>
+<p>Podstawowym problemem podczas budowania aplikacji wizji komputerowej jest kwestia możliwości interpretacji: dlaczego nasz klasyfikator uznał, że dany obraz zawiera lodówkę, podczas gdy wszystko, co widzimy, to ciężarówka? Jest to szczególnie istotne w przypadkach użycia, w których głębokie uczenie jest wykorzystywane do uzupełnienia ludzkiej wiedzy, jak na przykład w przypadkach użycia obrazowania medycznego. Zakończymy ten rozdział zapoznając Cię z szeregiem różnych technik wizualizacji tego, czego uczą się sieci splotowe i zrozumienia podejmowanych przez nie decyzji.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1524,11 +1525,11 @@ ________________________________________________________________________________
 </figure>
 </div></div><p>Często mówi się, że modele głębokiego uczenia są “czarnymi skrzynkami”: uczą się reprezentacji, które są trudne do wyodrębnienia i przedstawienia w formie czytelnej dla człowieka. Chociaż jest to częściowo prawdą w przypadku niektórych typów modeli głębokiego uczenia, to zdecydowanie nie jest to prawdą w przypadku sieci splotowych. Reprezentacje uczone przez sieci konwolucyjne są wygodne w wizualizacji, w dużej mierze dlatego, że są to reprezentacje wizualnych koncepcji. Od 2013 roku opracowano szeroki wachlarz technik wizualizacji i interpretacji tych reprezentacji. Nie będziemy badać ich wszystkich, ale omówimy trzy z najbardziej przystępnych i użytecznych:</p>
 <ul>
-<li>Wizualizacja pośrednich wyjść sieci (pośrednich aktywacji) - przydatna do zrozumienia, jak kolejne warstwy sicei przekształcają swoje dane wejściowe, oraz do uzyskania pierwszego wyobrażenia o znaczeniu poszczególnych filtrów sieci.</li>
-<li>Wizualizacja filtrów sieci splotwych - przydatna do dokładnego zrozumienia, na jaki wzór wizualny lub pojęcie reaguje każdy filtr w sieci.</li>
+<li>Wizualizacja pośrednich wyjść sieci (pośrednich aktywacji) - przydatna do zrozumienia, jak kolejne warstwy sieci przekształcają swoje dane wejściowe, oraz do uzyskania pierwszego wyobrażenia o znaczeniu poszczególnych filtrów sieci.</li>
+<li>Wizualizacja filtrów sieci splotowych - przydatna do dokładnego zrozumienia, na jaki wzór wizualny lub pojęcie reaguje każdy filtr w sieci.</li>
 <li>Wizualizacja map ciepła aktywacji klas w obrazie - przydatna do zrozumienia, które części obrazu zostały zidentyfikowane jako należące do danej klasy, co pozwala na lokalizację obiektów w obrazach.</li>
 </ul>
-<p>Do pierwszej metody - wizualizacji aktywacji - użyjemy małej sieci, który wytrenowaliśmy od podstaw na problemie klasyfikacji psy-vs-koty. W przypadku dwóch kolejnych metod użyjemy wstępnie wytrenowanego modelu Xception.</p>
+<p>Do pierwszej metody - wizualizacji aktywacji - użyjemy małej sieci, którą wytrenowaliśmy od podstaw na problemie klasyfikacji psy-vs-koty. W przypadku dwóch kolejnych metod użyjemy wstępnie wytrenowanego modelu Xception.</p>
 <section id="wizualizacja-aktywacji-pośrednich" class="level4 page-columns page-full" data-number="14.2.0.1">
 <h4 data-number="14.2.0.1" class="anchored" data-anchor-id="wizualizacja-aktywacji-pośrednich"><span class="header-section-number">14.2.0.1</span> Wizualizacja aktywacji pośrednich</h4>
 <p>Wizualizacja pośrednich aktywacji polega na wyświetleniu wartości zwracanych przez różne warstwy konwolucji i łączenia w modelu, przy określonym wejściu (wyjście warstwy często nazywane jest jej aktywacją, wyjściem funkcji aktywacji). Daje to wgląd w to, jak dane wejściowe są rozkładane na różne filtry uczone przez sieć. Chcemy wizualizować mapy cech o trzech wymiarach: szerokości, wysokości i głębokości (kanały). Każdy kanał koduje względnie niezależne cechy, więc właściwym sposobem wizualizacji tych map cech jest niezależne wykreślenie zawartości każdego kanału jako obrazu 2D. Zacznijmy od załadowania modelu:</p>
@@ -1582,7 +1583,7 @@ ________________________________________________________________________________
 <p><img src="segmentation_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Aby wyodrębnić mapy cech, na które chcemy spojrzeć, stworzymy model Keras, który przyjmuje partie obrazów jako dane wejściowe i który wyprowadza aktywacje wszystkich warstw konwolucji i łączenia.</p>
+<p>Aby wyodrębnić mapy cech, które chcemy obejrzeć, stworzymy model Keras, który przyjmuje partie obrazów jako dane wejściowe i który wyprowadza aktywacje wszystkich warstw konwolucji.</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -1660,7 +1661,7 @@ ________________________________________________________________________________
 </div>
 </div>
 </div>
-<p>Ten kanał wydaje się kodować detektor krawędzi ukośnych - ale zauważ, że Twoje własne kanały mogą się różnić, ponieważ konkretne filtry uczone przez warstwy konwolucji nie są deterministyczne.</p>
+<p>Kanał ten wydaje się kodować krawędzi ukośne - ale zauważmy, że nasze kanały mogą się różnić, ponieważ konkretne filtry uczone przez warstwy konwolucji nie są deterministyczne.</p>
 <p>Wykreślmy teraz pełną wizualizację wszystkich aktywacji w sieci. Wyodrębnimy i wykreślimy każdy kanał w każdej z warstw aktywacji, a następnie ułożymy wyniki w jedną dużą siatkę, z kanałami ułożonymi obok siebie.</p>
 <div class="cell">
 <details open="">
@@ -1710,18 +1711,18 @@ ________________________________________________________________________________
 <li>W miarę zagłębiania się, aktywacje stają się coraz bardziej abstrakcyjne i mniej wizualnie interpretowalne. Zaczynają kodować pojęcia wyższego rzędu, takie jak “kocie ucho” czy “kocie oko”. Głębsze prezentacje niosą coraz mniej informacji o wizualnej zawartości obrazu, a coraz więcej informacji związanych z klasą obrazu.</li>
 <li>Rozproszenie aktywacji rośnie wraz z głębokością warstwy: w pierwszej warstwie prawie wszystkie filtry są aktywowane przez obraz wejściowy, ale w kolejnych warstwach coraz więcej filtrów jest pustych. Oznacza to, że wzór zakodowany przez filtr nie występuje na obrazie wejściowym.</li>
 </ul>
-<p>Wykazaliśmy właśnie ważną, uniwersalną cechę reprezentacji uczonych przez głębokie sieci neuronowe: cechy wydobywane przez warstwę stają się coraz bardziej abstrakcyjne wraz z głębokością warstwy. Aktywacje wyższych warstw niosą coraz mniej informacji o konkretnym widzianym wejściu, a coraz więcej informacji o celu (w tym przypadku klasie obrazu: kot czy pies). Głęboka sieć neuronowa działa jak przebieg destylacji informacji, w którym surowe dane (w tym przypadku obrazy RGB) są wielokrotnie przekształcane w taki sposób, że nieistotne informacje są odfiltrowywane (np. specyficzny wygląd wizualny obrazu), a użyteczne informacje są powiększane i udoskonalane (np. klasa obrazu).</p>
+<p>Wykazaliśmy właśnie ważną, uniwersalną cechę reprezentacji uczonych przez głębokie sieci neuronowe: cechy wydobywane przez warstwę stają się coraz bardziej abstrakcyjne wraz z głębokością warstwy. Aktywacje wyższych warstw niosą coraz mniej informacji o konkretnym widzianym wejściu, a coraz więcej informacji o celu (w tym przypadku klasie obrazu: kot czy pies). Głęboka sieć neuronowa działa jak przebieg destylacji informacji, w którym surowe dane (w tym przypadku obrazy RGB) są wielokrotnie przekształcane w taki sposób, że nieistotne informacje są odfiltrowywane (np. specyficzny wygląd wizualny obrazu), a użyteczne informacje są eksponowane i udoskonalane.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://media.giphy.com/media/l46CuDUhXNUx1Bm5G/giphy.gif" class="img-fluid figure-img" width="400"></p>
 </figure>
-</div></div><p>Jest to analogiczne do sposobu, w jaki ludzie i zwierzęta postrzegają świat: po obserwacji sceny przez kilka sekund człowiek może pamiętać, jakie abstrakcyjne obiekty były w niej obecne (rower, drzewo), ale nie może pamiętać konkretnego wyglądu tych obiektów. W rzeczywistości, gdybyś próbował narysować z pamięci ogólny rower, istnieje prawdopodobieństwo, że nie udałoby Ci się to nawet w najmniejszym stopniu, mimo że w swoim życiu widziałeś tysiące rowerów. Twój mózg nauczył się całkowicie abstrahować od informacji wizualnych - przekształcać je w wysokopoziomowe koncepcje wizualne, jednocześnie odfiltrowując nieistotne szczegóły wizualne - co sprawia, że zapamiętanie wyglądu rzeczy wokół Ciebie jest niezwykle trudne.</p>
+</div></div><p>Jest to podobne do sposobu, w jaki ludzie i zwierzęta postrzegają świat: po obserwacji sceny przez kilka sekund człowiek może pamiętać, jakie abstrakcyjne obiekty były w niej obecne (rower, drzewo), ale może nie pamiętać konkretnego wyglądu tych obiektów. W rzeczywistości, gdybyśmy próbowali narysować z pamięci ogólny rower, istnieje prawdopodobieństwo, że nie udałoby się to nawet w najmniejszym stopniu, mimo że w swoim życiu widzieliśmy tysiące rowerów. Nasz mózg nauczył się całkowicie abstrahować od informacji wizualnych - przekształcać je w wysokopoziomowe koncepcje wizualne, jednocześnie odfiltrowując nieistotne szczegóły wizualne - co sprawia, że zapamiętanie wyglądu rzeczy wokół nas jest niezwykle trudne.</p>
 </section>
 <section id="wizualizacja-filtrów-sieci-splotowych" class="level4" data-number="14.2.0.2">
 <h4 data-number="14.2.0.2" class="anchored" data-anchor-id="wizualizacja-filtrów-sieci-splotowych"><span class="header-section-number">14.2.0.2</span> Wizualizacja filtrów sieci splotowych</h4>
 <p>Innym prostym sposobem na sprawdzenie filtrów wyuczonych przez sieci splotowe jest wyświetlenie wzorca wizualnego, na który każdy filtr ma reagować. Można to zrobić za pomocą spadku gradientu w przestrzeni wejściowej: zastosowanie spadku gradientu do wartości obrazu wejściowego sieci splotowej tak, aby zmaksymalizować odpowiedź określonego filtra, zaczynając od pustego obrazu wejściowego. Wynikowy obraz wejściowy będzie taki, na który wybrany filtr maksymalnie reaguje.</p>
-<p>Spróbujmy to zrobić z filtrami modelu Xception, wytrenowanego na ImageNecie. Proces jest prosty: zbudujemy funkcję straty, która maksymalizuje wartość danego filtra w danej warstwie konwolucji, a następnie użyjemy stochastycznego spadku gradientu, aby dopasować wartości obrazu wejściowego tak, by zmaksymalizować tę wartość aktywacji. Najpierw zainicjujmy model Xception, załadowany wagami wytrenowanymi na zbiorze danych ImageNet.</p>
+<p>Spróbujmy to zrobić z filtrami modelu Xception, wytrenowanego na <em>ImageNet</em>. Proces jest prosty: zbudujemy funkcję straty, która maksymalizuje wartość danego filtra w danej warstwie konwolucji, a następnie użyjemy stochastycznego spadku gradientu, aby dopasować wartości obrazu wejściowego tak, by zmaksymalizować tę wartość aktywacji. Najpierw zainicjujmy model Xception, załadowany wagami wytrenowanymi na zbiorze danych <em>ImageNet</em>.</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -1782,7 +1783,7 @@ ________________________________________________________________________________
 [1] "block14_sepconv2"</code></pre>
 </div>
 </div>
-<p>Zauważysz, że separowalne warstwy conv 2D tutaj są nazwane coś jak <code>block6_sepconv1</code>, <code>block7_sepconv2</code>, i tak dalej. Xception jest zorganizowany w bloki, z których każdy zawiera kilka warstw konwolucyjnych. Teraz stwórzmy drugi model, który zwraca wyjście konkretnej warstwy - model ekstraktora cech. Ponieważ nasz model jest modelem zbudowanym za pomocą API, jest on inspekcyjny: możemy zapytać o wyjście jednej z jego warstw i ponownie użyć go w nowym modelu. Nie trzeba kopiować całego kodu Xception.</p>
+<p>Zauważmy, że separowalne warstwy <code>conv2D</code> tutaj są nazwane <code>block6_sepconv1</code>, <code>block7_sepconv2</code>, i tak dalej. Xception jest zorganizowany w bloki, z których każdy zawiera kilka warstw konwolucyjnych. Teraz stwórzmy drugi model, który zwraca wyjście konkretnej warstwy - model ekstraktora cech. Ponieważ nasz model jest modelem zbudowanym za pomocą API, jest on inspekcyjny: możemy zapytać o wyjście jednej z jego warstw i ponownie użyć go w nowym modelu. Nie trzeba kopiować całego kodu Xception.</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -1792,7 +1793,7 @@ ________________________________________________________________________________
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">outputs =</span> layer<span class="sc">$</span>output)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Aby użyć tego modelu, wystarczy wywołać go na jakichś danych wejściowych (zauważ, że Xception wymaga, aby dane wejściowe były wstępnie przetworzone za pomocą funkcji <code>xception_preprocess_input()</code>).</p>
+<p>Aby użyć ekstraktora, wystarczy wywołać go na jakichś danych wejściowych (zauważmy, że Xception wymaga, aby dane wejściowe były wstępnie przetworzone za pomocą funkcji <code>xception_preprocess_input()</code>).</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -1838,7 +1839,7 @@ ________________________________________________________________________________
 <span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Teraz mamy już wszystkie elementy. Połączmy je w funkcję R, która pobiera jako dane wejściowe nazwę warstwy i indeks filtra i zwraca tensor reprezentujący wzór, który maksymalizuje aktywację określonego filtra. Zauważ, że użyjemy funkcji <code>tf_function()</code>, aby przyspieszyć działanie.</p>
+<p>Teraz mamy już wszystkie elementy. Połączmy je w funkcję R, która pobiera jako dane wejściowe nazwę warstwy i indeks filtra i zwraca tensor reprezentujący wzór, który maksymalizuje aktywację określonego filtra. Zauważmy, że użyjemy funkcji <code>tf_function()</code>, aby przyspieszyć działanie.</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -1880,7 +1881,7 @@ ________________________________________________________________________________
 <p><img src="segmentation_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Zauważ, że złożyliśmy tutaj <code>filter_index</code> z <code>as_tensor()</code>. Robimy to, ponieważ <code>tf_funkcja()</code> kompiluje oddzielną zoptymalizowaną funkcję dla każdego unikalnego sposobu jej wywoływana, a różne stałe liczą się jako unikalna sygnatura wywołania. Wygląda na to, że trzeci filtr w warstwie <code>block3_sepconv1</code> reaguje na wzór poziomych linii, nieco przypominający wodę.</p>
+<p>Zauważmy, że złożyliśmy tutaj <code>filter_index</code> z <code>as_tensor()</code>. Robimy to, ponieważ <code>tf_funkcja()</code> kompiluje oddzielną zoptymalizowaną funkcję dla każdego unikalnego sposobu jej wywoływana, a różne stałe liczą się jako unikalna sygnatura wywołania. Wygląda na to, że trzeci filtr w warstwie <code>block3_sepconv1</code> reaguje na wzór poziomych linii, nieco przypominający wodę.</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -1900,7 +1901,7 @@ ________________________________________________________________________________
 </div>
 </div>
 </div>
-<p>Te wizualizacje filtrów (patrz <a href="#fig-seg11">Rysunek&nbsp;<span>14.10</span></a>) mówią wiele o tym, jak warstwy sieci splotowej widzą świat: każda warstwa w convnecie uczy się zbioru filtrów w taki sposób, że jej dane wejściowe mogą być wyrażone jako kombinacja filtrów. Jest to podobne do tego, jak transformata Fouriera rozkłada sygnały na bank funkcji cosinusowych. Filtry w tych blokach filtrów sieci splotowej stają się coraz bardziej złożone i wyrafinowane, gdy zagłębiamy się w model:</p>
+<p>Te wizualizacje filtrów (patrz <a href="#fig-seg11">Rysunek&nbsp;<span>14.10</span></a>) mówią wiele o tym, jak warstwy sieci splotowej widzą świat: każda warstwa w sieci splotowej uczy się zbioru filtrów w taki sposób, że jej dane wejściowe mogą być wyrażone jako kombinacja filtrów. Jest to podobne do tego, jak transformata Fouriera rozkłada sygnały na funkcje trygonometryczne. Filtry w tych blokach filtrów sieci splotowej stają się coraz bardziej złożone i wyrafinowane, gdy zagłębiamy się w model:</p>
 <ul>
 <li>Filtry z pierwszych warstw w modelu kodują proste krawędzie kierunkowe i kolory (lub kolorowe krawędzie, w niektórych przypadkach).</li>
 <li>Filtry z warstw położonych nieco dalej w górę stosu, takich jak <code>block4_sepconv1</code>, kodują proste tekstury wykonane z kombinacji krawędzi i kolorów.</li>
@@ -1915,10 +1916,9 @@ ________________________________________________________________________________
 <figure class="figure">
 <p><img src="https://media.giphy.com/media/VFSexwZVYCeuDwqRF5/giphy.gif" class="img-fluid figure-img" width="400"></p>
 </figure>
-</div></div><p>Ta ogólna kategoria technik nazywana jest wizualizacją mapy aktywacji klas (ang. <em>Class Activation Map -</em> CAM) i polega na tworzeniu map ciepła aktywacji klas na obrazach wejściowych. Mapa cieplna aktywacji klas to dwuwymiarowa siatka wyników związanych z konkretną klasą wyjściową, obliczona dla każdej lokalizacji na dowolnym obrazie wejściowym, wskazująca jak ważna jest każda lokalizacja w odniesieniu do rozważanej klasy. Na przykład, biorąc pod uwagę obrazek wprowadzony do sieci splotowej psy-vs-koty, wizualizacja CAM pozwoli nam wygenerować mapę ciepła dla klasy “kot”, wskazując jak podobne do kotów są różne części obrazka, a także mapę ciepła dla klasy “pies”, wskazując jak podobne do psów są części obrazka.</p>
+</div></div><p>Ta ogólna kategoria technik nazywana jest wizualizacją mapy aktywacji klas (ang. <em>Class Activation Map -</em> CAM) i polega na tworzeniu map ciepła aktywacji klas na obrazach wejściowych. Mapa ciepła aktywacji klas to dwuwymiarowa siatka wyników związanych z konkretną klasą wyjściową, obliczona dla każdej lokalizacji na dowolnym obrazie wejściowym, wskazująca jak ważna jest każda lokalizacja w odniesieniu do rozważanej klasy. Na przykład, biorąc pod uwagę obrazek wprowadzony do sieci splotowej psy-vs-koty, wizualizacja CAM pozwoli nam wygenerować mapę ciepła dla klasy “kot”, wskazując jak podobne do kotów są różne części obrazka, a także mapę ciepła dla klasy “pies”, wskazując jak podobne do psów są części obrazka.</p>
 <p>Konkretna implementacja, której użyjemy, to ta opisana w artykule zatytułowanym “Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization”<span class="citation" data-cites="selvarajuGradCAMVisualExplanations2020">(<a href="references.html#ref-selvarajuGradCAMVisualExplanations2020" role="doc-biblioref">Selvaraju i in. 2020</a>)</span>.</p>
-<p>Grad-CAM polega na tym, że bierzemy wyjściową mapę cech warstwy konwolucji, daną obrazowi wejściowemu, i ważymy każdy kanał w tej mapie cech przez gradient klasy względem kanału. Intuicyjnie, jednym ze sposobów zrozumienia tej sztuczki jest wyobrażenie sobie, że ważymy przestrzenną mapę “jak intensywnie obraz wejściowy aktywuje różne kanały” przez “jak ważny jest każdy kanał w odniesieniu do klasy”, w wyniku czego otrzymujemy przestrzenną mapę “jak intensywnie obraz wejściowy aktywuje klasę”. Zademonstrujmy tę technikę przy użyciu wstępnie wytrenowanego modelu Xception.<br>
-</p>
+<p>Grad-CAM polega na tym, że bierzemy wyjściową mapę cech warstwy konwolucji, daną obrazowi wejściowemu, i ważymy każdy kanał w tej mapie cech przez gradient klasy względem kanału. Intuicyjnie, jednym ze sposobów zrozumienia tej sztuczki jest wyobrażenie sobie, że ważymy przestrzenną mapę “jak intensywnie obraz wejściowy aktywuje różne kanały” przez “jak ważny jest każdy kanał w odniesieniu do klasy”, w wyniku czego otrzymujemy przestrzenną mapę “jak intensywnie obraz wejściowy aktywuje klasę”. Zademonstrujmy tę technikę przy użyciu wstępnie wytrenowanego modelu Xception.</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -1947,7 +1947,7 @@ ________________________________________________________________________________
 </div>
 </div>
 </div>
-<p>Możesz teraz uruchomić wstępnie wytrenowaną sieć na obrazie i zdekodować jej wektor predykcji z powrotem do formatu czytelnego dla człowieka:</p>
+<p>Możemy teraz uruchomić wstępnie wytrenowaną sieć na obrazie i zdekodować jej wektor predykcji z powrotem do formatu czytelnego dla człowieka:</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -2039,7 +2039,7 @@ ________________________________________________________________________________
 <p><img src="segmentation_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Na koniec, nałóżmy mapę ciepła aktywacji na oryginalny obraz. Wycinamy wartości mapy ciepła do palety kolorów, a następnie konwertujemy do obiektu rastrowego R. Zwróć uwagę, że upewniliśmy się, że przekazaliśmy <code>alfa = .4</code> do palety, tak abyśmy nadal widzieli oryginalny obraz, gdy nałożymy na niego mapę ciepła. (Zobacz <a href="#fig-seg13">Rysunek&nbsp;<span>14.12</span></a>)</p>
+<p>Na koniec, nałóżmy mapę ciepła aktywacji na oryginalny obraz. Wycinamy wartości mapy ciepła do palety kolorów, a następnie konwertujemy do obiektu rastrowego R. Zwróćmy uwagę, że upewniliśmy się, że przekazaliśmy <code>alfa = .4</code> do palety, tak abyśmy nadal widzieli oryginalny obraz, gdy nałożymy na niego mapę ciepła (Zobacz <a href="#fig-seg13">Rysunek&nbsp;<span>14.12</span></a>).</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
