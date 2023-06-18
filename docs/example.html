@@ -307,27 +307,27 @@ div.csl-indent {
 </header>
 
 <p>Konieczność trenowania modelu klasyfikacji obrazów przy użyciu bardzo małej ilości danych jest częstą sytuacją, z którą prawdopodobnie spotkasz się w praktyce. “Kilka” próbek może oznaczać różnie od kilku setek do kilkudziesięciu tysięcy obrazów. Jako praktyczny przykład, skupimy się na klasyfikacji obrazów jako psów albo kotów, w zbiorze danych zawierającym 4000 zdjęć kotów i psów (2000 kotów, 2000 psów). Użyjemy 2000 zdjęć do treningu, 1000 do walidacji i 1000 do testów.</p>
-<p>W tym rozdziale omówimy jedną z podstawowych strategii radzenia sobie z tym problemem: trenowanie nowego modelu od podstaw przy użyciu niewielkiej ilości danych. Rozpoczniemy od naiwnego wytrenowania małej sieci splotowej na 2000 próbkach treningowych, bez żadnej regularyzacji, aby ustalić bazę tego, co można osiągnąć. Pozwoli to osiągnąć dokładność klasyfikacji na poziomie 71%. W tym momencie głównym problemem będzie <em>overfitting</em>. Następnie przedstawimy augmentację danych, technikę łagodzenia <em>overfitting</em> w wizji komputerowej. Używając augmentacji danych, poprawisz sieć do poziomu klasyfikacji 82%.</p>
+<p>W tym rozdziale omówimy jedną z podstawowych strategii radzenia sobie z tym problemem: trenowanie nowego modelu od podstaw przy użyciu niewielkiej ilości danych. Rozpoczniemy od wytrenowania małej sieci splotowej na 2000 próbkach treningowych, bez żadnej regularyzacji, aby ustalić bazę tego, co można osiągnąć. Pozwoli to osiągnąć dokładność klasyfikacji na poziomie 71%. W tym momencie głównym problemem będzie <em>overfitting</em>. Następnie przedstawimy augmentację danych, technikę łagodzenia <em>overfitting</em> w wizji komputerowej. Używając augmentacji danych, poprawimy sieć do poziomu klasyfikacji 82%.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://thumbs.dreamstime.com/z/cable-news-network-american-news-based-pay-television-channel-owned-turner-broadcasting-system-division-t-s-138494730.jpg" class="img-fluid figure-img" width="400"></p>
 </figure>
-</div></div><p>W dalszej części omówimy dwie kolejne techniki niezbędne do zastosowania głębokiego uczenia na małych zbiorach danych: ekstrakcję cech za pomocą wstępnie wytrenowanej sieci (co pozwoli osiągnąć dokładność od 90% do 96%) oraz dostrajanie wstępnie wytrenowanej sieci (co pozwoli osiągnąć ostateczną dokładność 97%). Razem, te trzy strategie - trenowanie małego modelu od zera, ekstrakcja cech przy użyciu wstępnie wytrenowanego modelu i dostrajanie wstępnie wytrenowanego modelu - będą stanowić twój przyszły zestaw narzędzi do radzenia sobie z problemem wizji komputerowej z małymi zbiorami danych.</p>
-<p>Czasami można usłyszeć, że głębokie uczenie działa tylko wtedy, gdy dostępna jest duża ilość danych. Jest to tylko częściowo prawdziwe: jedną z fundamentalnych cech głębokiego uczenia jest to, że może ono znaleźć interesujące cechy w danych treningowych samodzielnie, bez potrzeby ręcznej inżynierii cech, a to można osiągnąć tylko wtedy, gdy dostępna jest duża ilość przykładów treningowych. Jest to szczególnie prawdziwe dla problemów, w których próbki wejściowe są wielowymiarowe, jak obrazy.</p>
-<p>To, co stanowi dużą ilość próbek, jest względne - na przykład w odniesieniu do rozmiaru i głębokości sieci, którą próbujesz wytrenować. Nie jest możliwe wytrenowanie sieci splotowej do rozwiązania złożonego problemu przy użyciu zaledwie kilkudziesięciu próbek, ale kilkaset może potencjalnie wystarczyć, jeśli model jest mały i dobrze wyregulowany, a zadanie proste. Ponieważ sieci splotowe uczą się lokalnych, niezmiennych w czasie cech, są bardzo wydajne w przetwarzaniu danych dla problemów percepcyjnych. Trening sieci konwolucyjne od podstaw na bardzo małym zbiorze obrazów pozwoli na uzyskanie rozsądnych wyników pomimo względnego braku danych, bez potrzeby tworzenia własnych cech.</p>
-<p>Co więcej, modele uczenia głębokiego są z natury bardzo uniwersalne: możesz wziąć, powiedzmy, model klasyfikacji obrazów lub mowy/tekstu wytrenowany na dużym zbiorze danych i użyć go ponownie do znacznie innego problemu z niewielkimi zmianami. W przypadku wizji komputerowej, wiele wstępnie wytrenowanych modeli (zazwyczaj wytrenowanych na zbiorze danych ImageNet) jest publicznie dostępnych do pobrania i może być wykorzystanych do stworzenia potężnych modeli wizji z bardzo małej ilości danych.</p>
+</div></div><p>W dalszej części omówimy dwie kolejne techniki niezbędne do zastosowania głębokiego uczenia na małych zbiorach danych: ekstrakcję cech za pomocą wstępnie wytrenowanej sieci (co pozwoli osiągnąć dokładność od 90% do 96%) oraz dostrajanie wstępnie wytrenowanej sieci (co pozwoli osiągnąć ostateczną dokładność 97%). Razem, te trzy strategie - trenowanie małego modelu od zera, ekstrakcja cech przy użyciu wstępnie wytrenowanego modelu i dostrajanie wstępnie wytrenowanego modelu - będą stanowić nasz przyszły zestaw narzędzi do radzenia sobie z problemem wizji komputerowej z małymi zbiorami danych.</p>
+<p>Czasami można usłyszeć, że głębokie uczenie działa tylko wtedy, gdy dostępna jest duża ilość danych. Jest w tym stwierdzeniu trochę prawdy: jedną z fundamentalnych cech głębokiego uczenia jest to, że może ono znaleźć interesujące cechy w danych treningowych samodzielnie, bez potrzeby ręcznej inżynierii cech, a to można osiągnąć tylko wtedy, gdy dostępna jest duża ilość przykładów treningowych. Jest to szczególnie prawdziwe dla problemów, w których próbki wejściowe są wielowymiarowe, jak obrazy.</p>
+<p>Ile to jest “duża liczba próbek”, jest względne - na przykład w odniesieniu do rozmiaru i głębokości sieci, którą próbujemy wytrenować. Nie jest możliwe wytrenowanie sieci splotowej do rozwiązania złożonego problemu przy użyciu zaledwie kilkudziesięciu próbek, ale kilkaset może potencjalnie wystarczyć, jeśli model jest mały i dobrze wyregulowany, a zadanie proste. Ponieważ sieci splotowe uczą się lokalnych, niezmiennych w czasie cech, są bardzo wydajne w przetwarzaniu danych dla problemów percepcyjnych. Trening sieci konwolucyjnych od podstaw na bardzo małym zbiorze obrazów pozwoli na uzyskanie rozsądnych wyników pomimo względnego braku danych, bez potrzeby tworzenia własnych cech.</p>
+<p>Co więcej, modele uczenia głębokiego są z natury bardzo uniwersalne: możemy wziąć, powiedzmy, model klasyfikacji obrazów lub mowy/tekstu wytrenowany na dużym zbiorze danych i użyć go ponownie do znacznie innego problemu z niewielkimi zmianami. W przypadku wizji komputerowej, wiele wstępnie wytrenowanych modeli (zazwyczaj wytrenowanych na zbiorze danych <em>ImageNet</em>) jest publicznie dostępnych do pobrania i może być wykorzystanych do stworzenia potężnych modeli wizji z bardzo małej ilości danych.</p>
 <section id="pobieranie-danych" class="level2 page-columns page-full" data-number="13.1">
 <h2 data-number="13.1" class="anchored" data-anchor-id="pobieranie-danych"><span class="header-section-number">13.1</span> Pobieranie danych</h2>
-<div class="page-columns page-full"><p>Zestaw danych <em>Dogs vs.&nbsp;Cats</em>, z którego będziesz korzystać, nie jest dołączony do <code>keras</code>. Został udostępniony przez <em>Kaggle</em> w ramach konkursu wizji komputerowej pod koniec 2013 roku, jeszcze w czasach, gdy sieci splotowe nie były głównym nurtem. Oryginalny zbiór danych można pobrać ze strony <a href="https://www.kaggle.com/competitions/dogs-vs-cats/data" class="uri">https://www.kaggle.com/competitions/dogs-vs-cats/data</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.Zdjęcia to kolorowe JPEG-i o średniej rozdzielczości. Rysunek 5.8 pokazuje kilka przykładów.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;konieczne będzie założenie konta w Kaggle, jeśli jeszcze go nie masz - bez obaw, proces jest bezbolesny</p></li></div></div>
-<p>Nie jest zaskoczeniem, że konkurs Kaggle <em>cat-versus-dogs</em> w 2013 roku został wygrany przez uczestników, którzy użyli sieci konwolucyjnych. Najlepsze struktury osiągnęły do 95% dokładności. W tym przykładzie uzyskasz wynik bliski tej wartości, mimo że będziesz trenował swoje modele na mniej niż 10% danych, które były dostępne dla konkurencji.</p>
+<div class="page-columns page-full"><p>Zestaw danych <em>Dogs vs.&nbsp;Cats</em>, z którego będziemy korzystać, nie jest dołączony do <code>keras</code>. Został udostępniony przez <em>Kaggle</em> w ramach konkursu wizji komputerowej pod koniec 2013 roku, jeszcze w czasach, gdy sieci splotowe nie były głównym nurtem. Oryginalny zbiór danych można pobrać ze strony <a href="https://www.kaggle.com/competitions/dogs-vs-cats/data" class="uri">https://www.kaggle.com/competitions/dogs-vs-cats/data</a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.Zdjęcia to kolorowe JPEG-i o średniej rozdzielczości. <a href="#fig-kaggle1">Rysunek&nbsp;<span>13.1</span></a> pokazuje kilka przykładów z tego zbioru.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;konieczne będzie założenie konta w Kaggle, jeśli jeszcze go nie masz - bez obaw, proces jest bezbolesny</p></li></div></div>
+<p>Nie jest zaskoczeniem, że konkurs Kaggle <em>cat-versus-dogs</em> w 2013 roku został wygrany przez uczestników, którzy użyli sieci konwolucyjnych. Najlepsze struktury osiągnęły do 95% dokładności. W tym przykładzie uzyskamy wynik bliski tej wartości, mimo że będziemy trenować modele na mniej niż 10% danych, które były dostępne dla konkurencji.</p>
 <div id="fig-kaggle1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-03-2 o 21.14.55.png" class="img-fluid figure-img" width="600"></p>
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;13.1: Kilka przykładowych obrazów ze zbioru</figcaption><p></p>
 </figure>
 </div>
-<div class="page-columns page-full"><p>Ten zbiór danych zawiera 25000 obrazów psów i kotów (12500 z każdej klasy) i ma rozmiar 569 MB (skompresowany)<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Po pobraniu i rozpakowaniu, utworzysz nowy zbiór danych zawierający trzy podzbiory: zbiór treningowy z 1000 próbek każdej klasy, zbiór walidacyjny z 500 próbkami każdej klasy oraz zbiór testowy z 500 próbkami każdej klasy. Poniżej znajduje się kod do wykonania tego zadania.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;w ściągniętym pliku <code>dogs-vs-cats.zip</code> są zawarte trzy pliki, a skupiamy się na <code>train.zip</code> i to ten rozpakowujemy</p></li></div></div>
+<div class="page-columns page-full"><p>Oryginalny zbiór danych zawiera 25000 obrazów psów i kotów (12500 z każdej klasy) i ma rozmiar 569 MB (skompresowany)<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Po pobraniu i rozpakowaniu, utworzymy nowy zbiór danych zawierający trzy podzbiory: zbiór treningowy z 1000 próbek każdej klasy, zbiór walidacyjny z 500 próbkami każdej klasy oraz zbiór testowy z 500 próbkami każdej klasy. Poniżej znajduje się kod do wykonania tego zadania.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;w ściągniętym pliku <code>dogs-vs-cats.zip</code> są zawarte trzy pliki, a skupiamy się na <code>train.zip</code> i to ten rozpakowujemy</p></li></div></div>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -375,11 +375,11 @@ div.csl-indent {
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-annotation="1" data-code-lines="1">tu ustaw swoją ścieżkę do katalogu z rozpakowanym katalogiem <code>train</code></span>
+<span data-code-annotation="1" data-code-lines="1" data-code-cell="annotated-cell-1">tu ustaw swoją ścieżkę do katalogu z rozpakowanym katalogiem <code>train</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-annotation="2" data-code-lines="2">ustaw ścieżkę gdzie chcesz zapisywać obrazy do uczenia sieci</span>
+<span data-code-annotation="2" data-code-lines="2" data-code-cell="annotated-cell-1">ustaw ścieżkę gdzie chcesz zapisywać obrazy do uczenia sieci</span>
 </dd>
 </dl>
 </div>
@@ -429,12 +429,11 @@ div.csl-indent {
 <pre><code>total test dog images: 500 </code></pre>
 </div>
 </div>
-<p>Tak więc masz rzeczywiście 2000 obrazów treningowych, 1000 obrazów walidacyjnych i 1000 obrazów testowych. Każdy podział zawiera taką samą liczbę próbek z każdej klasy: jest to zrównoważony problem klasyfikacji binarnej, co oznacza, że dokładność klasyfikacji będzie odpowiednią miarą dopasowania.</p>
+<p>Tak więc mamy rzeczywiście 2000 obrazów treningowych, 1000 obrazów walidacyjnych i 1000 obrazów testowych. Każdy podział zawiera taką samą liczbę próbek z każdej klasy: jest to zrównoważony problem klasyfikacji binarnej, co oznacza, że dokładność klasyfikacji będzie odpowiednią miarą dopasowania.</p>
 </section>
 <section id="budowa-sieci" class="level2" data-number="13.2">
 <h2 data-number="13.2" class="anchored" data-anchor-id="budowa-sieci"><span class="header-section-number">13.2</span> Budowa sieci</h2>
-<p>W poprzednim przykładzie zbudowaliśmy małą sieć splotową dla MNIST. Ponownie użyjemy tej samej ogólnej struktury: sieć będzie stosem naprzemiennych warstw <code>layer_conv_2d</code> (z aktywacją <code>relu</code>) i <code>layer_max_pooling_2d</code>.</p>
-<p>Ale ponieważ mamy do czynienia z większymi obrazami i bardziej złożonym problemem, sprawimy, że nasza sieć będzie odpowiednio większa: będzie miała jeszcze jedną kombinację <code>layer_conv_2d</code> + <code>layer_max_pooling_2d</code>. Służy to zarówno zwiększeniu pojemności sieci, jak i dalszemu zmniejszeniu rozmiaru map funkcji, aby nie były zbyt duże, gdy dojdziemy do <code>layer_flatten</code>. Tutaj, ponieważ zaczynamy od wejść o rozmiarze 150 × 150 (nieco arbitralny wybór), kończymy z mapami cech o rozmiarze 7 × 7 tuż przed <code>layer_flatten</code>.</p>
+<p>W poprzednim przykładzie zbudowaliśmy małą sieć splotową dla MNIST. Ponownie użyjemy tej samej ogólnej struktury: sieć będzie stosem naprzemiennych warstw <code>layer_conv_2d</code> (z aktywacją <code>relu</code>) i <code>layer_max_pooling_2d</code>. Ale ponieważ mamy do czynienia z większymi obrazami i bardziej złożonym problemem, sprawimy, że nasza sieć będzie odpowiednio większa: będzie miała jeszcze jedną kombinację <code>layer_conv_2d</code> + <code>layer_max_pooling_2d</code>. Posłuży to, zarówno zwiększeniu pojemności sieci, jak i dalszemu zmniejszeniu rozmiaru map funkcji, aby nie były zbyt duże, gdy dojdziemy do <code>layer_flatten</code>. Tutaj, ponieważ zaczynamy od wejść o rozmiarze 150 × 150 (nieco arbitralny wybór), kończymy z mapami cech o rozmiarze 7 × 7 tuż przed <code>layer_flatten</code>.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -512,9 +511,9 @@ ________________________________________________________________________________
 <li>Odczytaj pliki z obrazkami.</li>
 <li>Zdekoduj zawartość JPEG na siatki pikseli RGB.</li>
 <li>Przekształć je na tensory zmiennoprzecinkowe.</li>
-<li>Przeskaluj wartości pikseli (między 0 a 255) do przedziału [0, 1] (jak wiadomo, sieci neuronowe wolą mieć do czynienia z małymi wartościami wejściowymi).</li>
+<li>Przeskaluj wartości pikseli (między 0 a 255) do przedziału [0, 1]<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</li>
 </ol>
-<p>To może wydawać się nieco zniechęcające, ale na szczęście <code>keras</code> ma narzędzia, które zajmują się tymi krokami automatycznie. <code>keras</code> zawiera wiele narzędzi pomocniczych do przetwarzania obrazów. W szczególności, zawiera funkcję <code>image_data_generator()</code>, która może automatycznie przekształcić pliki graficzne na dysku w partie wstępnie przetworzonych tensorów. To właśnie z niej będziemy tutaj korzystać.</p>
+<div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;jak wiadomo, sieci neuronowe wolą mieć do czynienia z małymi wartościami wejściowymi</p></li></div><p>Zadanie te mogą się wydawać dosyć trudne do wykonania, ale na szczęście <code>keras</code> ma narzędzia, które pozwalają na pewnego rodzaju automatyzację tych czynności. <code>keras</code> zawiera wiele narzędzi pomocniczych do przetwarzania obrazów. W szczególności, zawiera funkcję <code>image_data_generator()</code>, która może automatycznie przekształcić pliki graficzne na dysku w partie wstępnie przetworzonych tensorów. To właśnie z niej będziemy tutaj korzystać.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -543,7 +542,7 @@ ________________________________________________________________________________
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Przyjrzyjmy się wyjściu jednego z takich generatorów: daje on partie obrazów RGB o wymiarach 150 × 150 (kształt <code>(20, 150, 150, 3)</code>) oraz binarne etykiety (kształt (20)). W każdej partii znajduje się 20 próbek (rozmiar partii). Zauważ, że generator tworzy te partie w nieskończoność: zapętla się bez końca nad obrazami w folderze docelowym.</p>
+<p>Przyjrzyjmy się wyjściu jednego z takich generatorów: daje on partie obrazów RGB o wymiarach 150 × 150 (kształt <code>(20, 150, 150, 3)</code>) oraz binarne etykiety (kształt (20)). W każdej partii znajduje się 20 próbek (rozmiar partii). Zauważmy, że generator tworzy te partie w nieskończoność: zapętla się bez końca nad obrazami w folderze docelowym.</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -552,12 +551,11 @@ ________________________________________________________________________________
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 2
- $ : num [1:20, 1:150, 1:150, 1:3] 1 0.404 0.306 0.145 0.102 ...
- $ : num [1:20(1d)] 0 0 1 0 0 1 1 0 0 0 ...</code></pre>
+ $ : num [1:20, 1:150, 1:150, 1:3] 0.349 0.0902 0.4667 0.7804 0.0235 ...
+ $ : num [1:20(1d)] 0 0 1 0 1 1 0 1 1 0 ...</code></pre>
 </div>
 </div>
-<p>Dopasujmy model do danych uzyskanych za pomocą generatora. Robimy to za pomocą funkcji <code>fit</code>. Jako pierwszy argument oczekuje ona generatora, który będzie generował partie danych wejściowych i docelowych. Ponieważ dane są generowane w nieskończoność, generator musi wiedzieć, ile próbek pobrać z generatora, zanim zadeklaruje koniec epoki. Taką rolę pełni argument <code>steps_per_epoch</code>: po pobraniu z generatora partii próbek - czyli po wykonaniu kroków spadku gradientu - proces dopasowania przejdzie do następnej epoki. W tym przypadku, partie są 20-próbkowe, więc zajmie to 100 partii, aż do osiągnięcia celu 2000 próbek.</p>
-<div class="page-columns page-full"><p>Kiedy używasz <code>fit</code>, możesz przekazać też argument <code>validation_data</code>. Ważne jest, aby zauważyć, że ten argument może być zbiorem danych, ale może to być również lista tablic. Jeśli przekażesz generator jako <code>validation_data</code>, to oczekuje się, że ten generator będzie dawał partie danych walidacyjnych w nieskończoność; dlatego powinieneś również określić argument <code>validation_steps</code>, który mówi procesowi ile partii ma pobrać z generatora walidacji do oceny<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;ponieważ liczebnośc tej próby wynosi 1000 obserwacji, to z prostego rachunku <code># validation_data / batch_size = 1000/20 = 50</code></p></li></div></div>
+<div class="page-columns page-full"><p>Dopasujmy model do danych uzyskanych za pomocą generatora. Robimy to za pomocą funkcji <code>fit</code>. Jako pierwszy argument funkcja ta oczekuje generatora, który będzie generował partie danych wejściowych i docelowych. Ponieważ dane są generowane w nieskończoność, generator musi wiedzieć, ile próbek pobrać z generatora, zanim zadeklaruje koniec epoki. Taką rolę pełni argument <code>steps_per_epoch</code>: po pobraniu z generatora partii próbek - czyli po wykonaniu kroków spadku gradientu - proces dopasowania przejdzie do następnej epoki. W tym przypadku, partie są 20-próbkowe, więc zajmie to 100 partii, aż do osiągnięcia celu 2000 próbek. Do funkcji <code>fit</code>, możemy przekazać też argument <code>validation_data</code>. Ważne jest, aby zauważyć, że ten argument może być zbiorem danych, ale może to być również lista tablic. Jeśli przekażesz generator jako <code>validation_data</code>, to oczekuje się, że ten generator będzie dawał partie danych walidacyjnych w nieskończoność; dlatego powinieneś również określić argument <code>validation_steps</code>, który mówi procesowi ile partii ma pobrać z generatora walidacji do oceny<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;ponieważ liczebność tej próby wynosi 1000 obserwacji, to z prostego rachunku <code># validation_data / batch_size = 1000/20 = 50</code></p></li></div></div>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -582,12 +580,12 @@ ________________________________________________________________________________
 <p><img src="example_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Te wykresy są charakterystyczne dla nadmiernego dopasowania. Dokładność szkolenia rośnie liniowo w czasie, aż osiąga prawie 100%, natomiast dokładność walidacji zatrzymuje się na poziomie 70-74%. Strata związana z walidacją osiąga swoje minimum już po pięciu epokach, a następnie zatrzymuje się, podczas gdy strata związana z treningiem zmniejsza się liniowo, aż osiągnie prawie 0.</p>
-<p>Ponieważ mamy stosunkowo mało próbek treningowych (2000), <em>overfitting</em> będzie naszym najczęstszym problemem. Wiemy już o kilku technikach, które mogą pomóc złagodzić <em>overfitting</em>, takich jak <em>dropout</em> i regularyzacje L1 i L2. Teraz wprowadzimy nową, specyficzną dla wizji komputerowej i używaną niemal powszechnie podczas przetwarzania obrazów za pomocą modeli głębokiego uczenia: augmentację danych.</p>
+<p>Te wykresy są charakterystyczne dla nadmiernego dopasowania. Dokładność szkolenia rośnie liniowo w czasie, aż osiąga prawie 100%, natomiast dokładność walidacji zatrzymuje się na poziomie 70-74%. Strata związana z walidacją osiąga swoje minimum już po około 8 epokach, a następnie zatrzymuje się, podczas gdy strata związana z treningiem zmniejsza się liniowo, aż osiągnie prawie 0.</p>
+<p>Ponieważ mamy stosunkowo mało próbek treningowych (2000), <em>overfitting</em> będzie naszym najczęstszym naszym problemem. Wiemy już o kilku technikach, które mogą pomóc złagodzić <em>overfitting</em>, takich jak <em>dropout</em> i regularyzacje L1 i L2. Teraz jednak wprowadzimy nową, specyficzną dla wizji komputerowej i używaną niemal powszechnie podczas przetwarzania obrazów za pomocą modeli głębokiego uczenia: augmentację danych.</p>
 </section>
 <section id="augmentacja-obrazów" class="level2 page-columns page-full" data-number="13.4">
 <h2 data-number="13.4" class="anchored" data-anchor-id="augmentacja-obrazów"><span class="header-section-number">13.4</span> Augmentacja obrazów</h2>
-<p>Nadmierne dopasowanie jest spowodowany przez posiadanie zbyt małej ilości próbek do nauki, co powoduje, że nie można wytrenować modelu, który może uogólniać się na nowe dane. Przy nieskończonej ilości danych, twój model byłby wystawiony na każdy możliwy rozkład danych: <em>overfitting</em> nigdy nie byłby możliwy. Augmentacja danych polega na generowaniu większej ilości danych treningowych z istniejących próbek treningowych, poprzez szereg losowych przekształceń, które dają wiarygodnie wyglądające obrazy. Celem jest, aby w czasie treningu model nigdy nie widział dokładnie tego samego obrazu dwa razy. To pomaga wystawić model na więcej aspektów danych i lepiej generalizować.</p>
+<p>Nadmierne dopasowanie jest spowodowany przez posiadanie zbyt małej ilości próbek do nauki, co powoduje, że nie można wytrenować modelu, który może uogólniać się na nowe dane. Przy nieskończonej ilości danych, nasz model byłby wystawiony na każdy możliwy rozkład danych: <em>overfitting</em> nigdy nie byłby możliwy. Augmentacja danych polega na generowaniu większej ilości danych treningowych z istniejących próbek treningowych, poprzez szereg losowych przekształceń, które dają wiarygodnie wyglądające obrazy. Celem jest, aby w czasie treningu model nigdy nie widział dokładnie tego samego obrazu dwa razy. To pomaga wystawić model na więcej różnych aspektów charakterystycznych dla klas i w rezultacie lepiej generalizować.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -615,10 +613,10 @@ ________________________________________________________________________________
 <li><code>width_shift</code> i <code>height_shift</code> to zakresy (jako ułamek całkowitej szerokości lub wysokości), w których można losowo przesuwać obrazy w pionie lub poziomie.</li>
 <li><code>shear_range</code> służy do losowego stosowania transformacji ścinających.</li>
 <li><code>zoom_range</code> służy do losowego powiększania obrazów.</li>
-<li><code>horizontal_flip</code> służy do losowego obracania obrazów w poziomie<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> - ma to znaczenie, gdy nie ma założeń asymetrii poziomej (np. obrazy z prawdziwego świata).</li>
+<li><code>horizontal_flip</code> służy do losowego obracania obrazów w poziomie<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> - ma to znaczenie, gdy nie ma założeń asymetrii poziomej (np. obrazy z prawdziwego świata).</li>
 <li><code>fill_mode</code> to strategia używana do wypełniania nowo utworzonych pikseli, które mogą pojawić się po obrocie lub zmianie szerokości/wysokości.</li>
 </ul>
-<div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;obrócona zostanie połowa obrazów</p></li></div><div class="cell">
+<div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;obrócona zostanie połowa obrazów</p></li></div><div class="cell">
 <details open="">
 <summary>Kod</summary>
 <div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a>fnames <span class="ot">&lt;-</span> <span class="fu">list.files</span>(train_cats_dir, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
@@ -643,27 +641,27 @@ ________________________________________________________________________________
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-annotation="1" data-code-lines="2">wybierz obraz do augmentacji</span>
+<span data-code-annotation="1" data-code-lines="2" data-code-cell="annotated-cell-15">wybierz obraz do augmentacji</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-annotation="2" data-code-lines="3">wczytaj obraz i zmień rozmiar na 150 x 150</span>
+<span data-code-annotation="2" data-code-lines="3" data-code-cell="annotated-cell-15">wczytaj obraz i zmień rozmiar na 150 x 150</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-annotation="3" data-code-lines="4">zamień obraz do formatu (150, 150, 3)</span>
+<span data-code-annotation="3" data-code-lines="4" data-code-cell="annotated-cell-15">zamień obraz do formatu (150, 150, 3)</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-annotation="4" data-code-lines="5">przekształć na tensor (1, 150, 150, 3)</span>
+<span data-code-annotation="4" data-code-lines="5" data-code-cell="annotated-cell-15">przekształć na tensor (1, 150, 150, 3)</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-annotation="5" data-code-lines="7">generuj partie losowo przekształconych obrazów</span>
+<span data-code-annotation="5" data-code-lines="7" data-code-cell="annotated-cell-15">generuj partie losowo przekształconych obrazów</span>
 </dd>
 <dt data-target-cell="annotated-cell-15" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-annotation="6" data-code-lines="13">wyświetl obrazy</span>
+<span data-code-annotation="6" data-code-lines="13" data-code-cell="annotated-cell-15">wyświetl obrazy</span>
 </dd>
 </dl>
 </div>
@@ -675,7 +673,7 @@ ________________________________________________________________________________
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(op)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Jeśli wytrenujesz nową sieć używając tej konfiguracji augmentacji danych, sieć nigdy nie zobaczy tego samego wejścia dwa razy. Dane wejściowe, które widzi, są nadal silnie powiązane, ponieważ pochodzą z niewielkiej liczby oryginalnych obrazów - nie możesz wytworzyć nowych informacji, możesz jedynie zmiksować istniejące. Jako takie, może to nie wystarczyć, aby całkowicie pozbyć się nadmiernego dopasowania. Aby dalej walczyć z nadmiernym dopasowanie, dodajemy do modelu warstwę <em>dropout</em>, tuż przed klasyfikatorem gęsto połączonym.</p>
+<p>Jeśli wytrenujesz nową sieć używając tej konfiguracji augmentacji danych, sieć nigdy nie zobaczy tego samego wejścia dwa razy. Dane wejściowe, które widzi, są nadal silnie powiązane, ponieważ pochodzą z niewielkiej liczby oryginalnych obrazów - nie możemy wytworzyć nowych informacji, możemy jedynie zmiksować istniejące. Jako takie, może to nie wystarczyć, aby całkowicie pozbyć się nadmiernego dopasowania. Aby dalej walczyć z nadmiernym dopasowanie, dodajemy do modelu warstwę <em>dropout</em>, tuż przed klasyfikatorem gęsto połączonym.</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -744,15 +742,15 @@ ________________________________________________________________________________
 </div>
 <p>Zanim przejdziemy do oceny dopasowania modelu wspomnijmy najważniejsze parametry w ustawieniu uczenia:</p>
 <ul>
-<li><code>batch_size</code> - określa liczbę próbek w każdej partii. Jego maksimum to liczba wszystkich próbek, co sprawia, że spadek gradientu jest dokładny, strata zmniejszy się w kierunku minimum, jeśli współczynnik uczenia jest wystarczająco mały, ale iteracje są wolniejsze. Z drugiej strony jego minimum to 1, co powoduje stochastyczny spadek gradientu - szybki, ale kierunek kroku gradientu jest oparty tylko na jednym przykładzie, dlatego może błądzić. <code>batch_size</code> pozwala na kompromis między dwoma skrajnościami: dokładnym kierunkiem gradientu i szybką iteracją. Maksymalna wartość dla <code>batch_size</code> może być ograniczona, jeśli twój model + zestaw danych nie mieści się w dostępnej (GPU) pamięci.</li>
-<li><code>steps_per_epoch</code> - liczba iteracji partii, zanim epoka treningowa zostanie zakończona. Jeśli masz zestaw treningowy o stałym rozmiarze, możesz go zignorować, ale może być przydatny, jeśli masz ogromny zestaw danych lub jeśli generujesz losowe augmentacje danych w locie, tj. jeśli twój zestaw treningowy ma (wygenerowany) nieskończony rozmiar.</li>
+<li><code>batch_size</code> - określa liczbę próbek w każdej partii. Jego maksimum to liczba wszystkich próbek, co sprawia, że spadek gradientu jest dokładny, strata zmniejszy się w kierunku minimum, jeśli współczynnik uczenia jest wystarczająco mały, ale iteracje są wolniejsze. Z drugiej strony jego minimum to 1, co powoduje stochastyczny spadek gradientu - szybki, ale kierunek kroku gradientu jest oparty tylko na jednym przykładzie, dlatego może błądzić. <code>batch_size</code> pozwala na kompromis między dwoma skrajnościami: dokładnym kierunkiem gradientu i szybką iteracją. Maksymalna wartość dla <code>batch_size</code> może być ograniczona, jeśli nasz model + zestaw danych nie mieści się w dostępnej (GPU) pamięci.</li>
+<li><code>steps_per_epoch</code> - liczba iteracji partii, zanim epoka treningowa zostanie zakończona. Jeśli mamy zestaw treningowy o stałym rozmiarze, możemy go zignorować, ale może być przydatny, jeśli masz ogromny zestaw danych lub jeśli generujemy losowe augmentacje danych w locie, tj. jeśli nasz zestaw treningowy ma (wygenerowany) nieskończony rozmiar.</li>
 <li><code>validation_steps</code> - podobne do <code>steps_per_epoch</code> ale na zestawie danych walidacyjnych.</li>
 </ul>
 <p>Wracając do podsumowania dopasowania sieci, widzimy, że augmentacja oraz dodanie jednej warstwy regularyzacyjnej znacznie poprawiło wynik dopasowania (83%). Stosując więcej warstw regularyzacyjnych można osiągnąć jeszcze lepszy wynik 86-87%.</p>
 </section>
 <section id="wykorzystanie-sieci-wstępnie-wytrenowanej" class="level2 page-columns page-full" data-number="13.5">
 <h2 data-number="13.5" class="anchored" data-anchor-id="wykorzystanie-sieci-wstępnie-wytrenowanej"><span class="header-section-number">13.5</span> Wykorzystanie sieci wstępnie wytrenowanej</h2>
-<p>Powszechnym i wysoce efektywnym podejściem do głębokiego uczenia na małych zbiorach danych obrazów jest użycie wstępnie wytrenowanej sieci. Sieć wstępnie wytrenowana to sieć zapisana, która została wcześniej wytrenowana na dużym zbiorze danych, zazwyczaj na zadaniu klasyfikacji obrazów na dużą skalę. Jeśli ten oryginalny zbiór danych jest wystarczająco duży i ogólny, to hierarchia cech przestrzennych wyuczona przez wstępnie wytrenowaną sieć może efektywnie działać jako ogólny model świata wizualnego, a zatem jej cechy mogą okazać się użyteczne dla wielu różnych problemów związanych z widzeniem komputerowym, nawet jeśli te nowe problemy mogą dotyczyć zupełnie innych klas niż te z oryginalnego zadania. Na przykład, można wytrenować sieć na ImageNet (gdzie klasy to głównie zwierzęta i przedmioty codziennego użytku), a następnie wykorzystać ją do czegoś tak odległego jak identyfikacja mebli na obrazach. Taka możliwość przenoszenia wyuczonych cech na różne problemy jest kluczową zaletą głębokiego uczenia w porównaniu do wielu starszych podejść płytkiego uczenia i sprawia, że głębokie uczenie jest bardzo efektywne w przypadku problemów z małymi danymi. W tym przypadku, rozważmy dużą sieć splotową wytrenowaną na zbiorze danych ImageNet (1,4 miliona oznaczonych obrazów i 1000 różnych klas). ImageNet zawiera wiele klas zwierząt, w tym różne gatunki kotów i psów, można więc oczekiwać dobrych wyników w problemie klasyfikacji koty kontra psy. Będziemy używać architektury VGG16, opracowanej przez <span class="citation" data-cites="Simonyan2014">Simonyan i Zisserman (<a href="references.html#ref-Simonyan2014" role="doc-biblioref">2014</a>)</span>; jest to prosta i szeroko stosowana architektura sieci konwolucyjnej dla ImageNet. Chociaż jest to starszy model, daleki od obecnego stanu wiedzy i nieco cięższy niż wiele innych najnowszych modeli, wybraliśmy go, ponieważ jego architektura jest podobna do tego, co już znamy i jest łatwa do zrozumienia bez wprowadzania nowych koncepcji. To może być pierwsze spotkanie z jedną z tych uroczych nazw modeli-VGG, ResNet, Inception, Inception-ResNet, Xception i tak dalej.</p>
+<div class="page-columns page-full"><p>Powszechnym i wysoce efektywnym podejściem do głębokiego uczenia na małych zbiorach danych obrazów jest użycie wstępnie wytrenowanej sieci. Sieć wstępnie wytrenowana to sieć zapisana, która została wcześniej wytrenowana na dużym zbiorze danych, zazwyczaj na zadaniu klasyfikacji obrazów na dużą skalę. Jeśli oryginalny zbiór danych jest wystarczająco duży i ogólny, to hierarchia cech przestrzennych wyuczona przez wstępnie wytrenowaną sieć może efektywnie działać jako ogólny model świata wizualnego, a zatem jej cechy mogą okazać się użyteczne dla wielu różnych problemów związanych z widzeniem komputerowym, nawet jeśli te nowe problemy dotyczą zupełnie innych klas niż te z oryginalnego zadania. Na przykład, można wytrenować sieć na <em>ImageNet</em> (gdzie klasy to głównie zwierzęta i przedmioty codziennego użytku), a następnie wykorzystać ją do czegoś tak odległego jak identyfikacja mebli na obrazach. Taka możliwość przenoszenia<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> wyuczonych cech na różne problemy jest kluczową zaletą głębokiego uczenia w porównaniu do wielu starszych podejść płytkiego uczenia i sprawia, że głębokie uczenie jest bardzo efektywne w przypadku problemów z małymi zbiorami danych. W tym przypadku, rozważmy dużą sieć splotową wytrenowaną na zbiorze danych <em>ImageNet</em> (1,4 miliona oznaczonych obrazów i 1000 różnych klas). <em>ImageNet</em> zawiera wiele klas zwierząt, w tym różne gatunki kotów i psów, można więc oczekiwać dobrych wyników w problemie klasyfikacji koty kontra psy. Będziemy używać architektury VGG16, opracowanej przez <span class="citation" data-cites="Simonyan2014">Simonyan i Zisserman (<a href="references.html#ref-Simonyan2014" role="doc-biblioref">2014</a>)</span>; jest to prosta i szeroko stosowana architektura sieci konwolucyjnej dla <em>ImageNet.</em> Mimo, że jest to starszy model, daleki od obecnego stanu wiedzy i nieco cięższy niż wiele innych najnowszych modeli, wybraliśmy go, ponieważ jego architektura jest podobna do tego, co już znamy i jest łatwa do zrozumienia bez wprowadzania nowych koncepcji. Innymi znanymi wstępnie wytrenowanymi architekturami są między innymi: VGG, ResNet, Inception, Inception-ResNet, Xception.</p><div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;ang. <em>transfer learning</em></p></li></div></div>
 <p>Istnieją dwa sposoby wykorzystania wstępnie wytrenowanej sieci: ekstrakcja cech i dostrajanie. Omówimy oba z nich. Zacznijmy od ekstrakcji cech.</p>
 <section id="ekstrakcja-cech" class="level3 page-columns page-full" data-number="13.5.1">
 <h3 data-number="13.5.1" class="anchored" data-anchor-id="ekstrakcja-cech"><span class="header-section-number">13.5.1</span> Ekstrakcja cech</h3>
@@ -764,10 +762,9 @@ ________________________________________________________________________________
 <p></p><figcaption class="figure-caption">Rysunek&nbsp;13.2: Sposób zastosowania wyuczonej sieci</figcaption><p></p>
 </figure>
 </div>
-<p>Dlaczego warto ponownie wykorzystać tylko bazę konwolucyjną? Czy mógłbyś ponownie użyć również gęsto połączonego klasyfikatora? Ogólnie rzecz biorąc, należy tego unikać. Powodem jest to, że reprezentacje nauczone przez bazę konwolucyjną będą prawdopodobnie bardziej ogólne, a zatem bardziej użyteczne: mapy cech sieci konwolucyjnej są mapami obecności ogólnych wzorców na obrazie, co prawdopodobnie będzie przydatne niezależnie od problemu widzenia komputerowego. Natomiast reprezentacje wyuczone przez klasyfikator będą z konieczności specyficzne dla zbioru klas, na których model został wytrenowany - będą zawierać jedynie informacje o prawdopodobieństwie obecności tej czy innej klasy na całym obrazie. Dodatkowo, reprezentacje znajdujące się w gęsto połączonych warstwach nie zawierają już żadnej informacji o tym, gdzie w obrazie wejściowym znajdują się obiekty: warstwy te pozbywają się pojęcia przestrzeni, lokalizacja obiektów jest opisywana tylko przez konwencjonalne mapy cech. Dla problemów, w których lokalizacja obiektów ma znaczenie, gęsto połączone cechy są w dużej mierze bezużyteczne.</p>
-<p>Zauważmy, że poziom ogólności (a więc i możliwości ponownego wykorzystania) reprezentacji wyodrębnionych przez konkretne warstwy konwolucyjne zależy od głębokości warstwy w modelu. Warstwy znajdujące się wcześniej w modelu ekstrahują lokalne, bardzo ogólne mapy cech (takie jak krawędzie, kolory i tekstury), podczas gdy warstwy znajdujące się wyżej ekstrahują bardziej abstrakcyjne pojęcia (takie jak “kocie ucho” lub “psie oko”). Jeśli więc nowy zestaw danych różni się znacznie od zestawu danych, na którym był trenowany oryginalny model, lepiej będzie użyć tylko kilku pierwszych warstw modelu do ekstrakcji cech, niż używać całej bazy konwolucyjnej.</p>
-<p>W tym przypadku, ponieważ zbiór klas ImageNet zawiera wiele klas psów i kotów, prawdopodobnie korzystne byłoby ponowne wykorzystanie informacji zawartych w gęsto połączonych warstwach oryginalnego modelu. Nie zdecydujemy się jednak na to, aby uwzględnić bardziej ogólny przypadek, gdy zbiór klas nowego problemu nie pokrywa się ze zbiorem klas oryginalnego modelu. Przedstawmy to w praktyce, wykorzystując bazę konwolucyjną sieci VGG16, wytrenowaną na ImageNet, do wyodrębnienia interesujących cech z obrazów kotów i psów, a następnie wytrenowania klasyfikatora koty vs psy na tych cechach.</p>
-<p>Model VGG16, między innymi, jest dostarczany w pakiecie z <code>keras</code>. Oto lista modeli klasyfikacji obrazów (wszystkie wytrenowane na zbiorze danych ImageNet), które są dostępne jako część <code>keras</code>:</p>
+<p>Dlaczego warto ponownie wykorzystać tylko bazę konwolucyjną? Czy nie moglibyśmy ponownie użyć również gęsto połączonego klasyfikatora? Ogólnie rzecz biorąc, należy tego unikać. Powodem jest to, że reprezentacje nauczone przez bazę konwolucyjną będą prawdopodobnie bardziej ogólne, a zatem bardziej użyteczne: mapy cech sieci konwolucyjnej są mapami obecności ogólnych wzorców na obrazie, co prawdopodobnie będzie przydatne niezależnie od problemu widzenia komputerowego. Natomiast reprezentacje wyuczone przez klasyfikator będą z konieczności specyficzne dla zbioru klas, na których model został wytrenowany - będą zawierać jedynie informacje o prawdopodobieństwie obecności tej czy innej klasy na całym obrazie. Dodatkowo, reprezentacje znajdujące się w gęsto połączonych warstwach nie zawierają już żadnej informacji o tym, gdzie w obrazie wejściowym znajdują się obiekty: warstwy te pozbywają się pojęcia przestrzeni, lokalizacja obiektów jest opisywana tylko przez konwencjonalne mapy cech. Dla problemów, w których lokalizacja obiektów ma znaczenie, gęsto połączone cechy są w dużej mierze bezużyteczne.</p>
+<p>Zauważmy, że poziom ogólności (a więc i możliwości ponownego wykorzystania) reprezentacji wyodrębnionych przez konkretne warstwy konwolucyjne zależy od głębokości warstwy w modelu. Warstwy znajdujące się wcześniej w modelu ekstrahują lokalne, bardzo ogólne mapy cech (takie jak krawędzie, kolory i tekstury), podczas gdy warstwy znajdujące się wyżej ekstrahują bardziej abstrakcyjne pojęcia (takie jak “kocie ucho” lub “psie oko”). Jeśli więc nowy zestaw danych różni się znacznie od zestawu danych, na którym był trenowany oryginalny model, lepiej będzie użyć tylko kilku pierwszych warstw modelu do ekstrakcji cech, niż używać całej bazy konwolucyjnej. W tym przypadku, ponieważ zbiór klas <em>ImageNet</em> zawiera wiele klas psów i kotów, prawdopodobnie korzystne byłoby ponowne wykorzystanie informacji zawartych w gęsto połączonych warstwach oryginalnego modelu. Nie zdecydujemy się jednak na to, aby uwzględnić bardziej ogólny przypadek, gdy zbiór klas nowego problemu nie pokrywa się ze zbiorem klas oryginalnego modelu. Przedstawmy to w praktyce, wykorzystując bazę konwolucyjną sieci VGG16, wytrenowaną na <em>ImageNet</em>, do wyodrębnienia interesujących cech z obrazów kotów i psów, a następnie wytrenowania klasyfikatora koty vs psy na tych cechach.</p>
+<p>Model VGG16 jest dostępny w pakiecie z <code>keras</code>. Oto lista modeli klasyfikacji obrazów (wszystkie wytrenowane na zbiorze danych <em>ImageNet</em>), które są dostępne jako część <code>keras</code>:</p>
 <ul>
 <li><code>Xception</code></li>
 <li><code>InceptionV3</code></li>
@@ -789,8 +786,8 @@ ________________________________________________________________________________
 <p>Do funkcji przekazywane są trzy argumenty:</p>
 <ul>
 <li><code>weights</code> - określa punkt startowy wag, z którego należy zainicjalizować model.</li>
-<li><code>include_top</code> - odnosi się do włączenia (lub nie) gęsto połączonego klasyfikatora na szczycie sieci. Domyślnie, ten gęsto połączony klasyfikator odpowiada 1000 klas z ImageNet. Ponieważ zamierzasz użyć własnego gęsto połączonego klasyfikatora (z tylko dwoma klasami: kot i pies), nie musisz go włączać.</li>
-<li><code>input_shape</code> - to kształt tensorów obrazów, które podasz sieci. Ten argument jest czysto opcjonalny: jeśli go nie podasz, sieć będzie w stanie przetwarzać dane wejściowe o dowolnym rozmiarze.</li>
+<li><code>include_top</code> - odnosi się do włączenia (lub nie) gęsto połączonego klasyfikatora na szczycie sieci. Domyślnie, ten gęsto połączony klasyfikator odpowiada 1000 klas z <em>ImageNet</em>. Ponieważ zamierzamy użyć własnego gęsto połączonego klasyfikatora (z tylko dwoma klasami: kot i pies), nie musimy go włączać.</li>
+<li><code>input_shape</code> - to kształt tensorów obrazów, które podamy sieci. Ten argument jest czysto opcjonalny: jeśli go nie podamy, sieć będzie w stanie przetwarzać dane wejściowe o dowolnym rozmiarze.</li>
 </ul>
 <div class="cell">
 <details open="">
@@ -803,11 +800,11 @@ ________________________________________________________________________________
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-19" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-19" data-code-annotation="1" data-code-lines="1">sieć można przestawić jako podsumowanie tekstowe</span>
+<span data-code-annotation="1" data-code-lines="1" data-code-cell="annotated-cell-19">sieć można przestawić jako podsumowanie tekstowe</span>
 </dd>
 <dt data-target-cell="annotated-cell-19" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-19" data-code-annotation="2" data-code-lines="3">ale również jako wykres</span>
+<span data-code-annotation="2" data-code-lines="3" data-code-cell="annotated-cell-19">ale również jako wykres</span>
 </dd>
 </dl>
 </div>
@@ -847,10 +844,10 @@ ________________________________________________________________________________
 </div>
 <p>Ostateczna mapa cech ma kształt <code>(4, 4, 512)</code>. To jest ta warstwa, do której będziemy dołączać sieć gęstą. W tym momencie możemy postąpić na dwa sposoby:</p>
 <ul>
-<li>Uruchomienie bazy konwolucyjnej na zbiorze danych, następnie zapisanie jej wyjść do pliku na dysku, a następnie użycie tych danych jako danych wejściowych do własnego, gęsto połączonego klasyfikatora. To rozwiązanie jest szybkie i tanie<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> w wykonaniu, ponieważ wymaga uruchomienia bazy konwolucyjnej tylko raz dla każdego obrazu wejściowego, a baza konwolucyjna jest zdecydowanie najdroższą częścią potoku. Ale z tego samego powodu ta technika nie pozwoli ci użyć augmentacji danych.</li>
+<li>Uruchomienie bazy konwolucyjnej na zbiorze danych, następnie zapisanie jej wyjść do pliku na dysku, a następnie użycie tych danych jako danych wejściowych do własnego, gęsto połączonego klasyfikatora. To rozwiązanie jest szybkie i tanie<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> w wykonaniu, ponieważ wymaga uruchomienia bazy konwolucyjnej tylko raz dla każdego obrazu wejściowego, a baza konwolucyjna jest zdecydowanie najbardziej wymagającą częścią potoku. Ale z tego samego powodu ta technika nie pozwoli ci użyć augmentacji danych.</li>
 <li>Rozszerzenie modelu, który mamy (<code>conv_base</code>), dodając gęste warstwy na górze i uruchamiając całą sieć na danych wejściowych. To pozwoli ci użyć augmentacji danych, ponieważ każdy obraz wejściowy przechodzi przez bazę konwolucyjną za każdym razem, gdy jest widziany przez model. Ale z tego samego powodu ta technika jest znacznie droższa od pierwszej. Zajmiemy się obiema technikami.</li>
 </ul>
-<div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;obliczeniowo</p></li></div><section id="ekstrakcja-cech-bez-augmentacji" class="level4" data-number="13.5.1.1">
+<div class="no-row-height column-margin column-container"><li id="fn7"><p><sup>7</sup>&nbsp;obliczeniowo</p></li></div><section id="ekstrakcja-cech-bez-augmentacji" class="level4" data-number="13.5.1.1">
 <h4 data-number="13.5.1.1" class="anchored" data-anchor-id="ekstrakcja-cech-bez-augmentacji"><span class="header-section-number">13.5.1.1</span> Ekstrakcja cech bez augmentacji</h4>
 <p>Zacznijmy od uruchomienia instancji wcześniej wprowadzonego <code>image_data_generator</code>, aby wyodrębnić obrazy jako tablice, jak również ich etykiety. Wyodrębnimy cechy z tych obrazów poprzez wywołanie metody <code>predict</code> na modelu.</p>
 <div class="cell">
@@ -897,12 +894,12 @@ ________________________________________________________________________________
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-20" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-20" data-code-annotation="1" data-code-lines="26">ponieważ generator obrazów tworzy je w nieskończoność, to musimy go zatrzymać po tym jak każdy obraz zostanie obejrzany raz</span>
+<span data-code-annotation="1" data-code-lines="26" data-code-cell="annotated-cell-20">ponieważ generator obrazów tworzy je w nieskończoność, to musimy go zatrzymać po tym jak każdy obraz zostanie obejrzany raz</span>
 </dd>
 </dl>
 </div>
 </div>
-<p>Wyodrębnione cechy mają obecnie kształt <code>(samples, 4, 4, 512)</code>. Będziemy je przekazywali do gęsto połączonego klasyfikatora, więc najpierw musisz je spłaszczyć do postaci <code>(samples, 8192)</code>:</p>
+<p>Wyodrębnione cechy mają obecnie kształt <code>(samples, 4, 4, 512)</code>. Będziemy je przekazywali do gęsto połączonego klasyfikatora, więc najpierw musimy je spłaszczyć do postaci <code>(samples, 8192)</code>:</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -981,7 +978,7 @@ Non-trainable params: 0
 ________________________________________________________________________________</code></pre>
 </div>
 </div>
-<p>Jak widać, baza konwolucyjna VGG16 ma 14714688 parametrów. Klasyfikator, który dodajesz na końcu, ma 2 miliony parametrów. Zanim skompilujemy i wytrenujemy model, bardzo ważne jest zamrożenie bazy konwolucyjnej. Zamrożenie warstwy lub zestawu warstw oznacza uniemożliwienie aktualizacji ich wag podczas treningu. Jeśli tego nie zrobisz, to reprezentacje, które zostały wcześniej wyuczone przez bazę konwolucyjną, zostaną zmodyfikowane podczas treningu. Ponieważ gęste warstwy na górze są losowo inicjalizowane, bardzo duże aktualizacje wag byłyby propagowane przez sieć, skutecznie niszcząc reprezentacje wcześniej nauczone. W <code>keras</code> zamrażamy sieć za pomocą funkcji <code>freeze_weights()</code>.</p>
+<p>Jak widać, baza konwolucyjna VGG16 ma 14714688 parametrów. Klasyfikator, który dodajemy na końcu, ma 2 miliony parametrów. Zanim skompilujemy i wytrenujemy model, bardzo ważne jest zamrożenie bazy konwolucyjnej. Zamrożenie warstwy lub zestawu warstw oznacza uniemożliwienie aktualizacji ich wag podczas treningu. Jeśli tego nie zrobimy, to reprezentacje, które zostały wcześniej wyuczone przez bazę konwolucyjną, zostaną zmodyfikowane podczas treningu. Ponieważ gęste warstwy na górze są losowo inicjalizowane, bardzo duże aktualizacje wag byłyby propagowane przez sieć, skutecznie niszcząc reprezentacje wcześniej nauczone. W <code>keras</code> zamrażamy sieć za pomocą funkcji <code>freeze_weights()</code>.</p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -1068,15 +1065,16 @@ ________________________________________________________________________________
 <p>Stwierdziliśmy wcześniej, że konieczne jest zamrożenie bazy konwolucyjnej VGG16, aby móc trenować losowo zainicjowany klasyfikator. Z tego samego powodu możliwe jest dostrojenie górnych warstw bazy konwolucyjnej tylko wtedy, gdy klasyfikator na górze został już wytrenowany. Jeśli klasyfikator nie był już wytrenowany, to sygnał błędu propagujący się przez sieć podczas treningu byłby zbyt duży, a reprezentacje wyuczone wcześniej przez dostrajane warstwy zostałyby zniszczone. Zatem kroki dostrajania sieci są następujące:</p>
 <ol type="1">
 <li>Dodaj swoją własną sieć na wierzchu już wytrenowanej sieci bazowej.</li>
-<li>Zamroź sieć bazową.</li>
+<li>Zamróź sieć bazową.</li>
 <li>Wytrenuj dodaną część.</li>
-<li>Odmroź niektóre warstwy w sieci bazowej.</li>
+<li>Odmróź niektóre warstwy w sieci bazowej.</li>
 <li>Wspólnie wytrenuj obie te warstwy i część, którą dodałeś.</li>
 </ol>
-<p>Wykonaliśmy już pierwsze trzy kroki podczas wykonywania ekstrakcji cech. Przejdźmy do kroku 4: odmrozimy sieć <code>conv_base</code>, a następnie zamrozimy poszczególne warstwy wewnątrz niej. Dostroimy trzy ostatnie warstwy konwolucyjne, co oznacza, że wszystkie warstwy aż do <code>block4_pool</code> powinny być zamrożone, a warstwy <code>block5_conv1</code>, <code>block5_conv2</code> i <code>block5_conv3</code> powinny być trenowane. Dlaczego nie dostroić więcej warstw? Dlaczego nie dostroić całej bazy konwolucyjnej? Można. Ale musisz wziąć pod uwagę następujące kwestie:</p>
+<p>Wykonaliśmy już pierwsze trzy kroki podczas wykonywania ekstrakcji cech. Przejdźmy do kroku 4: odmrozimy sieć <code>conv_base</code>, a następnie zamrozimy poszczególne warstwy wewnątrz niej. Dostroimy trzy ostatnie warstwy konwolucyjne, co oznacza, że wszystkie warstwy aż do <code>block4_pool</code> powinny być zamrożone, a warstwy <code>block5_conv1</code>, <code>block5_conv2</code> i <code>block5_conv3</code> powinny być trenowane.</p>
+<p>Dlaczego nie dostroić więcej warstw? Dlaczego nie dostroić całej bazy konwolucyjnej? Można. Ale musisz wziąć pod uwagę następujące kwestie:</p>
 <ul>
 <li><p>Wcześniejsze warstwy w bazie konwolucyjnej kodują bardziej ogólne, możliwe do ponownego wykorzystania cechy, podczas gdy warstwy wyżej kodują bardziej wyspecjalizowane cechy. Bardziej przydatne jest dostrojenie bardziej wyspecjalizowanych cech, ponieważ są to te, które muszą być ponownie wykorzystane w naszym nowym problemie.</p></li>
-<li><p>Im więcej parametrów trenujesz, tym bardziej ryzykujesz nadmierne dopasowanie. Baza konwencjonalna ma ~15 milionów parametrów, więc ryzykowna byłaby próba wytrenowania jej na twoim małym zbiorze danych.</p></li>
+<li><p>Im więcej parametrów trenujemy, tym bardziej ryzykujemy nadmierne dopasowanie. Baza konwencjonalna ma ~15 milionów parametrów, więc ryzykowna byłaby próba wytrenowania jej na twoim małym zbiorze danych.</p></li>
 </ul>
 <p>Dlatego w tej sytuacji dobrą strategią jest dostrojenie tylko dwóch lub trzech górnych warstw w bazie konwolucyjnej. Ustawmy to, zaczynając od miejsca, w którym zakończyliśmy pracę w poprzednim przykładzie.</p>
 <div class="cell">
@@ -1085,7 +1083,7 @@ ________________________________________________________________________________
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unfreeze_weights</span>(conv_base, <span class="at">from =</span> <span class="st">"block5_conv1"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Teraz możemy zacząć dostrajać sieć. Zrobimy to za pomocą optymalizatora <code>RMSProp</code>, używając bardzo niskiego współczynnika uczenia. Powodem użycia niskiego współczynnika uczenia jest to, że chcemy ograniczyć wielkość modyfikacji, które wprowadzasz do reprezentacji trzech warstw, które dostrajasz. Zbyt duże aktualizacje mogą zaszkodzić tym reprezentacjom. Dokonamy jeszcze jednej zmiany. Ponieważ odmrożenie ostatnich warstw bazy konwolucyjnej może spowodować przeuczenie sieci, to dodamy warstwę <em>dropout.</em></p>
+<p>Teraz możemy zacząć dostrajać sieć. Zrobimy to za pomocą optymalizatora <code>RMSProp</code>, używając bardzo niskiego współczynnika uczenia. Powodem użycia niskiego współczynnika uczenia jest to, że chcemy ograniczyć wielkość modyfikacji, które wprowadzamy do reprezentacji trzech warstw, które dostrajamy. Zbyt duże aktualizacje mogą zaszkodzić tym reprezentacjom. Dokonamy jeszcze jednej zmiany. Ponieważ odmrożenie ostatnich warstw bazy konwolucyjnej może spowodować przeuczenie sieci, to dodamy warstwę <em>dropout.</em></p>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
@@ -1116,7 +1114,7 @@ ________________________________________________________________________________
 <p><img src="example_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="page-columns page-full"><p>Dopasowanie tej sieci okazało się najlepsze<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> pomimo, jak widać z rysunku, nadmiernego dopasowania. Być może dołożenie jeszcze jednej warstwy regularyzacji zaradziłoby temu problemowi. Możemy też sprawdzić jak ta sieć radzi sobie z zupełnie nowymi danymi, zbioru testowego.</p><div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;blisko 95% na zbiorze walidacyjnym</p></li></div></div>
+<div class="page-columns page-full"><p>Dopasowanie tej sieci kształtuje się na poziomie podobnym jak dla sieci z ekstrakcją cech i augmentacją<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. Widać też z powyższego wykresu, nadmierne dopasowanie. Być może dołożenie jeszcze jednej warstwy regularyzacji zaradziłoby temu problemowi. Możemy też sprawdzić jak ta sieć radzi sobie z zupełnie nowymi danymi, zbioru testowego.</p><div class="no-row-height column-margin column-container"><li id="fn8"><p><sup>8</sup>&nbsp;blisko 95% na zbiorze walidacyjnym</p></li></div></div>
 <div class="cell">
 <details open="">
 <summary>Kod</summary>
