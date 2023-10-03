@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.299">
-
+<meta name="generator" content="quarto-1.3.450">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>Automatyczna analiza obrazu - 10&nbsp; Deep learning</title>
 <style>
 code{white-space: pre-wrap;}
@@ -75,7 +72,6 @@ div.csl-indent {
   margin-left: 2em;
 }</style>
 
-
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -96,8 +92,7 @@ div.csl-indent {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -113,47 +108,36 @@ div.csl-indent {
     "search-more-matches-text": "więcej dopasowań w tym dokumencie",
     "search-clear-button-title": "Wyczyść",
     "search-detached-cancel-button-title": "Anuluj",
-    "search-submit-button-title": "Zatwierdź"
+    "search-submit-button-title": "Zatwierdź",
+    "search-label": "Szukaj"
   }
-}</script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
+}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 </head>
-
 <body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./deeplearning.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Deep learning</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Szukaj" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
-      </a>
+      <img src="./images/logo.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Automatyczna analiza obrazu</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://twitter.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
-    <a href="https://github.com/dax44/ComputerVision/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="https://twitter.com/intent/tweet?url=|url|" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://twitter.com" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
+    <a href="https://github.com/dax44/ComputerVision/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/intent/tweet?url=%7Curl%7C" rel="" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Przełącz tryb ciemny"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Przełącz tryb czytnika">
   <div class="quarto-reader-toggle-btn">
@@ -170,7 +154,7 @@ div.csl-indent {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Wstęp</span></a>
@@ -267,39 +251,39 @@ div.csl-indent {
   </div>
 </li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Spis treści</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Spis treści</h2>
    
   <ul>
-  <li><a href="#uczenie-się-reprezentacji-na-podstawie-danych" id="toc-uczenie-się-reprezentacji-na-podstawie-danych" class="nav-link active" data-scroll-target="#uczenie-się-reprezentacji-na-podstawie-danych"><span class="header-section-number">10.1</span> Uczenie się reprezentacji na podstawie danych</a></li>
-  <li><a href="#jak-działa-deep-learning" id="toc-jak-działa-deep-learning" class="nav-link" data-scroll-target="#jak-działa-deep-learning"><span class="header-section-number">10.2</span> Jak działa deep learning?</a></li>
-  <li><a href="#krótki-rys-historyczny-dl" id="toc-krótki-rys-historyczny-dl" class="nav-link" data-scroll-target="#krótki-rys-historyczny-dl"><span class="header-section-number">10.3</span> Krótki rys historyczny DL</a>
+<li><a href="#uczenie-si%C4%99-reprezentacji-na-podstawie-danych" id="toc-uczenie-się-reprezentacji-na-podstawie-danych" class="nav-link active" data-scroll-target="#uczenie-si%C4%99-reprezentacji-na-podstawie-danych"><span class="header-section-number">10.1</span> Uczenie się reprezentacji na podstawie danych</a></li>
+  <li><a href="#jak-dzia%C5%82a-deep-learning" id="toc-jak-działa-deep-learning" class="nav-link" data-scroll-target="#jak-dzia%C5%82a-deep-learning"><span class="header-section-number">10.2</span> Jak działa deep learning?</a></li>
+  <li>
+<a href="#kr%C3%B3tki-rys-historyczny-dl" id="toc-krótki-rys-historyczny-dl" class="nav-link" data-scroll-target="#kr%C3%B3tki-rys-historyczny-dl"><span class="header-section-number">10.3</span> Krótki rys historyczny DL</a>
   <ul class="collapse">
-  <li><a href="#hardware" id="toc-hardware" class="nav-link" data-scroll-target="#hardware"><span class="header-section-number">10.3.1</span> Hardware</a></li>
+<li><a href="#hardware" id="toc-hardware" class="nav-link" data-scroll-target="#hardware"><span class="header-section-number">10.3.1</span> Hardware</a></li>
   <li><a href="#dane" id="toc-dane" class="nav-link" data-scroll-target="#dane"><span class="header-section-number">10.3.2</span> Dane</a></li>
   <li><a href="#algorytmy" id="toc-algorytmy" class="nav-link" data-scroll-target="#algorytmy"><span class="header-section-number">10.3.3</span> Algorytmy</a></li>
-  </ul></li>
-  <li><a href="#elementy-deep-learning" id="toc-elementy-deep-learning" class="nav-link" data-scroll-target="#elementy-deep-learning"><span class="header-section-number">10.4</span> Elementy Deep Learning</a>
-  <ul class="collapse">
-  <li><a href="#operacje-na-danych" id="toc-operacje-na-danych" class="nav-link" data-scroll-target="#operacje-na-danych"><span class="header-section-number">10.4.1</span> Operacje na danych</a></li>
-  <li><a href="#optymalizacja-gradientowa" id="toc-optymalizacja-gradientowa" class="nav-link" data-scroll-target="#optymalizacja-gradientowa"><span class="header-section-number">10.4.2</span> Optymalizacja gradientowa</a></li>
-  <li><a href="#wsteczna-propagacja-błędu" id="toc-wsteczna-propagacja-błędu" class="nav-link" data-scroll-target="#wsteczna-propagacja-błędu"><span class="header-section-number">10.4.3</span> Wsteczna propagacja błędu</a></li>
-  <li><a href="#funkcje-straty" id="toc-funkcje-straty" class="nav-link" data-scroll-target="#funkcje-straty"><span class="header-section-number">10.4.4</span> Funkcje straty</a></li>
-  </ul></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
+</li>
+  <li>
+<a href="#elementy-deep-learning" id="toc-elementy-deep-learning" class="nav-link" data-scroll-target="#elementy-deep-learning"><span class="header-section-number">10.4</span> Elementy Deep Learning</a>
+  <ul class="collapse">
+<li><a href="#operacje-na-danych" id="toc-operacje-na-danych" class="nav-link" data-scroll-target="#operacje-na-danych"><span class="header-section-number">10.4.1</span> Operacje na danych</a></li>
+  <li><a href="#optymalizacja-gradientowa" id="toc-optymalizacja-gradientowa" class="nav-link" data-scroll-target="#optymalizacja-gradientowa"><span class="header-section-number">10.4.2</span> Optymalizacja gradientowa</a></li>
+  <li><a href="#wsteczna-propagacja-b%C5%82%C4%99du" id="toc-wsteczna-propagacja-błędu" class="nav-link" data-scroll-target="#wsteczna-propagacja-b%C5%82%C4%99du"><span class="header-section-number">10.4.3</span> Wsteczna propagacja błędu</a></li>
+  <li><a href="#funkcje-straty" id="toc-funkcje-straty" class="nav-link" data-scroll-target="#funkcje-straty"><span class="header-section-number">10.4.4</span> Funkcje straty</a></li>
+  </ul>
+</li>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action">Zgłoś problem</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Deep learning</span></h1>
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Deep learning</span>
+</h1>
 </div>
 
 
@@ -312,25 +296,20 @@ div.csl-indent {
   </div>
   
 
-</header>
-
-<p>Jak to zostało wspomniane na początku tej książki do automatycznej analizy obrazu wykorzystamy techniki z zakresu uczenia maszynowego, które mieszczą się pod pojęciem głębokiego uczenia (ang. <em>deep learning</em>). Uczenie maszynowe wynika bezpośrednio z pytania: czy komputer mógłby wyjść poza to, co wiemy i samodzielnie nauczyć się, jak wykonać określone zadanie? Czy komputer mógłby nas zaskoczyć? Czy zamiast programistów ręcznie tworzących reguły przetwarzania danych, komputer mógłby automatycznie nauczyć się tych reguł patrząc na dane?</p>
+</header><p>Jak to zostało wspomniane na początku tej książki do automatycznej analizy obrazu wykorzystamy techniki z zakresu uczenia maszynowego, które mieszczą się pod pojęciem głębokiego uczenia (ang. <em>deep learning</em>). Uczenie maszynowe wynika bezpośrednio z pytania: czy komputer mógłby wyjść poza to, co wiemy i samodzielnie nauczyć się, jak wykonać określone zadanie? Czy komputer mógłby nas zaskoczyć? Czy zamiast programistów ręcznie tworzących reguły przetwarzania danych, komputer mógłby automatycznie nauczyć się tych reguł patrząc na dane?</p>
 <div id="fig-ml1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/Zrzut ekranu 2023-02-23 o 19.01.53.png" class="img-fluid figure-img" width="400"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.1: Dwa schematy myślenia o programowaniu komputerów</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-23 o 19.01.53.png" class="img-fluid figure-img" width="400"></p>
+<figcaption class="figure-caption">Rysunek&nbsp;10.1: Dwa schematy myślenia o programowaniu komputerów</figcaption></figure>
 </div>
 <p>To pytanie otwiera drzwi do nowego paradygmatu programowania. W klasycznym programowaniu, paradygmacie symbolicznej AI, ludzie wprowadzają reguły (program) i dane, które mają być przetwarzane zgodnie z tymi regułami, a następnie otrzymują odpowiedzi (patrz <a href="#fig-ml1">Rysunek&nbsp;<span>10.1</span></a>). W przypadku uczenia maszynowego, człowiek wprowadza dane oraz odpowiedzi oczekiwane na podstawie tych danych, a następnie otrzymuje reguły. Reguły te mogą być następnie zastosowane do nowych danych, aby uzyskać oryginalne odpowiedzi.</p>
 <p>System uczenia maszynowego jest raczej uczony niż programowany. Przedstawia się mu wiele przykładów związanych z zadaniem, a on znajduje w nich strukturę statystyczną, która w końcu pozwala mu wymyślić reguły automatyzacji zadania. Na przykład, jeśli chciałbyś zautomatyzować zadanie oznaczania zdjęć z wakacji, mógłbyś przedstawić systemowi uczenia maszynowego wiele przykładów zdjęć już oznaczonych przez ludzi, a system nauczyłby się statystycznych reguł kojarzenia konkretnych zdjęć z konkretnymi tagami.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/tw1.jpeg" class="img-fluid figure-img" width="400"></p>
+<figure class="figure"><p><img src="images/tw1.jpeg" class="img-fluid figure-img" width="400"></p>
 </figure>
 </div></div><p>Chociaż uczenie maszynowe zaczęło się rozwijać dopiero w latach 90-tych, szybko stało się najpopularniejszą i odnoszącą największe sukcesy dziedziną AI, a trend ten jest napędzany przez dostępność szybszego sprzętu i większych zbiorów danych. Uczenie maszynowe jest ściśle związane ze statystyką matematyczną, ale różni się od niej na kilka ważnych sposobów. W przeciwieństwie do statystyki, uczenie maszynowe ma tendencję do zajmowania się dużymi, złożonymi zbiorami danych (takimi jak zbiór milionów obrazów, z których każdy składa się z dziesiątek tysięcy pikseli), dla których klasyczna analiza statystyczna byłaby niepraktyczna. W rezultacie, uczenie maszynowe, a zwłaszcza głębokie uczenie, wykazuje stosunkowo mało teorii matematycznej - być może zbyt mało - i jest zorientowane na inżynierię. Jest to praktyczna dyscyplina, w której pomysły są sprawdzane empirycznie znacznie częściej niż teoretycznie.</p>
-<section id="uczenie-się-reprezentacji-na-podstawie-danych" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="uczenie-się-reprezentacji-na-podstawie-danych"><span class="header-section-number">10.1</span> Uczenie się reprezentacji na podstawie danych</h2>
+<section id="uczenie-się-reprezentacji-na-podstawie-danych" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="uczenie-się-reprezentacji-na-podstawie-danych">
+<span class="header-section-number">10.1</span> Uczenie się reprezentacji na podstawie danych</h2>
 <p>Na to, aby zdefiniować głębokie uczenie i zrozumieć różnicę między głębokim uczeniem a innymi podejściami do uczenia maszynowego, najpierw musimy mieć pewne pojęcie o tym, co robią algorytmy uczenia maszynowego. Właśnie stwierdziliśmy, że uczenie maszynowe odkrywa reguły wykonywania zadania przetwarzania danych, biorąc pod uwagę przykłady tego, co jest oczekiwane na wyjściu. Zatem, aby przeprowadzić uczenie maszynowe, potrzebujemy trzech rzeczy:</p>
 <ul>
 <li>Punkty danych wejściowych - na przykład, jeśli zadaniem jest rozpoznawanie mowy, tymi punktami danych mogą być pliki dźwiękowe osób mówiących. Jeśli zadanie polega na oznaczaniu obrazów, mogą to być pliki z obrazami.</li>
@@ -344,54 +323,41 @@ div.csl-indent {
 <p>W głębokim uczeniu, te warstwowe reprezentacje są (prawie zawsze) uczone za pomocą modeli zwanych sieciami neuronowymi, zbudowanymi w dosłownych warstwach ułożonych jedna za drugą. Termin sieć neuronowa jest odniesieniem do neurobiologii, jednak mimo że niektóre z głównych koncepcji głębokiego uczenia zostały opracowane częściowo poprzez czerpanie inspiracji z naszego rozumienia mózgu, modele głębokiego uczenia nie są modelami mózgu. Nie ma dowodów na to, że mózg implementuje cokolwiek w rodzaju mechanizmów uczenia się wykorzystywanych w nowoczesnych modelach głębokiego uczenia. Możesz natknąć się na artykuły popularno-naukowe głoszące, że głębokie uczenie działa jak mózg lub było wzorowane na mózgu, ale to nie jest prawda. Byłoby to mylące, aby myśleć o głębokim uczeniu jako w jakikolwiek sposób związanym z neurobiologią. Dla naszych celów, głębokie uczenie jest matematyczną strukturą do uczenia się reprezentacji danych.</p>
 <p>Jak wyglądają reprezentacje wyuczone przez algorytm głębokiego uczenia? Przyjrzyjmy się, jak sieć o głębokości kilku warstw (patrz <a href="#fig-dl1">Rysunek&nbsp;<span>10.2</span></a>) przekształca obraz cyfry w celu rozpoznania, jaka to cyfra.</p>
 <div id="fig-dl1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/Zrzut ekranu 2023-02-23 o 19.22.38.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.2: Schemat działania sieci rozpoznającej cyfry</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-23 o 19.22.38.png" class="img-fluid figure-img" width="600"></p>
+<figcaption class="figure-caption">Rysunek&nbsp;10.2: Schemat działania sieci rozpoznającej cyfry</figcaption></figure>
 </div>
 <p>Jak widać na <a href="#fig-dl2">Rysunek&nbsp;<span>10.3</span></a>, sieć przekształca obraz cyfry w reprezentacje coraz bardziej różniące się od obrazu oryginalnego i coraz bardziej informujące o wyniku końcowym. Można myśleć o sieci głębokiej jak o wielostopniowej operacji destylacji informacji, gdzie informacja przechodzi przez kolejne filtry i wychodzi coraz bardziej oczyszczona (czyli przydatna w odniesieniu do jakiegoś zadania).</p>
 <div id="fig-dl2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/Zrzut ekranu 2023-02-23 o 19.24.25.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.3: Przedstawienie zasady działania poszczególnych warstw sieci neuronowej w rozpoznawaniu cyfr</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-23 o 19.24.25.png" class="img-fluid figure-img" width="600"></p>
+<figcaption class="figure-caption">Rysunek&nbsp;10.3: Przedstawienie zasady działania poszczególnych warstw sieci neuronowej w rozpoznawaniu cyfr</figcaption></figure>
 </div>
 <p>Tak właśnie wygląda głębokie uczenie, technicznie rzecz biorąc: jest to wieloetapowy sposób uczenia się reprezentacji danych. To prosty pomysł - ale jak się okazuje, bardzo proste mechanizmy, odpowiednio skalowane, mogą w końcu wyglądać jak magia 🙉.</p>
-</section>
-<section id="jak-działa-deep-learning" class="level2 page-columns page-full" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="jak-działa-deep-learning"><span class="header-section-number">10.2</span> Jak działa deep learning?</h2>
+</section><section id="jak-działa-deep-learning" class="level2 page-columns page-full" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="jak-działa-deep-learning">
+<span class="header-section-number">10.2</span> Jak działa deep learning?</h2>
 <p>Wiemy już, że uczenie maszynowe polega na mapowaniu danych wejściowych (takich jak obrazy) na dane docelowe (takie jak etykieta “kot”), co odbywa się poprzez obserwację wielu przykładów danych wejściowych i danych docelowych. Wiemy też, że głębokie sieci neuronowe wykonują odwzorowanie danych wejściowych na docelowe poprzez głęboką sekwencję prostych transformacji danych (warstwy) i że te transformacje danych są uczone przez ekspozycję na przykłady. Przyjrzyjmy się teraz, jak to uczenie przebiega, konkretnie.</p>
 <p>Specyfikacja tego, co warstwa robi ze swoimi danymi wejściowymi, jest przechowywana w wagach warstwy (zwanych wagami synaptycznymi), które w istocie są zbiorem liczb. W sensie technicznym można powiedzieć, że transformacja wykonywana przez warstwę jest sparametryzowana przez jej wagi (patrz <a href="#fig-dl3">Rysunek&nbsp;<span>10.4</span></a>). W tym kontekście uczenie oznacza znalezienie zestawu wartości dla wag wszystkich warstw w sieci, tak aby sieć poprawnie odwzorowywała przykładowe wejścia na przypisane im cele. Rzecz w tym, że głęboka sieć neuronowa może zawierać dziesiątki milionów parametrów. Znalezienie poprawnej wartości dla wszystkich z nich może wydawać się trudnym zadaniem, szczególnie biorąc pod uwagę fakt, że zmiana wartości jednego parametru wpłynie na zachowanie wszystkich pozostałych!</p>
 <div id="fig-dl3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/Zrzut ekranu 2023-02-23 o 19.37.23.png" class="img-fluid figure-img" width="400"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.4: Sieć neuronowa parametryzowana przez wagi</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-23 o 19.37.23.png" class="img-fluid figure-img" width="400"></p>
+<figcaption class="figure-caption">Rysunek&nbsp;10.4: Sieć neuronowa parametryzowana przez wagi</figcaption></figure>
 </div>
 <p>Aby coś kontrolować, trzeba najpierw móc to obserwować. Aby kontrolować wyjście sieci neuronowej, musimy być w stanie zmierzyć, jak daleko to wyjście jest od tego, czego się spodziewaliśmy. Jest to zadanie dla funkcji straty sieci, zwanej również funkcją celu. Funkcja straty bierze predykcje sieci oraz prawdziwy wynik i oblicza wynik odległości, ujmując, jak dobrze sieć poradziła sobie z tym konkretnym przykładem (patrz <a href="#fig-dl4">Rysunek&nbsp;<span>10.5</span></a>).</p>
 <div id="fig-dl4" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/Zrzut ekranu 2023-02-23 o 19.37.35.png" class="img-fluid figure-img" width="400"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.5: Funkcja straty mierząca jakość predykcji</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-23 o 19.37.35.png" class="img-fluid figure-img" width="400"></p>
+<figcaption class="figure-caption">Rysunek&nbsp;10.5: Funkcja straty mierząca jakość predykcji</figcaption></figure>
 </div>
 <div class="page-columns page-full"><p>Podstawową sztuczką w uczeniu głębokim jest wykorzystanie wyniku jako sygnału zwrotnego do skorygowania wartości wag w kierunku, który obniży wynik straty dla bieżącego przykładu (patrz <a href="#fig-dl5">Rysunek&nbsp;<span>10.6</span></a>). Ta korekta jest zadaniem optymalizatora, który implementuje coś, co nazywa się algorytmem wstecznej propagacji (ang. <em>backpropagation</em>)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. W dalszej części wyjaśnimy bardziej szczegółowo, jak działa wsteczna propagacja.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;główny algorytm w uczeniu głębokim</p></li></div></div>
 <div id="fig-dl5" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/Zrzut ekranu 2023-02-23 o 19.37.48.png" class="img-fluid figure-img" width="400"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.6: Korekta wag wykorzystująca wartość funkcji straty</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-23 o 19.37.48.png" class="img-fluid figure-img" width="400"></p>
+<figcaption class="figure-caption">Rysunek&nbsp;10.6: Korekta wag wykorzystująca wartość funkcji straty</figcaption></figure>
 </div>
 <div class="page-columns page-full"><p>Początkowo wagom sieci przypisane są losowe wartości, więc sieć wykonuje jedynie serię losowych przekształceń. Oczywiście jej wynik jest daleki od tego, jaki powinien być w idealnej sytuacji, a wynik funkcji straty jest bardzo wysoki. Ale z każdym przykładem, który sieć przetwarza, wagi są dostosowywane w prawidłowym kierunku, a wynik strat maleje. Jest to pętla treningowa, która powtarzana odpowiednią ilość razy (zwykle dziesiątki iteracji na tysiącach przykładów) daje wartości wag, które minimalizują funkcję straty. Sieć z minimalną stratą to taka, dla której wyjścia są tak bliskie celom, jak to tylko możliwe<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;sieć wytrenowana</p></li></div></div>
-</section>
-<section id="krótki-rys-historyczny-dl" class="level2 page-columns page-full" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="krótki-rys-historyczny-dl"><span class="header-section-number">10.3</span> Krótki rys historyczny DL</h2>
+</section><section id="krótki-rys-historyczny-dl" class="level2 page-columns page-full" data-number="10.3"><h2 data-number="10.3" class="anchored" data-anchor-id="krótki-rys-historyczny-dl">
+<span class="header-section-number">10.3</span> Krótki rys historyczny DL</h2>
 <p>Około 2010 roku, mimo że sieci neuronowe były niemal całkowicie odrzucane przez ogół społeczności naukowej, kilka osób wciąż pracujących nad sieciami neuronowymi zaczęło dokonywać ważnych przełomów: grupy Geoffreya Hintona z Uniwersytetu w Toronto, Yoshua Bengio z Uniwersytetu w Montrealu, Yann LeCun z Uniwersytetu Nowojorskiego oraz IDSIA w Szwajcarii.</p>
 <div class="page-columns page-full"><p>W 2011 roku Dan Ciresan z IDSIA zaczął wygrywać akademickie konkursy klasyfikacji obrazów za pomocą trenowanych na GPU głębokich sieci neuronowych - był to pierwszy praktyczny sukces nowoczesnego uczenia głębokiego. Jednak przełomowy moment nastąpił w 2012 roku, gdy grupa Hintona wzięła udział w corocznym wyzwaniu ImageNet dotyczącym klasyfikacji obrazów na dużą skalę. Wyzwanie ImageNet było w tamtym czasie wyjątkowo trudne, polegało na klasyfikacji kolorowych obrazów o wysokiej rozdzielczości do 1000 różnych kategorii po przeszkoleniu na 1,4 mln obrazów. W 2011 roku dokładność zwycięskiego modelu, opartego na klasycznym podejściu do widzenia komputerowego, wyniosła zaledwie 74,3%. Następnie, w 2012 roku, zespół kierowany przez Alexa Krizhevsky’ego i wspierany przez Geoffreya Hintona był w stanie osiągnąć dokładność pierwszej piątki<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> na poziomie 83,6% - był to znaczący przełom. Od tego czasu co roku konkurs był zdominowany przez głębokie konwencjonalne sieci neuronowe. W 2015 roku zwycięzca osiągnął dokładność 96,4%, a zadanie klasyfikacji na ImageNet uznano za całkowicie rozwiązany problem.</p><div class="no-row-height column-margin column-container"><li id="fn3"><p><sup>3</sup>&nbsp;(ang. <em>top 5 accuracy</em>) <em>-</em> oznacza, że wśród 5 kategorii z najwyższym prawdopodobieństwem jest prawdziwa klasa</p></li></div></div>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/tw2.jpeg" class="img-fluid figure-img" width="400"></p>
+<figure class="figure"><p><img src="images/tw2.jpeg" class="img-fluid figure-img" width="400"></p>
 </figure>
 </div></div><p>Od 2012 r. głębokie konwolucyjne sieci neuronowe (CovNets - <em>Convolutional Networks</em>) stały się algorytmem pierwszego wyboru dla wszystkich zadań widzenia komputerowego. Na najważniejszych konferencjach poświęconych widzeniu komputerowemu w 2015 i 2016 r. niemal niemożliwe było znalezienie prezentacji, które w jakiejś formie nie wiązałyby się z CovNets. Jednocześnie głębokie uczenie znalazło zastosowanie w wielu innych typach problemów, takich jak np. przetwarzanie języka naturalnego. W szerokim zakresie zastosowań całkowicie zastąpiło klasyczne modele SVM i drzewa decyzyjne. Na przykład przez kilka lat Europejska Organizacja Badań Jądrowych (CERN), używała metod opartych na drzewach decyzyjnych do analizy danych cząstek z detektora ATLAS w Wielkim Zderzaczu Hadronów (LHC); ale CERN ostatecznie przeszedł na głębokie sieci neuronowe oparte na Keras ze względu na ich wyższą wydajność i łatwość szkolenia na dużych zbiorach danych.</p>
 <p>Podstawowym powodem, dla którego uczenie głębokie odniosło sukces tak szybko, jest to, że oferowało lepszą wydajność w wielu problemach. Ale to nie jest jedyny powód. Głębokie uczenie ułatwia również rozwiązywanie problemów, ponieważ całkowicie automatyzuje to, co kiedyś było najbardziej kluczowym krokiem w procesie uczenia maszynowego - inżynierię cech.</p>
@@ -400,21 +366,19 @@ div.csl-indent {
 <p>Dwie zasadnicze cechy tego, jak głębokie uczenie uczy się z danych, to: przyrostowy, warstwa po warstwie sposób, w jaki korygowane są coraz bardziej złożone reprezentacje, oraz fakt, że te pośrednie, przyrostowe reprezentacje są uczone wspólnie, a każda warstwa jest aktualizowana, aby podążać zarówno za potrzebami reprezentacyjnymi warstwy powyżej, jak i potrzebami warstwy poniżej. Razem, te dwie właściwości sprawiły, że głębokie uczenie jest znacznie bardziej skuteczne niż poprzednie podejścia do uczenia maszynowego.</p>
 <p>Świetnym sposobem na poznanie aktualnego bogactwa algorytmów i narzędzi uczenia maszynowego jest przyjrzenie się konkursom uczenia maszynowego na Kaggle. Dzięki wysoce konkurencyjnemu środowisku (niektóre konkursy mają tysiące uczestników i milionowe nagrody) i szerokiej gamie problemów uczenia maszynowego, Kaggle oferuje realistyczny sposób oceny tego, co działa, a co nie. Jaki więc rodzaj algorytmu niezawodnie wygrywa konkursy? Z jakich narzędzi korzystają najlepsi uczestnicy?</p>
 <p>W 2016 roku Kaggle został zdominowany przez dwa podejścia: <em>gradient boosting machines</em> i <em>deep learning</em>. Należy nadmienić, że <em>gradient boosting</em> jest używany głównie do problemów, w których dostępne są ustrukturyzowane dane, podczas gdy głębokie uczenie jest używane do problemów percepcyjnych, takich jak klasyfikacja obrazów. Zwolennicy tego pierwszego rozwiązania prawie zawsze korzystają ze znakomitej biblioteki <code>XGBoost</code>. Tymczasem większość uczestników Kaggle wykorzystujących uczenie głębokie używa biblioteki <code>Keras</code>, ze względu na jej łatwość użycia i elastyczność. Zarówno <code>XGBoost</code>, jak i <code>Keras</code> wspierają dwa najpopularniejsze języki data science: R i Python.</p>
-<section id="hardware" class="level3" data-number="10.3.1">
-<h3 data-number="10.3.1" class="anchored" data-anchor-id="hardware"><span class="header-section-number">10.3.1</span> Hardware</h3>
+<section id="hardware" class="level3" data-number="10.3.1"><h3 data-number="10.3.1" class="anchored" data-anchor-id="hardware">
+<span class="header-section-number">10.3.1</span> Hardware</h3>
 <p>W latach 1990-2010 procesory dostępne na rynku stały się szybsze o około 5000 razy. W rezultacie, obecnie możliwe jest uruchomienie małych modeli głębokiego uczenia na laptopie, podczas gdy 25 lat temu byłoby to niewykonalne.</p>
 <p>Jednak typowe modele głębokiego uczenia wykorzystywane w wizji komputerowej lub rozpoznawaniu mowy wymagają mocy obliczeniowej o kilka rzędów wielkości większej niż ta, którą może zapewnić laptop. Przez całą dekadę XXI wieku firmy takie jak NVIDIA i AMD inwestowały miliardy dolarów w rozwój szybkich, równoległych układów (procesorów graficznych [GPU]), które napędzały grafikę w coraz bardziej fotorealistycznych grach wideo - tanich, osobistych komputerów zaprojektowanych do renderowania złożonych scen 3D na ekranie w czasie rzeczywistym. Inwestycja ta przyniosła korzyści społeczności naukowej, gdy w 2007 roku NVIDIA wprowadziła CUDA (<a href="https://developer.nvidia.com/about-cuda" class="uri">https://developer.nvidia.com/about-cuda</a>), interfejs programistyczny dla swojej linii układów GPU. Niewielka liczba procesorów graficznych zaczęła zastępować klastry CPU w różnych złożonych zadaniach, począwszy od modelowania w fizyce. Głębokie sieci neuronowe, składające się głównie z wielu mnożeń macierzy, są również wysoce paralelizowalne i około 2011 roku niektórzy badacze zaczęli pisać implementacje CUDA sieci neuronowych - jednymi z pierwszych byli Dan Ciresan<span class="citation" data-cites="ciresanFlexibleHighPerformance">(<a href="references.html#ref-ciresanFlexibleHighPerformance" role="doc-biblioref">Ciresan i in., b.d.</a>)</span> i Alex Krizhevsky<span class="citation" data-cites="krizhevsky2017">(<a href="references.html#ref-krizhevsky2017" role="doc-biblioref">Krizhevsky, Sutskever, i Hinton 2017</a>)</span>.</p>
 <p><br>
 Stało się tak, że rynek gier dofinansował superkomputery dla następnej generacji aplikacji sztucznej inteligencji. Czasami wielkie rzeczy zaczynają się do zabawy 🙈. Dziś NVIDIA Titan X, procesor graficzny dla graczy, który kosztował 1000 dolarów pod koniec 2015 roku, może zapewnić szczytową wydajność 6,6 TLOPS w pojedynczej precyzji: to znaczy 6,6 biliona operacji <code>float32</code> na sekundę. To około 350 razy więcej niż to, co można wyciągnąć z nowoczesnego laptopa. Na Tytanie X trenowanie modelu ImageNet, który kilka lat temu wygrałby konkurs ILSVRC, zajmuje zaledwie kilka dni. Tymczasem duże firmy trenują modele głębokiego uczenia na klastrach składających się z setek jednostek GPU, takich jak NVIDIA K80, opracowanych specjalnie na potrzeby głębokiego uczenia. Sama moc obliczeniowa takich klastrów jest czymś, co nigdy nie byłoby możliwe bez nowoczesnych procesorów graficznych.</p>
 <p>Co więcej, branża głębokiego uczenia zaczyna wychodzić poza procesory graficzne i inwestuje w coraz bardziej wyspecjalizowane, wydajne układy do głębokiego uczenia. W 2016 roku, na corocznej konwencji I/O, Google ujawniło swój projekt procesora tensorowego (TPU): nowy układ scalony opracowany od podstaw w celu uruchamiania głębokich sieci neuronowych, który jest podobno 10 razy szybszy i znacznie bardziej energooszczędny niż topowe układy GPU.</p>
-</section>
-<section id="dane" class="level3 page-columns page-full" data-number="10.3.2">
-<h3 data-number="10.3.2" class="anchored" data-anchor-id="dane"><span class="header-section-number">10.3.2</span> Dane</h3>
+</section><section id="dane" class="level3 page-columns page-full" data-number="10.3.2"><h3 data-number="10.3.2" class="anchored" data-anchor-id="dane">
+<span class="header-section-number">10.3.2</span> Dane</h3>
 <div class="page-columns page-full"><p>AI jest czasem zapowiadana jako nowa rewolucja przemysłowa. Jeśli głębokie uczenie jest maszyną parową tej rewolucji, to dane są jej węglem: surowcem, który zasila nasze inteligentne maszyny, bez którego nic nie byłoby możliwe. Jeśli chodzi o dane, to oprócz wykładniczego postępu w dziedzinie sprzętu do przechowywania danych w ciągu ostatnich 20 lat (zgodnie z prawem Moore’a<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>), kluczowym czynnikiem był rozwój Internetu, dzięki któremu możliwe stało się gromadzenie i rozpowszechnianie bardzo dużych zbiorów danych na potrzeby uczenia maszynowego. Obecnie duże firmy pracują z zestawami danych obrazowych, zestawami danych wideo i zestawami danych w języku naturalnym, które nie mogłyby zostać zebrane bez Internetu. Przykładowo, generowane przez użytkowników tagi do obrazów w serwisie Flickr są skarbnicą danych dla wizji komputerowej. Podobnie jest z filmami z YouTube. A Wikipedia jest kluczowym zbiorem danych dla przetwarzania języka naturalnego.</p><div class="no-row-height column-margin column-container"><li id="fn4"><p><sup>4</sup>&nbsp;mówi o tym, że liczba tranzystorów w procesorach rośnie wykładniczo</p></li></div></div>
 <p>Jeśli jest jakiś zbiór danych, który stał się katalizatorem rozwoju głębokiego uczenia, to jest to zbiór danych ImageNet, składający się z 1,4 miliona obrazów, które zostały ręcznie przypisane do 1000 kategorii obrazów (1 kategoria na obraz). Jednak to, co czyni ImageNet wyjątkowym, to nie tylko jego duży rozmiar, ale także coroczny konkurs z nim związany. Jak pokazuje Kaggle od 2010 roku, publiczne konkursy są doskonałym sposobem motywowania naukowców i inżynierów do przekraczania granic. Posiadanie wspólnych benchmarków, które badacze starają się pokonać, bardzo pomogło w niedawnym rozwoju uczenia głębokiego.</p>
-</section>
-<section id="algorytmy" class="level3" data-number="10.3.3">
-<h3 data-number="10.3.3" class="anchored" data-anchor-id="algorytmy"><span class="header-section-number">10.3.3</span> Algorytmy</h3>
+</section><section id="algorytmy" class="level3" data-number="10.3.3"><h3 data-number="10.3.3" class="anchored" data-anchor-id="algorytmy">
+<span class="header-section-number">10.3.3</span> Algorytmy</h3>
 <p>Oprócz sprzętu i danych, aż do późnych lat 2000 brakowało niezawodnego sposobu trenowania bardzo głębokich sieci neuronowych. W rezultacie sieci neuronowe były wciąż dość płytkie, wykorzystując tylko jedną lub dwie warstwy reprezentacji; nie były więc w stanie zabłysnąć w porównaniu z bardziej wyrafinowanymi klasycznymi metodami, takimi jak SVM czy lasy losowe. Kluczowym problemem była propagacja gradientu przez głębokie stosy warstw. Sygnał zwrotny używany do trenowania sieci neuronowych zanikał wraz ze wzrostem liczby warstw.</p>
 <p>Zmieniło się to około 2009-2010 roku wraz z pojawieniem się kilku prostych, ale ważnych ulepszeń algorytmicznych, które pozwoliły na lepszą propagację gradientu:</p>
 <ul>
@@ -429,26 +393,19 @@ Stało się tak, że rynek gier dofinansował superkomputery dla następnej gene
 <li>Prostota - głębokie uczenie eliminuje potrzebę inżynierii cech, zastępując złożone, wrażliwe i wymagające inżynierii potoki prostymi, kompleksowo wytrenowanymi modelami, które są zazwyczaj budowane przy użyciu tylko pięciu lub sześciu różnych operacji na tensorach.</li>
 <li>Skalowalność - głębokie uczenie jest bardzo podatne na równoległe przetwarzanie na układach GPU lub TPU. Dodatkowo, modele głębokiego uczenia są trenowane poprzez iterację na małych partiach danych, co pozwala na ich trenowanie na zbiorach danych o dowolnym rozmiarze. (Jedynym wąskim gardłem jest ilość dostępnej mocy obliczeniowej).</li>
 <li>Wszechstronność i możliwość ponownego wykorzystania - w przeciwieństwie do wielu wcześniejszych podejść do uczenia maszynowego, modele głębokiego uczenia mogą być trenowane na dodatkowych danych bez konieczności ponownego rozpoczynania od zera, co czyni je realnymi dla ciągłego uczenia się na bieżąco - ważna właściwość dla bardzo dużych modeli produkcyjnych. Co więcej, wytrenowane modele głębokiego uczenia mogą być ponownie wykorzystane, na przykład, możliwe jest wzięcie modelu głębokiego uczenia wytrenowanego do klasyfikacji obrazów i wrzucenie go do potoku przetwarzania wideo.</li>
-</ul>
-</section>
-</section>
-<section id="elementy-deep-learning" class="level2 page-columns page-full" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="elementy-deep-learning"><span class="header-section-number">10.4</span> Elementy Deep Learning</h2>
+</ul></section></section><section id="elementy-deep-learning" class="level2 page-columns page-full" data-number="10.4"><h2 data-number="10.4" class="anchored" data-anchor-id="elementy-deep-learning">
+<span class="header-section-number">10.4</span> Elementy Deep Learning</h2>
 <p>Zrozumienie głębokiego uczenia wymaga znajomości wielu prostych pojęć matematycznych: tensorów, operacji na tensorach, różniczkowania, spadku gradientu itp. Naszym celem w tym rozdziale będzie zbudowanie intuicji na temat tych pojęć bez nadmiernego zagłębiania się w technikę. W szczególności, będziemy unikać notacji matematycznej, która może być drażniąca dla osób nieposiadających żadnego wykształcenia matematycznego, a nie jest niezbędna do dobrego wytłumaczenia.</p>
 <p>Aby dodać trochę kontekstu dla tensorów i spadku gradientu, rozpoczniemy podrozdział od praktycznego przykładu sieci neuronowej. Następnie przejdziemy przez każde nowe pojęcie, które zostało wprowadzone, punkt po punkcie. Pamiętajmy, że pojęcia te będą niezbędne do zrozumienia praktycznych przykładów, które pojawią się w kolejnych rozdziałach!</p>
 <p>Przyjrzyjmy się konkretnemu przykładowi sieci neuronowej, która wykorzystuje pakiet <code>keras</code> do nauki klasyfikacji ręcznie pisanych cyfr.</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(keras)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tensorflow.rstudio.com/">keras</a></span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Problemem, który postaramy się rozwiązać jest klasyfikacja obrazów pisma ręcznego w skali szarości (28 pikseli na 28 pikseli) do 10 kategorii (od 0 do 9). Użyjemy zestawu danych MNIST, klasycznego zestawu danych w społeczności ML, który istnieje prawie tak długo jak sama dziedzina i jest intensywnie badany. Jest to zestaw 60 000 obrazów treningowych oraz 10 000 obrazów testowych, zebranych przez National Institute of Standards and Technology (NIST w MNIST) w latach 80. Możemy myśleć o “rozwiązywaniu” MNIST jako o “Hello World” głębokiego uczenia - to jest to, co robimy, aby zweryfikować, że nasze algorytmy działają zgodnie z oczekiwaniami. Gdy staniemy się praktykami uczenia maszynowego, zobaczymy, że MNIST pojawia się raz za razem, w pracach naukowych, wpisach na blogach i tak dalej. Kilka próbek MNIST można zobaczyć na <a href="#fig-mnist1">Rysunek&nbsp;<span>10.7</span></a>.</p>
 <div id="fig-mnist1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/Zrzut ekranu 2023-02-24 o 17.57.00.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.7: Kilka przykładów obrazów ze zbioru MNIST</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-24 o 17.57.00.png" class="img-fluid figure-img" width="600"></p>
+<figcaption class="figure-caption">Rysunek&nbsp;10.7: Kilka przykładów obrazów ze zbioru MNIST</figcaption></figure>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -465,60 +422,43 @@ Zagrożenie
 </div>
 <p>Zbiór danych MNIST jest wstępnie załadowany do <code>keras</code> w postaci list <code>train</code> i <code>test</code>, z których każda zawiera zestaw obrazów (x) i związanych z nimi etykiet (y):</p>
 <div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-2_fedf61c1f3e72503192f6e2e3613d6e7">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mnist <span class="ot">&lt;-</span> <span class="fu">dataset_mnist</span>()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>train_images <span class="ot">&lt;-</span> mnist<span class="sc">$</span>train<span class="sc">$</span>x</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>train_labels <span class="ot">&lt;-</span> mnist<span class="sc">$</span>train<span class="sc">$</span>y</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>test_images <span class="ot">&lt;-</span> mnist<span class="sc">$</span>test<span class="sc">$</span>x</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>test_labels <span class="ot">&lt;-</span> mnist<span class="sc">$</span>test<span class="sc">$</span>y</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mnist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/dataset_mnist.html">dataset_mnist</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">train_images</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">train</span><span class="op">$</span><span class="va">x</span></span>
+<span><span class="va">train_labels</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">train</span><span class="op">$</span><span class="va">y</span></span>
+<span><span class="va">test_images</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">test</span><span class="op">$</span><span class="va">x</span></span>
+<span><span class="va">test_labels</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">test</span><span class="op">$</span><span class="va">y</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><code>train_images</code> i <code>train_labels</code> tworzą zbiór treningowy, czyli dane, na podstawie których model będzie się uczył. Model będzie następnie testowany na zbiorze testowym, <code>test_images</code> i <code>test_labels</code> . Obrazy są zakodowane jako tablice 3D, a etykiety to tablica 1D z cyframi od 0 do 9. Pomiędzy obrazami i etykietami istnieje korespondencja jeden do jednego.</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(train_images)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">train_images</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code> int [1:60000, 1:28, 1:28] 0 0 0 0 0 0 0 0 0 0 ...</code></pre>
 </div>
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(train_labels)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">train_labels</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code> int [1:60000(1d)] 5 0 4 1 9 2 1 3 1 4 ...</code></pre>
 </div>
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(test_images)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">test_images</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code> int [1:10000, 1:28, 1:28] 0 0 0 0 0 0 0 0 0 0 ...</code></pre>
 </div>
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(test_labels)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">test_labels</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code> int [1:10000(1d)] 7 2 1 0 4 1 4 9 5 9 ...</code></pre>
 </div>
 </div>
 <p>Przepływ pracy (ang. <em>workflow</em>) będzie następujący: najpierw podamy sieci neuronowej dane treningowe, <code>train_images</code> i <code>train_labels</code>. Następnie sieć nauczy się kojarzyć obrazy i etykiety. Na koniec poprosimy sieć o stworzenie przewidywań dla <code>test_images</code> i sprawdzimy, czy te przewidywania pasują do etykiet z <code>test_labels</code>.</p>
 <div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-4_bfd70e0c37cab0209c01411074e22a1a">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>network <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">512</span>, <span class="at">activation =</span> <span class="st">"relu"</span>, <span class="at">input_shape =</span> <span class="fu">c</span>(<span class="dv">28</span> <span class="sc">*</span> <span class="dv">28</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">10</span>, <span class="at">activation =</span> <span class="st">"softmax"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">network</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/keras_model_sequential.html">keras_model_sequential</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">512</span>, activation <span class="op">=</span> <span class="st">"relu"</span>, input_shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">28</span> <span class="op">*</span> <span class="fl">28</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">10</span>, activation <span class="op">=</span> <span class="st">"softmax"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Podstawowym elementem konstrukcyjnym sieci neuronowych jest warstwa, moduł przetwarzania danych, o którym można myśleć jak o filtrze dla danych. Niektóre dane przychodzą i wychodzą w bardziej użytecznej formie. W szczególności, warstwy wyodrębniają reprezentacje z danych, które są do nich wprowadzane - miejmy nadzieję, że reprezentacje, które są bardziej znaczące dla danego problemu. Większość głębokiego uczenia polega na łączeniu prostych warstw, które implementują formę stopniowej destylacji danych. Model głębokiego uczenia jest jak sito do przetwarzania danych, złożone z szeregu coraz bardziej wyrafinowanych filtrów danych - warstw.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/tw3.jpeg" class="img-fluid figure-img" width="400"></p>
+<figure class="figure"><p><img src="images/tw3.jpeg" class="img-fluid figure-img" width="400"></p>
 </figure>
 </div></div><p>Nasza sieć składa się z dwóch warstw, które są gęsto połączonymi (zwanymi też w pełni połączonymi - ang. <em>fully connected</em>) warstwami neuronowymi. Druga (i ostatnia) warstwa jest 10-kierunkową warstwą softmax, co oznacza, że zwróci tablicę 10 wyników prawdopodobieństwa (sumujących się do 1). Każdy wynik będzie oznaczał prawdopodobieństwo, że aktualny obraz cyfry należy do jednej z naszych 10 klas cyfr.</p>
 <p>Aby sieć była gotowa do treningu, musimy wybrać jeszcze trzy rzeczy, w ramach kroku kompilacji:</p>
@@ -529,213 +469,157 @@ Zagrożenie
 </ul>
 <p>Dokładne przeznaczenie funkcji straty i optymalizatora zostanie wyjaśnione w kolejnych rozdziałach.</p>
 <div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-5_362b131e9423ed281d81da1a2d76781c">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>network <span class="sc">%&gt;%</span> <span class="fu">compile</span>(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">optimizer =</span> <span class="st">"rmsprop"</span>,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">loss =</span> <span class="st">"categorical_crossentropy"</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"accuracy"</span>)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/compile.html">compile</a></span><span class="op">(</span></span>
+<span>  optimizer <span class="op">=</span> <span class="st">"rmsprop"</span>,</span>
+<span>  loss <span class="op">=</span> <span class="st">"categorical_crossentropy"</span>,</span>
+<span>  metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"accuracy"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Zauważmy, że funkcja <code>compile()</code> modyfikuje sieć na bieżąco (zamiast zwracać nowy obiekt sieci, co jest bardziej typowe dla R). Powód tego opiszemy, gdy powrócimy do przykładu w dalszej części rozdziału.</p>
+<p>Zauważmy, że funkcja <code><a href="https://generics.r-lib.org/reference/compile.html">compile()</a></code> modyfikuje sieć na bieżąco (zamiast zwracać nowy obiekt sieci, co jest bardziej typowe dla R). Powód tego opiszemy, gdy powrócimy do przykładu w dalszej części rozdziału.</p>
 <p>Przed treningiem wstępnie przetworzymy dane, zmieniając ich kształt na taki, jakiego oczekuje sieć, i skalując je tak, by wszystkie wartości mieściły się w przedziale [0, 1]. Poprzednio nasze obrazy treningowe, na przykład, były przechowywane w tablicy o kształcie <code>(60000, 28, 28)</code> typu <code>integer</code> z wartościami w przedziale [0, 255]. Przekształcamy go w podwójną tablicę kształtu <code>(60000, 28 * 28)</code> z wartościami w przedziale [0,1].</p>
 <div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-6_496d486d00834c24faa318baf5f45336">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>train_images <span class="ot">&lt;-</span> <span class="fu">array_reshape</span>(train_images, <span class="fu">c</span>(<span class="dv">60000</span>, <span class="dv">28</span> <span class="sc">*</span> <span class="dv">28</span>))</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>train_images <span class="ot">&lt;-</span> train_images <span class="sc">/</span> <span class="dv">255</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>test_images <span class="ot">&lt;-</span> <span class="fu">array_reshape</span>(test_images, <span class="fu">c</span>(<span class="dv">10000</span>, <span class="dv">28</span> <span class="sc">*</span> <span class="dv">28</span>))</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>test_images <span class="ot">&lt;-</span> test_images <span class="sc">/</span> <span class="dv">255</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">train_images</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/array_reshape.html">array_reshape</a></span><span class="op">(</span><span class="va">train_images</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">60000</span>, <span class="fl">28</span> <span class="op">*</span> <span class="fl">28</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">train_images</span> <span class="op">&lt;-</span> <span class="va">train_images</span> <span class="op">/</span> <span class="fl">255</span></span>
+<span><span class="va">test_images</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/array_reshape.html">array_reshape</a></span><span class="op">(</span><span class="va">test_images</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10000</span>, <span class="fl">28</span> <span class="op">*</span> <span class="fl">28</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">test_images</span> <span class="op">&lt;-</span> <span class="va">test_images</span> <span class="op">/</span> <span class="fl">255</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Zauważmy, że używamy funkcji <code>array_reshape()</code> zamiast funkcji <code>dim()</code> do zmiany kształtu tablicy. Powód tego omówimy później, kiedy będziemy mówić o przekształcaniu tensorów. Musimy również zakodować etykiety w sposób kategoryczny.</p>
+<p>Zauważmy, że używamy funkcji <code><a href="https://rstudio.github.io/reticulate/reference/array_reshape.html">array_reshape()</a></code> zamiast funkcji <code><a href="https://rdrr.io/r/base/dim.html">dim()</a></code> do zmiany kształtu tablicy. Powód tego omówimy później, kiedy będziemy mówić o przekształcaniu tensorów. Musimy również zakodować etykiety w sposób kategoryczny.</p>
 <div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-7_28d63e0e0f078c20e12c43e97b709e5f">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>train_labels <span class="ot">&lt;-</span> <span class="fu">to_categorical</span>(train_labels)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>test_labels <span class="ot">&lt;-</span> <span class="fu">to_categorical</span>(test_labels)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">train_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/to_categorical.html">to_categorical</a></span><span class="op">(</span><span class="va">train_labels</span><span class="op">)</span></span>
+<span><span class="va">test_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/to_categorical.html">to_categorical</a></span><span class="op">(</span><span class="va">test_labels</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Teraz jesteśmy gotowi do trenowania sieci, co w <code>keras</code> odbywa się poprzez wywołanie metody <code>fit</code> sieci - dopasowujemy model do danych treningowych:</p>
 <div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-8_879fceaa3973ae3c539ce58814e96936">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>network <span class="sc">%&gt;%</span> <span class="fu">fit</span>(train_images, train_labels, <span class="at">epochs =</span> <span class="dv">5</span>, <span class="at">batch_size =</span> <span class="dv">128</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span><span class="va">train_images</span>, <span class="va">train_labels</span>, epochs <span class="op">=</span> <span class="fl">5</span>, batch_size <span class="op">=</span> <span class="fl">128</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Podczas treningu wyświetlane są dwie wielkości: strata sieci na danych treningowych oraz dokładność sieci na danych treningowych. Szybko osiągamy dokładność 0,989 (98,9%) na danych treningowych. Teraz sprawdźmy, czy model dobrze radzi sobie również na zbiorze testowym:</p>
 <div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-9_6c7090cd2f5e105fad5466214c75a717">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> network <span class="sc">%&gt;%</span> <span class="fu">evaluate</span>(test_images, test_labels)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>metrics</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">metrics</span> <span class="op">&lt;-</span> <span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/tensorflow/man/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">test_images</span>, <span class="va">test_labels</span><span class="op">)</span></span>
+<span><span class="va">metrics</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>      loss   accuracy 
 0.07629414 0.97790003 </code></pre>
 </div>
 </div>
 <p>Dokładność zestawu testowego okazuje się wynosić 97,8% - to sporo mniej niż dokładność zestawu treningowego. Ta różnica między dokładnością treningu a dokładnością testu jest przykładem nadmiernego dopasowania (fakt, że modele uczenia maszynowego mają tendencję do osiągania gorszych wyników na nowych danych niż na danych treningowych). Wygenerujmy przewidywania dla pierwszych 10 próbek zbioru testowego:</p>
 <div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-10_57bddd67053e1e741c2540e3d41b5e23">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>network <span class="sc">%&gt;%</span> <span class="fu">predict</span>(test_images[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]) <span class="sc">|&gt;</span> <span class="fu">k_argmax</span>()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">network</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">test_images</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/k_argmax.html">k_argmax</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>tf.Tensor([7 2 1 0 4 1 4 9 5 9], shape=(10), dtype=int64)</code></pre>
 </div>
 </div>
 <p>Na tym kończymy nasz pierwszy przykład - właśnie zobaczyliśmy, jak można zbudować i wytrenować sieć neuronową do klasyfikacji pisma ręcznego w mniej niż 20 liniach kodu R. W następnym rozdziale omówimy szczegółowo każdy element, który użyliśmy i wyjaśnimy, co on robi. Dowiemy się o tensorach, obiektach przechowujących dane w sieci; o operacjach na tensorach, z których składają się warstwy oraz o spadku gradientu, który pozwala sieci uczyć się na przykładach treningowych.</p>
-<section id="operacje-na-danych" class="level3 page-columns page-full" data-number="10.4.1">
-<h3 data-number="10.4.1" class="anchored" data-anchor-id="operacje-na-danych"><span class="header-section-number">10.4.1</span> Operacje na danych</h3>
+<section id="operacje-na-danych" class="level3 page-columns page-full" data-number="10.4.1"><h3 data-number="10.4.1" class="anchored" data-anchor-id="operacje-na-danych">
+<span class="header-section-number">10.4.1</span> Operacje na danych</h3>
 <p>W poprzednim przykładzie zaczynaliśmy od danych przechowywanych w wielowymiarowych tablicach, zwanych również tensorami. Wszystkie obecne systemy uczenia maszynowego używają tensorów jako podstawowej struktury danych. Tensory są fundamentalne dla tej dziedziny - tak fundamentalne, że Google’s TensorFlow został nazwany na ich cześć. Czym więc jest tensor?</p>
 <div class="page-columns page-full"><p>Tensory są uogólnieniem wektorów i macierzy na dowolną liczbę wymiarów (zauważmy, że w kontekście tensorów “wymiar” jest często nazywany “osią”). W R wektory są używane do tworzenia i manipulowania tensorami 1D, a macierze są używane do tensorów 2D. Dla wymiarów wyższego rzędu używane są obiekty tablicowe<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> (które obsługują dowolną liczbę wymiarów).</p><div class="no-row-height column-margin column-container"><li id="fn5"><p><sup>5</sup>&nbsp;ang. <em>array</em></p></li></div></div>
-<section id="skalary" class="level4" data-number="10.4.1.1">
-<h4 data-number="10.4.1.1" class="anchored" data-anchor-id="skalary"><span class="header-section-number">10.4.1.1</span> Skalary</h4>
+<section id="skalary" class="level4" data-number="10.4.1.1"><h4 data-number="10.4.1.1" class="anchored" data-anchor-id="skalary">
+<span class="header-section-number">10.4.1.1</span> Skalary</h4>
 <p>Tensor, który zawiera tylko jedną liczbę nazywany jest skalarem (lub tensorem skalarnym, lub tensorem 0-wymiarowym, lub tensorem 0D). Chociaż R nie ma typu danych do reprezentowania skalarów (wszystkie obiekty numeryczne są wektorami, macierzami lub tablicami), wektor R, który ma zawsze długość 1, jest koncepcyjnie podobny do skalara.</p>
-</section>
-<section id="wektory" class="level4" data-number="10.4.1.2">
-<h4 data-number="10.4.1.2" class="anchored" data-anchor-id="wektory"><span class="header-section-number">10.4.1.2</span> Wektory</h4>
+</section><section id="wektory" class="level4" data-number="10.4.1.2"><h4 data-number="10.4.1.2" class="anchored" data-anchor-id="wektory">
+<span class="header-section-number">10.4.1.2</span> Wektory</h4>
 <p>Jednowymiarowa tablica liczb nazywana jest wektorem lub tensorem 1D. Mówi się, że tensor 1D ma dokładnie jedną oś. Możemy przekonwertować wektor R na obiekt tablicowy (<code>array</code>), aby sprawdzić jego wymiary:</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">14</span>, <span class="dv">10</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(x)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">3</span>, <span class="fl">6</span>, <span class="fl">14</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code> num [1:5] 12 3 6 14 10</code></pre>
 </div>
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(<span class="fu">as.array</span>(x))</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/array.html">as.array</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 5</code></pre>
 </div>
 </div>
 <p>Wektor ten ma pięć wpisów i dlatego nazywany jest wektorem 5-wymiarowym. Nie należy mylić wektora 5D z tensorem 5D! Wektor 5D ma tylko jedną oś i ma pięć wymiarów wzdłuż swojej osi, podczas gdy tensor 5D ma pięć osi (i może mieć dowolną liczbę wymiarów wzdłuż każdej osi). Wymiarowość może oznaczać albo liczbę wpisów wzdłuż konkretnej osi (jak w przypadku naszego wektora 5D), albo liczbę osi w tensorze (jak tensor 5D), co może być czasem mylące. W tym drugim przypadku technicznie poprawniej jest mówić o tensorze rzędu 5 (ranga tensora to liczba osi), ale niejednoznaczny zapis tensor 5D jest powszechny niezależnie od tego.</p>
-</section>
-<section id="macierze" class="level4" data-number="10.4.1.3">
-<h4 data-number="10.4.1.3" class="anchored" data-anchor-id="macierze"><span class="header-section-number">10.4.1.3</span> Macierze</h4>
+</section><section id="macierze" class="level4" data-number="10.4.1.3"><h4 data-number="10.4.1.3" class="anchored" data-anchor-id="macierze">
+<span class="header-section-number">10.4.1.3</span> Macierze</h4>
 <p>Dwuwymiarowa tablica liczb to macierz, czyli tensor 2D. Macierz ma dwie osie (często nazywane wierszami i kolumnami). Możesz wizualnie zinterpretować macierz jako prostokątną siatkę liczb:</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">3</span><span class="sc">*</span><span class="dv">5</span>), <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">5</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">*</span><span class="fl">5</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">x</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3] [,4] [,5]
 [1,]    0    0    0    0    0
 [2,]    0    0    0    0    0
 [3,]    0    0    0    0    0</code></pre>
 </div>
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(x)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 3 5</code></pre>
 </div>
 </div>
-</section>
-<section id="tensory" class="level4" data-number="10.4.1.4">
-<h4 data-number="10.4.1.4" class="anchored" data-anchor-id="tensory"><span class="header-section-number">10.4.1.4</span> Tensory</h4>
+</section><section id="tensory" class="level4" data-number="10.4.1.4"><h4 data-number="10.4.1.4" class="anchored" data-anchor-id="tensory">
+<span class="header-section-number">10.4.1.4</span> Tensory</h4>
 <p>Jeśli spakujemy takie macierze do nowej tablicy, otrzymamy tensor 3D, który możemy wizualnie zinterpretować jako sześcian liczb:</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">2</span><span class="sc">*</span><span class="dv">3</span><span class="sc">*</span><span class="dv">2</span>), <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>))</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(x)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">*</span><span class="fl">3</span><span class="op">*</span><span class="fl">2</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code> num [1:2, 1:3, 1:2] 0 0 0 0 0 0 0 0 0 0 ...</code></pre>
 </div>
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(x)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 2 3 2</code></pre>
 </div>
 </div>
 <p>Pakując tensory 3D w tablicy, możesz stworzyć tensor 4D i tak dalej. W głębokim uczeniu się, generalnie będziesz manipulować tensorami, które są 0D do 4D, a tensory 5D pojawią się, jeśli będziesz przetwarzać dane wideo.</p>
-</section>
-<section id="kluczowe-własności" class="level4 page-columns page-full" data-number="10.4.1.5">
-<h4 data-number="10.4.1.5" class="anchored" data-anchor-id="kluczowe-własności"><span class="header-section-number">10.4.1.5</span> Kluczowe własności</h4>
+</section><section id="kluczowe-własności" class="level4 page-columns page-full" data-number="10.4.1.5"><h4 data-number="10.4.1.5" class="anchored" data-anchor-id="kluczowe-własności">
+<span class="header-section-number">10.4.1.5</span> Kluczowe własności</h4>
 <p>Tensor jest określony przez trzy kluczowe atrybuty:</p>
 <ul>
 <li>Liczba osi - np. tensor 3D ma trzy osie, a macierz dwie osie.</li>
-<li>Kształt - to wektor liczb całkowitych, który opisuje, ile wymiarów ma tensor wzdłuż każdej osi. Na przykład poprzedni przykład macierzy ma kształt (3, 5), a przykład tensora 3D ma kształt (3, 3, 5). Wektor ma kształt z pojedynczym elementem, o wymiarze 5. Możesz sprawdzić wymiary dowolnej tablicy za pomocą funkcji <code>dim()</code>.</li>
+<li>Kształt - to wektor liczb całkowitych, który opisuje, ile wymiarów ma tensor wzdłuż każdej osi. Na przykład poprzedni przykład macierzy ma kształt (3, 5), a przykład tensora 3D ma kształt (3, 3, 5). Wektor ma kształt z pojedynczym elementem, o wymiarze 5. Możesz sprawdzić wymiary dowolnej tablicy za pomocą funkcji <code><a href="https://rdrr.io/r/base/dim.html">dim()</a></code>.</li>
 <li>Typ danych - typ danych zawartych w tensorze; na przykład, typem tensora może być liczba całkowita lub rzeczywista<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. W rzadkich przypadkach możesz zobaczyć tensor znakowy<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. Ponieważ jednak tensory żyją we wstępnie przydzielonych segmentach pamięci, a łańcuchy znaków, będąc zmiennej długości, wykluczyłyby użycie tej implementacji, są one rzadziej używane.</li>
 </ul>
 <div class="no-row-height column-margin column-container"><li id="fn6"><p><sup>6</sup>&nbsp;float - czyli liczba rzeczywista</p></li><li id="fn7"><p><sup>7</sup>&nbsp;typu <code>character</code></p></li></div><p>Aby to skonkretyzować, spójrzmy na dane, które przetwarzaliśmy w przykładzie MNIST. Najpierw ładujemy zbiór danych MNIST:</p>
 <div class="cell" data-hash="deeplearning_cache/html/unnamed-chunk-14_1e1e0d26e36f2c5513a0495d7c2ef569">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>train_images <span class="ot">&lt;-</span> mnist<span class="sc">$</span>train<span class="sc">$</span>x</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>train_labels <span class="ot">&lt;-</span> mnist<span class="sc">$</span>train<span class="sc">$</span>y</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>test_images <span class="ot">&lt;-</span> mnist<span class="sc">$</span>test<span class="sc">$</span>x</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>test_labels <span class="ot">&lt;-</span> mnist<span class="sc">$</span>test<span class="sc">$</span>y</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">dim</span>(train_images)) <span class="co"># osie</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">train_images</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">train</span><span class="op">$</span><span class="va">x</span></span>
+<span><span class="va">train_labels</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">train</span><span class="op">$</span><span class="va">y</span></span>
+<span><span class="va">test_images</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">test</span><span class="op">$</span><span class="va">x</span></span>
+<span><span class="va">test_labels</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">test</span><span class="op">$</span><span class="va">y</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">train_images</span><span class="op">)</span><span class="op">)</span> <span class="co"># osie</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(train_images) <span class="co"># kształt</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">train_images</span><span class="op">)</span> <span class="co"># kształt</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 60000    28    28</code></pre>
 </div>
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(train_images) <span class="co"># typ danych</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">train_images</span><span class="op">)</span> <span class="co"># typ danych</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] "integer"</code></pre>
 </div>
 </div>
 <p>Jak więc widać jest to tensor 3D liczb całkowitych. Dokładniej, jest to tablica 60000 macierzy 28 × 28 liczb całkowitych. Każda taka macierz jest obrazem w skali szarości o współczynnikach od 0 do 255. Wykreślmy piątą cyfrę w tym tensorze 3D:</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>digit <span class="ot">&lt;-</span> train_images[<span class="dv">5</span>,,]</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">as.raster</span>(digit, <span class="at">max =</span> <span class="dv">255</span>))</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">digit</span> <span class="op">&lt;-</span> <span class="va">train_images</span><span class="op">[</span><span class="fl">5</span>,,<span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html">as.raster</a></span><span class="op">(</span><span class="va">digit</span>, max <span class="op">=</span> <span class="fl">255</span><span class="op">)</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <p><img src="deeplearning_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</section>
-<section id="operacje-na-tensorach" class="level4 page-columns page-full" data-number="10.4.1.6">
-<h4 data-number="10.4.1.6" class="anchored" data-anchor-id="operacje-na-tensorach"><span class="header-section-number">10.4.1.6</span> Operacje na tensorach</h4>
+</section><section id="operacje-na-tensorach" class="level4 page-columns page-full" data-number="10.4.1.6"><h4 data-number="10.4.1.6" class="anchored" data-anchor-id="operacje-na-tensorach">
+<span class="header-section-number">10.4.1.6</span> Operacje na tensorach</h4>
 <p>W poprzednim przykładzie wybraliśmy konkretną cyfrę wzdłuż pierwszej osi za pomocą składni <code>train_images[i,,]</code>. Wybieranie konkretnych elementów w tensorze nazywa się <em>tensor slicing</em>. Przyjrzyjmy się operacjom <em>tensor slicing</em>, które można wykonać na tablicach R. Poniżej wybrano cyfry od #10 do #99 i umieszczono je w tablicy o kształcie <code>(90, 28, 28)</code>:</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>my_slice <span class="ot">&lt;-</span> train_images[<span class="dv">10</span><span class="sc">:</span><span class="dv">99</span>,,]</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(my_slice)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_slice</span> <span class="op">&lt;-</span> <span class="va">train_images</span><span class="op">[</span><span class="fl">10</span><span class="op">:</span><span class="fl">99</span>,,<span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">my_slice</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 90 28 28</code></pre>
 </div>
 </div>
 <p>Generalnie, możemy wybrać pomiędzy dwoma dowolnymi indeksami wzdłuż każdej osi tensora. Na przykład, aby wybrać 14 × 14 pikseli w prawym dolnym rogu wszystkich obrazów, użyjemy:</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>my_slice <span class="ot">&lt;-</span> train_images[, <span class="dv">15</span><span class="sc">:</span><span class="dv">28</span>, <span class="dv">15</span><span class="sc">:</span><span class="dv">28</span>]</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_slice</span> <span class="op">&lt;-</span> <span class="va">train_images</span><span class="op">[</span>, <span class="fl">15</span><span class="op">:</span><span class="fl">28</span>, <span class="fl">15</span><span class="op">:</span><span class="fl">28</span><span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Generalnie, pierwszą osią we wszystkich tensorach danych, z którymi zetkniemy się w głębokim uczeniu, będzie oś próbek (czasami nazywana wymiarem próbek). W przykładzie MNIST, próbki to obrazy cyfr. Ponadto, modele głębokiego uczenia nie przetwarzają całego zbioru danych na raz, ale raczej dzielą dane na małe partie (ang. <em>batch</em>). Konkretnie, oto jedna partia naszych cyfr MNIST, o rozmiarze partii 128:</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>batch <span class="ot">&lt;-</span> train_images[<span class="dv">1</span><span class="sc">:</span><span class="dv">128</span>,,]</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">batch</span> <span class="op">&lt;-</span> <span class="va">train_images</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">128</span>,,<span class="op">]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Gdy rozważamy tensor partii, pierwsza oś nazywana jest osią partii lub wymiarem partii. Jest to termin, który często spotkamy podczas korzystania z <code>keras</code> i innych bibliotek uczenia głębokiego.</p>
@@ -753,10 +637,8 @@ Zagrożenie
 </ul>
 <p>Gdy w danych ważny staje się czas (lub kolejność sekwencji), sensowne jest przechowywanie ich w tensorze 3D z wyraźną osią czasu. Każda próbka może być zakodowana jako ciąg wektorów (tensor 2D), a zatem partia danych będzie zakodowana jako tensor 3D (patrz <a href="#fig-tensor1">Rysunek&nbsp;<span>10.8</span></a>).</p>
 <div id="fig-tensor1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/Zrzut ekranu 2023-02-24 o 18.59.47.png" class="img-fluid figure-img" width="400"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.8: Schemat zapisu danych sekwencyjnych</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-24 o 18.59.47.png" class="img-fluid figure-img" width="400"></p>
+<figcaption class="figure-caption">Rysunek&nbsp;10.8: Schemat zapisu danych sekwencyjnych</figcaption></figure>
 </div>
 <p>Oś czasu jest zawsze drugą osią, zgodnie z konwencją. Przyjrzyjmy się kilku przykładom:</p>
 <ul>
@@ -765,114 +647,84 @@ Zagrożenie
 </ul>
 <p>Obrazy mają zazwyczaj trzy wymiary: wysokość, szerokość i głębię koloru. Choć obrazy w skali szarości (jak nasze cyfry MNIST) mają tylko jeden kanał koloru i mogłyby być przechowywane w tensorach 2D, to konwencjonalnie tensory obrazów są zawsze trójwymiarowe, z jednowymiarowym kanałem koloru dla obrazów w skali szarości. Partia 128 obrazów w skali szarości o rozmiarach 256 × 256 mogłaby więc być przechowywana w tensorze o kształcie <code>(128, 256, 256, 1)</code>, a partia 128 obrazów kolorowych - w tensorze o kształcie <code>(128, 256, 256, 3)</code> (patrz <a href="#fig-tensor2">Rysunek&nbsp;<span>10.9</span></a>).</p>
 <div id="fig-tensor2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/Zrzut ekranu 2023-02-24 o 19.04.18.png" class="img-fluid figure-img" width="400"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.9: Zapis kolorowego obrazu</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-24 o 19.04.18.png" class="img-fluid figure-img" width="400"></p>
+<figcaption class="figure-caption">Rysunek&nbsp;10.9: Zapis kolorowego obrazu</figcaption></figure>
 </div>
 <p>Istnieją dwie konwencje dla kształtów tensorów obrazów: konwencja <em>channels-last</em> (używana przez TensorFlow) i konwencja <em>channels-firs</em>t (używana przez Theano). Framework uczenia maszynowego TensorFlow, od Google, umieszcza oś głębokości koloru na końcu: <code>(sample, height, width, color_depth)</code>. Tymczasem Theano umieszcza oś głębi koloru zaraz po osi partii: <code>(sample, color_depth, height, width)</code>. Keras zapewniają wsparcie dla obu formatów.</p>
 <p>Dane wideo są jednym z niewielu typów danych ze świata rzeczywistego, dla których będziemy potrzebować tensorów 5D. Wideo może być rozumiane jako sekwencja klatek, z których każda jest obrazem kolorowym. Ponieważ każda klatka może być przechowywana w tensorze 3D <code>(wysokość, szerokość, głębokość koloru)</code>, sekwencja klatek może być przechowywana w tensorze 4D <code>(klatki, wysokość, szerokość, głębokość koloru)</code>, a zatem partia różnych filmów może być przechowywana w tensorze 5D o kształcie <code>(próbki, klatki, wysokość, szerokość, głębokość koloru)</code>.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/reshape.jpg" class="img-fluid figure-img" width="400"></p>
+<figure class="figure"><p><img src="images/reshape.jpg" class="img-fluid figure-img" width="400"></p>
 </figure>
 </div></div><p>Na przykład 60-sekundowy klip wideo YouTube o wymiarach 256 × 144, próbkowany z prędkością 4 klatek na sekundę, miałby 240 klatek. Partia czterech takich klipów wideo byłaby przechowywana w tensorze o kształcie <code>(4, 240, 256, 144, 3)</code>. To w sumie 106168320 liczb! Jeśli typ danych tensora to <em>double</em>, to każda wartość jest przechowywana w 64 bitach, więc tensor reprezentowałby 810 MB. Sporo 😱! Filmy, które spotykamy w prawdziwym życiu są znacznie lżejsze, ponieważ nie są przechowywane w <code>float32</code> i zazwyczaj są silnie skompresowane (jak w formacie MPEG).</p>
 <p>Podobnie jak każdy program komputerowy może być ostatecznie zredukowany do małego zestawu operacji binarnych na wejściach binarnych (AND, OR, NOR, i tak dalej), wszystkie transformacje uczone przez głębokie sieci neuronowe mogą być zredukowane do garści operacji tensorowych stosowanych do tensorów danych liczbowych. Na przykład, możliwe jest dodawanie tensorów, mnożenie tensorów i tak dalej. W naszym początkowym przykładzie budowaliśmy naszą sieć poprzez układanie gęstych warstw jedna na drugiej. Instancja warstwy wygląda tak:</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">512</span>, <span class="at">activation =</span> <span class="st">"relu"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/keras/man/layer_dense.html">layer_dense</a></span><span class="op">(</span>units <span class="op">=</span> <span class="fl">512</span>, activation <span class="op">=</span> <span class="st">"relu"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Warstwa ta może być interpretowana jako funkcja, która przyjmuje na wejście tensor 2D i zwraca inny tensor 2D - nową reprezentację tensora wejściowego. Można ją też przedstawić inaczej (gdzie <code>W</code> jest tensorem 2D, a <code>b</code> jest wektorem):</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># nie wykonuj</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>output <span class="ot">=</span> <span class="fu">relu</span>(<span class="fu">dot</span>(W, input) <span class="sc">+</span> b)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># nie wykonuj</span></span>
+<span><span class="va">output</span> <span class="op">=</span> <span class="fu">relu</span><span class="op">(</span><span class="fu">dot</span><span class="op">(</span><span class="va">W</span>, <span class="va">input</span><span class="op">)</span> <span class="op">+</span> <span class="va">b</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Mamy tu trzy operacje na tensorach: iloczyn (<code>dot</code>) między tensorem wejściowym a tensorem <code>W</code>, dodawanie (<code>+</code>) między wynikowym tensorem 2D wektorem <code>b</code> i wreszcie operację <code>relu</code>, gdzie <code>relu(x)</code> to <code>max(x, 0)</code>.</p>
 <p>Operacja <code>relu</code> i dodawanie są operacjami typu <em>element-wise</em>: operacjami, które są stosowane niezależnie do każdego wpisu w rozważanych tensorach. Oznacza to, że operacje te są bardzo podatne na wektoryzacje. W praktyce, gdy mamy do czynienia z tablicami R, operacje te są dostępne jako dobrze zoptymalizowane wbudowane funkcje R, które same delegują ciężką pracę do BLAS (<em>Basic Linear Algebra Subprograms</em>). BLAS to niskopoziomowe, wysoce wektoryzowalne, wydajne procedury manipulacji tensorami, zwykle zaimplementowane w Fortranie lub C.</p>
 <p>Operacje na tensorach można wykonywać również wtedy, gdy są one innych wymiarów. Przykładowo:</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># x is a tensor of random values with shape (64, 3, 32, 10)</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">1000</span>, <span class="dv">0</span>, <span class="dv">9</span>)), <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">64</span>, <span class="dv">3</span>, <span class="dv">32</span>, <span class="dv">10</span>))</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(x)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># x is a tensor of random values with shape (64, 3, 32, 10)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">64</span>, <span class="fl">3</span>, <span class="fl">32</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code> num [1:64, 1:3, 1:32, 1:10] 3 7 2 3 5 6 4 8 3 8 ...</code></pre>
 </div>
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># y is a tensor of 5s of shape (32, 10)</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">5</span>, <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">32</span>, <span class="dv">10</span>))</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(y)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># y is a tensor of 5s of shape (32, 10)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="fl">5</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">32</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code> num [1:32, 1:10] 5 5 5 5 5 5 5 5 5 5 ...</code></pre>
 </div>
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The output z has shape (64, 3, 32, 10) like x</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">sweep</span>(x, <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>), y, pmax)</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(z)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># The output z has shape (64, 3, 32, 10) like x</span></span>
+<span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sweep.html">sweep</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="va">y</span>, <span class="va">pmax</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code> num [1:64, 1:3, 1:32, 1:10] 5 7 5 5 5 6 5 8 5 8 ...</code></pre>
 </div>
 </div>
 <p>Operacja <code>dot</code>, zwana również iloczynem tensorowym jest najczęściej spotykaną, najbardziej użyteczną operacją na tensorach. W przeciwieństwie do operacji <em>element-wise</em>, łączy ona wpisy w tensorach wejściowych. Iloczyny tensorowe wykorzystują operator <code>%*%</code>. Zauważ, że gdy tylko jeden z dwóch tensorów ma więcej niż jeden wymiar, <code>%*%</code> nie jest symetryczny, czyli że <code>x %*% y</code> nie jest taki sam jak <code>y %*% x</code>.</p>
 <div id="fig-tensor3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/Zrzut ekranu 2023-02-24 o 19.35.48.png" class="img-fluid figure-img" width="400"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.10: Iloczyn tensorów</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-24 o 19.35.48.png" class="img-fluid figure-img" width="400"></p>
+<figcaption class="figure-caption">Rysunek&nbsp;10.10: Iloczyn tensorów</figcaption></figure>
 </div>
 <p>Trzecim bardzo ważnym rodzajem operacji na tensorach jest przekształcanie tensorów. Chociaż nie było ono używane w gęstych warstwach w naszym pierwszym przykładzie sieci neuronowej, używaliśmy go, gdy wstępnie przetwarzaliśmy dane o cyfrach przed wprowadzeniem ich do naszej sieci:</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>train_images <span class="ot">&lt;-</span> mnist<span class="sc">$</span>train<span class="sc">$</span>x</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(train_images)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">train_images</span> <span class="op">&lt;-</span> <span class="va">mnist</span><span class="op">$</span><span class="va">train</span><span class="op">$</span><span class="va">x</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">train_images</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code> int [1:60000, 1:28, 1:28] 0 0 0 0 0 0 0 0 0 0 ...</code></pre>
 </div>
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>train_images <span class="ot">&lt;-</span> <span class="fu">array_reshape</span>(train_images, <span class="fu">c</span>(<span class="dv">60000</span>, <span class="dv">28</span> <span class="sc">*</span> <span class="dv">28</span>))</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(train_images)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">train_images</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/array_reshape.html">array_reshape</a></span><span class="op">(</span><span class="va">train_images</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">60000</span>, <span class="fl">28</span> <span class="op">*</span> <span class="fl">28</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">train_images</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code> int [1:60000, 1:784] 0 0 0 0 0 0 0 0 0 0 ...</code></pre>
 </div>
 </div>
 <p>Przekształcenie tensora oznacza zmianę rozmieszczenia jego wierszy i kolumn tak, by pasowały do docelowego kształtu. Oczywiście, przekształcony tensor ma taką samą całkowitą liczbę współczynników jak tensor początkowy.</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>,</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>                <span class="dv">2</span>, <span class="dv">3</span>,</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>                <span class="dv">4</span>, <span class="dv">5</span>),</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>,</span>
+<span>                <span class="fl">2</span>, <span class="fl">3</span>,</span>
+<span>                <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span>,</span>
+<span>             nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">x</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2]
 [1,]    0    1
 [2,]    2    3
 [3,]    4    5</code></pre>
 </div>
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">array_reshape</span>(x, <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">1</span>)) </span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/array_reshape.html">array_reshape</a></span><span class="op">(</span><span class="va">x</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">x</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>     [,1]
 [1,]    0
 [2,]    1
@@ -881,27 +733,20 @@ Zagrożenie
 [5,]    4
 [6,]    5</code></pre>
 </div>
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">array_reshape</span>(x, <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/array_reshape.html">array_reshape</a></span><span class="op">(</span><span class="va">x</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">x</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3]
 [1,]    0    1    2
 [2,]    3    4    5</code></pre>
 </div>
 </div>
 <p>Szczególnym przypadkiem przekształcenia, który jest powszechnie spotykany, jest transpozycja.</p>
-</section>
-</section>
-<section id="optymalizacja-gradientowa" class="level3" data-number="10.4.2">
-<h3 data-number="10.4.2" class="anchored" data-anchor-id="optymalizacja-gradientowa"><span class="header-section-number">10.4.2</span> Optymalizacja gradientowa</h3>
+</section></section><section id="optymalizacja-gradientowa" class="level3" data-number="10.4.2"><h3 data-number="10.4.2" class="anchored" data-anchor-id="optymalizacja-gradientowa">
+<span class="header-section-number">10.4.2</span> Optymalizacja gradientowa</h3>
 <p>Jak widzieliśmy wcześniej, każda warstwa neuronowa z naszego pierwszego przykładu sieci przekształca swoje dane wejściowe w następujący sposób:</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>output <span class="ot">=</span> <span class="fu">relu</span>(<span class="fu">dot</span>(input, W)<span class="sc">+</span>b)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">output</span> <span class="op">=</span> <span class="fu">relu</span><span class="op">(</span><span class="fu">dot</span><span class="op">(</span><span class="va">input</span>, <span class="va">W</span><span class="op">)</span><span class="op">+</span><span class="va">b</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>W tym wyrażeniu <code>W</code> i <code>b</code> są tensorami będącymi atrybutami warstwy. Nazywamy je wagami lub parametrami trenowanymi warstwy (odpowiednio atrybuty kernel i bias). Wagi te zawierają informacje wyuczone przez sieć w wyniku ekspozycji na dane treningowe.</p>
@@ -921,7 +766,8 @@ Zagrożenie
 <ol type="1">
 <li>Wylosuj partię próbek treningowych <code>x</code> i odpowiadające im cele <code>y</code>.</li>
 <li>Uruchom sieć na <code>x</code>, aby uzyskać predykcje <code>y_pred</code>.</li>
-<li>Oblicz stratę sieci na partii, czyli miarę niedopasowania między <code>y_pred</code> a <code>y.</code></li>
+<li>Oblicz stratę sieci na partii, czyli miarę niedopasowania między <code>y_pred</code> a <code>y.</code>
+</li>
 <li>Oblicz gradient straty względem parametrów sieci (przejście wsteczne).</li>
 <li>Skoryguj (nieznacznie) parametry sieci w kierunku przeciwnym do gradientu - na przykład <code>W = W - (krok * gradient)</code> - tym samym zmniejszając nieco stratę na partii.</li>
 </ol>
@@ -940,43 +786,34 @@ Zagrożenie
 </ul>
 <p>Istnieją również odmiany wspominanych wyżej metod z planami. Owe plany są przepisami na to jak współczynnik szybkości uczenia ma się zmieniać w kolejnych iteracjach.</p>
 <div id="fig-sgd1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://cs231n.github.io/assets/nn3/opt2.gif" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.11: Optymalizacja wag z wykorzystaniem różnych technik</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="https://cs231n.github.io/assets/nn3/opt2.gif" class="img-fluid figure-img" width="600"></p>
+<figcaption class="figure-caption">Rysunek&nbsp;10.11: Optymalizacja wag z wykorzystaniem różnych technik</figcaption></figure>
 </div>
-</section>
-<section id="wsteczna-propagacja-błędu" class="level3" data-number="10.4.3">
-<h3 data-number="10.4.3" class="anchored" data-anchor-id="wsteczna-propagacja-błędu"><span class="header-section-number">10.4.3</span> Wsteczna propagacja błędu</h3>
+</section><section id="wsteczna-propagacja-błędu" class="level3" data-number="10.4.3"><h3 data-number="10.4.3" class="anchored" data-anchor-id="wsteczna-propagacja-błędu">
+<span class="header-section-number">10.4.3</span> Wsteczna propagacja błędu</h3>
 <p>Wsteczna propagacja błędu (ang. <em>backpropagation</em>) jest metodą instruującą algorytm jak korygować wagi sieci. Korzysta ona z prawa znanego w matematyce jako pochodna funkcji złożonej (ang. <em>chain rule</em>)</p>
 <p><span id="eq-chain-rule"><span class="math display">\[
 [f(g(x))]'=f'(g(x))\cdot g'(x).
 \tag{10.1}\]</span></span></p>
 <p><em>Backpropagation</em> rozpoczyna się od końcowej wartości straty i działa wstecz od górnych warstw do dolnych, stosując regułę łańcuchową do obliczenia wkładu, jaki każdy parametr miał w wartości straty.</p>
 <div id="fig-backprop1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://developer-blogs.nvidia.com/wp-content/uploads/2022/02/DS-Guide-to-Gradient-Descent_Pic5.gif" class="img-fluid figure-img" width="400"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;10.12: Zasada działania wstecznej propagacji błędu</figcaption><p></p>
-</figure>
+<figure class="figure"><p><img src="https://developer-blogs.nvidia.com/wp-content/uploads/2022/02/DS-Guide-to-Gradient-Descent_Pic5.gif" class="img-fluid figure-img" width="400"></p>
+<figcaption class="figure-caption">Rysunek&nbsp;10.12: Zasada działania wstecznej propagacji błędu</figcaption></figure>
 </div>
 <p>Obecnie korzysta się z metod zdolnych do symbolicznego różniczkowania, takich jak TensorFlow. Oznacza to, że biorąc pod uwagę łańcuch operacji ze znaną funkcją straty, mogą obliczyć funkcję gradientu dla łańcucha za pomocą pochodnej funkcji złożonej, która mapuje wartości parametrów sieci do wartości gradientu. Kiedy mamy dostęp do takiej funkcji, przejście wsteczne jest zredukowane do wywołania tej funkcji gradientu. Dzięki symbolicznemu różniczkowaniu nigdy nie będziemy musieli ręcznie implementować algorytmu wstecznej propagacji.</p>
-</section>
-<section id="funkcje-straty" class="level3 page-columns page-full" data-number="10.4.4">
-<h3 data-number="10.4.4" class="anchored" data-anchor-id="funkcje-straty"><span class="header-section-number">10.4.4</span> Funkcje straty</h3>
-<div class="page-columns page-full"><p>We wcześniej prezentowanym przykładzie w funkcji <code>compile()</code> pojawiła się funkcja straty <code>loss = 'categorical_crossentropy'</code>, która jest jedną z możliwych do zastosowania funkcji straty<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. Funkcja straty jest używana jako sygnał zwrotny do uczenia tensorów wag i którą w fazie uczenia będzie minimalizowana. Odbywać się to będzie za pomocą mini-batch SGD. Dokładne zasady rządzące konkretną implementacją SGD są zdefiniowane przez optymalizator <code>rmsprop</code> przekazany jako pierwszy argument.</p><div class="no-row-height column-margin column-container"><li id="fn8"><p><sup>8</sup>&nbsp;o funkcjach straty będziemy jeszcze wspominać przy konkretnych przykładach</p></li></div></div>
+</section><section id="funkcje-straty" class="level3 page-columns page-full" data-number="10.4.4"><h3 data-number="10.4.4" class="anchored" data-anchor-id="funkcje-straty">
+<span class="header-section-number">10.4.4</span> Funkcje straty</h3>
+<div class="page-columns page-full"><p>We wcześniej prezentowanym przykładzie w funkcji <code><a href="https://generics.r-lib.org/reference/compile.html">compile()</a></code> pojawiła się funkcja straty <code>loss = 'categorical_crossentropy'</code>, która jest jedną z możliwych do zastosowania funkcji straty<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. Funkcja straty jest używana jako sygnał zwrotny do uczenia tensorów wag i którą w fazie uczenia będzie minimalizowana. Odbywać się to będzie za pomocą mini-batch SGD. Dokładne zasady rządzące konkretną implementacją SGD są zdefiniowane przez optymalizator <code>rmsprop</code> przekazany jako pierwszy argument.</p><div class="no-row-height column-margin column-container"><li id="fn8"><p><sup>8</sup>&nbsp;o funkcjach straty będziemy jeszcze wspominać przy konkretnych przykładach</p></li></div></div>
 <p>Uruchamiając</p>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>network <span class="sc">|&gt;</span> </span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train_samples, train_labels, <span class="at">epochs =</span> <span class="dv">5</span>, <span class="at">batch_size =</span> <span class="dv">128</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">network</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span><span class="va">train_samples</span>, <span class="va">train_labels</span>, epochs <span class="op">=</span> <span class="fl">5</span>, batch_size <span class="op">=</span> <span class="fl">128</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>rozpoczynamy iteracyjne uczenie przygotowanej sieci. Będzie ona realizowana w 5 epokach na partiach danych składających się ze 128 obserwacji.</p>
 
 <div class="no-row-height column-margin column-container"><div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/tw4.jpeg" class="img-fluid figure-img" width="400"></p>
+<figure class="figure"><p><img src="images/tw4.jpeg" class="img-fluid figure-img" width="400"></p>
 </figure>
 </div></div><div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -992,14 +829,11 @@ Adnotacja
 </div>
 </div>
 <div class="cell">
-<details open="">
-<summary>Kod</summary>
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lista funkcji straty pakietu keras</span></span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>(<span class="st">"package:keras"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grep</span>(<span class="at">x =</span> _, <span class="at">pattern =</span> <span class="st">"^loss_"</span>, <span class="at">value =</span> T)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details open=""><summary>Kod</summary><div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># lista funkcji straty pakietu keras</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="st">"package:keras"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">_</span>, pattern <span class="op">=</span> <span class="st">"^loss_"</span>, value <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code> [1] "loss_binary_crossentropy"            
  [2] "loss_categorical_crossentropy"       
  [3] "loss_categorical_hinge"              
@@ -1029,12 +863,7 @@ Ciresan, Dan C, Ueli Meier, Jonathan Masci, Luca M Gambardella, i Jurgen Schmidh
 Krizhevsky, Alex, Ilya Sutskever, i Geoffrey E. Hinton. 2017. <span>„ImageNet Classification with Deep Convolutional Neural Networks”</span>. <em>Communications of the ACM</em> 60 (6): 84–90. <a href="https://doi.org/10.1145/3065386">https://doi.org/10.1145/3065386</a>.
 </div>
 </div>
-</section>
-</section>
-
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1446,9 +1275,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./fourier.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Transformata Fouriera</span></span>
       </a>          
@@ -1460,8 +1287,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">Automatyczna analiza obrazu, Dariusz Majerek</div>   
     <div class="nav-footer-center">
       &nbsp;
@@ -1469,7 +1295,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-right">Książka została napisana w <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>
-
 
 
 </body></html>

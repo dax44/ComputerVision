@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.299">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -94,7 +94,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "więcej dopasowań w tym dokumencie",
     "search-clear-button-title": "Wyczyść",
     "search-detached-cancel-button-title": "Anuluj",
-    "search-submit-button-title": "Zatwierdź"
+    "search-submit-button-title": "Zatwierdź",
+    "search-label": "Szukaj"
   }
 }</script>
 
@@ -113,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./convolution.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sieci splotowe</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Szukaj" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -125,14 +126,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./images/logo.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Automatyczna analiza obrazu</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://twitter.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
-    <a href="https://github.com/dax44/ComputerVision/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="https://twitter.com/intent/tweet?url=|url|" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://twitter.com" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
+    <a href="https://github.com/dax44/ComputerVision/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/intent/tweet?url=|url|" rel="" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Przełącz tryb ciemny"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Przełącz tryb czytnika">
   <div class="quarto-reader-toggle-btn">
@@ -423,7 +424,7 @@ ________________________________________________________________________________
 <div id="fig-wz1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-03-2 o 18.34.26.png" class="img-fluid figure-img" width="400"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;12.1: Rozbicie obrazu na lokalne wzorce</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;12.1: Rozbicie obrazu na lokalne wzorce</figcaption>
 </figure>
 </div>
 <p>Dzięki tej kluczowej charakterystyce sieci konwolucyjne mają dwie ciekawe własności:</p>
@@ -435,7 +436,7 @@ ________________________________________________________________________________
 <div id="fig-conv" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-03-2 o 18.58.12.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;12.2: Procedura filtrowania obrazu</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;12.2: Procedura filtrowania obrazu</figcaption>
 </figure>
 </div>
 <p>W przykładzie MNIST, pierwsza warstwa konwolucji pobiera mapę cech o rozmiarze <code>(28, 28, 1)</code> i wyprowadza mapę cech o rozmiarze <code>(26, 26, 32)</code>: oblicza 32 filtry na danych wejściowych. Każdy z tych 32 filtrów wyjściowych zawiera siatkę wartości 26 × 26, która jest mapą odpowiedzi filtra, wskazującą odpowiedź tego filtra w różnych miejscach wejścia (patrz <a href="#fig-conv">Rysunek&nbsp;<span>12.2</span></a>). To właśnie oznacza termin mapa cech: każdy wymiar na osi głębokości jest cechą (lub filtrem), a tensor 2D <code>output[:, :, n]</code> jest przestrzenną mapą 2D odpowiedzi tego filtra na wejście.</p>
@@ -449,7 +450,7 @@ ________________________________________________________________________________
 <div id="fig-conv0" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://mukulrathi.com/aad8a78e265cb76c3b0ebe17a058b19c/conv-slide.gif" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;12.3: Zasada działania filtrów w sieci splotowej</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;12.3: Zasada działania filtrów w sieci splotowej</figcaption>
 </figure>
 </div>
 <p>Zauważmy, że szerokość i wysokość wyjściowa może się różnić od szerokości i wysokości wejściowej. Mogą się one różnić z dwóch powodów:</p>
@@ -465,7 +466,7 @@ ________________________________________________________________________________
 <div id="fig-padd" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://miro.medium.com/v2/resize:fit:1400/1*s-Hm4M6au-bqW8VLL5qo3g.gif" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;12.4: Przykłady <em>paddingu</em> i konwolucji kroczącej</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;12.4: Przykłady <em>paddingu</em> i konwolucji kroczącej</figcaption>
 </figure>
 </div>
 </section>
@@ -607,7 +608,7 @@ KerasTensor(type_spec=TensorSpec(shape=(None, 3, 3, 64), dtype=tf.float32, name=
 <div id="fig-conv1-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="convolution_files/figure-html/fig-conv1-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;12.5: Wyniki filtracji pierwszą warstwą splotową (wybrano filtry 4 i 10)</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;12.5: Wyniki filtracji pierwszą warstwą splotową (wybrano filtry 4 i 10)</figcaption>
 </figure>
 </div>
 </div>
@@ -615,7 +616,7 @@ KerasTensor(type_spec=TensorSpec(shape=(None, 3, 3, 64), dtype=tf.float32, name=
 <div id="fig-conv1-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="convolution_files/figure-html/fig-conv1-2.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;12.6: Wyniki filtracji pierwszą warstwą splotową (wybrano filtry 4 i 10)</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;12.6: Wyniki filtracji pierwszą warstwą splotową (wybrano filtry 4 i 10)</figcaption>
 </figure>
 </div>
 </div>
@@ -625,7 +626,7 @@ KerasTensor(type_spec=TensorSpec(shape=(None, 3, 3, 64), dtype=tf.float32, name=
 <div id="fig-conv1-3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="convolution_files/figure-html/fig-conv1-3.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;12.7: Wyniki filtracji pierwszą warstwą splotową (wybrano filtry 4 i 10)</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;12.7: Wyniki filtracji pierwszą warstwą splotową (wybrano filtry 4 i 10)</figcaption>
 </figure>
 </div>
 </div>
@@ -751,7 +752,7 @@ KerasTensor(type_spec=TensorSpec(shape=(None, 3, 3, 64), dtype=tf.float32, name=
 <div id="fig-conv2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="nine_activations/5_conv2d_12.png" class="img-fluid figure-img" width="1000"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;12.8: Wyniki wszystkich warstw splotowych i wszystkich filtrów</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;12.8: Wyniki wszystkich warstw splotowych i wszystkich filtrów</figcaption>
 </figure>
 </div>
 

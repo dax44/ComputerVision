@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.299">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -60,7 +60,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "więcej dopasowań w tym dokumencie",
     "search-clear-button-title": "Wyczyść",
     "search-detached-cancel-button-title": "Anuluj",
-    "search-submit-button-title": "Zatwierdź"
+    "search-submit-button-title": "Zatwierdź",
+    "search-label": "Szukaj"
   }
 }</script>
 
@@ -81,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fourier.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Transformata Fouriera</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Szukaj" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -93,14 +94,14 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./images/logo.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Automatyczna analiza obrazu</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://twitter.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
-    <a href="https://github.com/dax44/ComputerVision/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="https://twitter.com/intent/tweet?url=|url|" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+    <a href="https://twitter.com" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
+    <a href="https://github.com/dax44/ComputerVision/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/intent/tweet?url=|url|" rel="" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Przełącz tryb ciemny"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Przełącz tryb czytnika">
   <div class="quarto-reader-toggle-btn">
@@ -281,14 +282,14 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dft1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 19.10.21.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.1: Centrowanie widma Fouriera 2D. W oryginalnym (niewycentrowanym) widmie centrum współrzędnych (tj. region niskich częstotliwości) znajduje się w lewym górnym rogu, a ze względu na periodyczność widma także we wszystkich pozostałych rogach (a). W tym przypadku współczynniki dla największych częstotliwości leżą w centrum. Zamiana kwadrantów parami, jak pokazano w (b), powoduje przesunięcie wszystkich współczynników dla niskich częstotliwości do centrum, a wysokich częstotliwości na peryferia. Rzeczywiste widmo mocy 2D jest pokazane w swojej oryginalnej formie w (c) i w formie wyśrodkowanej w (d)</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;9.1: Centrowanie widma Fouriera 2D. W oryginalnym (niewycentrowanym) widmie centrum współrzędnych (tj. region niskich częstotliwości) znajduje się w lewym górnym rogu, a ze względu na periodyczność widma także we wszystkich pozostałych rogach (a). W tym przypadku współczynniki dla największych częstotliwości leżą w centrum. Zamiana kwadrantów parami, jak pokazano w (b), powoduje przesunięcie wszystkich współczynników dla niskich częstotliwości do centrum, a wysokich częstotliwości na peryferia. Rzeczywiste widmo mocy 2D jest pokazane w swojej oryginalnej formie w (c) i w formie wyśrodkowanej w (d)</figcaption>
 </figure>
 </div>
 <p>Na rysunku widać jak się różni reprezentacją widmową (spektralną) ten sam obraz kiedy go wyrazimy widmem bez centralizacji i z centralizacją.</p>
 <div id="fig-dft2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 19.16.40.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.2: Przykład dekompozycji spektralnej za pomocą DFT. (a) oryginalny obraz, (b) widmo bez centralizacji, (c) widmo po centralizacji</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;9.2: Przykład dekompozycji spektralnej za pomocą DFT. (a) oryginalny obraz, (b) widmo bez centralizacji, (c) widmo po centralizacji</figcaption>
 </figure>
 </div>
 <div class="page-columns page-full"><p>Najwyższe dopuszczalne częstotliwości sygnału w dowolnym kierunku leżą wzdłuż granicy wyśrodkowanego widma 2D o rozmiarach M × N. Każdy sygnał, którego wszystkie składowe częstotliwościowe znajdują się w tym regionie, spełnia twierdzenie o próbkowaniu (reguła Nyquista), a więc może być zrekonstruowany bez aliasingu<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. W przeciwieństwie do tego, każda składowa widmowa znajdująca się poza tymi granicami jest odbijana przez granicę tego pola w kierunku centrum współrzędnych na niższe częstotliwości, co objawia się jako wizualny aliasing w zrekonstruowanym obrazie.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;reguła Nyquista dotyczy próbkowania częstotliwości, tak aby nie wystąpił aliasing, czyli sytuacja w której obraz jest zniekształcony, ponieważ wystąpiła niejednoznaczna reprezentacja falowa tego samego sygnału</p></li></div></div>
@@ -296,7 +297,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="no-row-height column-margin column-container"><div id="fig-aliasing" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/AliasingSines.svg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.3: Przykład aliasingu</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;9.3: Przykład aliasingu</figcaption>
 </figure>
 </div></div><p>Najniższa efektywna częstotliwość próbkowania występuje w kierunkach osi współrzędnych siatki próbkującej. Aby zapewnić, że określony wzór obrazu może być zrekonstruowany bez aliasingu przy dowolnej orientacji, efektywna częstotliwość sygnału <span class="math inline">\(\hat{f}\)</span> tego wzoru musi być ograniczona do <span class="math inline">\(\frac{1}{2\tau}\)</span> w każdym kierunku, ponownie zakładając, że częstotliwość próbkowania <span class="math inline">\(\tau\)</span> jest taka sama dla obu współrzędnych.</p>
 <p>Orientacja przestrzenna fal kosinusowych i sinusowych 2D o współrzędnych spektralnych <span class="math inline">\(m,n\)</span> jest dana wzorem</p>
@@ -315,14 +316,14 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-angles" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-06-15 o 20.59.50.png" class="img-fluid figure-img" width="500"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.4: Porównanie kątów w obrazie i widmie</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;9.4: Porównanie kątów w obrazie i widmie</figcaption>
 </figure>
 </div>
 <div class="page-columns page-full"><p>O ile obraz nie jest kwadratowy (<span class="math inline">\(M = N\)</span>)<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, to kąty orientacji w obrazie i w widmie nie są takie same, choć pokrywają się z kierunkami wzlgędem osi współrzędnych. Oznacza to, że obrót obrazu o jakiś kąt <span class="math inline">\(\alpha\)</span> powoduje obrót widma w tym samym kierunku, ale na ogół nie o ten sam kąt <span class="math inline">\(\alpha\)</span>. Aby uzyskać identyczne orientacje i kąty zwrotu zarówno w obrazie, jak i w widmie, wystarczy przeskalować widmo do rozmiaru kwadratu, tak aby rozdzielczość spektralna była taka sama wzdłuż obu osi częstotliwości.</p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;a więc i widmo</p></li></div></div>
 <div id="fig-dft3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.03.01.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.5: Normalizacja widma 2D. Oryginalny obraz (a) z dominującymi zorientowanymi wzorami, które pokazują się jako wyraźne piki w odpowiednim widmie (b). Ponieważ obraz i widmo nie są kwadratowe (<span class="math inline">\(M \neq N\)</span>), orientacje w obrazie nie są takie same jak w rzeczywistym widmie (b). Po znormalizowaniu widma do proporcji kwadratowych (c), możemy wyraźnie zauważyć, że cylindry tego silnika (Harley-Davidson V-Rod) są w rzeczywistości ułożone pod kątem <span class="math inline">\(60\degree\)</span>.</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;9.5: Normalizacja widma 2D. Oryginalny obraz (a) z dominującymi zorientowanymi wzorami, które pokazują się jako wyraźne piki w odpowiednim widmie (b). Ponieważ obraz i widmo nie są kwadratowe (<span class="math inline">\(M \neq N\)</span>), orientacje w obrazie nie są takie same jak w rzeczywistym widmie (b). Po znormalizowaniu widma do proporcji kwadratowych (c), możemy wyraźnie zauważyć, że cylindry tego silnika (Harley-Davidson V-Rod) są w rzeczywistości ułożone pod kątem <span class="math inline">\(60\degree\)</span>.</figcaption>
 </figure>
 </div>
 <section id="przykłady-zastosowań-dft" class="level2" data-number="9.1">
@@ -334,7 +335,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dft4" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.17.26.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.6: Skalowanie</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;9.6: Skalowanie</figcaption>
 </figure>
 </div>
 </section>
@@ -344,7 +345,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dft5" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.17.40.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.7: Powtarzający się wzór</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;9.7: Powtarzający się wzór</figcaption>
 </figure>
 </div>
 </section>
@@ -354,7 +355,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dft6" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.17.55.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.8: Rotacje obrazu</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;9.8: Rotacje obrazu</figcaption>
 </figure>
 </div>
 </section>
@@ -364,7 +365,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.18.06.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Obrazy z wyraźnymi wzorcami</figcaption><p></p>
+<figcaption class="figure-caption">Obrazy z wyraźnymi wzorcami</figcaption>
 </figure>
 </div>
 </section>
@@ -374,13 +375,13 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dft7" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.18.16.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.9: Wzorce występujące w naturze</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;9.9: Wzorce występujące w naturze</figcaption>
 </figure>
 </div>
 <div id="fig-dft8" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.18.23.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.10: Wzorce naturalne</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;9.10: Wzorce naturalne</figcaption>
 </figure>
 </div>
 </section>
@@ -390,7 +391,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-dft9" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.18.39.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.11: Wzorce druku rastrowego</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;9.11: Wzorce druku rastrowego</figcaption>
 </figure>
 </div>
 </section>
@@ -412,7 +413,7 @@ G_{orig}(m,n)=\frac{G_{blur}(m,n)}{H_{blur}(m,n)}.
 <div id="fig-dft10" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/Zrzut ekranu 2023-02-22 o 20.59.56.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Rysunek&nbsp;9.12: Przykłady usunięcia efektu rozmycia (poruszenia) za pomocą DFT</figcaption><p></p>
+<figcaption class="figure-caption">Rysunek&nbsp;9.12: Przykłady usunięcia efektu rozmycia (poruszenia) za pomocą DFT</figcaption>
 </figure>
 </div>
 <p>Istnieje kilka transformacji spektralnych, które mają właściwości podobne do DFT, ale nie działają na dziedzinie zespolonej. Dyskretna transformata kosinusowa (DCT) jest dobrze znanym przykładem, który jest szczególnie interesujący w naszym kontekście, ponieważ jest często używany do kompresji obrazów i wideo. DCT wykorzystuje jako funkcje bazowe wyłącznie funkcje kosinus różnych częstotliwości i operuje na sygnałach i współczynnikach spektralnych o wartościach rzeczywistych. Podobnie istnieje również dyskretna transformata sinusoidalna (DST) oparta na układzie funkcji sinusoidalnych.</p>
