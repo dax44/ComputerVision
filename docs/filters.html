@@ -576,7 +576,7 @@ H=\delta*H=H*\delta.
 <figure class="figure"><p><img src="images/Zrzut ekranu 2023-02-8 o 19.52.39.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Rysunek&nbsp;6.9: Zastosowanie filtru minimum 1D do różnych sygnałów wejściowych. Górny rząd przedstawia oryginalny sygnał, a dolny spleciony z filtrem minimum</figcaption></figure>
 </div>
-<div class="cell" data-hash="filters_cache/html/fig-min2_9ac05e62e4b43b2ab7b9e9cef2d03bd7">
+<div class="cell" data-hash="filters_cache/html/fig-min2_d45a33d41cc433e8207e624ad1a53b91">
 <details open=""><summary>Kod</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">kwiat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/load.image.html">load.image</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"~/kwiat.jpg"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/grayscale.html">grayscale</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">min_filter</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">im</span>, <span class="va">radius</span><span class="op">)</span> <span class="op">{</span></span>
