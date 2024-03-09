@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Automatyczna analiza obrazu - 4&nbsp; Transformacje geometryczne</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./point_trans.html" rel="next">
+<link href="./digt_img.html" rel="prev">
+<link href="./cover.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Brak wyników",
+    "search-matching-documents-text": "dopasowane dokumenty",
+    "search-copy-link-title": "Kopiuj link do wyszukiwania",
+    "search-hide-matches-text": "Ukryj dodatkowe dopasowania",
+    "search-more-match-text": "więcej dopasowań w tym dokumencie",
+    "search-more-matches-text": "więcej dopasowań w tym dokumencie",
+    "search-clear-button-title": "Wyczyść",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Anuluj",
+    "search-submit-button-title": "Zatwierdź",
+    "search-label": "Szukaj"
+  }
+}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transformations.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Transformacje geometryczne</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/logo.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Automatyczna analiza obrazu</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://twitter.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-twitter"></i></a>
+    <a href="https://github.com/dax44/ComputerVision/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/intent/tweet?url=%7Curl%7C" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Przełącz tryb ciemny"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Przełącz tryb czytnika">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Szukaj"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wstęp</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Wprowadzenie</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./history.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Historia wizji komputerowej</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./digt_img.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Obrazy cyfrowe</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformations.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Transformacje geometryczne</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./point_trans.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Transformacje punktowe</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./filters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Filtry</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./edge.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Wykrywanie krawędzi i konturów</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./morpho.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Filtry morfologiczne</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fourier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Transformata Fouriera</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./deeplearning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Deep learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fundamentals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Fundamenty DNN</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./convolution.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Sieci splotowe</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./example.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Przykład uczenia sieci splotowej</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./segmentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Segmentacja obrazów</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bibliografia</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+<li>
+<a href="#interpolacje-liniowa-i-kubiczna" id="toc-interpolacje-liniowa-i-kubiczna" class="nav-link active" data-scroll-target="#interpolacje-liniowa-i-kubiczna"><span class="header-section-number">4.1</span> Interpolacje liniowa i kubiczna</a>
+  <ul class="collapse">
+<li><a href="#interpolacja-bilinearna" id="toc-interpolacja-bilinearna" class="nav-link" data-scroll-target="#interpolacja-bilinearna"><span class="header-section-number">4.1.1</span> Interpolacja bilinearna</a></li>
+  <li><a href="#interpolacja-bikubiczna" id="toc-interpolacja-bikubiczna" class="nav-link" data-scroll-target="#interpolacja-bikubiczna"><span class="header-section-number">4.1.2</span> Interpolacja bikubiczna</a></li>
+  </ul>
+</li>
+  <li><a href="#przyk%C5%82ady-r%C3%B3%C5%BCnych-transformacji" id="toc-przykłady-różnych-transformacji" class="nav-link" data-scroll-target="#przyk%C5%82ady-r%C3%B3%C5%BCnych-transformacji"><span class="header-section-number">4.2</span> Przykłady różnych transformacji</a></li>
+  <li><a href="#rotacje-obraz%C3%B3w" id="toc-rotacje-obrazów" class="nav-link" data-scroll-target="#rotacje-obraz%C3%B3w"><span class="header-section-number">4.3</span> Rotacje obrazów</a></li>
+  <li><a href="#zmiana-rozmiaru-obrazu" id="toc-zmiana-rozmiaru-obrazu" class="nav-link" data-scroll-target="#zmiana-rozmiaru-obrazu"><span class="header-section-number">4.4</span> Zmiana rozmiaru obrazu</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action"><i class="bi bi-github"></i>Zgłoś problem</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Transformacje geometryczne</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><p>Obrazy cyfrowe mogą zostać poddane różnego rodzaju transformacjom. Oto kilka najważniejszych z nich:</p>
+<ul>
+<li><p>Skalowanie: zmiana rozmiaru obrazu;</p></li>
+<li><p>Obracanie: obrót obrazu o określony kąt;</p></li>
+<li><p>Przesunięcie: przesunięcie obrazu w kierunku ustalonego wektora;</p></li>
+<li><p>Progowanie: przekształcenie obrazu binarnego, gdzie piksele o wartościach powyżej określonego progu są przekształcane na białe, a pozostałe na czarne;</p></li>
+<li><p>Kompresja: zmniejszanie rozmiaru pliku obrazu poprzez redukcję jego jakości;</p></li>
+<li><p>Filtrowanie: zastosowanie filtrów, takich jak filtr Gaussa, filtr medianowy, filtr Laplasjan itp.</p></li>
+</ul>
+<p>Skalowanie obrazu to proces zmiany rozmiaru obrazu. Może to być zwiększenie lub zmniejszenie wielkości obrazu. Skalowanie może być wykonywane przy użyciu różnych algorytmów, takich jak skalowanie proporcjonalne, skalowanie nieproporcjonalne, skalowanie bilinearne, skalowanie bikubiczne itp. Skalowanie proporcjonalne zachowuje proporcje pikseli i jakość obrazu, natomiast skalowanie nieproporcjonalne nie zachowuje proporcji i może prowadzić do zniekształceń obrazu. Skalowanie bilinearne i bikubiczne są bardziej zaawansowanymi metodami skalowania, które pozwalają na uzyskanie lepszej jakości obrazu po skalowaniu.</p>
+<section id="interpolacje-liniowa-i-kubiczna" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="interpolacje-liniowa-i-kubiczna">
+<span class="header-section-number">4.1</span> Interpolacje liniowa i kubiczna</h2>
+<p>Jak widać z powyższych przykładów interpolacja obrazów jest kluczową techniką w wizji komputerowej, szczególnie przy operacjach takich jak obrót i skalowanie obrazów. Pozwala na wygładzenie obrazu i zminimalizowanie efektów zniekształceń. Dwie powszechnie stosowane metody interpolacji, które zostaną bliżej opisane, to interpolacja bilinearna i bikubiczna. Obie metody różnią się złożonością obliczeniową i jakością wynikowego obrazu.</p>
+<section id="interpolacja-bilinearna" class="level3" data-number="4.1.1"><h3 data-number="4.1.1" class="anchored" data-anchor-id="interpolacja-bilinearna">
+<span class="header-section-number">4.1.1</span> Interpolacja bilinearna</h3>
+<p>Skalowanie bilinearne to metoda skalowania obrazu, która polega na interpolacji między pikselami. W tym procesie, dla każdego nowego piksela wynikowego obrazu, algorytm oblicza wartość piksela poprzez interpolację między czterema najbliższymi pikselami z oryginalnego obrazu. Konkretniej, dla każdego nowego piksela, algorytm określa współrzędne na oryginalnym obrazie, i następnie interpoluje wartości pikseli z czterech najbliższych sąsiednich pikseli w oryginalnym obrazie. Interpolacja ta jest wykonywana przez przemnożenie każdej z wartości pikseli przez odpowiedni współczynnik interpolacji i następnie sumowanie ich. W ten sposób, skalowanie bilinearne pozwala na uzyskanie obrazu o wyższej jakości niż skalowanie prostopadłe, ponieważ interpoluje wartości pikseli między pikselami oryginalnego obrazu, zamiast przydzielać nowym pikselom wartości pikseli z oryginalnego obrazu.</p>
+<p>Załóżmy, że chcemy obliczyć wartość piksela <span class="math inline">\(P(x,y)\)</span> w obrazie docelowym. Niech <span class="math inline">\(Q_{11}, Q_{12}, Q_{21}, i Q_{22}\)</span> będą wartościami czterech najbliższych pikseli w obrazie źródłowym, położonymi odpowiednio w lewym górnym, prawym górnym, lewym dolnym i prawym dolnym rogu kwadratu, w którym znajduje się punkt <span class="math inline">\(P\)</span>. Wówczas wartość <span class="math inline">\(P\)</span> można obliczyć jako:</p>
+<p><span class="math display">\[
+P(x,y) = \frac{1}{(x_2-x_1)(y_2-y_1)} \left[(x_2-x)(y_2-y)Q_{11} +
+(x-x_1)(y_2-y)Q_{21} + (x_2-x)(y-y_1)Q_{12} + (x-x_1)(y-y_1)Q_{22}\right]
+\]</span></p>
+<p>gdzie <span class="math inline">\(x_1, x_2, y_1, y_2\)</span> to odpowiednio współrzędne poziome i pionowe granic kwadratu zawierającego punkt <span class="math inline">\(P\)</span>.</p>
+</section><section id="interpolacja-bikubiczna" class="level3" data-number="4.1.2"><h3 data-number="4.1.2" class="anchored" data-anchor-id="interpolacja-bikubiczna">
+<span class="header-section-number">4.1.2</span> Interpolacja bikubiczna</h3>
+<p>Skalowanie bikubiczne jest bardziej zaawansowaną metodą skalowania obrazów niż skalowanie bilinearne. Podobnie jak skalowanie bilinearne, skalowanie bikubiczne również polega na interpolacji między pikselami, jednak jest bardziej złożone i dokładniejsze. W skalowaniu bikubicznym, dla każdego nowego piksela, algorytm określa współrzędne na oryginalnym obrazie, a następnie interpoluje wartości pikseli z szesnastu najbliższych sąsiednich pikseli w oryginalnym obrazie, zamiast czterech jak w skalowaniu bilinearnym. Interpolacja ta jest wykonywana za pomocą funkcji bikubicznej, która jest bardziej złożona niż funkcja liniowa używana w skalowaniu bilinearnym. Wartość każdego nowego piksela jest obliczana przez wielokrotne mnożenie wartości pikseli z oryginalnego obrazu przez odpowiednie współczynniki interpolacji i sumowanie ich. Dzięki zastosowaniu bardziej złożonej funkcji interpolacji i większej liczby pikseli z oryginalnego obrazu, skalowanie bikubiczne pozwala na uzyskanie jeszcze lepszej jakości obrazu po skalowaniu, niż skalowanie bilinearne.</p>
+<p>Wartość piksela <span class="math inline">\(P(x,y)\)</span> w interpolacji bikubicznej obliczana jest za pomocą wzoru:</p>
+<p><span class="math display">\[
+P(x,y) = \sum_{i=-1}^{2} \sum_{j=-1}^{2} a_{ij} \cdot (x-x_1)^i \cdot
+(y-y_1)^j
+\]</span></p>
+<p>gdzie <span class="math inline">\(a_{ij}\)</span> są współczynnikami uzyskanymi z warunków brzegowych i charakterystyk interpolowanych punktów, a <span class="math inline">\(x_1\)</span> i <span class="math inline">\(y_1\)</span> są współrzędnymi punktu w obrazie źródłowym, najbliższego lewemu górnemu rogowi obszaru interpolacji.</p>
+<p>Obie metody mają swoje zastosowania w zależności od wymagań dotyczących jakości i wydajności. Interpolacja bilinearna jest często stosowana w przeglądarkach internetowych i aplikacjach graficznych, gdzie szybkość jest kluczowa, natomiast interpolacja bikubiczna znajduje zastosowanie w bardziej zaawansowanych edytorach grafiki, gdzie priorytetem jest jakość obrazu.</p>
+<p>Obrót obrazu polega na przekształceniu obrazu przez obrócenie go o określony kąt względem pewnego punktu, zwykle środka obrazu. Ten proces polega na transformacji współrzędnych pikseli na obrazie i może być wykonywany za pomocą różnych algorytmów. Jednym z najczęściej stosowanych algorytmów jest algorytm obrotu o kąt <span class="math inline">\(\theta\)</span>, który polega na przekształceniu każdego piksela <span class="math inline">\((x, y)\)</span> na <span class="math inline">\((x', y')\)</span> za pomocą następujących równań:</p>
+<p><span class="math display">\[
+\begin{align}
+x' &amp;= x \cos(\theta) - y \sin(\theta)\\
+y' &amp;= x \sin(\theta) + y \cos(\theta),
+\end{align}
+\]</span></p>
+<p>gdzie <span class="math inline">\(\theta\)</span> jest kątem obrotu w radianach.</p>
+<p>Jeśli obraz jest skalowany podczas obrotu, to mogą pojawić się brakujące lub zbędne piksele w obrazie wynikowym, w związku z tym trzeba zastosować odpowiednie metody interpolacji takie jak skalowanie bilinearne czy bikubiczne.</p>
+<p>Obrót obrazu jest przydatny w wielu aplikacjach, takich jak analiza obrazów, przetwarzanie obrazów i uczenie maszynowe, ponieważ pozwala na zmianę orientacji obrazu, co może być konieczne do prawidłowego przetwarzania i analizy.</p>
+<p>Przesunięcie obrazu o wektor to proces przemieszczenia obrazu o określoną odległość w pionie i/lub poziomie. W tym procesie, każdy piksel w obrazie jest przesunięty o taki sam wektor <span class="math inline">\((dx, dy)\)</span> w pionie i poziomie. Wektor przesunięcia może być dodatni lub ujemny, co oznacza przesunięcie obrazu w górę lub w dół oraz w lewo lub w prawo. Przesunięcie obrazu o wektor może być wykonywane za pomocą różnych algorytmów, ale jednym z najprostszych jest przekształcenie każdego piksela <span class="math inline">\((x, y)\)</span> na <span class="math inline">\((x+dx, y+dy)\)</span>.</p>
+<p>Jeśli przesunięcie prowadzi do utraty części obrazu, to trzeba zastosować odpowiednie metody interpolacji, takie jak skalowanie bilinearne lub bikubiczne, aby uzupełnić brakujące piksele. Przesunięcia są również ważne w kontekście uczenia maszynowego.</p>
+<p>Przekształcenie afiniczne (afiniczne transformacje obrazów) to rodzaj przekształcenia obrazu, które polega na zmianie rozmiaru, kształtu i położenia obrazu za pomocą macierzy afinicznej. Macierz afiniczna jest to macierz 3x3, która zawiera informacje o skali, obrocie, translacji i odkształceniu obrazu.</p>
+<p>Przekształcenie afiniczne pozwala na wykonywanie operacji takich jak:</p>
+<ul>
+<li>skalowanie, czyli zmiana rozmiaru obrazu,</li>
+<li>obrót, czyli zmiana orientacji obrazu,</li>
+<li>translacja, czyli przesunięcie obrazu w płaszczyźnie,</li>
+<li>odkształcenie, czyli zmiana kształtu obrazu.</li>
+</ul>
+<p>Przekształcenie afiniczne jest często używane w przetwarzaniu obrazów do uzyskania lepszego dopasowania obrazów do siebie, np. w celu wykonania mapowania międzyobrazowego lub w celu korygowania perspektywy obrazów.</p>
+<p>Progowanie obrazu polega na zmianie poziomów jasności pikseli w obrazie na podstawie określonego progu. Próg jest wartością graniczną, po której piksele o niższej jasności są zmieniane na czarne, a piksele o jasności powyżej progu są zmieniane na białe. W ten sposób obraz jest konwertowany na obraz czarno-biały, co może ułatwić dalsze operacje na nim, takie jak analiza obrazu.</p>
+<p>Filtracja obrazów to proces przetwarzania obrazów polegający na przepuszczeniu obrazu przez filtr, który modyfikuje wartości pikseli. Cel filtracji może być różny, np. usunięcie szumów, wzmocnienie krawędzi, rozmycie obrazu.</p>
+<p>Istnieje wiele różnych rodzajów filtrów. Wśród nich można wymienić:</p>
+<ul>
+<li>filtry lokalne, które modyfikują każdy piksel na podstawie jego otoczenia,</li>
+<li>filtry globalne, które modyfikują cały obraz jednocześnie,</li>
+<li>filtry medianowe, które służą do usuwania szumów poprzez zastąpienie każdego piksela mediana jego otoczenia.</li>
+</ul>
+<p>Filtracja jest ważnym krokiem w przetwarzaniu obrazów, ponieważ pozwala na usunięcie niepożądanych cech obrazu lub wzmocnienie istotnych cech obrazu, co ułatwia dalsze analizy.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/Zrzut ekranu 2023-01-22 o 14.08.19.png" class="img-fluid figure-img"></p>
+<figcaption>Różne rodzaje przekształceń obrazów 2D</figcaption></figure>
+</div>
+<p>Translacja (przesunięcie) i rotacja nie zmieniają rozmiarów i orientacji obrazu, natomiast skalowanie zmienia rozmiar obrazu ale zachowuje orientację i kąty. Przekształcenia afiniczne zachowują jedynie równoległość par prostych. Projekcje są przekształceniami polegającymi na zmianie perspektywy patrzenia na obraz dlatego jedyną własnością, która jest zachowana w transformowanym obrazie to linie proste.</p>
+</section></section><section id="przykłady-różnych-transformacji" class="level2 exm-2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="przykłady-różnych-transformacji">
+<span class="header-section-number">4.2</span> Przykłady różnych transformacji</h2>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/magick/">magick</a></span><span class="op">)</span></span>
+<span><span class="va">frink</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span><span class="st">"https://jeroen.github.io/images/frink.png"</span><span class="op">)</span></span>
+<span><span class="va">frink</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="transformations_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="110"></p>
+<figcaption>Frink w oryginalnym rozmiarze</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/transform.html">image_scale</a></span><span class="op">(</span><span class="va">frink</span>, <span class="st">"250%x250%"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="transformations_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="275"></p>
+<figcaption>Frink powiększony o 150%</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/transform.html">image_scale</a></span><span class="op">(</span><span class="va">frink</span>, <span class="st">"300x100!"</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="transformations_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="150"></p>
+<figcaption>Frink poszerzony do proporcji 3:1</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/transform.html">image_rotate</a></span><span class="op">(</span><span class="va">frink</span>, <span class="fl">90</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="transformations_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="222"></p>
+<figcaption>Frink obrócony o 90 stopni</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="rotacje-obrazów" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="rotacje-obrazów">
+<span class="header-section-number">4.3</span> Rotacje obrazów</h2>
+<p>Obroty o inne kąty niż pełne wielokrotności 90<span class="math inline">\(\degree\)</span> powodują pewne problemy, ponieważ po rotacji powstają piksele, które nie pokrywają żadnej wartości z oryginalnego obrazu, a część z nich zawiera kilka wartości (<a href="#fig-rotation1" class="quarto-xref">Rysunek&nbsp;<span>4.1</span></a>). Podobne zjawisko może powstać w sytuacji zmiany rozmiaru obrazów. W tych sytuacjach konieczna jest interpolacja pikseli zarówno “pustych”, jak i “wypełnionych”.</p>
+<div id="fig-rotation1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rotation1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/Zrzut ekranu 2023-01-23 o 18.32.36.png" class="img-fluid figure-img" width="600">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rotation1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rysunek&nbsp;4.1: Przykład rotacji obrazu
+</figcaption></figure>
+</div>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://asgr.github.io/imager/">imager</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tensorflow.rstudio.com/">keras</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/keras/man/dataset_mnist.html">dataset_mnist</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">im</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">train</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">2023</span>,,<span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">im</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/as.cimg.html">as.cimg</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">im_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/map_il.html">map_il</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">6</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imrotate.html">imrotate</a></span><span class="op">(</span><span class="va">im</span>, <span class="co"># Nearest Neighbour interp.</span></span>
+<span>                                 angle <span class="op">=</span> <span class="fl">15</span><span class="op">*</span><span class="va">.x</span>, </span>
+<span>                                 interpolation <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">row1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, axis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span>  </span>
+<span><span class="va">row2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, axis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">row1</span>,<span class="va">row2</span><span class="op">)</span>, <span class="st">"y"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>interp<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="co"># antialiasing off</span></span>
+<span></span>
+<span><span class="va">im_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/map_il.html">map_il</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">6</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imrotate.html">imrotate</a></span><span class="op">(</span><span class="va">im</span>, <span class="co"># linear interpolation</span></span>
+<span>                                 angle <span class="op">=</span> <span class="fl">15</span><span class="op">*</span><span class="va">.x</span>, </span>
+<span>                                 interpolation <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">row1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, axis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span>  </span>
+<span><span class="va">row2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, axis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">row1</span>,<span class="va">row2</span><span class="op">)</span>, <span class="st">"y"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>interp<span class="op">=</span><span class="cn">F</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">im_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/map_il.html">map_il</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">6</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imrotate.html">imrotate</a></span><span class="op">(</span><span class="va">im</span>, <span class="co"># cubic interpolation</span></span>
+<span>                                 angle <span class="op">=</span> <span class="fl">15</span><span class="op">*</span><span class="va">.x</span>, </span>
+<span>                                 interpolation <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">row1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, axis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span>  </span>
+<span><span class="va">row2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, axis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">row1</span>,<span class="va">row2</span><span class="op">)</span>, <span class="st">"y"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>interp<span class="op">=</span><span class="cn">F</span><span class="op">)</span> </span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-rotation2" class="cell quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rotation2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="fig-rotation2-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-rotation2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="transformations_files/figure-html/fig-rotation2-1.png" class="img-fluid figure-img" data-ref-parent="fig-rotation2" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rotation2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Nearest Neighbour interpolation
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-rotation2-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-rotation2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="transformations_files/figure-html/fig-rotation2-2.png" class="img-fluid figure-img" data-ref-parent="fig-rotation2" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rotation2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Linear interpolation
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-rotation2-3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-rotation2-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="transformations_files/figure-html/fig-rotation2-3.png" class="img-fluid figure-img" data-ref-parent="fig-rotation2" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rotation2-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Cubic interpolation
+</figcaption></figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rotation2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rysunek&nbsp;4.2: Przykład rotacji o wielokrotnośc <span class="math inline">\(15\degree\)</span>
+</figcaption></figure>
+</div>
+</div>
+<p>Jak widać z powyższych wykresów rotacja wpływa na jakość obrazu, dlatego zaleca się nie stosować kilku występujących po sobie rotacji o kąty niebędące wielokrotnościami <span class="math inline">\(90\degree\)</span>.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">im2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imlist.html">imlist</a></span><span class="op">(</span><span class="va">im</span><span class="op">)</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">im2</span><span class="op">[[</span><span class="va">i</span><span class="op">+</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imrotate.html">imrotate</a></span><span class="op">(</span><span class="va">im2</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>, angle <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im2</span>, axis <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>interp<span class="op">=</span><span class="cn">F</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-rotation3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rotation3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="transformations_files/figure-html/fig-rotation3-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rotation3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rysunek&nbsp;4.3: Kilka iteracji rotacji obrazu. Każdy nastepny powstaje jako rotacja poprzedniego.
+</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="zmiana-rozmiaru-obrazu" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="zmiana-rozmiaru-obrazu">
+<span class="header-section-number">4.4</span> Zmiana rozmiaru obrazu</h2>
+<p>W przypadku gdy zmieniamy rozmiar obrazu w proporcji 0.5, 2, 3 funkcja <code>imresize</code> korzysta z algorytmu opisanego na stronie <a href="http://www.scale2x.it/algorithm.html" class="uri">http://www.scale2x.it/algorithm.html</a>.</p>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">im_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/map_il.html">map_il</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/resize_uniform.html">imresize</a></span><span class="op">(</span><span class="va">im</span>, </span>
+<span>                                         scale <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span>, <span class="st">"x"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>interp <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="co"># antialiasing off</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-zooming1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-zooming1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="transformations_files/figure-html/fig-zooming1-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-zooming1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rysunek&nbsp;4.4: Zmiana rozmiaru obrazu
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>W innych przypadkach wykorzystuje jedną z 7 opcji interpolacji:</p>
+<ul>
+<li>brak interpolacji (opcja -1);</li>
+<li>brak interpolacji ale dodatkowo powstała przestrzeń jest wypełniana zgodnie z warunkiem brzegowym <code>boundary_conditions</code> (opcja 0);</li>
+<li>interpolacja metodą najbliższego sąsiada (opcja 1);</li>
+<li>interpolacja metodą średniej kroczącej (opcja 2);</li>
+<li>interpolacja liniowa (opcja 3);</li>
+<li>interpolacja na siatce (opcja 4);</li>
+<li>interpolacja kubiczna (opcja 5);</li>
+<li>interpolacja Lanczosa (opcja 6).</li>
+</ul>
+<div class="cell">
+<details open="" class="code-fold"><summary>Kod</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">im_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/map_il.html">map_il</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/resize_uniform.html">imresize</a></span><span class="op">(</span><span class="va">im</span>, </span>
+<span>                                     scale <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>                                     interpolation <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">row1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="st">"x"</span><span class="op">)</span></span>
+<span><span class="va">row2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="va">im_list</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, <span class="st">"x"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/imager/man/imappend.html">imappend</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">row1</span>, <span class="va">row2</span><span class="op">)</span>, <span class="st">"y"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>interp <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-zooming2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-zooming2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="transformations_files/figure-html/fig-zooming2-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-zooming2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rysunek&nbsp;4.5: Zastosowania różnych interpolacji
+</figcaption></figure>
+</div>
+</div>
+</div>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Skopiowano!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Skopiowano!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./digt_img.html" class="pagination-link  aria-label=" cyfrowe="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Obrazy cyfrowe</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./point_trans.html" class="pagination-link" aria-label="<span class='chapter-number'>5</span>&nbsp; <span class='chapter-title'>Transformacje punktowe</span>">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Transformacje punktowe</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Automatyczna analiza obrazu, Dariusz Majerek</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/dax44/ComputerVision/issues/new" class="toc-action"><i class="bi bi-github"></i>Zgłoś problem</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Książka została napisana w <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

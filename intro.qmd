@@ -1,0 +1,93 @@
+# Wprowadzenie
+
+Automatyczna analiza obrazu jest znana również pod inną nazwą wizja komputerowa (ang. *Computer Vision*).
+Można powiedzieć też, że AAO[^intro-1] jest częścią jeszcze szerszej dziedziny automatycznej analizy sygnałów.
+Ponieważ różnice pomiędzy analizą obrazu i dźwięku w niektórych zadaniach będą się zacierać, to poznane metody w toku tego wykładu będzie można śmiało przenieść na inne dziedziny.
+Oczywiście uwzględniając szereg podobieństw pomiędzy analizą obrazu i analizą dźwięku, istniej wiele dedykowanych modeli stosowanych tylko w domenie fal dźwiękowych.
+
+[^intro-1]: skrót od Automatyczna Analiza Obrazu
+
+![](https://media.giphy.com/media/nJcXqpOgoFCxO/giphy.gif){fig-align="center"}
+
+W ramach zadań realizowanych przez wizję komputerową można wymienić:
+
+-   pozyskiwanie obrazów (opis procesu "robienia zdjęcia" cyfrowego);
+-   przetwarzanie obrazów w celu zmiany ich parametrów (np. poprawy ostrości, usuwania szumów, itp);
+-   analizowania zdjęć w celu poszukiwania wzorców:
+    -   zastosowanie ML[^intro-2] do klasyfikacji obiektów na zdjęciach;
+
+    -   zastosowanie ML do zadań regresyjnych (np. wyznaczanie poziomu wylania na podstawie zdjęć satelitarnych);
+
+    -   zastosowanie ML w lokalizacji obiektów na obrazie (np. wskazanie położenia samolotu na zdjęciu w postaci ujęcia go w prostokątną ramkę);
+
+    -   autoidentyfikacja (np. rozpoznawanie twarzy czy odcisku palca);
+
+    -   tworzenie obrazów na podstawie fraz (istnieją sieci np. GAN, które są w stanie wygenerować całkowicie fikcyjny obraz na podstawie zdania opisującego co ma się na nim znaleźć);
+
+    -   śledzenie ruchów na podstawie obrazu wideo (np. automatyczne kadrowanie obrazu wideo na podstawie położenia twarzy podczas rozmowy przez komunikator);
+
+    -   segmentacja obrazu;
+
+    -   i wiele innych
+
+[^intro-2]: Machine Learning
+
+Śmiało można stwierdzić, że AAO towarzyszy nam codziennie i na każdym kroku.
+Czasami nie jesteśmy nawet tego świadomi.
+
+{{< video https://darwin-public.s3.eu-west-1.amazonaws.com/splash_page/v7-vs-other-tools.mp4 >}}
+
+Poniżej przedstawiam listę wybranych zastosowań AAO:
+
+1.  Transport - Rosnące wymagania sektora transportowego napędzają rozwój technologiczny w tej branży, w którego centrum znajduje się wizja komputerowa. Od pojazdów autonomicznych po wykrywanie zajętości miejsc parkingowych, Inteligentny System Transportowy (ITS) stał się krytycznym obszarem promowania wydajności, efektywności i bezpieczeństwa transportu.
+
+{{< video https://www.youtube.com/embed/KLgnqnKbpGI >}}
+
+![Monitorowanie zajętości miejsc na parkingu](https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc59829c5d3f40c63c8c79_kgfTLrY0PWEI5RosfrI1paxVhOQUsaI28fJHdMc45d0MDugcMLTWlajG5GN1zRdm-SHafTGXgiUoRRHLDci1XGvPLjKnN-xNwIKJrS2hQu8nVM3gHMyXGIY3rtqneCmZT6XvCJS4.png)
+
+2.  Medycyna. Dane z obrazowania medycznego są jednym z najbogatszych źródeł informacji. Bez odpowiedniej technologii lekarze są zmuszeni spędzać godziny na ręcznym analizowaniu danych pacjentów i wykonywaniu prac administracyjnych. Na szczęście, wraz z upływem lat i rozwojem technologii, branża opieki zdrowotnej stała się jedną z najszybciej przyjmujących nowe rozwiązania automatyzacji, w tym wizję komputerową.
+
+{{< video https://youtu.be/BTnYehqjirM >}}
+
+![Segmentacja obrazu MRI](https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc598232f27002f1d6723b_BtnZghsPM9o_nFMZ400x1daKiqlT7jU4JyS7tpVVb4OwDmGWMy-om3a1Ja74hiKJOY76_mpz3piP552O2tU9ICBKr3JVsxV3p2BNhnEp0FPlXxlY4DQooC4NT9e2XdHBPyEt4iQq.gif)
+
+3.  Produkcja. Przemysł produkcyjny przyjął już szeroką gamę rozwiązań automatyzacji z wizją komputerową w centrum. Pomaga ona zautomatyzować kontrolę jakości, zminimalizować zagrożenia bezpieczeństwa i zwiększyć wydajność produkcji. Oto niektóre z najczęstszych zastosowań wizji komputerowej w przemyśle produkcyjnym.
+
+![AAO w kontroli jakości](https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fd7cd55dbbe9aa16a0a72d_missing%20pill.PNG)
+
+![AAO w procesie magazynowania](https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc598357f2fab35086a350_wjjK4s_ju-B4NmwOsMwECiQs7XcfktM9Z97pBSH9cgzs_E9UA7rbE4FUcm5HB0JZ0Qdu_jFUy_FJnnb6rxowfJKXWICqRf6Az0EOsa3yd4rdmd2hB6vw81cel9OxL6ho6YCepeag.png)
+
+4.  Budowa. Sektor budowlany szybko przyjmuje technologię wizji komputerowej i wykorzystuje ją do wykrywania sprzętu ochrony osobistej, kontroli aktywów infrastruktury, wykrywania zagrożeń w miejscu pracy lub konserwacji.
+
+![Wykrywanie zużytych części](https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc598357f2fa0e1286a34f_tTzWALM99EjqnbscUwWS5IjXfGJeZO8cH4E9t_0RRBf5kttI6fUe5Wg76rxZ9xfjbWgQjd9SpjNiEYYzBw3zPTdjABAiOk2u0Luy5csiiBCsOhCNfrU7_WvBs15jMtKOhIsU8zhE.png)
+
+![Naruszenia procedur bezpieczeństwa](https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc59839d50654852d23dfb__Hi-nntl-MVNlAJUdLKKxS1pm0rBdSMyKexEpDUIYQ8_jPU0hezOnOSnLOeLOzOxOFipEbVgDg3bCzN2YO0USrETgJzgvBIe3QU1VGv5-ES1x8BrPX2JDAtyfzSRQFtQCy3HTtiU.jpeg)
+
+5.  Rolnictwo. Sektor rolniczy był świadkiem kilku przypadków zastosowania modeli sztucznej inteligencji (w tym wizji komputerowej) w takich dziedzinach, jak monitorowanie upraw i plonów, zautomatyzowane zbiory, analiza warunków pogodowych, monitorowanie zdrowia zwierząt gospodarskich czy wykrywanie chorób roślin. Technologia ta zdobyła już silną pozycję dzięki możliwościom automatyzacji i wykrywania, a jej zastosowania będą się tylko rozszerzać.
+
+![Wyrywanie nietypowych zachowań zwierząt](https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc5984d806aa3e13f43f6d__2ixaxqamXj_YjFrTKHtEjoF7WWIcd8RG-zZax-fPNBpmAtmtHphHqA2OgBvwIoNaiX2pp7mfStLcAEj_pavsv6fptBiiZXyDOTCazzfrnVp7q9YmxCw7iwS5M3gwUFGr5FXoWyZ.png)
+
+![Choroby roślin](https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc598432f27058b5d6723c_dHWjLelZK7zoop9w_DXZvM8x5L_0gBDS4LULfyyFX2L3c4lB1iU-vWnyHbQAEmuCEGP1PUja38D5PwQbgjKOV2Z9PW61Rb18K7rT-qtxIJSrgZ1osK0z17ZiWCcw87FGOaVUSxy9.png)
+
+6.  Sprzedaż detaliczna. Kamery zainstalowane w sklepach detalicznych pozwalają sprzedawcom zbierać duże ilości danych wizualnych pomocnych w projektowaniu lepszych doświadczeń klientów i pracowników. Rozwój systemów wizji komputerowej do przetwarzania tych danych sprawia, że cyfrowa transformacja branży realnej staje się znacznie bardziej osiągalna.
+
+![Wykrywanie braków towaru](https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fd9a0e575c8541c8c6eea7_missing%20products.PNG)
+
+![Wykrywanie nietypowych zachowań klientów lub badanie zatłoczenia](https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/60fc5985d3713414bc52a802_ASiEMtMMPiPu7Wu9WUr_0amhXbxV0_94PD8-pZuI9zXe4EnVFyUfKqWHfMPQ79THYjNahS5pfOoev0_EJ9FnkB4pdRW5ZfJYR8HfAxK_nO5BTd4ZQKkkM1DmL1sGjFN5VjnUamwG.png)
+
+Przestrzeni do zastosowań AAO jest jeszcze dużo więcej ale nie sposób ich wszystkich opisać.
+Oto kilka przykładów z różnych kategorii.
+
+![Badanie ruchu zawodnika](https://viso.ai/wp-content/uploads/2021/01/human-pose-estimation-deep-learning.gif)
+
+![Wykrywanie naruszeń prawa](https://viso.ai/wp-content/uploads/2021/05/video-analytics-fence-detection.jpg)
+
+![Wykrywanie twarzy](https://www.malwarebytes.com/blog/news/2021/11/asset_upload_file64984_232483.png)
+
+Może też służyć do zabawy
+
+![Kilka obrazów wygenerowanych jako wariacje na temat mojego zdjęcia z wakacji](images/Zrzut%20ekranu%202023-01-3%20o%2019.50.20.png)
+
+![Kilka przykładów obrazów wygenerowanych przez sieć DALL E2 jako odpowiedź na zdanie "narysuj bez odrywania ręki jedna linią misia na zakupach"](images/Zrzut%20ekranu%202023-01-3%20o%2019.50.45.png)
+
+![Tym razem sieć DALL E2 została poproszona o namalowanie kobiet w stylu Van Gogha](images/Zrzut%20ekranu%202023-01-5%20o%2013.42.47.png)

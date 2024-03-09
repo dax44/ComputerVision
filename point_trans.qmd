@@ -1,0 +1,224 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Transformacje punktowe
+
+Transformacje obrazów, które odbywają się na poziomie pojedynczych pikseli nazywane są w literaturze tematu transformacjami punktowymi (ang. *point transformation*).
+Należą do nich między innymi:
+
+-   modyfikacja kontrastu,
+-   modyfikacja jasności,
+-   zmiana intensywności,
+-   odwracanie wartości piksela,
+-   kwantyzacja obrazów (ang. *posterizing*),
+-   progowanie,
+-   korekta gammy,
+-   transformacje kolorów.
+
+Wszystkie można opisać formułą
+
+$$
+g(x) = h(f(x)),
+$$
+
+gdzie $x = (i,j)$ jest położeniem transformowanego piksela, $f$ jest funkcja oryginalnego obrazu (przed przekształceniem)[^point_trans-1], natomiast $h$ jest zastosowaną transformacją.
+Wówczas $g$ opisuje transformację jako funkcję lokalizacji.
+
+[^point_trans-1]: informuje o nasyceniu barw w danej lokalizacji - pikselu
+
+Na potrzeby zmian w kontraście, czy jasności stosuje się przekształcenia postaci:
+
+$$
+g(x) = a(x)\cdot f(x)+b(x),
+$$
+
+gdzie $a(x)$ jest parametrem zmiany kontrastu, a $b(x)$ jest parametrem zmiany jasności[^point_trans-2].
+Należy jednak pamiętać, że wartości $g(x)$ tak określonej transformacji mogą znaleźć się poza przedziałem \[0,255\].
+Oczywiście powoduje to problem, z którym można sobie radzić poprzez progowanie wartości, tak aby znalazły się w przedziale \[0,255\].
+Obrazy zapisane w formacie `cimg` wartości poszczególnych kanałów mają znormalizowane do przedziału \[0,1\].
+Dodatkowo należy pamiętać, że funkcja `plot` ma domyślnie włączoną flagę `rescale=TRUE` co oznacza, że wartości kanałów zostaną znormalizowane do przedziału \[0,1\] automatycznie.
+W rezultacie oznacza to, że transformacja liniowa $g(x)$ nie odniesie żadnego skutku.
+
+[^point_trans-2]: jeśli zmieniamy te parametry globalnie (dla całego obrazu) wówczas funkcje te są stałe
+
+```{r}
+#| label: fig-contr
+#| fig-cap: Zmiana kontrastu obrazu (podbicie o 70%)
+library(imager)
+library(imagerExtra)
+library(tidyverse)
+
+adjust <- function(x, contrast, brithness){
+  
+  # transformacji dokonujemy od razu na wszystkich kanałach
+  x_trans <- x |> 
+    as.data.frame() |> 
+    mutate(value = ifelse(value*(contrast+1)+brithness>1, 
+                          1, 
+                          ifelse(value*(contrast+1)+brithness<0, 0,
+                                 value*(contrast+1)+brithness)), 
+           .by  = cc) |> 
+    as.cimg(dims = dim(x))
+  
+  return(x_trans)
+}
+
+layout(t(1:2))
+plot(boats, rescale = F, interpolate = F)
+adjust(boats, 0.7, 0) |> 
+  plot(rescale = F, interpolate = F)
+```
+
+```{r}
+#| label: fig-contr2
+#| fig-cap: Zmiana kontrastu obrazu (redukcja o 30%)
+
+layout(t(1:2))
+plot(boats, rescale = F, interpolate = F)
+adjust(boats, -0.3, 0) |> 
+  plot(rescale = F, interpolate = F)
+```
+
+```{r}
+#| label: fig-brithness
+#| fig-cap: Zmiana jasności obrazu (podbicie o 20% pełnej skali)
+
+layout(t(1:2))
+plot(boats,rescale = F, interpolate = F)
+adjust(boats, 0, 0.2) |> 
+  plot(rescale = F, interpolate = F)
+```
+
+```{r}
+#| label: fig-brithness2
+#| fig-cap: Zmiana jasności obrazu (redukcja o 40% pełnej skali)
+
+layout(t(1:2))
+plot(boats,rescale = F, interpolate = F)
+adjust(boats, 0, -0.4) |> 
+  plot(rescale = F, interpolate = F)
+```
+
+Aby uniknąć przekraczania wartości dla poszczególnych kanałów wprowadza się często funkcję, która podnosi kontrast (tzw. autokontrast) przez poszerzenie spektrum wartości z obserwowanych $[x_{\min},x_{\max}]$ do przedziału $[lower, upper]$ (często przyjmowane jako \[0,1\]):
+
+$$
+g(x) = x_{lower}+(x-x_{\min})\cdot\frac{x_{\max}-x_{\min}}{x_{upper}-x_{lower}}.
+$$ Funkcja `EqualizeDP` pozwala na autokontrast.
+Dodatkowo umożliwia ustawić wartości skrajne dla spektrum kanału inne niż min i max.
+
+```{r}
+#| label: fig-autocontrast
+#| fig-cap: Autokontrast w zakresie min, max
+layout(t(1:2))
+plot(boats,rescale = F, interpolate = F)
+boats |> 
+  imsplit("c") |> 
+  map_il(~EqualizeDP(.x, t_down = min(.x),t_up = max(.x), range = c(0,1))) |> 
+  imappend("c") |> 
+  plot(rescale = F, interpolate = F)
+```
+
+```{r}
+#| label: fig-autocontrast2
+#| fig-cap: Autokontrast w zakresie 50, 170
+layout(t(1:2))
+plot(boats,rescale = F, interpolate = F)
+boats |> 
+  imsplit("c") |> 
+  map_il(~EqualizeDP(.x, t_down = 50,t_up = 170, range = c(0,1))) |> 
+  imappend("c") |> 
+  plot(rescale = F, interpolate = F)
+```
+
+```{r}
+#| label: fig-inverse
+#| fig-cap: Przykład odwrócenia wartości pikseli
+layout(t(1:2))
+plot(boats,rescale = F, interpolate = F)
+boats |> 
+  imsplit("c") |> 
+  map_il(~{
+    max(.x)-.x
+  }) |> 
+  imappend("c") |> 
+  plot(rescale = F, interpolate = F)
+```
+
+```{r}
+#| label: fig-posterization
+#| fig-cap: Przykład kwantyzacji obrazu
+layout(t(1:2))
+plot(boats,rescale = F, interpolate = F)
+boats |> 
+  imsplit("c") |> 
+  map_il(~round(.x/0.2, digits = 0)) |> 
+  imappend("c") |> 
+  plot(interpolate = F)
+```
+
+```{r}
+#| label: fig-thresh1
+#| fig-cap: Przykład progowania obrazu z różnymi poziomami progowania
+list("10%","25%", "50%", "75%", "auto") |> 
+  map_il(~threshold(im = boats, thr = .x)) |> 
+  imappend("x") |> 
+  plot()
+```
+
+```{r}
+#| label: fig-gamma
+#| fig-cap: Przykład korekty gamma dla różnych potęg
+2^(-3:3) |> 
+  map_il(~{
+    boats^.x
+  }) |> 
+  imappend("x") |> 
+  plot()
+```
+
+Transformację kolorów możemy wykonywać na dwa sposoby:
+
+-   przeprowadzając transformację oddzielnie na każdym kanale,
+-   zachowując barwę (ang. *hue*) obrazu, przetwarzać składową intensywności, a następnie obliczać wartości RGB z nowej składowej intensywności.
+
+```{r}
+#| label: fig-color1
+#| fig-cap: Transformacja kolorów niezależnie modyfikując każdy kanał
+layout(t(1:2))
+plot(boats)
+boats |> 
+  imsplit("c") |> 
+  map_il(~BalanceSimplest(.x, 2, 2, range = c(0,1))) |> 
+  imappend("c") |> 
+  plot(rescale = F, interpolate = F)
+```
+
+Aby wykonać transformację drugą metodą zapiszemy plik w skali szarości, czyli dokonamy faktycznie agregacji postaci:
+
+$$
+g_{grayscale}(x)=0.3R+0.59G+0.11B.
+$$
+
+Ponadto będziemy potrzebowali intensywności barw.
+Do zapisu nasycenia barw użyjemy funkcji `GetHue` pakietu `imagerExtra`.
+
+```{r}
+#| label: fig-color2
+#| fig-cap: Transformacja kolorów modyfikując kanały łącznie
+
+# zapisujemy obraz w skali szarości
+g <- grayscale(boats)
+# zapisujemy nasycenia barw
+hueim <- GetHue(boats)
+# transformujemy obraz w skali szarości
+g <- BalanceSimplest(g, 2, 2, range = c(0,1))
+# oddtwarzamy kolory
+y <- RestoreHue(g, hueim)
+
+layout(t(1:2))
+plot(boats)
+plot(y)
+```
